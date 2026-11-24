@@ -12,8 +12,8 @@ interface NavItem {
 const navItems: NavItem[] = [
   { name: '首页', href: '/', icon: Home },
   { name: '作品集', href: '/portfolio', icon: Briefcase },
-  { name: '知识库', href: '/posts', icon: BookOpen },
-  { name: '实验室', href: '/effects', icon: Sparkles },
+  { name: '博客', href: '/posts', icon: BookOpen },
+  { name: '特效库', href: '/effects', icon: Sparkles },
   { name: '关于', href: '/about', icon: User },
 ];
 
@@ -46,7 +46,7 @@ export const FloatingDock: React.FC<FloatingDockProps> = ({ currentPath = '/' })
               {isActive && (
                 <motion.div
                   layoutId="activeDockIndicator"
-                  className="absolute inset-0 bg-terracotta/10 dark:bg-terracotta/20 rounded-full border border-terracotta/30"
+                  className="absolute inset-0 bg-terracotta/15 dark:bg-terracotta/25 rounded-full border border-terracotta/40"
                   transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                 />
               )}

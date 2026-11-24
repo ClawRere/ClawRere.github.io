@@ -7,9 +7,7 @@ export default defineConfig({
   site: 'https://clawrere.github.io',
   integrations: [
     react(),
-    tailwind({
-      applyBaseStyles: false,
-    }),
+    tailwind(),
   ],
   markdown: {
     shikiConfig: {

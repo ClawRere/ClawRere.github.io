@@ -30,7 +30,13 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    category: z.enum(['AI Agent', 'GenAI Interactive', 'Fullstack Experiment', 'Visual Effects']),
+    category: z.enum([
+      'AI Product Systems',
+      'AI Agent',
+      'GenAI Interactive',
+      'Fullstack Experiment',
+      'Visual Effects',
+    ]),
     date: z.coerce.date(),
     featured: z.boolean().default(false),
     cover: z.string().optional().nullable(),

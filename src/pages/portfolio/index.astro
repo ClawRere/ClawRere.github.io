@@ -1,0 +1,75 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { CoCreationBadge } from '@/components/portfolio/CoCreationBadge';
+import { getCollection } from 'astro:content';
+import { Sparkles, ArrowUpRight, Filter } from 'lucide-react';
+
+const projects = await getCollection('projects');
+---
+
+<Layout title="作品集 | 磊大大 Larry - AI 共创项目">
+  <div class="py-8">
+    <div class="max-w-2xl">
+      <div class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta mb-2">
+        <Sparkles class="w-3.5 h-3.5" />
+        AI Co-Creation Portfolio
+      </div>
+      <h1 class="font-serif text-3xl sm:text-4xl font-medium text-charcoal-DEFAULT dark:text-cream-50">
+        人机共创作品集
+      </h1>
+      <p class="mt-3 text-sm text-charcoal-100 dark:text-cream-300 leading-relaxed">
+        记录我与大语言模型（Claude、Gemini、Cursor）共同构思、架构并落地的技术项目。每一个作品都标注了人机协同分工、核心 Prompt 以及架构决策。
+      </p>
+    </div>
+
+    <!-- Category Filter Bar -->
+    <div class="flex flex-wrap gap-2 mt-8 mb-10 pb-4 border-b border-charcoal-500/10 dark:border-white/10">
+      <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-terracotta text-white">
+        全部 (All)
+      </span>
+      {['AI Agent', 'GenAI Interactive', 'Fullstack Experiment', 'Visual Effects'].map((cat) => (
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-cream-200/80 dark:bg-obsidian-border text-charcoal-200 dark:text-cream-300 hover:bg-cream-300/80 cursor-pointer transition-colors">
+          {cat}
+        </span>
+      ))}
+    </div>
+
+    <!-- Project Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {projects.map((project) => (
+        <a
+          href={`/portfolio/${project.id}`}
+          class="group block p-6 sm:p-7 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 dark:hover:border-terracotta/40 hover:shadow-apple-card transition-all duration-300"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-2.5 py-1 rounded-full bg-cream-200/80 dark:bg-obsidian-border text-[11px] font-mono text-charcoal-200 dark:text-cream-300">
+              {project.data.category}
+            </span>
+            <span class="text-xs font-mono text-charcoal-100 dark:text-cream-400">
+              {new Date(project.data.date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'short' })}
+            </span>
+          </div>
+
+          <h2 class="font-serif text-xl sm:text-2xl font-medium text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors">
+            {project.data.title}
+          </h2>
+
+          <p class="mt-3 text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 line-clamp-3 leading-relaxed">
+            {project.data.description}
+          </p>
+
+          <div class="mt-6 pt-5 border-t border-charcoal-500/10 dark:border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <CoCreationBadge
+              humanShare={project.data.coCreation.humanShare}
+              aiShare={project.data.coCreation.aiShare}
+              models={project.data.coCreation.models}
+            />
+            <span class="text-xs font-medium text-terracotta flex items-center gap-1 group-hover:translate-x-1 transition-transform self-end sm:self-auto">
+              查看复盘 →
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>

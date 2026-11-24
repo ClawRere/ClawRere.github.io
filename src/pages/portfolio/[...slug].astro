@@ -1,0 +1,130 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { CoCreationBadge } from '@/components/portfolio/CoCreationBadge';
+import { ThinkingAccordion } from '@/components/portfolio/ThinkingAccordion';
+import { getCollection, render } from 'astro:content';
+import { ArrowLeft, ExternalLink, Sparkles, User, Bot } from 'lucide-react';
+import { GithubIcon } from '@/components/ui/Icons';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<Layout title={`${project.data.title} | AI 共创作品复盘`}>
+  <article class="py-6 max-w-3xl mx-auto">
+    <!-- Back link -->
+    <a
+      href="/portfolio"
+      class="inline-flex items-center gap-1.5 text-xs font-mono text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors mb-6"
+    >
+      <ArrowLeft class="w-3.5 h-3.5" />
+      返回作品集
+    </a>
+
+    <!-- Header -->
+    <header class="mb-8 pb-6 border-b border-charcoal-500/10 dark:border-white/10">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-1 rounded-full bg-cream-200/80 dark:bg-obsidian-border text-xs font-mono text-charcoal-200 dark:text-cream-300">
+          {project.data.category}
+        </span>
+        <span class="text-xs font-mono text-charcoal-100 dark:text-cream-400">
+          {new Date(project.data.date).toLocaleDateString('zh-CN')}
+        </span>
+      </div>
+
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium text-charcoal-DEFAULT dark:text-cream-50 leading-[1.2]">
+        {project.data.title}
+      </h1>
+
+      <p class="mt-4 text-base sm:text-lg text-charcoal-100 dark:text-cream-300 leading-relaxed font-serif">
+        {project.data.description}
+      </p>
+
+      <!-- Co-Creation Metadata Card -->
+      <div class="mt-6 p-5 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <Sparkles class="w-4 h-4 text-terracotta" />
+            <span class="text-xs font-mono uppercase tracking-wider font-semibold text-charcoal-DEFAULT dark:text-cream-100">
+              人机协作全景矩阵
+            </span>
+          </div>
+          <CoCreationBadge
+            humanShare={project.data.coCreation.humanShare}
+            aiShare={project.data.coCreation.aiShare}
+            models={project.data.coCreation.models}
+          />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono pt-3 border-t border-charcoal-500/10 dark:border-white/10">
+          <div class="flex items-start gap-2">
+            <User class="w-3.5 h-3.5 text-terracotta mt-0.5 shrink-0" />
+            <div>
+              <span class="text-charcoal-100 dark:text-cream-400">人类主导：</span>
+              <p class="text-charcoal-DEFAULT dark:text-cream-200 mt-0.5 font-sans">
+                {project.data.coCreation.humanRole}
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2">
+            <Bot class="w-3.5 h-3.5 text-amber-500 mt-0.5 shrink-0" />
+            <div>
+              <span class="text-charcoal-100 dark:text-cream-400">AI 智能体：</span>
+              <p class="text-charcoal-DEFAULT dark:text-cream-200 mt-0.5 font-sans">
+                {project.data.coCreation.aiRole}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Links -->
+        {(project.data.demoUrl || project.data.githubUrl) && (
+          <div class="mt-4 pt-3 border-t border-charcoal-500/10 dark:border-white/10 flex items-center gap-3">
+            {project.data.demoUrl && (
+              <a
+                href={project.data.demoUrl}
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-terracotta text-white text-xs font-medium hover:bg-terracotta-500 transition-colors"
+              >
+                在线体验 Demo
+                <ExternalLink class="w-3 h-3" />
+              </a>
+            )}
+            {project.data.githubUrl && (
+              <a
+                href={project.data.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass text-xs font-medium text-charcoal-DEFAULT dark:text-cream-100 hover:bg-cream-200 dark:hover:bg-obsidian-hover transition-colors"
+              >
+                <GithubIcon className="w-3.5 h-3.5" />
+                源码仓库
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </header>
+
+    <!-- Claude-style Thinking Accordion Demonstration -->
+    <ThinkingAccordion client:load title="AI 架构师构思与推导轨迹 (Architecture & Thought Graph)">
+      <p>1. 分析业务边界：识别高频交互模块与低频展示模块；</p>
+      <p>2. 性能权衡：避免重型第三方包，采用原生 React + Tailwind 编写微动效；</p>
+      <p>3. 容错防护：为流式生成接口设置超时保护与渐进式降级方案。</p>
+    </ThinkingAccordion>
+
+    <!-- Main Markdown Content -->
+    <div class="prose prose-charcoal dark:prose-invert max-w-none prose-headings:font-serif prose-headings:font-medium prose-a:text-terracotta prose-pre:bg-charcoal-900 prose-pre:border prose-pre:border-white/5 my-8">
+      <Content />
+    </div>
+  </article>
+</Layout>

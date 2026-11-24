@@ -1,0 +1,81 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { User, Sparkles, Terminal, Mail, BookOpen } from 'lucide-react';
+import { GithubIcon } from '@/components/ui/Icons';
+---
+
+<Layout title="关于我 | 磊大大 Larry - AI Co-creator">
+  <div class="py-8 max-w-3xl mx-auto">
+    <div class="mb-10 pb-6 border-b border-charcoal-500/10 dark:border-white/10">
+      <div class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta mb-2">
+        <User class="w-3.5 h-3.5" />
+        About the Creator
+      </div>
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium text-charcoal-DEFAULT dark:text-cream-50">
+        关于磊大大 (Larry)
+      </h1>
+      <p class="mt-4 text-base sm:text-lg text-charcoal-100 dark:text-cream-300 font-serif leading-relaxed">
+        专注于陪伴、成长与技术分享。崇尚人机协同、敏捷构建与温润克制的产品设计美学。
+      </p>
+    </div>
+
+    <!-- Philosophy Bento -->
+    <div class="space-y-8 prose prose-charcoal dark:prose-invert max-w-none prose-headings:font-serif">
+      <section>
+        <h2>✦ AI 共创理念</h2>
+        <p>
+          在 LLM 普及的时代，编程的角色正在从“逐行敲击代码的工匠”演变为“定义系统边界与提示词策略的架构指挥官”。
+        </p>
+        <p>
+          这个网站是我与多个先进大模型（Claude 3.5 Sonnet、Gemini、Cursor）共同打磨的产物。在这里，代码不再是由单一大脑孤立写就，而是人类的直觉判断与机器的超速推导产生化学反应的结晶。
+        </p>
+      </section>
+
+      <section class="p-6 rounded-2xl glass not-prose border border-charcoal-500/10 dark:border-white/10 my-8">
+        <div class="flex items-center gap-2 mb-4 text-xs font-mono uppercase tracking-wider text-terracotta font-semibold">
+          <Terminal class="w-4 h-4" />
+          人机协作三大准则
+        </div>
+        <ul class="space-y-3 text-xs sm:text-sm text-charcoal-200 dark:text-cream-200 font-sans">
+          <li class="flex items-start gap-2">
+            <span class="text-terracotta font-bold font-mono">01.</span>
+            <span><strong>规格先行（Spec-driven）：</strong>人类负责定义清晰的数据类型、API 契约与安全边界，杜绝无序生成。</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-terracotta font-bold font-mono">02.</span>
+            <span><strong>原子封装（Atomic Isolation）：</strong>每个交互组件必须自洽、单一职责，确保任何 AI 均可快速分块局部修改。</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-terracotta font-bold font-mono">03.</span>
+            <span><strong>真实反思（Traceable Reflection）：</strong>记录每一次协作中的 Prompt 与思考链，形成可复用的模式库。</span>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>✦ 联系与共创</h2>
+        <p>
+          如果你对人机协同、全栈开发或者前沿 AI 动效感兴趣，欢迎通过以下途径与我交流：
+        </p>
+        <div class="not-prose flex flex-wrap gap-3 mt-4">
+          <a
+            href="mailto:2472919073@qq.com"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass hover:bg-cream-200 dark:hover:bg-obsidian-hover text-xs font-mono text-charcoal-DEFAULT dark:text-cream-100 transition-colors"
+          >
+            <Mail class="w-3.5 h-3.5 text-terracotta" />
+            2472919073@qq.com
+          </a>
+          <a
+            href="https://github.com/ClawRere"
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass hover:bg-cream-200 dark:hover:bg-obsidian-hover text-xs font-mono text-charcoal-DEFAULT dark:text-cream-100 transition-colors"
+          >
+            <GithubIcon className="w-3.5 h-3.5 text-terracotta" />
+            GitHub: @ClawRere
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>

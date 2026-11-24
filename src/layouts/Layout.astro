@@ -1,0 +1,81 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { FloatingDock } from '@/components/ui/FloatingDock';
+import '@/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = '磊大大 Larry | AI 共创作品集与知识库',
+  description = '基于提示词工程、大模型协同与现代全栈架构的技术沉淀与作品集花园。',
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <ClientRouter />
+  </head>
+  <body class="min-h-screen flex flex-col bg-cream-50 dark:bg-obsidian text-charcoal-DEFAULT dark:text-cream-100 transition-colors duration-300">
+    <!-- Top delicate glow banner -->
+    <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-terracotta to-transparent opacity-40 z-50 pointer-events-none" />
+
+    <!-- Ambient background gradient mesh (Apple/Claude style) -->
+    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-terracotta/5 dark:bg-terracotta/10 blur-[120px]" />
+      <div className="absolute top-[30%] right-[-10%] w-[450px] h-[450px] rounded-full bg-amber-500/5 dark:bg-amber-500/5 blur-[100px]" />
+    </div>
+
+    <!-- Header bar -->
+    <header className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-full bg-terracotta text-white flex items-center justify-center font-serif font-bold text-sm shadow-glow-terracotta group-hover:scale-105 transition-transform">
+          L
+        </span>
+        <div class="flex flex-col">
+          <span class="font-serif font-bold text-base tracking-tight text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors">
+            磊大大 Larry
+          </span>
+          <span class="text-[10px] font-mono text-charcoal-100 dark:text-cream-400">
+            AI Co-creator & Developer
+          </span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-4 text-xs font-mono text-charcoal-100 dark:text-cream-400">
+        <span class="hidden sm:inline-block px-2.5 py-1 rounded-full bg-cream-200/60 dark:bg-obsidian-border border border-charcoal-500/5 dark:border-white/5">
+          ✦ Astro 5 + React + Motion
+        </span>
+      </div>
+    </header>
+
+    <!-- Main Content Slot -->
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 pb-28">
+      <slot />
+    </main>
+
+    <!-- Floating Dock Navigation Bar -->
+    <FloatingDock client:load currentPath={currentPath} />
+
+    <!-- Footer -->
+    <footer class="border-t border-charcoal-500/10 dark:border-white/10 py-8 text-center text-xs text-charcoal-100 dark:text-cream-400">
+      <p class="font-serif">
+        Crafted with <span class="text-terracotta">♥</span> by Larry & AI Co-creators (Claude, Gemini & Cursor)
+      </p>
+      <p class="font-mono text-[11px] mt-1 opacity-70">
+        Deployed on GitHub Pages · All Rights Reserved © {new Date().getFullYear()}
+      </p>
+    </footer>
+  </body>
+</html>

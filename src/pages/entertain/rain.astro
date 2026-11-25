@@ -1,0 +1,44 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { CloudRain, ArrowLeft, Maximize2, Volume2 } from 'lucide-react';
+---
+
+<Layout title="雨夜电影院与白噪音 | 磊大大 Larry">
+  <div class="py-6 space-y-6 max-w-5xl mx-auto">
+    <!-- Top Nav -->
+    <div class="flex items-center justify-between">
+      <a
+        href="/entertain"
+        class="inline-flex items-center gap-1.5 text-xs font-mono text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors"
+      >
+        <ArrowLeft class="w-3.5 h-3.5" />
+        返回娱乐馆
+      </a>
+
+      <a
+        href="/effects/rain_movie/index.html"
+        target="_blank"
+        rel="noreferrer"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass hover:border-terracotta/40 text-xs font-mono text-charcoal-DEFAULT dark:text-cream-100 transition-colors"
+      >
+        <Maximize2 class="w-3.5 h-3.5 text-sky-400" />
+        全屏独立窗口打开
+      </a>
+    </div>
+
+    <!-- Rain Container -->
+    <div class="rounded-3xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 shadow-2xl relative bg-black h-[75vh]">
+      <div class="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-sky-300 text-xs font-mono border border-white/10 pointer-events-none flex items-center gap-1.5">
+        <Volume2 class="w-3.5 h-3.5 animate-pulse" />
+        <span>提示：进入后可调节雨水大小与背景环境音效</span>
+      </div>
+
+      <iframe
+        src="/effects/rain_movie/index.html"
+        class="w-full h-full border-0"
+        title="雨夜电影院"
+        allowFullScreen
+      />
+    </div>
+  </div>
+</Layout>

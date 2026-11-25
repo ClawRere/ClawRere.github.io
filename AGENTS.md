@@ -1,7 +1,7 @@
 # 🤖 AGENTS.md — AI 协同分块更新与阅读指南 (AI Reading & Chunk Update Guide)
 
 > **致未来的 AI 助手（Cursor, Claude, Copilot, Gemini, DeepSeek 等）：**
-> 本项目采用 **模块化与孤岛架构（Astro 5 + React + Tailwind）** 设计。**你无需阅读所有代码文件！** 请按照下方的「任务路由表」，按需精准读取指定文件即可完成修改。
+> 本项目采用 **模块化与孤岛架构（Astro 5 + React 19 + Tailwind CSS）** 设计。**你无需阅读所有代码文件！** 请按照下方的「任务路由表」，按需精准读取指定文件即可完成修改。
 
 ---
 
@@ -9,15 +9,21 @@
 
 | 你的任务目标 | 只需要读取/修改的文件 | 不需要碰的文件（避免读取） |
 | :--- | :--- | :--- |
-| **新增/更新作品集项目** | `src/content/projects/*.md` | `src/pages/**`, `src/components/**` |
+| **新增/更新作品集项目 (如 PMOS)** | `src/content/projects/*.md` | `src/pages/**`, `src/components/**` |
 | **新增/修改技术博客文章** | `src/content/posts/*.md` | `src/pages/**`, `src/components/**` |
-| **调整作品集元数据字段规范** | `src/content.config.ts` | 任何样式文件或具体页面 |
+| **调整 108+ 站点导航数据与分类** | `src/data/links.json` | 任何样式文件或具体页面 |
+| **调整导航展示模式(卡片/列表/抽屉内嵌)** | `src/components/tools/LinksExplorer.tsx` | 数据文件或底层组件 |
+| **新增/修改今日 AI 早报或工具推荐** | `src/pages/tools/dayly.astro`, `recommend.astro` | 其他页面 |
+| **新增/修改娱乐特效 (音乐/烟花/雨声)** | `src/pages/entertain/*.astro` | 导航与管理端 |
+| **调整 3D 蝴蝶飞舞逻辑与开关** | `src/components/ui/FlyingButterfly.tsx` | 布局与其他组件 |
+| **调整网易云音乐随身听/歌单 ID** | `src/components/ui/NetEaseMusicPlayer.tsx` | 其他组件 |
+| **调整首页大封面预设(壁纸/纯色/渐变)** | `src/components/home/HeroCover.tsx` | 首页其他模块 |
+| **管理后台控制面板与鉴权** | `src/components/admin/AdminDashboard.tsx`, `src/components/auth/LoginForm.tsx` | 静态内容页面 |
+| **留言板与友链留言处理** | `src/components/guestbook/MessageBoard.tsx` | 其他页面 |
+| **关于我 (产品思维、5W1H、经历)** | `src/pages/about.astro` | 博客与特效文件 |
 | **修改全局主题色/调色盘/动效** | `tailwind.config.mjs`, `src/styles/global.css` | 任何组件文件 |
 | **调整首页 Bento Grid 布局** | `src/components/portfolio/BentoGrid.tsx` | 博客与文章文件 |
-| **调整导航栏链接或悬浮底栏** | `src/components/ui/FloatingDock.tsx` | 布局与内容文件 |
-| **修改光影跟随卡片 (Spotlight)** | `src/components/ui/SpotlightCard.tsx` | 其他任何文件 |
-| **修改人机协作比例/徽章展示** | `src/components/portfolio/CoCreationBadge.tsx` | 内容与页面文件 |
-| **修改 Claude 风格思考折叠框** | `src/components/portfolio/ThinkingAccordion.tsx`| 其他组件 |
+| **调整底部浮动导航 Dock 栏** | `src/components/ui/FloatingDock.tsx` | 布局与内容文件 |
 
 ---
 
@@ -50,7 +56,8 @@ tags:
 ---
 
 # 这里书写项目的正文复盘
-- 背景与痛点
+- 背景与业务诉求 (5W1H)
+- 假设与事实分层决策
 - 关键 Prompt 与人机协作细节
 - 架构演进与思考
 ```
@@ -77,11 +84,23 @@ author: "Larry"
 
 ---
 
-### 任务 C：如何新增或调整可交互 UI 组件
+### 任务 C：如何新增或调整导航链接 (Add Links)
+👉 **操作范围**：直接编辑 `src/data/links.json`，在对应分类数组中追加：
+```json
+{
+  "name": "站点名称",
+  "link": "https://example.com",
+  "avatar": "https://example.com/avatar.png",
+  "descr": "站点简述"
+}
+```
+
+---
+
+### 任务 D：如何新增独立特效
 👉 **操作范围**：
-1. 通用原子 UI 组件放在 `src/components/ui/`
-2. 作品集相关组件放在 `src/components/portfolio/`
-3. 必须包含 TypeScript Props 接口定义，遵循无状态或内部受控原则，保持单一职责。
+1. 将纯静态 HTML/CSS/JS 放入 `public/effects/<name>/index.html`。
+2. 在 `src/data/effects.json` 中追加该特效的元数据（标题、描述、路径、标签）。
 
 ---
 
@@ -98,18 +117,4 @@ author: "Larry"
   - 标题与大字号：`font-serif`（Newsreader 人文衬线体）
   - 正文与界面：`font-sans`（苹果极简无衬线体）
   - 代码与元数据：`font-mono`（JetBrains Mono 等宽字体）
-
----
-
-## ⚡ 4. 构建与测试命令
-
-```bash
-# 启动本地实时热重载开发服务器
-npm run dev
-
-# 编译纯静态 HTML 产物（用于 GitHub Pages 部署）
-npm run build
-
-# 本地预览编译后的静态站点
-npm run preview
-```
+- **图片防破损机制**：所有图片渲染优先使用 `src/components/ui/ImageWithFallback.tsx`，当图片加载失败或 URL 空缺时自动平滑回退到高清抽象光影封面。

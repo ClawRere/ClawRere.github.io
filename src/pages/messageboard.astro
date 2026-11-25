@@ -1,0 +1,10 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { MessageBoard } from '@/components/guestbook/MessageBoard';
+---
+
+<Layout title="温暖留言板与友链 | 磊大大 Larry">
+  <div class="py-6">
+    <MessageBoard client:load />
+  </div>
+</Layout>

@@ -1,0 +1,44 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Flame, ArrowLeft, Maximize2, Sparkles } from 'lucide-react';
+---
+
+<Layout title="烟花模拟器 | 磊大大 Larry">
+  <div class="py-6 space-y-6 max-w-5xl mx-auto">
+    <!-- Top Nav -->
+    <div class="flex items-center justify-between">
+      <a
+        href="/entertain"
+        class="inline-flex items-center gap-1.5 text-xs font-mono text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors"
+      >
+        <ArrowLeft class="w-3.5 h-3.5" />
+        返回娱乐馆
+      </a>
+
+      <a
+        href="/effects/fireworks/index.html"
+        target="_blank"
+        rel="noreferrer"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass hover:border-terracotta/40 text-xs font-mono text-charcoal-DEFAULT dark:text-cream-100 transition-colors"
+      >
+        <Maximize2 class="w-3.5 h-3.5 text-terracotta" />
+        全屏独立窗口打开
+      </a>
+    </div>
+
+    <!-- Fireworks Canvas Container -->
+    <div class="rounded-3xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 shadow-2xl relative bg-black h-[75vh]">
+      <div class="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-amber-300 text-xs font-mono border border-white/10 pointer-events-none flex items-center gap-1.5">
+        <Sparkles class="w-3.5 h-3.5 animate-pulse" />
+        <span>提示：在黑色画布内任意点击，引燃绚丽烟花！</span>
+      </div>
+
+      <iframe
+        src="/effects/fireworks/index.html"
+        class="w-full h-full border-0"
+        title="烟花模拟器"
+        allowFullScreen
+      />
+    </div>
+  </div>
+</Layout>

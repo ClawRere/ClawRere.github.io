@@ -1,0 +1,89 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Newspaper, ArrowLeft, ExternalLink, Calendar, Maximize2 } from 'lucide-react';
+---
+
+<Layout title="每日一报 | 科技与行业资讯聚合 | 磊大大 Larry">
+  <div class="py-6 space-y-6 max-w-5xl mx-auto">
+    <div class="flex items-center justify-between">
+      <a
+        href="/tools"
+        class="inline-flex items-center gap-1.5 text-xs font-mono text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors"
+      >
+        <ArrowLeft class="w-3.5 h-3.5" />
+        返回工具箱
+      </a>
+
+      <div class="flex items-center gap-2 text-xs font-mono">
+        <span class="px-2.5 py-1 rounded-full bg-cream-200/60 dark:bg-obsidian-border text-charcoal-100 dark:text-cream-400">
+          每日早间 10:00 自动更新
+        </span>
+      </div>
+    </div>
+
+    <!-- Header Card -->
+    <div class="p-6 sm:p-8 rounded-3xl glass border border-charcoal-500/10 dark:border-white/10 relative overflow-hidden bg-gradient-to-br from-amber-50/30 via-cream-50/20 to-terracotta-50/30 dark:from-obsidian-card dark:to-obsidian">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1 font-semibold">
+            <Newspaper class="w-3.5 h-3.5" />
+            Daily News & Insights
+          </div>
+          <h1 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-DEFAULT dark:text-cream-50">
+            每日一报 · 科技与行业速递
+          </h1>
+          <p class="text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 mt-1 font-serif">
+            保持信息敏锐度，精选 HackerNews 每日头条、行业资讯与前沿热榜。
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a
+            href="https://suzhi.fun/"
+            target="_blank"
+            rel="noreferrer"
+            class="px-3 py-1.5 rounded-full glass hover:border-terracotta/40 text-xs font-mono text-charcoal-DEFAULT dark:text-cream-100 transition-colors flex items-center gap-1"
+          >
+            <span>速知热榜</span>
+            <ExternalLink class="w-3 h-3" />
+          </a>
+          <a
+            href="https://www.supertechfans.com/cn"
+            target="_blank"
+            rel="noreferrer"
+            class="px-3 py-1.5 rounded-full glass hover:border-terracotta/40 text-xs font-mono text-charcoal-DEFAULT dark:text-cream-100 transition-colors flex items-center gap-1"
+          >
+            <span>科技新闻</span>
+            <ExternalLink class="w-3 h-3" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Iframe Container for HackerNews & Daily News -->
+    <div class="rounded-3xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 shadow-2xl h-[75vh] flex flex-col bg-white dark:bg-black">
+      <div class="px-5 py-3 border-b border-charcoal-500/10 dark:border-white/10 flex items-center justify-between bg-cream-100/80 dark:bg-obsidian-card text-xs font-mono">
+        <span class="font-bold flex items-center gap-1.5 text-charcoal-DEFAULT dark:text-cream-50">
+          <Calendar class="w-3.5 h-3.5 text-terracotta" />
+          科技头条 (SuperTechFans HackerNews)
+        </span>
+        <a
+          href="https://www.supertechfans.com/cn"
+          target="_blank"
+          rel="noreferrer"
+          class="text-terracotta hover:underline flex items-center gap-1"
+        >
+          <span>独立窗口打开</span>
+          <Maximize2 class="w-3.5 h-3.5" />
+        </a>
+      </div>
+
+      <iframe
+        id="newsFrame"
+        src="https://www.supertechfans.com/cn"
+        class="w-full flex-1 border-0"
+        title="每日一报"
+      />
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,109 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Sparkles, ArrowLeft, ExternalLink, Cpu, Terminal, Layers } from 'lucide-react';
+
+const recommendedTools = [
+  {
+    name: 'Cursor',
+    category: 'AI 辅助编程',
+    desc: '基于 VS Code 深度定制的 AI 代码编辑器，支持 Composer 跨文件多轮迭代与自然语言一键开发。',
+    link: 'https://www.cursor.com/',
+    tag: '必备生产力',
+  },
+  {
+    name: 'Claude 3.5 Sonnet',
+    category: '大语言模型',
+    desc: '在代码架构推演、逻辑推理与高质量文档生成方面具备顶尖水准的模型，人机共创主力伙伴。',
+    link: 'https://claude.ai/',
+    tag: '主力模型',
+  },
+  {
+    name: 'Faster-Whisper',
+    category: '本地语音 AI',
+    desc: '基于 CTranslate2 优化的 OpenAI Whisper 模型，推理速度提升 4 倍且大幅降低显存占用。',
+    link: 'https://github.com/SYSTRAN/faster-whisper',
+    tag: '语音转写',
+  },
+  {
+    name: 'Obsidian',
+    category: '第二大脑知识库',
+    desc: '本地优先的双链 Markdown 笔记应用，通过丰富插件生态可无缝打造个人 AI 知识库。',
+    link: 'https://obsidian.md/',
+    tag: '知识管理',
+  },
+  {
+    name: 'SimpleDesktops',
+    category: '极简壁纸灵感',
+    desc: '纯粹、克制、极简主义桌面壁纸站，本站多张封面图片与设计灵感来源。',
+    link: 'https://simpledesktops.com/',
+    tag: '视觉灵感',
+  },
+  {
+    name: 'Figma',
+    category: '产品与原型设计',
+    desc: '协同式界面与交互原型设计平台，支持快速梳理信息架构与交付高保真组件规范。',
+    link: 'https://www.figma.com/',
+    tag: '产品设计',
+  },
+];
+---
+
+<Layout title="AI 工具与生产力推荐 | 磊大大 Larry">
+  <div class="py-6 space-y-8 max-w-4xl mx-auto">
+    <a
+      href="/tools"
+      class="inline-flex items-center gap-1.5 text-xs font-mono text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors"
+    >
+      <ArrowLeft class="w-3.5 h-3.5" />
+      返回工具箱
+    </a>
+
+    <div>
+      <div class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta mb-2 font-semibold">
+        <Sparkles class="w-3.5 h-3.5" />
+        Curated Toolstack
+      </div>
+      <h1 class="font-serif text-3xl sm:text-4xl font-bold text-charcoal-DEFAULT dark:text-cream-50">
+        AI 工具与生产力推荐
+      </h1>
+      <p class="mt-2 text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 leading-relaxed font-serif">
+        经过真实工程实践与产品交付验证的优质工具栈。
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {recommendedTools.map((tool) => (
+        <a
+          href={tool.link}
+          target="_blank"
+          rel="noreferrer"
+          class="group p-6 rounded-3xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 dark:hover:border-terracotta/40 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded-full bg-cream-200/80 dark:bg-obsidian-border text-[11px] font-mono text-charcoal-200 dark:text-cream-300">
+                {tool.category}
+              </span>
+              <span class="text-xs font-mono text-terracotta font-medium">
+                {tool.tag}
+              </span>
+            </div>
+
+            <h3 class="font-serif text-xl font-bold text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors">
+              {tool.name}
+            </h3>
+
+            <p class="mt-2 text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 leading-relaxed">
+              {tool.desc}
+            </p>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-charcoal-500/10 dark:border-white/10 flex items-center justify-between text-xs font-mono text-terracotta">
+            <span>前往官方站点</span>
+            <ExternalLink class="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>

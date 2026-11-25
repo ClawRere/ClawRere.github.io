@@ -1,0 +1,728 @@
+[
+  {
+    "name": "<i class=",
+    "desc": "最可愛的朋友在這裏",
+    "links": [
+      {
+        "name": "磊大大",
+        "link": "/",
+        "avatar": "/img/profile/头像.jpg",
+        "descr": "欢迎来玩~"
+      },
+      {
+        "name": "Hexo",
+        "link": "https://hexo.io/zh-tw/",
+        "avatar": "https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg",
+        "descr": "快速、簡單且強大的網誌框架"
+      },
+      {
+        "name": "Butterfly-github",
+        "link": "https://github.com/jerryc127/hexo-theme-butterfly",
+        "avatar": "/img/avatar.png",
+        "descr": "🦋 A Hexo Theme: Butterfly--github源码"
+      },
+      {
+        "name": "Butterfly",
+        "link": "https://butterfly.js.org/",
+        "avatar": "/img/avatar.png",
+        "descr": "🦋 A Hexo Theme: Butterfly"
+      },
+      {
+        "name": "安知鱼",
+        "link": "https://blog.anheyu.com/",
+        "avatar": "https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg",
+        "descr": "生活明朗，万物可爱"
+      },
+      {
+        "name": "张洪Heo",
+        "link": "https://blog.zhheo.com/",
+        "avatar": "https://bu.dusays.com/2022/12/28/63ac2812183aa.png",
+        "descr": "分享设计与科技生活"
+      },
+      {
+        "name": "Akilarの糖果屋",
+        "link": "https://akilar.top/",
+        "avatar": "https://img02.anheyu.com/adminuploads/1/2022/09/02/6311fc9de6507.webp",
+        "descr": "期待您的光临！"
+      },
+      {
+        "name": "小N同学",
+        "link": "https://www.imcharon.com/",
+        "avatar": "https://public.cdn.nesxc.com/avatar.jpg",
+        "descr": "青石落晚巷 故人未还乡"
+      }
+    ]
+  },
+  {
+    "name": "壁纸网站",
+    "desc": "看看风景~",
+    "links": [
+      {
+        "name": "simperdesk",
+        "link": "https://simpledesktops.com/",
+        "avatar": "https://static.simpledesktops.com/static/favicon.ico",
+        "descr": "简洁可爱，极简主义推荐！"
+      },
+      {
+        "name": "WallpapersCraft",
+        "link": "https://wallpaperscraft.com/",
+        "avatar": "https://wallpaperscraft.com/public/img/general/favicon.ico?v=3c8163e3d",
+        "descr": "风格很多，选择很多。"
+      },
+      {
+        "name": "colorr4bg",
+        "link": "https://www.color4bg.com/zh-hans/",
+        "avatar": "https://www.color4bg.com/static/images/favicon.ico",
+        "descr": "免费的抽象艺术风彩色背景,好看的多色背景生成器，你可以自己定制颜色、并且录制视频或导出图片."
+      }
+    ]
+  },
+  {
+    "name": "图标网站",
+    "desc": "好看的图标~",
+    "links": [
+      {
+        "name": "fontawesome",
+        "link": "https://fontawesome.com/",
+        "avatar": "https://fontawesome.com/favicon.ico",
+        "descr": "本网站主要使用的图标网站"
+      },
+      {
+        "name": "阿里矢量图库",
+        "link": "https://www.iconfont.cn/",
+        "avatar": "https://img.alicdn.com/imgextra/i4/O1CN01Z5paLz1O0zuCC7osS_!!6000000001644-55-tps-83-82.svg",
+        "descr": "阿里系图标，免费好用！"
+      },
+      {
+        "name": "IconPark",
+        "link": "https://iconpark.oceanengine.com/home",
+        "avatar": "/img/friend_404.gif",
+        "descr": "IconPark图标库是一个通过技术驱动矢量图标样式的开源图标库，可以实现根据单一SVG源文件变换出多种主题"
+      },
+      {
+        "name": "icons8",
+        "link": "https://icons8.com/icons/color",
+        "avatar": "https://maxst.icons8.com/vue-static/icon/menu/logo.svg",
+        "descr": "扁平色彩的风格，简单的形状和充满活力的调色板。"
+      },
+      {
+        "name": "Remix Icon",
+        "link": "https://remixicon.cn/",
+        "avatar": "https://remixicon.cn/img/logo/light/text.svg",
+        "descr": "为设计师和开发人员精心制作的开源中性风格系统符号。"
+      },
+      {
+        "name": "freepik",
+        "link": "https://www.freepik.com/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "这个网站里面图标精美，可以点击左侧菜单切换不同类型的图标"
+      },
+      {
+        "name": "undraw",
+        "link": "https://undraw.co/illustrations",
+        "avatar": "/img/friend_404.gif",
+        "descr": "这个网站里面主要是一些精美的插画，图片可以更换喜欢的颜色主题然后再下载"
+      }
+    ]
+  },
+  {
+    "name": "AI网站",
+    "desc": "AI合集",
+    "links": [
+      {
+        "name": "ChatGPT（免梯）",
+        "link": "http://gpt4.xn--fiqq6k90ovivepbxtg0bz10m.xyz/",
+        "avatar": "https://t10.baidu.com/it/u=3001416051,198333688&fm=30&app=106&f=JPEG?w=640&h=640&s=A6938D6264C55AF6101FC252020010FD",
+        "descr": "网站需使用个人账号登录，提供一个免梯环境。"
+      },
+      {
+        "name": "国内公益chatgpt",
+        "link": "https://sharedchat.fun/",
+        "avatar": "https://t10.baidu.com/it/u=3001416051,198333688&fm=30&app=106&f=JPEG?w=640&h=640&s=A6938D6264C55AF6101FC252020010FD",
+        "descr": "网站包含gpt4，放心使用。"
+      },
+      {
+        "name": "国内公益chatgpt",
+        "link": "https://chatgptplus.cn/",
+        "avatar": "https://t10.baidu.com/it/u=3001416051,198333688&fm=30&app=106&f=JPEG?w=640&h=640&s=A6938D6264C55AF6101FC252020010FD",
+        "descr": "测试正常可用。"
+      },
+      {
+        "name": "ai汇总",
+        "link": "https://www.aihub.cn/",
+        "avatar": "https://www.aihub.cn/wp-content/uploads/2023/08/aihub_cn_logo.png",
+        "descr": "优质AI工具汇总"
+      },
+      {
+        "name": "千图设计室",
+        "link": "https://hisheai.com/",
+        "avatar": "https://pic.hisheai.com/static/images/public/favicon.ico",
+        "descr": "图片处理工具"
+      },
+      {
+        "name": "音虫",
+        "link": "https://www.soundbug.com/",
+        "avatar": "https://www.soundbug.com/favicon.ico",
+        "descr": "音虫（SoundBug）是一款用于音乐编曲和录音的软件"
+      }
+    ]
+  },
+  {
+    "name": "文本AI网站",
+    "desc": "文本AI",
+    "links": [
+      {
+        "name": "文心一言",
+        "link": "https://yiyan.baidu.com/",
+        "avatar": "https://nlp-eb.cdn.bcebos.com/static/eb/asset/logo.8a6b508d.png",
+        "descr": "百度推出的对话式AI工具，中文理解和生成能力强大。"
+      },
+      {
+        "name": "讯飞星火",
+        "link": "https://xinghuo.xfyun.cn/",
+        "avatar": "https://xinghuo.xfyun.cn/spark-icon.ico",
+        "descr": "科大讯飞的智能对话助手，主打语音识别与智能对话。"
+      },
+      {
+        "name": "百度Chat",
+        "link": "https://chat.baidu.com/",
+        "avatar": "https://psstatic.cdn.bcebos.com/basics/chat/aiassistants_1722495738000.png",
+        "descr": "百度旗下的通用对话AI，适用于各种聊天场景。"
+      },
+      {
+        "name": "清华智谱清言",
+        "link": "https://chatglm.cn/",
+        "avatar": "https://chatglm.cn/img/icons/favicon-32x32.png",
+        "descr": "清华大学出品的高水平对话AI，研究性较强。"
+      },
+      {
+        "name": "豆包",
+        "link": "https://www.doubao.com/",
+        "avatar": "https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/web/static/image/logo-icon-white-bg.f3acc228.png",
+        "descr": "轻量级对话AI工具，搭配coze使用体验更好。"
+      },
+      {
+        "name": "通义千问",
+        "link": "https://tongyi.aliyun.com/",
+        "avatar": "https://img.alicdn.com/imgextra/i3/O1CN01O4Zouy1qaXx8mPVnp_!!6000000005512-2-tps-134-133.png",
+        "descr": "阿里巴巴推出的AI助手，适合企业级应用场景。"
+      },
+      {
+        "name": "Kimi-月之暗面",
+        "link": "https://kimi.moonshot.cn/",
+        "avatar": "https://statics.moonshot.cn/kimi-chat/favicon.ico",
+        "descr": "KIMI AI 来自月之暗面的超火AI"
+      }
+    ]
+  },
+  {
+    "name": "图像AI网站",
+    "desc": "图像AI",
+    "links": [
+      {
+        "name": "无限画",
+        "link": "https://ibaotu.com/?m=AigcTi",
+        "avatar": "https://s.ibaotu.com/next/img/new/logo.da18.png",
+        "descr": "专注于高质量图像生成的AI工具，适用于艺术创作。"
+      },
+      {
+        "name": "美图设计室",
+        "link": "https://www.designkit.com/",
+        "avatar": "https://public.static.meitudata.com/xiuxiu-pc/xdesign-widgets/images/logo/logo-light.png",
+        "descr": "美图公司推出的设计工具，集成了多种AI图像处理功能。"
+      },
+      {
+        "name": "文心一格",
+        "link": "https://yige.baidu.com/",
+        "avatar": "https://yige.baidu.com/favicon.png",
+        "descr": "百度推出的AI绘图工具，适合生成多样化的图像内容。"
+      },
+      {
+        "name": "阿里通义万相",
+        "link": "https://tongyi.aliyun.com/wanxiang/",
+        "avatar": "https://img.alicdn.com/imgextra/i4/O1CN01tKHYG31nxV2ZRMlB9_!!6000000005156-55-tps-261-62.svg",
+        "descr": "阿里云的AI图像生成平台，适合商业化场景使用。"
+      },
+      {
+        "name": "无界AI",
+        "link": "https://www.wujieai.com/",
+        "avatar": "https://cdn.wujiebantu.com/upload/8A9FBA86DE2EA52AC1A24BDC692FF171/1712129887561/FmNieqg-bOfiZ97cu2ZtoAmJdbp7.png",
+        "descr": "多功能AI平台，支持图像生成、处理及多种其他应用。"
+      },
+      {
+        "name": "通义万象",
+        "link": "https://tongyi.aliyun.com/wanxiang/",
+        "avatar": "https://img.alicdn.com/imgextra/i3/O1CN01O4Zouy1qaXx8mPVnp_!!6000000005512-2-tps-134-133.png",
+        "descr": "阿里推出的一款大模型AI绘画，每日免费使用50次。"
+      },
+      {
+        "name": "吐司ai",
+        "link": "https://tusiart.com/",
+        "avatar": "https://images.tusiassets.com/system/5c80acde65a0b0a52bacdc181811fd62.png!mfit_w240_h240_jpg_avif",
+        "descr": "在线文生图  https://www.aihub.cn/tools/music/soundbug/"
+      },
+      {
+        "name": "BigJpg AI",
+        "link": "https://bigjpg.ai/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "BigJpg AI是一个基于人工智能的图片放大工具。"
+      },
+      {
+        "name": "鲜艺AI抠图",
+        "link": "https://kt.94xy.com/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "鲜艺AI抠图是一个免费且无需联网的AI抠图工具。"
+      }
+    ]
+  },
+  {
+    "name": "视频AI网站",
+    "desc": "视频剪辑AI",
+    "links": [
+      {
+        "name": "腾讯智影",
+        "link": "https://zenvideo.qq.com/",
+        "avatar": "https://zenvideo.gtimg.com/grail/dist/favicon.ico",
+        "descr": "腾讯推出的AI视频剪辑工具，操作简便，功能丰富。"
+      },
+      {
+        "name": "一帧秒创",
+        "link": "https://aigc.yizhentv.com/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "AI驱动的高效视频制作工具，适合短视频内容创作。"
+      },
+      {
+        "name": "绘影字幕",
+        "link": "https://huiyingzimu.com/",
+        "avatar": "https://huiyingzimu.com/img/HY_header_logo.19ea9684.png",
+        "descr": "专注于视频自动加字幕的工具，省时省力。"
+      },
+      {
+        "name": "来画",
+        "link": "https://www.laihua.com/",
+        "avatar": "https://www.laihua.com//favicon.ico",
+        "descr": "便捷的AI视频创作工具，适合各种风格的视频制作。"
+      },
+      {
+        "name": "万彩微影",
+        "link": "https://www.animiz.cn/microvideo/",
+        "avatar": "https://www.animiz.cn/microvideo.ico",
+        "descr": "简单易用的微视频制作平台，支持丰富的动画效果。"
+      },
+      {
+        "name": "可灵-快手",
+        "link": "https://klingai.kuaishou.com/",
+        "avatar": "https://ali2.a.kwimgs.com/kos/nlav10378/aiwp/favicon.ico",
+        "descr": "国内最好用的AI视频创作工具，Sora的国内平替"
+      }
+    ]
+  },
+  {
+    "name": "PPT-AI网站",
+    "desc": "AI做PPT",
+    "links": [
+      {
+        "name": "博思AI白板",
+        "link": "https://boardmix.cn/",
+        "avatar": "https://cms.boardmix.cn/images/board.ico",
+        "descr": "提供智能化PPT制作的AI工具，自动化生成演示文稿。"
+      },
+      {
+        "name": "必优ChatPPT",
+        "link": "https://www.chatppt.com/",
+        "avatar": "https://www.chatppt.com/img/favicon.png",
+        "descr": "高效的AI辅助PPT制作工具，简化繁琐的PPT设计流程。"
+      },
+      {
+        "name": "chatPPT",
+        "link": "https://www.chat-ppt.com",
+        "avatar": "https://www.chat-ppt.com/static/img/logo_icon.76b4d398.svg",
+        "descr": "直接输入PPT主题即可快速一键生成文档"
+      }
+    ]
+  },
+  {
+    "name": "工具网站",
+    "desc": "工具合集",
+    "links": [
+      {
+        "name": "pdf转换",
+        "link": "https://www.cleverpdf.com/cn",
+        "avatar": "https://www.cleverpdf.com/statics/images/index_logo.svg",
+        "descr": "几十个强大的PDF在线工具，无需注册会员，永久免费！"
+      },
+      {
+        "name": "ALL to ALL",
+        "link": "https://www.alltoall.net/",
+        "avatar": "https://www.alltoall.net/qfy-content/uploads/2022/07/b42759ab5cf74aa8f1ce08d1317b6940-80.webp",
+        "descr": "ALL TO ALL是一个免费的万能格式转换器。"
+      },
+      {
+        "name": "PDF24 Tools",
+        "link": "https://tools.pdf24.org/zh/",
+        "avatar": "https://tools.pdf24.org/static/img/pdf24.png",
+        "descr": "PDF24 Tools 是一个免费的在线PDF编辑处理工具。"
+      },
+      {
+        "name": "速写简历",
+        "link": "https://www.jianlisx.com/",
+        "avatar": "https://www.jianlisx.com/img/logo.png",
+        "descr": "速写简历是一个提供简历模板和封面、求职技巧、招聘信息等资源的免费网站。"
+      },
+      {
+        "name": "知乎直答",
+        "link": "https://zhida.zhihu.com/",
+        "avatar": "https://pica.zhimg.com/v2-79e835d86b026c7c499de99d49906814.png",
+        "descr": "知乎官方推出的查找问题与答案工具"
+      },
+      {
+        "name": "Cat Meme Template Video",
+        "link": "https://www.memesstyle.com/region/en",
+        "avatar": "https://pica.zhimg.com/v2-79e835d86b026c7c499de99d49906814.png",
+        "descr": "猫meme素材也能一键下载"
+      },
+      {
+        "name": "Tools-Web",
+        "link": "https://tools.ranblogs.com/",
+        "avatar": "https://www.memesstyle.com/mylogo.png",
+        "descr": "开发运维、文本处理、教育学术、图片处理、数据图表、选择随机等类型的工具"
+      },
+      {
+        "name": "改图宝",
+        "link": "https://www.gaitubao.com/",
+        "avatar": "https://gtb-static.nasack.net/img/logo.svg",
+        "descr": "在线修改图片工具，大部分工具是可以免费使用的。"
+      },
+      {
+        "name": "ILovePDF3",
+        "link": "https://ilovepdf3.com/",
+        "avatar": "https://ilovepdf3.com/wp-content/uploads/2024/05/WhatsApp-Image-2024-05-18-at-5.46.02-PM.jpeg",
+        "descr": "免费在线PDF、图像和文件转换器。"
+      },
+      {
+        "name": "跟哈工具",
+        "link": "https://www.genha.com/",
+        "avatar": "https://www.genha.com/assets/img/logo.png",
+        "descr": "在线翻译转换器、图片压缩工具、摸鱼提醒通知、成语大全、世界港口大全、地砖计算器、Word&Excel&PPT快捷键大全、随机密码生成器等常用的工具"
+      },
+      {
+        "name": "效率工具指南",
+        "link": "https://penghh.fun/",
+        "avatar": "https://penghh.fun/img/blogicon.png",
+        "descr": "软件测评、个人电子产品使用心得和效率工具使用指南等"
+      },
+      {
+        "name": "短链生成",
+        "link": "https://tool.chinaz.com/Tools/dwz.aspx https://github.com/OpenGithubs/github-daily-rank?tab=readme-ov-file",
+        "avatar": "https://csstools.chinaz.com/tools/images/public/logos/logo-index.png",
+        "descr": "生成QQ微信可用的短网址便于分享"
+      },
+      {
+        "name": "视频转gif",
+        "link": "https://dongci.kawo.com/",
+        "avatar": "https://dongci.kawo.com/app/images/39XUnMH.png",
+        "descr": "视频直转gif"
+      },
+      {
+        "name": "jscool",
+        "link": "https://jscool.cn/",
+        "avatar": "https://jscool.cn/favicon.ico",
+        "descr": "jscool，是一个专注于分享一些超酷的前端资源的网站。"
+      },
+      {
+        "name": "美国身份生成",
+        "link": "https://www.ssnzk.com/",
+        "avatar": "",
+        "descr": "在线信息生成，包含美国，英国，日本，澳大利亚等全世界各个国家的个人、街道地址生成，美国SSN生成以及其他个人生成。"
+      },
+      {
+        "name": "Indie Hacker Tools",
+        "link": "https://indiehackertools.net/",
+        "avatar": "https://indiehackertools.net/_next/image?url=%2Fheader-logo.png&w=48&q=75",
+        "descr": "Indie Hacker Tools是一个独立开发者出海工具箱。类型涵盖灵感、推广、变现支付、精选模板、Logo制作、内容存储、AI开发资源、域名、部署托管、SEO、自媒体资讯、效率等。"
+      },
+      {
+        "name": "memocard",
+        "link": "https://memocard.net/",
+        "avatar": "https://memocard.net/favicon.ico",
+        "descr": "Memo Card是一个免费的文字卡片网站。"
+      },
+      {
+        "name": "深言达意",
+        "link": "https://www.shenyandayi.com/",
+        "avatar": "深言达意是一个支持找词找句，还自带素材库的在线工具。支持据意查词，输入你想表达的意思，它会帮你找到更丰富更恰当的表达方式。",
+        "descr": ""
+      },
+      {
+        "name": "代码美化工具",
+        "link": "https://codebeautify.org/",
+        "avatar": "https://codebeautify.org/img/nlogo.webp",
+        "descr": "代码美化在线工具箱，即用即走"
+      },
+      {
+        "name": "uuid生成",
+        "link": "https://1024tools.com/uuid",
+        "avatar": "/img/friend_404.gif",
+        "descr": "随机生成uuid"
+      },
+      {
+        "name": "patorjk",
+        "link": "https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20",
+        "avatar": "/img/friend_404.gif",
+        "descr": "生成Ascll字符图"
+      },
+      {
+        "name": "切九图",
+        "link": "https://v.magiconch.com/sns-image",
+        "avatar": "/img/friend_404.gif",
+        "descr": "切九图是一个免费的将图片切割成九宫格或者四宫格的在线工具。"
+      },
+      {
+        "name": "违禁词检测",
+        "link": "https://www.newrank.cn/creator/forbiddenWords",
+        "avatar": "https://chs.newrank.cn/logo/logo-newrank.svg",
+        "descr": "一键检测公众号、小红书、抖音违禁词"
+      },
+      {
+        "name": "表情包制作",
+        "link": "https://www.doutub.com/",
+        "avatar": "https://www.doutub.com/images/logo.png",
+        "descr": "在线制作表情包、GIF动图"
+      },
+      {
+        "name": "TTSMAKER",
+        "link": "https://ttsmaker.cn/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "TTSMAKER是一个免费的文字转语音在线工具。"
+      },
+      {
+        "name": "临时邮箱1",
+        "link": "https://temp.now/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "临时匿名邮箱"
+      },
+      {
+        "name": "临时邮箱2",
+        "link": "https://smail.pw/zh-CN",
+        "avatar": "/img/friend_404.gif",
+        "descr": "临时匿名邮箱"
+      },
+      {
+        "name": "文字对比工具",
+        "link": "https://www.littlediffer.com/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "一个完全免费的工具，无需登录注册即可使用，功能就是对比两段文字、代码的不同，输入后能够清晰的展示出来。"
+      },
+      {
+        "name": "查看财报",
+        "link": "https://discountingcashflows.com/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "商务人士必备，不知道投身股市的摸友会不会分析分析上市公司财报？这个网站可以很方便的查看各大上市公司的财报等数据，而且无需登录即可免费使用。"
+      },
+      {
+        "name": "火车票编辑器",
+        "link": "https://fog.vicc.wang/ticket.html",
+        "avatar": "/img/friend_404.gif",
+        "descr": "自行制作火车票，红色普票、蓝色高铁票1都可以"
+      },
+      {
+        "name": "英文字体转换器",
+        "link": "http://www.akuziti.com/yw/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "英文字体转换器是一个免费将文字转成各种好看的英文艺术字体的在线工具。"
+      }
+    ]
+  },
+  {
+    "name": "素材网站",
+    "desc": "素材网站合集",
+    "links": [
+      {
+        "name": "404 Illustrations（需要魔法）",
+        "link": "https://error404.fun/",
+        "avatar": "https://error404.fun/img/apple-icon-180x180.png",
+        "descr": "免费提供404错误页面素材的网站"
+      },
+      {
+        "name": "CocoMaterial",
+        "link": "https://cocomaterial.com/",
+        "avatar": "https://cocomaterial.com/img/logo.5db4d01a.svg",
+        "descr": "免费开源的手绘插画素材库。CC0协议，意味着下载的这些素材不仅可以用于个人用途，也可以用于商业用途，而且不需要注明出处。"
+      },
+      {
+        "name": "Dareful",
+        "link": "https://dareful.com/",
+        "avatar": "https://dareful.com/wp-content/themes/dareful-v1.0/assets/images/dareful-logo.svg",
+        "descr": "免费的高清视频素材下载网站"
+      },
+      {
+        "name": "灰大设计导航",
+        "link": "https://www.huisezhizhao.com/",
+        "avatar": "https://www.huisezhizhao.com/nav/images/nav.ico",
+        "descr": "专门收录设计工具、素材、插件等资源的导航网站"
+      },
+      {
+        "name": "头像生成器",
+        "link": "http://www.atoolbox.net/Topic.php?Id=4",
+        "avatar": "http://www.atoolbox.net/favicon.ico",
+        "descr": "一个工具箱，提供了很多头像生成器。"
+      },
+      {
+        "name": "食用手册",
+        "link": "https://cook.yunyoujun.cn/",
+        "avatar": "https://cook.yunyoujun.cn/favicon.svg",
+        "descr": "食用手册是一个免费开源的菜谱组合工具，由网友@云游君开发。可以帮助用户根据现有食材寻找到合适的菜谱。"
+      },
+      {
+        "name": "有趣的html5代码",
+        "link": "https://www.html5tricks.com/",
+        "avatar": "https://www.html5tricks.com/wp-content/uploads/2014/06/html5tricks-logo.jpg",
+        "descr": "各种有趣的html5代码样例"
+      },
+      {
+        "name": "VELeap",
+        "link": "https://veleap.com/console/works/material/font",
+        "avatar": "https://static.atvideo.cc/2021/08/23/17/19/favicon.ico",
+        "descr": "VELeap是一个专为设计师提供原创AE插件、脚本等工具资源的平台。"
+      },
+      {
+        "name": "AirPano",
+        "link": "https://www.airpano.com/",
+        "avatar": "https://www.airpano.ru/images/fb/1.jpg",
+        "descr": "AirPano是一个让你足不出户也能环游世界的网站。目前这里有3980个全景图和101个全景视频。"
+      }
+    ]
+  },
+  {
+    "name": "前端工具",
+    "desc": "前端工具合集",
+    "links": [
+      {
+        "name": "pug to html",
+        "link": "https://codebeautify.org/pug-to-html-converter",
+        "avatar": "https://codebeautify.org/img/nlogo.webp",
+        "descr": "将pug转化为html的在线工具"
+      },
+      {
+        "name": "scss to css",
+        "link": "http://scss.jsrun.net/",
+        "avatar": "http://cdn.jsrun.top/favicon.png",
+        "descr": "将scss转化为css的在线工具"
+      },
+      {
+        "name": "字库星球导航网站",
+        "link": "https://hao.mfonts.cn/",
+        "avatar": "https://hao.mfonts.cn/storage/upload/20240811/66b8bc911584d.ico",
+        "descr": "字库星球导航官网是一个提供国内专业设计师网站导航的平台。"
+      },
+      {
+        "name": "Branding Colors",
+        "link": "https://brandingcolors.net/",
+        "avatar": "https://brandingcolors.net/assets/images/og.png",
+        "descr": "Branding Colors是一个手工精挑细选的品牌配色方案网站。"
+      },
+      {
+        "name": "UILibHub",
+        "link": "https://uilibhub.com/zh",
+        "avatar": "https://uilibhub.com/favicon.png",
+        "descr": "UILibHub是一个专注收集和分享React、Vue和小程序组件库的平台。"
+      },
+      {
+        "name": "CodePen",
+        "link": "https://codepen.io/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "在线代码编辑器。可以快速编写HTML、CSS和JavaScript,实时预览效果,并轻松与团队分享。"
+      },
+      {
+        "name": "Animista",
+        "link": "https://animista.net/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "动动手指就生成复杂的CSS动画"
+      },
+      {
+        "name": "InVision",
+        "link": "https://proto.io/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "创建交互式原型进行用户测试"
+      },
+      {
+        "name": "Iconify",
+        "link": "https://iconify.design/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "统一管理多个项目的图标，在也不用担心图标不够用的问题"
+      },
+      {
+        "name": "html转pug",
+        "link": "https://codebeautify.org/html-to-pug-converter",
+        "avatar": "https://codebeautify.org/img/nlogo.webp",
+        "descr": "将html转为pug"
+      }
+    ]
+  },
+  {
+    "name": "其他",
+    "desc": "备用分类",
+    "links": [
+      {
+        "name": "github每日Star飙升榜",
+        "link": "https://github.com/OpenGithubs/github-daily-rank?tab=readme-ov-file",
+        "avatar": "https://github.githubassets.com/favicons/favicon.png",
+        "descr": "github的Star飙升榜"
+      },
+      {
+        "name": "答案之书线上",
+        "link": "https://answersbook.iwhy.dev/zh/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "打开这个网站，闭上眼睛，内心想着那个困扰你很久了的问题，点击寻求答案，也许你会得到启发。"
+      }
+    ]
+  },
+  {
+    "name": "知识库",
+    "desc": "有用的知识库，链接万物",
+    "links": [
+      {
+        "name": "通往 AGI 之路",
+        "link": "https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "提供一个全面系统的 AI 学习路径，帮助您了解从 AI 常见名词到 AI 应用等各方面知识"
+      },
+      {
+        "name": "AGI 掘金知识库",
+        "link": "https://km3dl0ffdl.feishu.cn/wiki/UvJPwhfkiitMzhkhEfycUnS9nAm",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "一家专注于 AGI 相关研究和应用的创新型知识平台。"
+      },
+      {
+        "name": "奔赴 AGI",
+        "link": "https://aigcreative.feishu.cn/wiki/DQGiwCAwji9ZoAkwZ7Tcvqhvngf",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "奔赴 AGI 知识库是一个完全免费、开放、大家一起建设和分享的平台，专门收集和分享最新、最有创意的 AIGC 学习资源。"
+      },
+      {
+        "name": "LangGPT 结构化提示词",
+        "link": "https://langgptai.feishu.cn/wiki/RXdbwRyASiShtDky381ciwFEnpe",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "LangGPT 是一个帮助你编写高质量提示词的工具，理论基础是我们提出的一套模块化、标准化的提示词编写方法论——结构化提示词。"
+      },
+      {
+        "name": "AI 产品榜",
+        "link": "https://dnipkggqxh.feishu.cn/wiki/YTIUwM6Vmij4IQkSm9PctPWunIb",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "AI 产品榜单由李榜主主导，联合 30 多位 AI 领域公众号主理人发布，是“被众多权威媒体和专家引用最多的榜单”。"
+      },
+      {
+        "name": "博物馆",
+        "link": "https://hsiaohsihsi.feishu.cn/wiki/NRN7wKiJGioZtIkojr2cYNVknrd",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "博物馆馆藏合集"
+      },
+      {
+        "name": "LangGPT提示词",
+        "link": "https://langgptai.feishu.cn/wiki/RXdbwRyASiShtDky381ciwFEnpe",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "LangGPT 是一个帮助你编写高质量提示词的工具,为大众提供一套可操作、可复现的提示词方法论、工具和交流社群。"
+      }
+    ]
+  }
+]

@@ -1,10 +1,11 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import { HeroCover } from '@/components/home/HeroCover';
 import { BentoGrid } from '@/components/portfolio/BentoGrid';
 import { CoCreationBadge } from '@/components/portfolio/CoCreationBadge';
 import { getCollection } from 'astro:content';
 import { getPostCover } from '@/lib/covers';
-import { ArrowUpRight, BookOpen, Sparkles, Calendar, Wand2, Star } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Sparkles, Calendar, Wand2, Star, Gamepad2, Wrench, Link2, MessageSquare, Compass, ShieldCheck } from 'lucide-react';
 
 // Fetch projects and posts
 const allProjects = await getCollection('projects');
@@ -19,10 +20,98 @@ const latestPosts = allPosts
 ---
 
 <Layout title="磊大大 Larry | AI 产品经理与共创作品集">
-  <!-- 1. Apple x Claude Interactive Bento Grid Hero -->
+  <!-- 1. Hexo-style Switchable Hero Banner (Wallpapers / Gradients / Solid Colors) -->
+  <HeroCover client:load />
+
+  <!-- 2. Apple x Claude Interactive Bento Grid & Live Metrics -->
   <BentoGrid client:load />
 
-  <!-- 2. AI Co-Creation Showcases Section (Visual Cards) -->
+  <!-- 3. Hub Fast Entry (Entertain / Tools / Links / Guestbook) -->
+  <section class="my-14">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <a
+        href="/entertain"
+        class="group p-5 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-pink-500/40 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+      >
+        <div class="flex items-center justify-between">
+          <div class="w-10 h-10 rounded-xl bg-pink-500/10 text-pink-500 flex items-center justify-center font-bold">
+            <Gamepad2 class="w-5 h-5 group-hover:scale-110 transition-transform" />
+          </div>
+          <ArrowUpRight class="w-4 h-4 text-charcoal-100 dark:text-cream-400 group-hover:text-pink-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+        </div>
+        <div class="mt-4">
+          <h3 class="font-serif font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-pink-500 transition-colors">
+            娱乐与视效馆
+          </h3>
+          <p class="text-[11px] text-charcoal-100 dark:text-cream-400 mt-1">
+            烟花 · 雨声影院 · 音乐 · 游戏
+          </p>
+        </div>
+      </a>
+
+      <a
+        href="/tools"
+        class="group p-5 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-cyan-500/40 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+      >
+        <div class="flex items-center justify-between">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center font-bold">
+            <Wrench class="w-5 h-5 group-hover:scale-110 transition-transform" />
+          </div>
+          <ArrowUpRight class="w-4 h-4 text-charcoal-100 dark:text-cream-400 group-hover:text-cyan-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+        </div>
+        <div class="mt-4">
+          <h3 class="font-serif font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-cyan-500 transition-colors">
+            生产力工具箱
+          </h3>
+          <p class="text-[11px] text-charcoal-100 dark:text-cream-400 mt-1">
+            今日AI早报 · 工具测评与推荐
+          </p>
+        </div>
+      </a>
+
+      <a
+        href="/links"
+        class="group p-5 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-amber-500/40 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+      >
+        <div class="flex items-center justify-between">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold">
+            <Link2 class="w-5 h-5 group-hover:scale-110 transition-transform" />
+          </div>
+          <ArrowUpRight class="w-4 h-4 text-charcoal-100 dark:text-cream-400 group-hover:text-amber-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+        </div>
+        <div class="mt-4">
+          <h3 class="font-serif font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-amber-500 transition-colors">
+            108+ 灵感导航
+          </h3>
+          <p class="text-[11px] text-charcoal-100 dark:text-cream-400 mt-1">
+            卡片 / 列表 / 抽屉内嵌多视图
+          </p>
+        </div>
+      </a>
+
+      <a
+        href="/messageboard"
+        class="group p-5 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-purple-500/40 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+      >
+        <div class="flex items-center justify-between">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold">
+            <MessageSquare class="w-5 h-5 group-hover:scale-110 transition-transform" />
+          </div>
+          <ArrowUpRight class="w-4 h-4 text-charcoal-100 dark:text-cream-400 group-hover:text-purple-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+        </div>
+        <div class="mt-4">
+          <h3 class="font-serif font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-purple-500 transition-colors">
+            互动留言板
+          </h3>
+          <p class="text-[11px] text-charcoal-100 dark:text-cream-400 mt-1">
+            交流心智 · 交换友链与灵感
+          </p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 4. AI Co-Creation Showcases Section (Visual Cards) -->
   <section class="my-16">
     <div class="flex items-end justify-between mb-8 pb-4 border-b border-charcoal-500/10 dark:border-white/10">
       <div>
@@ -51,6 +140,7 @@ const latestPosts = allPosts
               src={project.data.cover}
               alt={project.data.title}
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              loading="lazy"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-70" />
 
@@ -92,7 +182,7 @@ const latestPosts = allPosts
     </div>
   </section>
 
-  <!-- 3. Recent Technical Blog Notes Section (With Visual Image Cards) -->
+  <!-- 5. Recent Technical Blog Notes Section (With Visual Image Cards) -->
   <section class="my-16">
     <div class="flex items-end justify-between mb-8 pb-4 border-b border-charcoal-500/10 dark:border-white/10">
       <div>

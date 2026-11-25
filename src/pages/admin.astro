@@ -1,0 +1,10 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { AdminDashboard } from '@/components/admin/AdminDashboard';
+---
+
+<Layout title="站长管理工作台 | 磊大大 Larry">
+  <div class="py-6">
+    <AdminDashboard client:load />
+  </div>
+</Layout>

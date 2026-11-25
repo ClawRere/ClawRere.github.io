@@ -2,6 +2,8 @@
 import { ClientRouter } from 'astro:transitions';
 import { FloatingDock } from '@/components/ui/FloatingDock';
 import { BackgroundCanvas } from '@/components/ui/BackgroundCanvas';
+import { FlyingButterfly } from '@/components/ui/FlyingButterfly';
+import { NetEaseMusicPlayer } from '@/components/ui/NetEaseMusicPlayer';
 import '@/styles/global.css';
 
 interface Props {
@@ -28,7 +30,7 @@ const currentPath = Astro.url.pathname;
     <meta name="description" content={description} />
     <ClientRouter />
   </head>
-  <body class="min-h-screen flex flex-col bg-cream-50 dark:bg-obsidian text-charcoal-DEFAULT dark:text-cream-100 transition-colors duration-300 relative">
+  <body class="min-h-screen flex flex-col bg-cream-50 dark:bg-obsidian text-charcoal-DEFAULT dark:text-cream-100 transition-colors duration-300 relative selection:bg-terracotta/20 selection:text-terracotta">
     <!-- Top delicate glow banner -->
     <div class="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-terracotta to-transparent opacity-60 z-50 pointer-events-none" />
 
@@ -42,9 +44,9 @@ const currentPath = Astro.url.pathname;
     </div>
 
     <!-- Header bar -->
-    <header class="max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
+    <header class="max-w-6xl w-full mx-auto px-4 sm:px-6 py-5 flex items-center justify-between relative z-30">
       <a href="/" class="flex items-center gap-3 group">
-        <span class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-terracotta to-amber-500 text-white flex items-center justify-center font-serif font-bold text-base shadow-glow-terracotta group-hover:scale-105 transition-transform">
+        <span class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-terracotta to-amber-500 text-white flex items-center justify-center font-serif font-bold text-base shadow-glow-terracotta group-hover:scale-105 transition-transform">
           L
         </span>
         <div class="flex flex-col">
@@ -57,33 +59,70 @@ const currentPath = Astro.url.pathname;
         </div>
       </a>
 
-      <div class="flex items-center gap-3 text-xs font-mono">
+      <!-- Quick Actions Header Menu -->
+      <div class="flex items-center gap-2 sm:gap-3 text-xs font-mono">
         <a
           href="/effects"
-          class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass hover:border-terracotta/40 text-charcoal-DEFAULT dark:text-cream-100 transition-colors"
+          class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass hover:border-terracotta/40 text-charcoal-DEFAULT dark:text-cream-100 transition-colors shadow-sm"
+          title="浏览 93+ 原生动效"
         >
           <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
-          <span>93+ 交互特效库</span>
+          <span>93+ 交互视效</span>
+        </a>
+
+        <a
+          href="/messageboard"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass hover:border-pink-500/40 text-charcoal-DEFAULT dark:text-cream-100 transition-colors shadow-sm"
+          title="留言板与友链申请"
+        >
+          <span class="text-pink-400">💌</span>
+          <span class="hidden md:inline">留言板</span>
+        </a>
+
+        <a
+          href="/login"
+          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-charcoal-100 dark:text-cream-300 transition-colors"
+          title="管理员登录 / 控制台"
+        >
+          <span>🔐</span>
+          <span class="hidden md:inline">管理</span>
         </a>
       </div>
     </header>
 
     <!-- Main Content Slot -->
-    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 pb-28">
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 pb-28 relative z-10">
       <slot />
     </main>
+
+    <!-- Global Floating Butterfly (Hexo easter egg) -->
+    <FlyingButterfly client:load />
+
+    <!-- Global NetEase Music Player (Hexo playlist 901594222) -->
+    <NetEaseMusicPlayer client:load />
 
     <!-- Floating Dock Navigation Bar -->
     <FloatingDock client:load currentPath={currentPath} />
 
     <!-- Footer -->
-    <footer class="border-t border-charcoal-500/10 dark:border-white/10 py-8 text-center text-xs text-charcoal-100 dark:text-cream-400">
-      <p class="font-serif">
-        Crafted with <span class="text-terracotta">♥</span> by Larry (磊大大) & AI Co-creators (Claude, Gemini & Cursor)
-      </p>
-      <p class="font-mono text-[11px] mt-1 opacity-70">
-        AI Product Management · PMOS V0.2 · Deployed on GitHub Pages
-      </p>
+    <footer class="border-t border-charcoal-500/10 dark:border-white/10 py-10 text-center text-xs text-charcoal-100 dark:text-cream-400 relative z-20">
+      <div class="max-w-4xl mx-auto px-4 space-y-3">
+        <p class="font-serif text-sm">
+          Crafted with <span class="text-terracotta animate-pulse">♥</span> by Larry (磊大大) & AI Co-creators (Claude, Gemini & Cursor)
+        </p>
+        <p class="font-mono text-[11px] opacity-75">
+          AI Product Management · PMOS V0.2 · 380+ 持续演进天数 · 108+ 灵感导航 · 93+ 原生动效
+        </p>
+        <div class="flex items-center justify-center gap-4 text-[11px] pt-1 opacity-60">
+          <a href="/login" class="hover:text-terracotta transition-colors">系统管理</a>
+          <span>•</span>
+          <a href="/messageboard" class="hover:text-terracotta transition-colors">友链互换</a>
+          <span>•</span>
+          <a href="/tools/dayly" class="hover:text-terracotta transition-colors">今日AI早报</a>
+          <span>•</span>
+          <a href="https://github.com/ClawRere" target="_blank" rel="noopener noreferrer" class="hover:text-terracotta transition-colors">GitHub</a>
+        </div>
+      </div>
     </footer>
   </body>
 </html>

@@ -1,44 +1,41 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { CloudRain, ArrowLeft, Maximize2, Volume2 } from 'lucide-react';
+import { ArrowLeft, Maximize2, Volume2 } from 'lucide-react';
 ---
 
-<Layout title="雨夜电影院与白噪音 | 磊大大 Larry">
-  <div class="py-6 space-y-6 max-w-5xl mx-auto">
-    <!-- Top Nav -->
-    <div class="flex items-center justify-between">
+<Layout title="雨夜电影院与白噪音 | 磊大大 Larry" hideFooter={true} fullWidth={true}>
+  <div class="fixed inset-0 pt-14 bg-black z-20 flex flex-col">
+    <!-- Floating Back & Tip Bar -->
+    <div class="absolute top-20 left-6 right-6 z-30 flex items-center justify-between pointer-events-none">
       <a
-        href="/entertain"
-        class="inline-flex items-center gap-1.5 text-xs font-mono text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors"
+        href="/"
+        class="pointer-events-auto inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white text-xs font-mono border border-white/20 transition-all shadow-lg"
       >
         <ArrowLeft class="w-3.5 h-3.5" />
-        返回娱乐馆
+        返回首页
       </a>
+
+      <div class="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 backdrop-blur-md text-sky-300 text-xs font-mono border border-white/10">
+        <Volume2 class="w-3.5 h-3.5 animate-pulse" />
+        <span>雨夜白噪音 · 沉浸专注</span>
+      </div>
 
       <a
         href="/effects/rain_movie/index.html"
         target="_blank"
         rel="noreferrer"
-        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass hover:border-terracotta/40 text-xs font-mono text-charcoal-DEFAULT dark:text-cream-100 transition-colors"
+        class="pointer-events-auto inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white/80 hover:text-white text-xs font-mono border border-white/20 transition-all"
       >
-        <Maximize2 class="w-3.5 h-3.5 text-sky-400" />
-        全屏独立窗口打开
+        <Maximize2 class="w-3.5 h-3.5" />
+        <span class="hidden sm:inline">独立窗口</span>
       </a>
     </div>
 
-    <!-- Rain Container -->
-    <div class="rounded-3xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 shadow-2xl relative bg-black h-[75vh]">
-      <div class="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-sky-300 text-xs font-mono border border-white/10 pointer-events-none flex items-center gap-1.5">
-        <Volume2 class="w-3.5 h-3.5 animate-pulse" />
-        <span>提示：进入后可调节雨水大小与背景环境音效</span>
-      </div>
-
-      <iframe
-        src="/effects/rain_movie/index.html"
-        class="w-full h-full border-0"
-        title="雨夜电影院"
-        allowFullScreen
-      />
-    </div>
+    <iframe
+      src="/effects/rain_movie/index.html"
+      class="w-full h-full border-0 flex-1"
+      title="雨夜电影院"
+      allowFullScreen
+    />
   </div>
 </Layout>

@@ -3,38 +3,57 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Palette, ChevronDown, X, Check } from 'lucide-react';
 
 const wallpaperPresets = [
-  { name: 'SimpleDark', url: 'https://static.simpledesktops.com/uploads/desktops/2014/03/05/dark_deer.png', type: 'image' },
-  { name: 'Mountain', url: 'https://static.simpledesktops.com/uploads/desktops/2012/06/12/Mountain.png', type: 'image' },
-  { name: 'Rainy Day', url: 'https://static.simpledesktops.com/uploads/desktops/2014/04/24/rainyDay_2880x1800.png', type: 'image' },
-  { name: 'Tetris', url: 'https://static.simpledesktops.com/uploads/desktops/2012/01/25/tetris.png', type: 'image' },
-  { name: 'Cyber', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1800&auto=format&fit=crop', type: 'image' },
-  { name: 'Nordic', url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1800&auto=format&fit=crop', type: 'image' },
-  { name: 'Minimal', url: 'https://images.unsplash.com/photo-1557682250-33bd709cbe85?q=80&w=1800&auto=format&fit=crop', type: 'image' },
+  { name: '极光雪山', url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop', type: 'image' },
+  { name: '赛博流光', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop', type: 'image' },
+  { name: '星海深空', url: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2000&auto=format&fit=crop', type: 'image' },
+  { name: '落日海岸', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000&auto=format&fit=crop', type: 'image' },
+  { name: '京都暮色', url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2000&auto=format&fit=crop', type: 'image' },
+  { name: '几何极简', url: 'https://images.unsplash.com/photo-1557682250-33bd709cbe85?q=80&w=2000&auto=format&fit=crop', type: 'image' },
+  { name: '低多边形冰淇淋', url: 'https://static.simpledesktops.com/uploads/desktops/2020/11/21/low-poly-ice-cream.png', type: 'image' },
+  { name: '雨天窗景', url: 'https://static.simpledesktops.com/uploads/desktops/2014/04/24/rainyDay_2880x1800.png', type: 'image' },
+  { name: '幽深暗鹿', url: 'https://static.simpledesktops.com/uploads/desktops/2014/03/05/dark_deer.png', type: 'image' },
+  { name: '群山连绵', url: 'https://static.simpledesktops.com/uploads/desktops/2012/06/12/Mountain.png', type: 'image' },
+  { name: '钢铁之心', url: 'https://static.simpledesktops.com/uploads/desktops/2012/10/14/Iron_Man.png', type: 'image' },
+  { name: '俄罗斯方块', url: 'https://static.simpledesktops.com/uploads/desktops/2012/01/25/tetris.png', type: 'image' },
 ];
 
 const colorPresets = [
-  { name: 'Terracotta', value: '#ee7959', type: 'color' },
-  { name: 'Forest', value: '#2d4a3e', type: 'color' },
-  { name: 'Obsidian', value: '#141413', type: 'color' },
-  { name: 'Lapis', value: '#1a2b4a', type: 'color' },
-  { name: 'Plum', value: '#2d1b4e', type: 'color' },
+  { name: '暖陶土橙', value: '#ee7959', type: 'color' },
+  { name: '抹茶森林', value: '#2d4a3e', type: 'color' },
+  { name: '深邃暗夜', value: '#141413', type: 'color' },
+  { name: '青金石蓝', value: '#1a2b4a', type: 'color' },
+  { name: '暗夜紫罗兰', value: '#2d1b4e', type: 'color' },
+  { name: '燕麦温润', value: '#bfa782', type: 'color' },
 ];
 
 const gradientPresets = [
-  { name: 'Dusk', value: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)', type: 'gradient' },
-  { name: 'Aurora', value: 'linear-gradient(135deg, #0d1117, #1a4a3a, #0d1117)', type: 'gradient' },
-  { name: 'Coral', value: 'linear-gradient(135deg, #1a0a0a, #3d1515, #ee7959)', type: 'gradient' },
-  { name: 'Steel', value: 'linear-gradient(135deg, #0d1117, #161b22, #21262d)', type: 'gradient' },
-  { name: 'Neon', value: 'linear-gradient(135deg, #0a0a0a, #0d2137, #001f3f)', type: 'gradient' },
+  { name: '暮光樱花', value: 'linear-gradient(135deg, #eecda3, #ef629f)', type: 'gradient' },
+  { name: '极光深空', value: 'linear-gradient(135deg, #0f2027, #203a43, #2c5364)', type: 'gradient' },
+  { name: '蔚蓝天际', value: 'linear-gradient(135deg, #4facfe, #00f2fe)', type: 'gradient' },
+  { name: '蜜桃落日', value: 'linear-gradient(135deg, #ff758c, #ff7eb3)', type: 'gradient' },
+  { name: '紫霞幻境', value: 'linear-gradient(135deg, #667eea, #764ba2)', type: 'gradient' },
+  { name: '暖金流光', value: 'linear-gradient(135deg, #f6d365, #fda085)', type: 'gradient' },
+];
+
+const typewriterPhrases = [
+  '用 AI 重新定义产品边界 · Co-creating with Intelligence',
+  '5W1H 穿透本质 · 假设与事实分层决策',
+  'Apple 流体动效 × Claude 人文温润质感',
+  '欢迎来到磊大大的数字花园 · Digital Garden',
 ];
 
 export const HeroCover: React.FC = () => {
   const [currentBg, setCurrentBg] = useState<{ type: string; value: string }>({
-    type: 'gradient',
-    value: 'linear-gradient(135deg, #0d1117, #1a1a2e, #16213e)',
+    type: 'image',
+    value: wallpaperPresets[0].url,
   });
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'wallpaper' | 'color' | 'gradient'>('gradient');
+  const [activeTab, setActiveTab] = useState<'wallpaper' | 'color' | 'gradient'>('wallpaper');
+
+  // Typewriter state
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('blogbg');
@@ -47,6 +66,25 @@ export const HeroCover: React.FC = () => {
       }
     }
   }, []);
+
+  // Typewriter animation loop
+  useEffect(() => {
+    const currentPhrase = typewriterPhrases[phraseIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting && charIndex < currentPhrase.length) {
+      timeout = setTimeout(() => setCharIndex(charIndex + 1), 65);
+    } else if (!isDeleting && charIndex === currentPhrase.length) {
+      timeout = setTimeout(() => setIsDeleting(true), 2200);
+    } else if (isDeleting && charIndex > 0) {
+      timeout = setTimeout(() => setCharIndex(charIndex - 1), 32);
+    } else if (isDeleting && charIndex === 0) {
+      setIsDeleting(false);
+      setPhraseIndex((phraseIndex + 1) % typewriterPhrases.length);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, phraseIndex]);
 
   const selectBg = (type: string, value: string) => {
     const next = { type, value };
@@ -65,78 +103,55 @@ export const HeroCover: React.FC = () => {
   return (
     <div
       style={bgStyle}
-      className="relative w-screen -mx-4 sm:-mx-6 left-0 right-0 h-screen max-h-screen flex flex-col items-center justify-center overflow-hidden mb-16 transition-all duration-700"
+      className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center overflow-hidden mb-14 transition-all duration-700"
     >
-      {/* Dark vignette overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20 pointer-events-none z-10" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none z-10" />
+      {/* Light vignette only at bottom/center for text clarity without washing out wallpaper */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/55 pointer-events-none z-10" />
 
-      {/* Animated noise grain for depth */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none z-10"
-        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")', backgroundRepeat: 'repeat', backgroundSize: '128px' }}
-      />
-
-      {/* Center content - minimal & impactful */}
-      <div className="relative z-20 text-center space-y-6 px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
+      {/* Center Minimal Title + Typewriter */}
+      <div className="relative z-20 text-center px-6 max-w-3xl mx-auto">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="text-5xl sm:text-7xl md:text-8xl font-extrabold text-white tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.45)] select-none"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/20 text-white/70 text-xs font-mono backdrop-blur-md bg-white/5 mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            AI Product Manager & Co-creator
+          磊大大
+        </motion.h1>
+
+        {/* Typewriter subtitle */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mt-6 inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-black/30 backdrop-blur-md border border-white/15 shadow-xl"
+        >
+          <span className="text-sm sm:text-base md:text-lg font-mono text-white/95 tracking-wide">
+            {typewriterPhrases[phraseIndex].slice(0, charIndex)}
           </span>
-
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white leading-none tracking-tighter">
-            磊大大
-          </h1>
-          <p className="mt-4 text-white/50 text-sm sm:text-base font-mono tracking-widest uppercase">
-            Larry · AI PM · Digital Garden
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap items-center justify-center gap-3 pt-4"
-        >
-          <a
-            href="/portfolio"
-            className="px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition-all shadow-2xl"
-          >
-            查看作品集
-          </a>
-          <a
-            href="/about"
-            className="px-6 py-2.5 rounded-full border border-white/30 text-white text-sm font-medium hover:bg-white/10 backdrop-blur-md transition-all"
-          >
-            关于我
-          </a>
+          <span className="inline-block w-[2px] h-5 bg-terracotta ml-1 animate-pulse" />
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
+      {/* Scroll Down Wave / Arrow */}
+      <motion.a
+        href="#hub-section"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/40 text-xs font-mono"
+        transition={{ delay: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 p-2 rounded-full text-white/75 hover:text-white transition-colors"
+        aria-label="向下滚动"
       >
-        <span>scroll</span>
-        <ChevronDown className="w-4 h-4 animate-bounce" />
-      </motion.div>
+        <ChevronDown className="w-7 h-7 animate-bounce" />
+      </motion.a>
 
-      {/* Cover Switcher Button - bottom right */}
+      {/* Subtle Cover Switcher Icon Button - bottom right */}
       <button
         onClick={() => setIsOpen(true)}
-        className="absolute bottom-10 right-6 z-30 flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/15 hover:border-white/30 text-white/70 hover:text-white text-xs font-mono transition-all"
-        title="切换封面"
+        className="absolute bottom-8 right-6 z-30 p-3 rounded-full bg-black/35 hover:bg-black/60 backdrop-blur-md border border-white/20 text-white/80 hover:text-white transition-all shadow-lg hover:scale-105"
+        title="切换封面壁纸 / 纯色 / 渐变"
       >
-        <Palette className="w-3.5 h-3.5" />
-        <span className="hidden sm:inline">切换封面</span>
+        <Palette className="w-4 h-4" />
       </button>
 
       {/* Switcher Modal */}
@@ -150,42 +165,61 @@ export const HeroCover: React.FC = () => {
           >
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
             <motion.div
-              initial={{ y: 60, opacity: 0, scale: 0.95 }}
+              initial={{ y: 50, opacity: 0, scale: 0.96 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: 60, opacity: 0, scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="relative w-full max-w-sm rounded-3xl bg-zinc-900/95 border border-white/10 backdrop-blur-2xl p-5 shadow-2xl"
+              exit={{ y: 50, opacity: 0, scale: 0.96 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+              className="relative w-full max-w-md rounded-3xl bg-zinc-900/95 border border-white/10 backdrop-blur-2xl p-5 shadow-2xl"
             >
               <div className="flex items-center justify-between mb-4">
-                <span className="font-semibold text-white text-sm">切换封面背景</span>
-                <button onClick={() => setIsOpen(false)} className="text-white/40 hover:text-white transition-colors">
+                <span className="font-semibold text-white text-sm">切换封面背景 ({wallpaperPresets.length} 张壁纸)</span>
+                <button onClick={() => setIsOpen(false)} className="text-white/50 hover:text-white transition-colors">
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
-              {/* Tabs */}
               <div className="flex gap-1 p-1 rounded-xl bg-white/5 mb-4">
-                {(['gradient', 'wallpaper', 'color'] as const).map((tab) => (
+                {(['wallpaper', 'gradient', 'color'] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
                     className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                      activeTab === tab ? 'bg-white text-black' : 'text-white/50 hover:text-white'
+                      activeTab === tab ? 'bg-white text-black' : 'text-white/60 hover:text-white'
                     }`}
                   >
-                    {tab === 'gradient' ? '渐变' : tab === 'wallpaper' ? '壁纸' : '纯色'}
+                    {tab === 'wallpaper' ? '高清壁纸' : tab === 'gradient' ? '流光渐变' : '极简纯色'}
                   </button>
                 ))}
               </div>
 
-              {/* Gradient swatches */}
+              {activeTab === 'wallpaper' && (
+                <div className="grid grid-cols-3 gap-2 max-h-72 overflow-y-auto pr-1">
+                  {wallpaperPresets.map((p) => (
+                    <button
+                      key={p.url}
+                      onClick={() => selectBg(p.type, p.url)}
+                      className="relative h-20 rounded-xl overflow-hidden border-2 border-transparent hover:border-white/60 transition-all group"
+                      style={{ backgroundImage: `url(${p.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                      title={p.name}
+                    >
+                      {currentBg.value === p.url && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/35">
+                          <Check className="w-4 h-4 text-white" />
+                        </div>
+                      )}
+                      <span className="absolute bottom-0 inset-x-0 bg-black/55 py-0.5 text-[10px] text-white/90 truncate px-1">{p.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+
               {activeTab === 'gradient' && (
                 <div className="grid grid-cols-3 gap-2">
                   {gradientPresets.map((p) => (
                     <button
                       key={p.value}
                       onClick={() => selectBg(p.type, p.value)}
-                      className="relative h-16 rounded-xl overflow-hidden border-2 border-transparent hover:border-white/50 transition-all"
+                      className="relative h-20 rounded-xl overflow-hidden border-2 border-transparent hover:border-white/60 transition-all"
                       style={{ backgroundImage: p.value }}
                       title={p.name}
                     >
@@ -194,47 +228,26 @@ export const HeroCover: React.FC = () => {
                           <Check className="w-4 h-4 text-white" />
                         </div>
                       )}
-                      <span className="absolute bottom-1 left-0 right-0 text-center text-[9px] text-white/70 font-mono">{p.name}</span>
+                      <span className="absolute bottom-1 left-0 right-0 text-center text-[10px] text-white/90 font-mono">{p.name}</span>
                     </button>
                   ))}
                 </div>
               )}
 
-              {/* Wallpaper swatches */}
-              {activeTab === 'wallpaper' && (
-                <div className="grid grid-cols-3 gap-2">
-                  {wallpaperPresets.map((p) => (
-                    <button
-                      key={p.url}
-                      onClick={() => selectBg(p.type, p.url)}
-                      className="relative h-16 rounded-xl overflow-hidden border-2 border-transparent hover:border-white/50 transition-all"
-                      style={{ backgroundImage: `url(${p.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-                      title={p.name}
-                    >
-                      {currentBg.value === p.url && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                          <Check className="w-4 h-4 text-white" />
-                        </div>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Color swatches */}
               {activeTab === 'color' && (
-                <div className="flex gap-3 flex-wrap">
+                <div className="grid grid-cols-3 gap-3">
                   {colorPresets.map((p) => (
                     <button
                       key={p.value}
                       onClick={() => selectBg(p.type, p.value)}
-                      className="w-14 h-14 rounded-2xl border-2 border-transparent hover:border-white/60 transition-all relative shadow-lg"
+                      className="h-16 rounded-2xl border-2 border-transparent hover:border-white/60 transition-all relative shadow-lg flex items-end justify-center pb-1.5"
                       style={{ backgroundColor: p.value }}
                       title={p.name}
                     >
                       {currentBg.value === p.value && (
                         <Check className="w-4 h-4 text-white absolute inset-0 m-auto" />
                       )}
+                      <span className="text-[10px] text-white/80 font-mono">{p.name}</span>
                     </button>
                   ))}
                 </div>

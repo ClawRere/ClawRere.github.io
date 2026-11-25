@@ -1,8 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-import { FloatingDock } from '@/components/ui/FloatingDock';
 import { BackgroundCanvas } from '@/components/ui/BackgroundCanvas';
-import { FlyingButterfly } from '@/components/ui/FlyingButterfly';
 import { NetEaseMusicPlayer } from '@/components/ui/NetEaseMusicPlayer';
 import '@/styles/global.css';
 
@@ -10,12 +8,14 @@ interface Props {
   title?: string;
   description?: string;
   hideFooter?: boolean;
+  fullWidth?: boolean;
 }
 
 const {
   title = '磊大大 Larry | AI 产品经理与共创作品集',
   description = '以产品思维定义人机边界，以工程实践打磨 AI 生产力工具。面向 AI 协同时代的数字花园。',
   hideFooter = false,
+  fullWidth = false,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
@@ -26,6 +26,7 @@ const entertainItems = [
   { name: '雨声院', href: '/entertain/rain', emoji: '🌧️' },
   { name: '变形金刚', href: '/effects/optimus_prime/index.html', emoji: '🤖' },
   { name: '飞机大战', href: '/effects/flight_game/index.html', emoji: '✈️' },
+  { name: '极速赛车', href: '/effects/car_racing_game/index.html', emoji: '🏎️' },
 ];
 ---
 
@@ -40,11 +41,11 @@ const entertainItems = [
     <meta name="description" content={description} />
     <ClientRouter />
   </head>
-  <body class="min-h-screen flex flex-col bg-cream-50 dark:bg-obsidian text-charcoal-DEFAULT dark:text-cream-100 transition-colors duration-300 relative selection:bg-terracotta/20 selection:text-terracotta">
+  <body class="min-h-screen flex flex-col bg-cream-50 dark:bg-obsidian text-charcoal-DEFAULT dark:text-cream-100 transition-colors duration-300 relative selection:bg-terracotta/20 selection:text-terracotta overflow-x-hidden">
     <!-- Top accent line -->
     <div class="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-terracotta/60 to-transparent z-50 pointer-events-none" />
 
-    <!-- Background Canvas -->
+    <!-- Daytime Snowflakes / Nighttime Fireflies Interactive Canvas -->
     <BackgroundCanvas client:load />
 
     <!-- Ambient gradient mesh -->
@@ -54,7 +55,7 @@ const entertainItems = [
     </div>
 
     <!-- TOP NAVIGATION BAR -->
-    <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl border-b border-white/5 bg-cream-50/80 dark:bg-obsidian/80">
+    <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl border-b border-black/5 dark:border-white/5 bg-cream-50/80 dark:bg-obsidian/80">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
         
         <!-- Logo -->
@@ -78,13 +79,13 @@ const entertainItems = [
           <a href="/portfolio" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath.startsWith('/portfolio') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>作品集</a>
           <a href="/posts" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath.startsWith('/posts') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>博客</a>
           
-          <!-- Entertainment dropdown -->
+          <!-- Entertainment hover dropdown -->
           <div class="relative group/entertain">
-            <button class={`px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 ${currentPath.startsWith('/entertain') || currentPath.startsWith('/effects/optimus') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>
+            <a href="/entertain" class={`px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 ${currentPath.startsWith('/entertain') || currentPath.startsWith('/effects/optimus') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>
               娱乐馆
               <svg class="w-3 h-3 transition-transform group-hover/entertain:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-            </button>
-            <div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-44 py-1.5 rounded-2xl bg-white dark:bg-zinc-900 border border-black/8 dark:border-white/10 shadow-2xl backdrop-blur-xl opacity-0 invisible group-hover/entertain:opacity-100 group-hover/entertain:visible transition-all duration-200 z-50">
+            </a>
+            <div class="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-44 py-1.5 rounded-2xl bg-white dark:bg-zinc-900 border border-black/8 dark:border-white/10 shadow-2xl backdrop-blur-xl opacity-0 invisible group-hover/entertain:opacity-100 group-hover/entertain:visible transition-all duration-200 z-50">
               {entertainItems.map(item => (
                 <a href={item.href} class="flex items-center gap-2.5 px-4 py-2 text-sm text-charcoal-200 dark:text-cream-300 hover:text-terracotta hover:bg-terracotta/5 transition-colors" target={item.href.endsWith('.html') ? '_blank' : undefined} rel={item.href.endsWith('.html') ? 'noopener' : undefined}>
                   <span>{item.emoji}</span>
@@ -101,6 +102,15 @@ const entertainItems = [
 
         <!-- Right actions -->
         <div class="flex items-center gap-2 shrink-0">
+          <button
+            id="theme-toggle-btn"
+            onclick="document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');"
+            class="p-2 rounded-lg text-charcoal-100 dark:text-cream-400 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+            title="切换白天(飘雪) / 夜间(萤火虫)模式"
+          >
+            <span class="dark:hidden">❄️</span>
+            <span class="hidden dark:inline">✨</span>
+          </button>
           <a href="/messageboard" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors">
             💌 留言
           </a>
@@ -134,13 +144,12 @@ const entertainItems = [
       </div>
     </header>
 
-    <!-- Main Content Slot (pt-14 to clear fixed header) -->
-    <main class="flex-1 w-full pt-14 relative z-10">
+    <!-- Main Content Slot -->
+    <main class={`flex-1 w-full pt-14 relative z-10 ${fullWidth ? '' : 'max-w-6xl mx-auto px-4 sm:px-6'}`}>
       <slot />
     </main>
 
-    <!-- Global Easter Eggs -->
-    <FlyingButterfly client:load />
+    <!-- Synced NetEase Music Player -->
     <NetEaseMusicPlayer client:load />
 
     <!-- Footer -->
@@ -156,12 +165,25 @@ const entertainItems = [
           <div class="flex items-center justify-center gap-4 text-[11px] pt-1 opacity-60">
             <a href="/messageboard" class="hover:text-terracotta transition-colors">友链互换</a>
             <span>•</span>
-            <a href="/tools/dayly" class="hover:text-terracotta transition-colors">AI日报</a>
+            <a href="/tools" class="hover:text-terracotta transition-colors">AI日报</a>
             <span>•</span>
             <a href="https://github.com/ClawRere" target="_blank" rel="noopener noreferrer" class="hover:text-terracotta transition-colors">GitHub</a>
           </div>
         </div>
       </footer>
     )}
+
+    <script is:inline>
+      (function () {
+        const saved = localStorage.getItem('theme');
+        const hour = new Date().getHours();
+        const isNight = hour >= 19 || hour < 6;
+        if (saved === 'dark' || (!saved && isNight)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
   </body>
 </html>

@@ -80,7 +80,7 @@ export const LinksExplorer: React.FC = () => {
     [allLinks]
   );
 
-  const [selectedCategory, setSelectedCategory] = useState<string>('全部');
+  const [selectedCategory, setSelectedCategory] = useState<string>('友情链接');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [layoutMode, setLayoutMode] = useState<LayoutMode>('card');
   const [previewLink, setPreviewLink] = useState<LinkItem | null>(defaultPreview);

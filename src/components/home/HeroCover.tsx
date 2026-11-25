@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Palette, ChevronDown, X, Check } from 'lucide-react';
+import { FireworksOverlay } from './FireworksOverlay';
 
 const wallpaperPresets = [
   { name: '极光雪山', url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop', type: 'image' },
@@ -157,6 +158,9 @@ export const HeroCover: React.FC = () => {
           <span className="inline-block w-[2px] h-5 bg-terracotta ml-1 animate-pulse" />
         </motion.div>
       </div>
+
+      {/* Random-position "放个烟花" button & canvas overlay */}
+      <FireworksOverlay />
 
       {/* Scroll Down Arrow */}
       <motion.a

@@ -1,6 +1,24 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Sparkles, ExternalLink, Play, X, Maximize2, Eye, Box, Loader2, Gamepad2, MousePointerClick, Component } from 'lucide-react';
+import {
+  Search,
+  Sparkles,
+  ExternalLink,
+  Play,
+  X,
+  Maximize2,
+  Eye,
+  Box,
+  Loader2,
+  Gamepad2,
+  MousePointerClick,
+  Component,
+  Plus,
+  Copy,
+  Check,
+  Download,
+  Trash2,
+} from 'lucide-react';
 import effectsData from '@/data/effects.json';
 
 interface EffectItem {
@@ -8,6 +26,8 @@ interface EffectItem {
   path: string;
   image: string;
   category: string;
+  isCustom?: boolean;
+  htmlCode?: string;
 }
 
 const CATEGORY_STYLES: Record<string, { gradient: string; Icon: React.ComponentType<{ className?: string }> }> = {
@@ -24,12 +44,41 @@ export const EffectsShowcase: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeModalEffect, setActiveModalEffect] = useState<EffectItem | null>(null);
   const [inlinePreviewPaths, setInlinePreviewPaths] = useState<Record<string, boolean>>({});
+  const [customEffects, setCustomEffects] = useState<EffectItem[]>([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const categories = ['全部', '3D视觉', '趣味动效', '加载动画', 'UI交互', '互动游戏', '实用组件'];
+  const [newEffect, setNewEffect] = useState({
+    title: '',
+    category: 'UI交互',
+    path: '',
+    htmlCode: '',
+  });
+
+  const categories = ['全部', '我的收藏', '3D视觉', '趣味动效', '加载动画', 'UI交互', '互动游戏', '实用组件'];
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('custom_effects');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) setCustomEffects(parsed);
+      }
+    } catch {}
+  }, []);
+
+  const allEffects = useMemo(() => {
+    return [...customEffects, ...(effectsData as EffectItem[])];
+  }, [customEffects]);
 
   const filteredEffects = useMemo(() => {
-    return (effectsData as EffectItem[]).filter((item) => {
-      const matchCat = selectedCategory === '全部' || item.category === selectedCategory;
+    return allEffects.filter((item) => {
+      const matchCat =
+        selectedCategory === '全部'
+          ? true
+          : selectedCategory === '我的收藏'
+          ? !!item.isCustom
+          : item.category === selectedCategory;
       const query = searchQuery.trim().toLowerCase();
       const matchQuery =
         !query ||
@@ -37,10 +86,57 @@ export const EffectsShowcase: React.FC = () => {
         item.path.toLowerCase().includes(query);
       return matchCat && matchQuery;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [allEffects, selectedCategory, searchQuery]);
 
-  const toggleInlinePreview = (path: string) => {
-    setInlinePreviewPaths((prev) => ({ ...prev, [path]: !prev[path] }));
+  const toggleInlinePreview = (key: string) => {
+    setInlinePreviewPaths((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const handleAddEffect = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newEffect.title.trim()) return;
+    if (!newEffect.path.trim() && !newEffect.htmlCode.trim()) return;
+
+    const item: EffectItem = {
+      title: newEffect.title.trim(),
+      category: newEffect.category,
+      path: newEffect.path.trim() || `custom-${Date.now()}`,
+      image: '',
+      isCustom: true,
+      htmlCode: newEffect.htmlCode.trim() || undefined,
+    };
+
+    const updated = [item, ...customEffects];
+    setCustomEffects(updated);
+    localStorage.setItem('custom_effects', JSON.stringify(updated));
+    setNewEffect({ title: '', category: 'UI交互', path: '', htmlCode: '' });
+    setShowAddModal(false);
+    setSelectedCategory('我的收藏');
+  };
+
+  const removeCustomEffect = (title: string, path: string) => {
+    const updated = customEffects.filter((c) => !(c.title === title && c.path === path));
+    setCustomEffects(updated);
+    localStorage.setItem('custom_effects', JSON.stringify(updated));
+  };
+
+  const copyEmbedCode = (effect: EffectItem) => {
+    const code = effect.htmlCode
+      ? effect.htmlCode
+      : `<iframe src="${effect.path}" class="w-full h-96 border-0" title="${effect.title}" allowfullscreen></iframe>`;
+    navigator.clipboard.writeText(code);
+    setCopiedId(effect.title + effect.path);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const exportCustomEffects = () => {
+    const blob = new Blob([JSON.stringify(customEffects, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'my-frontend-effects.json';
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -51,19 +147,34 @@ export const EffectsShowcase: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta mb-2">
               <Sparkles className="w-3.5 h-3.5" />
-              Creative Code & Visual FX Showroom
+              Creative Code & Visual FX Vault
             </div>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-DEFAULT dark:text-cream-50">
-              原生 Web 特效与互动实验室
+              前端动效实验室与收藏库
             </h1>
             <p className="mt-2 text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 max-w-xl leading-relaxed">
-              汇集原博客珍藏的 <strong>{effectsData.length} 个</strong> 原生 HTML+CSS+JS 独立动效。点击「实时预览」直接在卡片内运行，或点击「网页内试玩」放大体验。
+              收录 <strong>{allEffects.length} 个</strong> 原生动效。支持在线存储新的前端动效 URL 或 HTML/CSS 代码片段，随时一键预览与复制复用。
             </p>
           </div>
 
-          <div className="px-4 py-2 rounded-2xl glass border border-terracotta/20 text-center font-mono shrink-0">
-            <span className="block text-2xl font-bold font-serif text-terracotta">{effectsData.length}</span>
-            <span className="text-[10px] text-charcoal-100 dark:text-cream-400">总计收录</span>
+          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-terracotta hover:bg-terracotta/90 text-white text-xs font-mono font-semibold shadow-lg transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              <span>收藏新动效</span>
+            </button>
+            {customEffects.length > 0 && (
+              <button
+                onClick={exportCustomEffects}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-2xl glass border border-charcoal-500/15 dark:border-white/15 text-xs font-mono hover:border-terracotta"
+                title="导出我收藏的动效 JSON"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>导出 ({customEffects.length})</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -107,6 +218,7 @@ export const EffectsShowcase: React.FC = () => {
             }`}
           >
             {cat}
+            {cat === '我的收藏' && ` (${customEffects.length})`}
           </button>
         ))}
       </div>
@@ -116,42 +228,49 @@ export const EffectsShowcase: React.FC = () => {
         {filteredEffects.map((effect) => {
           const styleCfg = CATEGORY_STYLES[effect.category] || CATEGORY_STYLES['趣味动效'];
           const Icon = styleCfg.Icon;
-          const isLive = !!inlinePreviewPaths[effect.path];
+          const uniqueKey = effect.title + effect.path;
+          const isLive = !!inlinePreviewPaths[uniqueKey];
 
           return (
             <div
-              key={effect.title + effect.path}
+              key={uniqueKey}
               className="group flex flex-col rounded-2xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 dark:hover:border-terracotta/40 hover:shadow-2xl transition-all duration-300"
             >
-              {/* Preview Window: Live Iframe on demand OR Clean Styled Card */}
               <div className={`h-52 w-full relative overflow-hidden bg-gradient-to-br ${styleCfg.gradient} flex items-center justify-center`}>
                 {isLive ? (
-                  <iframe
-                    src={effect.path}
-                    title={effect.title}
-                    className="w-full h-full border-0 bg-zinc-950"
-                    loading="lazy"
-                  />
+                  effect.htmlCode ? (
+                    <iframe
+                      srcDoc={effect.htmlCode}
+                      title={effect.title}
+                      className="w-full h-full border-0 bg-zinc-950"
+                      sandbox="allow-scripts"
+                    />
+                  ) : (
+                    <iframe
+                      src={effect.path}
+                      title={effect.title}
+                      className="w-full h-full border-0 bg-zinc-950"
+                      loading="lazy"
+                    />
+                  )
                 ) : (
                   <div className="flex flex-col items-center justify-center gap-3 p-6 text-center">
                     <div className="w-14 h-14 rounded-2xl bg-white/15 dark:bg-black/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-terracotta group-hover:scale-110 transition-transform shadow-lg">
                       <Icon className="w-7 h-7" />
                     </div>
-                    <div className="text-xs font-mono text-charcoal-200 dark:text-cream-200 opacity-80">
-                      {effect.path}
+                    <div className="text-xs font-mono text-charcoal-200 dark:text-cream-200 opacity-80 truncate max-w-[220px]">
+                      {effect.htmlCode ? 'HTML/CSS 片段' : effect.path}
                     </div>
                   </div>
                 )}
 
-                {/* Category Pill */}
                 <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md text-[10px] font-mono font-medium text-charcoal-DEFAULT dark:text-cream-100 shadow-sm pointer-events-none">
-                  {effect.category}
+                  {effect.isCustom ? `⭐ ${effect.category}` : effect.category}
                 </span>
 
-                {/* Action buttons */}
                 <div className="absolute bottom-3 right-3 flex items-center gap-2 z-10">
                   <button
-                    onClick={() => toggleInlinePreview(effect.path)}
+                    onClick={() => toggleInlinePreview(uniqueKey)}
                     className={`px-2.5 py-1.5 rounded-xl text-[11px] font-mono flex items-center gap-1 shadow-md transition-all ${
                       isLive
                         ? 'bg-zinc-900/90 text-white border border-white/20'
@@ -159,20 +278,19 @@ export const EffectsShowcase: React.FC = () => {
                     }`}
                   >
                     <Eye className="w-3 h-3" />
-                    {isLive ? '关闭预览' : '直接看效果'}
+                    {isLive ? '关闭' : '直接看'}
                   </button>
                   <button
                     onClick={() => setActiveModalEffect(effect)}
                     className="px-2.5 py-1.5 rounded-xl bg-terracotta text-white text-[11px] font-mono flex items-center gap-1 shadow-md hover:scale-105 transition-transform"
                   >
                     <Play className="w-3 h-3 fill-current" />
-                    放大试玩
+                    放大
                   </button>
                 </div>
               </div>
 
-              {/* Card Info Bottom */}
-              <div className="p-4 flex items-center justify-between">
+              <div className="p-4 flex items-center justify-between gap-2">
                 <div className="min-w-0">
                   <h3 className="font-serif text-base font-medium text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors truncate">
                     {effect.title}
@@ -182,22 +300,99 @@ export const EffectsShowcase: React.FC = () => {
                   </span>
                 </div>
 
-                <a
-                  href={effect.path}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-1.5 rounded-lg text-charcoal-100 dark:text-cream-400 hover:text-terracotta hover:bg-terracotta/10 transition-colors shrink-0"
-                  title="新标签页全屏打开"
-                >
-                  <Maximize2 className="w-4 h-4" />
-                </a>
+                <div className="flex items-center gap-1 shrink-0">
+                  <button
+                    onClick={() => copyEmbedCode(effect)}
+                    className="p-1.5 rounded-lg text-charcoal-100 dark:text-cream-400 hover:text-terracotta hover:bg-terracotta/10 transition-colors"
+                    title="复制嵌入/复用代码"
+                  >
+                    {copiedId === uniqueKey ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                  </button>
+                  {effect.isCustom && (
+                    <button
+                      onClick={() => removeCustomEffect(effect.title, effect.path)}
+                      className="p-1.5 rounded-lg text-red-400 hover:text-red-500 hover:bg-red-500/10 transition-colors"
+                      title="移除收藏"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
+                  {!effect.htmlCode && (
+                    <a
+                      href={effect.path}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-1.5 rounded-lg text-charcoal-100 dark:text-cream-400 hover:text-terracotta hover:bg-terracotta/10 transition-colors"
+                      title="新标签页全屏打开"
+                    >
+                      <Maximize2 className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* 4. Live Interactive Modal Player */}
+      {/* 4. Add / Store Effect Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <form
+            onSubmit={handleAddEffect}
+            className="w-full max-w-lg rounded-3xl bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/15 p-6 shadow-2xl space-y-4"
+          >
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-lg font-bold">✨ 收藏/储存新的前端动效</h3>
+              <button type="button" onClick={() => setShowAddModal(false)} className="p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input
+                type="text"
+                placeholder="动效名称 *"
+                required
+                value={newEffect.title}
+                onChange={(e) => setNewEffect({ ...newEffect, title: e.target.value })}
+                className="px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
+              />
+              <select
+                value={newEffect.category}
+                onChange={(e) => setNewEffect({ ...newEffect, category: e.target.value })}
+                className="px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white dark:bg-zinc-800 text-sm"
+              >
+                {['UI交互', '3D视觉', '趣味动效', '加载动画', '互动游戏', '实用组件'].map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+
+            <input
+              type="text"
+              placeholder="在线 Demo URL (如 CodePen / GitHub Pages / 本地路径，可与下方代码二选一)"
+              value={newEffect.path}
+              onChange={(e) => setNewEffect({ ...newEffect, path: e.target.value })}
+              className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm font-mono"
+            />
+
+            <textarea
+              rows={6}
+              placeholder="或者直接粘贴完整 HTML + <style> + <script> 动效代码片段（支持即时沙盒运行与一键复用）"
+              value={newEffect.htmlCode}
+              onChange={(e) => setNewEffect({ ...newEffect, htmlCode: e.target.value })}
+              className="w-full p-3.5 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono"
+            />
+
+            <button type="submit" className="w-full py-2.5 rounded-xl bg-terracotta text-white text-xs font-mono font-semibold hover:opacity-90">
+              保存到前端动效库
+            </button>
+          </form>
+        </div>
+      )}
+
+      {/* 5. Live Interactive Modal Player */}
       <AnimatePresence>
         {activeModalEffect && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-md">
@@ -219,15 +414,22 @@ export const EffectsShowcase: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <a
-                    href={activeModalEffect.path}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="p-1.5 rounded-lg glass hover:text-terracotta text-xs font-mono flex items-center gap-1"
+                  <button
+                    onClick={() => copyEmbedCode(activeModalEffect)}
+                    className="px-2.5 py-1.5 rounded-lg glass hover:text-terracotta text-xs font-mono flex items-center gap-1"
                   >
-                    <ExternalLink className="w-3.5 h-3.5" />
-                    全屏独立运行
-                  </a>
+                    <Copy className="w-3.5 h-3.5" /> 复制复用代码
+                  </button>
+                  {!activeModalEffect.htmlCode && (
+                    <a
+                      href={activeModalEffect.path}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-1.5 rounded-lg glass hover:text-terracotta text-xs font-mono flex items-center gap-1"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" /> 全屏运行
+                    </a>
+                  )}
                   <button
                     onClick={() => setActiveModalEffect(null)}
                     className="p-1.5 rounded-lg glass hover:bg-red-500 hover:text-white transition-colors"
@@ -238,13 +440,22 @@ export const EffectsShowcase: React.FC = () => {
               </div>
 
               <div className="flex-1 w-full h-full relative bg-black/5">
-                <iframe
-                  src={activeModalEffect.path}
-                  className="w-full h-full border-0"
-                  title={activeModalEffect.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+                {activeModalEffect.htmlCode ? (
+                  <iframe
+                    srcDoc={activeModalEffect.htmlCode}
+                    className="w-full h-full border-0"
+                    title={activeModalEffect.title}
+                    sandbox="allow-scripts"
+                  />
+                ) : (
+                  <iframe
+                    src={activeModalEffect.path}
+                    className="w-full h-full border-0"
+                    title={activeModalEffect.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                )}
               </div>
             </motion.div>
           </div>

@@ -22,20 +22,20 @@ const skills = [
     items: [
       { name: "Apple 流体动效与空间感", desc: "追求 120fps 极佳手感，弹簧物理动量与微交互细节" },
       { name: "Claude 式人文温润质感", desc: "克制的排版韵律，柔和暗色渐变，阅读呼吸感与沉浸感" },
-      { name: "Canvas / WebGL / CSS 3D", desc: "100+ 独立动效研究，轻量化渲染，低内存占用设计" },
+      { name: "Axure / Visio / PS / Canvas", desc: "高保真交互原型、100+ 独立动效研究与轻量化渲染" },
       { name: "Design System & Token 化", desc: "跨端设计资产复用，原子化样式保证长期协同一致性" },
     ],
   },
   {
-    category: "工程落地 & 全栈协作",
+    category: "工程落地 & 数据分析工具栈",
     color: "text-cyan-400",
     border: "border-cyan-500/30",
     bg: "bg-cyan-500/8",
     items: [
-      { name: "LLM / RAG / Multi-Agent", desc: "熟悉 LangChain / LlamaIndex / Agentic Workflow 链路工程与评测" },
-      { name: "现代前端技术栈", desc: "TypeScript / React / Vue 3 / Astro / Tailwind CSS / Framer Motion" },
-      { name: "后端与数据底座", desc: "FastAPI / Python / Node.js / SQLite / Vector DB (Chroma)" },
-      { name: "端侧工具链协同", desc: "Cursor, Windsurf, Git 工作流，高效人机共创与协同研发" },
+      { name: "LLM / RAG / Multi-Agent", desc: "熟悉 Agentic Workflow 链路工程与评测体系" },
+      { name: "Python / FineBI / Tableau / Matlab", desc: "数据采集清洗、自动化报告与多维分析驾驶舱搭建" },
+      { name: "Vue / React / Astro / Node / JS", desc: "全栈原型快速构建，Cursor 结对编程与高效共创" },
+      { name: "Git / Docker / Linux", desc: "版本协同管理与自动化构建部署流程" },
     ],
   },
 ];
@@ -54,10 +54,10 @@ const timeline = [
     highlight: "主导核心业务线全流程体验重构，引入流体设计系统与多维数据洞察看板，将复杂流程流失率降低 34%，日活留存提升 21%。",
   },
   {
-    period: "2020 - 2022",
+    period: "2019 - 2022",
     role: "产品经理 & 数字花园创作者",
-    org: "Hexo 开源动效社区",
-    highlight: "持续沉淀 99+ 篇技术与产品思考博客，独立收集与复刻 100+ 前端动效库，累计访问突破 100,000+ 次。",
+    org: "教育平台交付 & Hexo 开源社区",
+    highlight: "参与省级在线教育公益课堂、高校 AI 助教及数据驾驶舱等项目；业余持续沉淀 99+ 篇博客与 93+ 原生前端动效。",
   },
 ];
 
@@ -69,8 +69,8 @@ const metrics = [
 ];
 ---
 
-<Layout title="关于我 | AI 产品经理 & 体验架构师">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-16">
+<Layout title="关于我 | 磊大大の小栈">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-14">
 
     <!-- Hero -->
     <div class="relative overflow-hidden rounded-3xl border border-white/10 dark:border-white/8 bg-gradient-to-br from-zinc-100/80 via-transparent to-transparent dark:from-zinc-800/40 p-8 md:p-10">
@@ -84,27 +84,24 @@ const metrics = [
               src="https://q1.qlogo.cn/g?b=qq&nk=2472919073&s=640"
               alt="磊大大 Larry"
               class="w-full h-full object-cover"
-              onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop'"
+              onerror="this.src='/cover/img/icon/avatar.jpg'"
             />
           </div>
-          <span class="absolute -bottom-2 -right-2 px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5 shadow-lg backdrop-blur-md whitespace-nowrap">
+          <span class="absolute -bottom-2 -right-2 px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 shadow-lg backdrop-blur-md whitespace-nowrap">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            AI PM
+            ENTP · AI PM
           </span>
         </div>
 
         <div class="flex-1 text-center md:text-left space-y-4">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-medium text-amber-300">
-            ✨ 以工程严谨度衡量需求，以艺术家眼光雕琢体验
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-medium text-amber-500 dark:text-amber-300">
+            ✨ 充满好奇，保持理性 · 源于热爱而去感受
           </div>
           <h1 id="about-name" class="text-3xl md:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
-            磊大大 <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-300 to-purple-400">Larry</span>
+            你好，我是 <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-400 to-purple-500">磊大大</span> 👋
           </h1>
           <p id="about-bio" class="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed max-w-xl">
-            AI 产品经理 / 体验架构师 / 数字花园园丁。专注于
-            <strong class="text-zinc-900 dark:text-white font-medium">Agent 操作系统</strong>、
-            <strong class="text-zinc-900 dark:text-white font-medium">证据分层决策</strong>与
-            <strong class="text-zinc-900 dark:text-white font-medium">极致流体交互</strong>。
+            是一名 <strong class="text-zinc-900 dark:text-white font-medium">AI 产品经理</strong>、业余研发与数字花园博主。现居 <strong class="text-zinc-900 dark:text-white font-medium">中国·武汉</strong>，专注于 Agent 操作系统、证据分层决策与极致流体交互。
           </p>
           <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
             <a href="/portfolio/pmos-ai-workspace" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-black font-semibold text-sm transition-all shadow-lg">
@@ -125,6 +122,55 @@ const metrics = [
             <div class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">{m.label}</div>
           </div>
         ))}
+      </div>
+    </div>
+
+    <!-- Personal Bento Cards (from Hexo about.pug) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="p-5 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/50 space-y-2">
+        <div class="text-xs font-mono text-amber-500 uppercase tracking-wider">个人档案</div>
+        <div class="space-y-1.5 text-sm">
+          <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">生于</span><span class="font-semibold text-sky-500">1997 年</span></div>
+          <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">坐标</span><span class="font-semibold text-zinc-900 dark:text-white">中国 · 武汉市</span></div>
+          <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">本科</span><span class="font-semibold text-amber-500">中南财经政法大学</span></div>
+          <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">硕士</span><span class="font-semibold text-amber-500">华中科技大学</span></div>
+        </div>
+      </div>
+
+      <div class="p-5 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/50 space-y-2">
+        <div class="text-xs font-mono text-purple-400 uppercase tracking-wider">性格与座右铭</div>
+        <div class="text-2xl font-extrabold text-purple-500 dark:text-purple-300">ENTP · 辩论家</div>
+        <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          「充满好奇，保持理性。」<br />
+          给世界带来一点快乐的探索者，热衷把复杂概念拆成清晰可操作的系统。
+        </p>
+      </div>
+
+      <div class="p-5 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/50 space-y-2">
+        <div class="text-xs font-mono text-emerald-500 uppercase tracking-wider">热爱与兴趣偏好</div>
+        <div class="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
+          <div>🎮 <strong class="text-zinc-900 dark:text-white">游戏</strong>：原神（UID: 125766904）</div>
+          <div>📺 <strong class="text-zinc-900 dark:text-white">番剧</strong>：夏目友人帐</div>
+          <div>🎵 <strong class="text-zinc-900 dark:text-white">音乐</strong>：周杰伦 · 民谣 · 华语流行</div>
+          <div>🤖 <strong class="text-zinc-900 dark:text-white">科技</strong>：编程 AI · 创造 Agent 中...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fun Bio Checklist (from Hexo about.pug) -->
+    <div class="p-6 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/50 dark:bg-zinc-900/40 space-y-2.5">
+      <div class="text-xs font-mono text-terracotta uppercase tracking-wider mb-1">心路历程 · 欢迎来到我的小栈 😝</div>
+      <div class="text-sm text-zinc-700 dark:text-zinc-300 flex items-center gap-2">
+        <span>✅</span>
+        <span>擅长 PS、Pr、Ae、Au、Ai、Dw、An、Id 等软件的安装与卸载 🎃</span>
+      </div>
+      <div class="text-sm text-zinc-700 dark:text-zinc-300 flex items-center gap-2">
+        <span>✅</span>
+        <span>精通 HTML、CSS、JavaScript、Vue、React、Python、C++、Go、TypeScript 等单词的拼写 🎲</span>
+      </div>
+      <div class="text-sm text-zinc-700 dark:text-zinc-300 flex items-center gap-2">
+        <span>✅</span>
+        <span>熟悉 Windows、Linux、Mac、Android、iOS 等系统的开关机 👻</span>
       </div>
     </div>
 

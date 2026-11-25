@@ -39,6 +39,20 @@ const entertainItems = [
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <script is:inline>
+      (function () {
+        try {
+          var bg = localStorage.getItem('blogbg');
+          if (bg) {
+            var p = JSON.parse(bg);
+            if (p && p.value) {
+              var cssVal = p.type === 'image' ? 'url("' + p.value + '") center/cover no-repeat' : p.value;
+              document.documentElement.style.setProperty('--hero-bg', cssVal);
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
     <ClientRouter />
   </head>
   <body class="min-h-screen flex flex-col bg-cream-50 dark:bg-obsidian text-charcoal-DEFAULT dark:text-cream-100 transition-colors duration-300 relative selection:bg-terracotta/20 selection:text-terracotta overflow-x-hidden">

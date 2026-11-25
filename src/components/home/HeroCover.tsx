@@ -43,28 +43,34 @@ const defaultPhrases = [
 ];
 
 export const HeroCover: React.FC = () => {
-  const [currentBg, setCurrentBg] = useState<{ type: string; value: string }>({
-    type: 'image',
-    value: wallpaperPresets[0].url,
+  const [currentBg, setCurrentBg] = useState<{ type: string; value: string }>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('blogbg');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed?.type && parsed?.value) return parsed;
+        }
+      } catch {}
+    }
+    return { type: 'image', value: wallpaperPresets[0].url };
   });
+
   const [phrases, setPhrases] = useState<string[]>(defaultPhrases);
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'wallpaper' | 'color' | 'gradient'>('wallpaper');
+  const [activeTab, setActiveTab] = useState<'wallpaper' | 'gradient' | 'color'>('wallpaper');
+
+  // Custom color & gradient controls
+  const [customColor, setCustomColor] = useState('#D97757');
+  const [gradStart, setGradStart] = useState('#667eea');
+  const [gradEnd, setGradEnd] = useState('#764ba2');
+  const [gradAngle, setGradAngle] = useState(135);
 
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('blogbg');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (parsed.type && parsed.value) setCurrentBg(parsed);
-      } catch {
-        if (saved.startsWith('http')) setCurrentBg({ type: 'image', value: saved });
-      }
-    }
     const savedPhrases = localStorage.getItem('hero_phrases');
     if (savedPhrases) {
       try {
@@ -96,25 +102,20 @@ export const HeroCover: React.FC = () => {
     const next = { type, value };
     setCurrentBg(next);
     localStorage.setItem('blogbg', JSON.stringify(next));
+    const cssVal = type === 'image' ? `url("${value}") center/cover no-repeat` : value;
+    document.documentElement.style.setProperty('--hero-bg', cssVal);
     setIsOpen(false);
   };
 
-  const bgStyle =
-    currentBg.type === 'image'
-      ? { backgroundImage: `url(${currentBg.value})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-      : currentBg.type === 'color'
-      ? { backgroundColor: currentBg.value }
-      : { backgroundImage: currentBg.value };
-
+  const defaultBgCss = `url("${wallpaperPresets[0].url}") center/cover no-repeat`;
+  const customGradPreview = `linear-gradient(${gradAngle}deg, ${gradStart}, ${gradEnd})`;
   const activePhrase = phrases[phraseIndex % phrases.length] || defaultPhrases[0];
 
   return (
     <div
-      style={bgStyle}
-      className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center overflow-hidden mb-14 transition-all duration-700"
+      style={{ background: `var(--hero-bg, ${defaultBgCss})` }}
+      className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center overflow-hidden mb-14 transition-all duration-500"
     >
-      {/* Pure crisp image - NO grey/black overlay */}
-
       {/* Center Minimal Title + Typewriter */}
       <div className="relative z-20 text-center px-6 max-w-3xl mx-auto">
         <motion.h1
@@ -156,107 +157,168 @@ export const HeroCover: React.FC = () => {
       <button
         onClick={() => setIsOpen(true)}
         className="absolute bottom-8 right-6 z-30 p-3 rounded-full bg-black/30 hover:bg-black/55 backdrop-blur-md border border-white/25 text-white transition-all shadow-lg hover:scale-105"
-        title="切换封面壁纸 / 纯色 / 渐变"
+        title="切换封面壁纸 / 自定义纯色 / 自定义渐变"
       >
         <Palette className="w-4 h-4" />
       </button>
 
-      {/* Switcher Modal */}
+      {/* Enlarged Switcher Modal (max-w-2xl) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
+            <div className="absolute inset-0 bg-black/65 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
             <motion.div
-              initial={{ y: 50, opacity: 0, scale: 0.96 }}
+              initial={{ y: 40, opacity: 0, scale: 0.96 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: 50, opacity: 0, scale: 0.96 }}
+              exit={{ y: 40, opacity: 0, scale: 0.96 }}
               transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-              className="relative w-full max-w-md rounded-3xl bg-zinc-900/95 border border-white/10 backdrop-blur-2xl p-5 shadow-2xl"
+              className="relative w-full max-w-2xl rounded-3xl bg-zinc-900/95 border border-white/15 backdrop-blur-2xl p-6 sm:p-7 shadow-2xl text-white"
             >
-              <div className="flex items-center justify-between mb-4">
-                <span className="font-semibold text-white text-sm">切换封面背景 ({wallpaperPresets.length} 张壁纸)</span>
-                <button onClick={() => setIsOpen(false)} className="text-white/50 hover:text-white transition-colors">
-                  <X className="w-4 h-4" />
+              <div className="flex items-center justify-between mb-5">
+                <div>
+                  <h3 className="font-semibold text-base sm:text-lg">自定义首页封面背景</h3>
+                  <p className="text-xs text-white/50 mt-0.5">支持高清壁纸、自定义双色渐变与任意纯色</p>
+                </div>
+                <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-full hover:bg-white/10 text-white/60 hover:text-white transition-colors">
+                  <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="flex gap-1 p-1 rounded-xl bg-white/5 mb-4">
+              <div className="flex gap-1.5 p-1 rounded-xl bg-white/8 mb-5">
                 {(['wallpaper', 'gradient', 'color'] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                      activeTab === tab ? 'bg-white text-black' : 'text-white/60 hover:text-white'
+                    className={`flex-1 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+                      activeTab === tab ? 'bg-white text-black shadow' : 'text-white/65 hover:text-white'
                     }`}
                   >
-                    {tab === 'wallpaper' ? '高清壁纸' : tab === 'gradient' ? '流光渐变' : '极简纯色'}
+                    {tab === 'wallpaper' ? '高清壁纸 (12)' : tab === 'gradient' ? '流光渐变 / 自定义' : '纯色 / 调色盘'}
                   </button>
                 ))}
               </div>
 
               {activeTab === 'wallpaper' && (
-                <div className="grid grid-cols-3 gap-2 max-h-72 overflow-y-auto pr-1">
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-80 overflow-y-auto pr-1">
                   {wallpaperPresets.map((p) => (
                     <button
                       key={p.url}
                       onClick={() => selectBg(p.type, p.url)}
-                      className="relative h-20 rounded-xl overflow-hidden border-2 border-transparent hover:border-white/60 transition-all group"
+                      className="relative h-24 rounded-2xl overflow-hidden border-2 border-transparent hover:border-white/70 transition-all group"
                       style={{ backgroundImage: `url(${p.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
                       title={p.name}
                     >
                       {currentBg.value === p.url && (
                         <div className="absolute inset-0 flex items-center justify-center bg-black/35">
-                          <Check className="w-4 h-4 text-white" />
+                          <Check className="w-5 h-5 text-white" />
                         </div>
                       )}
-                      <span className="absolute bottom-0 inset-x-0 bg-black/55 py-0.5 text-[10px] text-white/90 truncate px-1">{p.name}</span>
+                      <span className="absolute bottom-0 inset-x-0 bg-black/60 py-1 text-[11px] text-white/95 truncate px-1.5">{p.name}</span>
                     </button>
                   ))}
                 </div>
               )}
 
               {activeTab === 'gradient' && (
-                <div className="grid grid-cols-3 gap-2">
-                  {gradientPresets.map((p) => (
-                    <button
-                      key={p.value}
-                      onClick={() => selectBg(p.type, p.value)}
-                      className="relative h-20 rounded-xl overflow-hidden border-2 border-transparent hover:border-white/60 transition-all"
-                      style={{ backgroundImage: p.value }}
-                      title={p.name}
-                    >
-                      {currentBg.value === p.value && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                          <Check className="w-4 h-4 text-white" />
-                        </div>
-                      )}
-                      <span className="absolute bottom-1 left-0 right-0 text-center text-[10px] text-white/90 font-mono">{p.name}</span>
-                    </button>
-                  ))}
+                <div className="space-y-5">
+                  <div className="grid grid-cols-3 gap-3">
+                    {gradientPresets.map((p) => (
+                      <button
+                        key={p.value}
+                        onClick={() => selectBg(p.type, p.value)}
+                        className="relative h-20 rounded-2xl overflow-hidden border-2 border-transparent hover:border-white/70 transition-all"
+                        style={{ backgroundImage: p.value }}
+                      >
+                        {currentBg.value === p.value && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                            <Check className="w-5 h-5 text-white" />
+                          </div>
+                        )}
+                        <span className="absolute bottom-1.5 left-0 right-0 text-center text-[11px] text-white font-mono drop-shadow">{p.name}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Custom Gradient Builder */}
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+                    <div className="text-xs font-mono text-white/70">自定义双色渐变生成器</div>
+                    <div className="h-14 rounded-xl border border-white/15 shadow-inner" style={{ backgroundImage: customGradPreview }} />
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <label className="flex items-center gap-1.5 text-xs font-mono">
+                          <span>起色</span>
+                          <input type="color" value={gradStart} onChange={(e) => setGradStart(e.target.value)} className="w-8 h-8 rounded cursor-pointer bg-transparent border-0" />
+                        </label>
+                        <label className="flex items-center gap-1.5 text-xs font-mono">
+                          <span>终色</span>
+                          <input type="color" value={gradEnd} onChange={(e) => setGradEnd(e.target.value)} className="w-8 h-8 rounded cursor-pointer bg-transparent border-0" />
+                        </label>
+                        <label className="flex items-center gap-1.5 text-xs font-mono">
+                          <span>角度 {gradAngle}°</span>
+                          <input type="range" min={0} max={360} value={gradAngle} onChange={(e) => setGradAngle(Number(e.target.value))} className="w-24 accent-terracotta" />
+                        </label>
+                      </div>
+                      <button
+                        onClick={() => selectBg('gradient', customGradPreview)}
+                        className="px-4 py-2 rounded-xl bg-terracotta hover:bg-terracotta/90 text-white text-xs font-mono font-semibold"
+                      >
+                        应用自定义渐变
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
 
               {activeTab === 'color' && (
-                <div className="grid grid-cols-3 gap-3">
-                  {colorPresets.map((p) => (
+                <div className="space-y-5">
+                  <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+                    {colorPresets.map((p) => (
+                      <button
+                        key={p.value}
+                        onClick={() => selectBg(p.type, p.value)}
+                        className="h-20 rounded-2xl border-2 border-transparent hover:border-white/70 transition-all relative shadow-lg flex items-end justify-center pb-2"
+                        style={{ backgroundColor: p.value }}
+                        title={p.name}
+                      >
+                        {currentBg.value === p.value && (
+                          <Check className="w-5 h-5 text-white absolute inset-0 m-auto" />
+                        )}
+                        <span className="text-[10px] text-white/90 font-mono">{p.name}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Custom Solid Color Picker */}
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-wrap items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="color"
+                        value={customColor}
+                        onChange={(e) => setCustomColor(e.target.value)}
+                        className="w-11 h-11 rounded-xl cursor-pointer bg-transparent border-0"
+                      />
+                      <div>
+                        <div className="text-xs font-mono text-white/60 mb-1">自定义纯色 (HEX)</div>
+                        <input
+                          type="text"
+                          value={customColor}
+                          onChange={(e) => setCustomColor(e.target.value)}
+                          className="w-28 px-2.5 py-1 rounded-lg bg-black/40 border border-white/15 text-xs font-mono text-white"
+                        />
+                      </div>
+                    </div>
                     <button
-                      key={p.value}
-                      onClick={() => selectBg(p.type, p.value)}
-                      className="h-16 rounded-2xl border-2 border-transparent hover:border-white/60 transition-all relative shadow-lg flex items-end justify-center pb-1.5"
-                      style={{ backgroundColor: p.value }}
-                      title={p.name}
+                      onClick={() => selectBg('color', customColor)}
+                      className="px-4 py-2 rounded-xl bg-terracotta hover:bg-terracotta/90 text-white text-xs font-mono font-semibold"
                     >
-                      {currentBg.value === p.value && (
-                        <Check className="w-4 h-4 text-white absolute inset-0 m-auto" />
-                      )}
-                      <span className="text-[10px] text-white/80 font-mono">{p.name}</span>
+                      应用自定义纯色
                     </button>
-                  ))}
+                  </div>
                 </div>
               )}
             </motion.div>

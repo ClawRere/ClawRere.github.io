@@ -119,55 +119,56 @@ export const LinksExplorer: React.FC = () => {
   const getSafeIframeSrc = (link: string) => (link === '/' ? '/about' : link);
 
   return (
-    <div className="space-y-3">
-      {/* Ultra-compact Single Top Toolbar */}
-      <div className="flex flex-wrap items-center gap-2.5">
-        <h1 className="text-base sm:text-lg font-bold text-charcoal-DEFAULT dark:text-cream-50 shrink-0 mr-1">
-          🔖 友链导航 <span className="text-xs font-mono text-terracotta font-normal">({filteredLinks.length})</span>
-        </h1>
+    <div className="space-y-4">
+      {/* Centered Top Toolbar */}
+      <div className="max-w-5xl mx-auto flex flex-col items-center gap-3">
+        <div className="w-full flex flex-wrap items-center justify-center gap-3">
+          <h1 className="text-base sm:text-lg font-bold text-charcoal-DEFAULT dark:text-cream-50 shrink-0">
+            🔖 友链导航 <span className="text-xs font-mono text-terracotta font-normal">({filteredLinks.length})</span>
+          </h1>
 
-        <div className="relative flex-1 min-w-[180px] max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-charcoal-100 dark:text-cream-400" />
-          <input
-            type="text"
-            placeholder="搜索站点..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-8 pr-3 py-1.5 rounded-lg border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-zinc-900/60 text-xs text-charcoal-DEFAULT dark:text-cream-100 focus:outline-none focus:border-terracotta/50"
-          />
+          <div className="relative flex-1 min-w-[180px] max-w-xs">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-charcoal-100 dark:text-cream-400" />
+            <input
+              type="text"
+              placeholder="搜索站点..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-8 pr-3 py-1.5 rounded-lg border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-zinc-900/60 text-xs text-charcoal-DEFAULT dark:text-cream-100 focus:outline-none focus:border-terracotta/50"
+            />
+          </div>
+
+          <div className="flex items-center gap-1 p-0.5 rounded-lg border border-charcoal-500/10 dark:border-white/10 bg-white/40 dark:bg-black/20">
+            {([
+              ['card', '卡片', LayoutGrid],
+              ['compact', '列表', List],
+              ['split', '画中画', Monitor],
+            ] as const).map(([mode, label, Icon]) => (
+              <button
+                key={mode}
+                onClick={() => switchLayout(mode)}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
+                  layoutMode === mode
+                    ? 'bg-terracotta text-white shadow-sm'
+                    : 'text-charcoal-100 dark:text-cream-400 hover:text-charcoal dark:hover:text-white'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Layout mode switcher */}
-        <div className="flex items-center gap-1 p-0.5 rounded-lg border border-charcoal-500/10 dark:border-white/10 bg-white/40 dark:bg-black/20">
-          {([
-            ['card', '卡片', LayoutGrid],
-            ['compact', '列表', List],
-            ['split', '画中画', Monitor],
-          ] as const).map(([mode, label, Icon]) => (
-            <button
-              key={mode}
-              onClick={() => switchLayout(mode)}
-              className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
-                layoutMode === mode
-                  ? 'bg-terracotta text-white shadow-sm'
-                  : 'text-charcoal-100 dark:text-cream-400 hover:text-charcoal dark:hover:text-white'
-              }`}
-            >
-              <Icon className="w-3.5 h-3.5" />
-              <span>{label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Inline scrollable category pills */}
-        <div className="flex gap-1.5 overflow-x-auto pb-0.5 w-full scrollbar-none">
+        {/* Centered category pills */}
+        <div className="flex flex-wrap items-center justify-center gap-1.5">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`flex-shrink-0 px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border ${
+              className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all border ${
                 selectedCategory === cat
-                  ? 'bg-terracotta text-white border-terracotta'
+                  ? 'bg-terracotta text-white border-terracotta shadow-sm'
                   : 'border-charcoal-500/15 dark:border-white/10 text-charcoal-200 dark:text-cream-300 hover:border-terracotta/40 hover:text-terracotta'
               }`}
             >
@@ -179,9 +180,8 @@ export const LinksExplorer: React.FC = () => {
 
       {/* Main Content */}
       {layoutMode === 'split' ? (
-        /* Split PiP occupies 82%+ width and full viewport height */
+        /* Split PiP occupies full screen width (83%+ iframe) */
         <div className="flex flex-col lg:flex-row gap-3 h-[calc(100vh-10.5rem)] min-h-[600px]">
-          {/* Narrow Left Sidebar ~17% */}
           <div className="w-full lg:w-56 max-h-44 lg:max-h-full flex-shrink-0 overflow-y-auto space-y-1 pr-1 lg:border-r border-charcoal-500/10 dark:border-white/8">
             {filteredLinks.map((item, idx) => (
               <button
@@ -208,7 +208,6 @@ export const LinksExplorer: React.FC = () => {
             ))}
           </div>
 
-          {/* Wide Right PiP Preview ~83% */}
           <div className="flex-1 min-w-0 h-full">
             {previewLink && (
               <div className="h-full flex flex-col rounded-2xl overflow-hidden border border-charcoal-500/10 dark:border-white/10 bg-white dark:bg-zinc-950 shadow-2xl">
@@ -252,7 +251,8 @@ export const LinksExplorer: React.FC = () => {
           </div>
         </div>
       ) : layoutMode === 'compact' ? (
-        <div className="space-y-1">
+        /* Compact list constrained to max-w-4xl centered */
+        <div className="max-w-4xl mx-auto space-y-1 py-2">
           {filteredLinks.map((item, idx) => (
             <a
               key={`compact-${item.category}-${item.name}-${idx}`}
@@ -270,9 +270,8 @@ export const LinksExplorer: React.FC = () => {
                 }}
               />
               <div className="flex-1 min-w-0 flex items-center gap-4">
-                <span className="font-medium text-sm text-charcoal-DEFAULT dark:text-cream-50 w-32 flex-shrink-0 truncate">{item.name}</span>
+                <span className="font-medium text-sm text-charcoal-DEFAULT dark:text-cream-50 w-36 flex-shrink-0 truncate">{item.name}</span>
                 <span className="text-xs text-charcoal-100 dark:text-cream-400 truncate flex-1">{item.descr}</span>
-                <span className="text-[10px] font-mono text-charcoal-100/50 dark:text-cream-400/50 hidden lg:block truncate max-w-[180px]">{item.link}</span>
               </div>
               <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
@@ -287,7 +286,8 @@ export const LinksExplorer: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3.5">
+        /* Card grid constrained to max-w-6xl centered */
+        <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 py-2">
           {filteredLinks.map((item, idx) => (
             <a
               key={`card-${item.category}-${item.name}-${idx}`}

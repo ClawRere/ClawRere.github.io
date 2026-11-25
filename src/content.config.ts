@@ -41,6 +41,7 @@ const projects = defineCollection({
     ]),
     date: z.coerce.date(),
     featured: z.boolean().default(false),
+    hidden: z.boolean().default(false),
     cover: z.string().optional().nullable(),
     coCreation: z.object({
       humanShare: z.number().min(0).max(100),

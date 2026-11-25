@@ -3,7 +3,8 @@ title: "BestCEM AI 访谈主持人｜企业级用户研究 AI Agent"
 description: "将研究人员的用户访谈工作拆解为大纲设计、在线主持、智能追问、笔录整理与洞察报告全链路。引入人工确认与访谈原文回溯机制，已在 20+ 家企业真实落地使用。"
 category: "AI Agent"
 date: 2026-11-01
-featured: true
+featured: false
+hidden: true
 cover: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop"
 coCreation:
   humanShare: 65

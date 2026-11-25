@@ -2,6 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { getPostCover } from '@/lib/covers';
+import { QuickPostButton } from '@/components/blog/QuickPostButton';
 import { Calendar, Tag, ArrowUpRight, Search } from 'lucide-react';
 
 const allPosts = await getCollection('posts');
@@ -22,14 +23,17 @@ const categories = Array.from(
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
 
     <!-- Page hero -->
-    <div class="mb-12">
-      <p class="text-xs font-mono uppercase tracking-widest text-terracotta mb-2">Technical Blog · {sortedPosts.length} articles</p>
-      <h1 class="text-4xl sm:text-5xl font-extrabold text-charcoal-DEFAULT dark:text-cream-50 tracking-tight">
-        知识库
-      </h1>
-      <p class="mt-3 text-charcoal-100 dark:text-cream-300 text-sm max-w-xl">
-        AI 产品思维 · 前端工程 · 大模型实践 · 数字花园随笔
-      </p>
+    <div class="mb-12 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="text-xs font-mono uppercase tracking-widest text-terracotta mb-2">Technical Blog · {sortedPosts.length} articles</p>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-charcoal-DEFAULT dark:text-cream-50 tracking-tight">
+          知识库
+        </h1>
+        <p class="mt-3 text-charcoal-100 dark:text-cream-300 text-sm max-w-xl">
+          AI 产品思维 · 前端工程 · 大模型实践 · 数字花园随笔
+        </p>
+      </div>
+      <QuickPostButton client:load />
     </div>
 
     <!-- Category filter chips -->

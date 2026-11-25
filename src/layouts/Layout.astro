@@ -50,6 +50,12 @@ const entertainItems = [
               document.documentElement.style.setProperty('--hero-bg', cssVal);
             }
           }
+          var cs = localStorage.getItem('layout_card_scale');
+          if (cs) document.documentElement.style.setProperty('--card-scale', cs);
+          var ps = localStorage.getItem('layout_pill_scale');
+          if (ps) document.documentElement.style.setProperty('--pill-scale', ps);
+          var ph = localStorage.getItem('layout_pip_vh');
+          if (ph) document.documentElement.style.setProperty('--pip-height', ph + 'vh');
         } catch (e) {}
       })();
     </script>
@@ -61,6 +67,17 @@ const entertainItems = [
 
     <!-- Daytime Snowflakes / Nighttime Fireflies Interactive Canvas -->
     <BackgroundCanvas client:load />
+
+    <!-- Blurred Ambient Hero Background across the entire site -->
+    <div
+      class="fixed inset-0 pointer-events-none z-[-3] overflow-hidden"
+      aria-hidden="true"
+    >
+      <div
+        class="w-full h-full scale-110 blur-[60px] saturate-125 opacity-30 dark:opacity-25 transition-all duration-700"
+        style="background: var(--hero-bg, url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat);"
+      />
+    </div>
 
     <!-- Ambient gradient mesh -->
     <div class="fixed inset-0 pointer-events-none z-[-2] overflow-hidden">

@@ -38,7 +38,7 @@ const latestPosts = allPosts
           { href: '/links', icon: Link2, emoji: '🔖', title: '108+ 友链', sub: '卡片 / 列表 / 画中画', color: 'hover:border-amber-500/40 group-hover:text-amber-500' },
           { href: '/messageboard', icon: MessageSquare, emoji: '💌', title: '留言板', sub: '交流 · 友链申请', color: 'hover:border-purple-500/40 group-hover:text-purple-500' },
         ].map(item => (
-          <a href={item.href} class={`group p-4 rounded-2xl border border-charcoal-500/10 dark:border-white/8 ${item.color} bg-white/50 dark:bg-zinc-900/50 hover:shadow-lg transition-all duration-300 flex flex-col justify-between gap-3`}>
+          <a href={item.href} style="transform: scale(var(--card-scale, 1));" class={`group p-4 rounded-2xl border border-charcoal-500/10 dark:border-white/8 ${item.color} bg-white/50 dark:bg-zinc-900/50 hover:shadow-lg transition-all duration-300 flex flex-col justify-between gap-3`}>
             <div class="flex items-center justify-between">
               <span class="text-2xl">{item.emoji}</span>
               <ArrowUpRight class="w-4 h-4 text-charcoal-100 dark:text-cream-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, RefreshCw } from 'lucide-react';
+import { ExternalLink, RefreshCw, Plus, X } from 'lucide-react';
 
 export interface ToolTab {
   id: string;
@@ -52,12 +52,16 @@ export const ToolboxViewer: React.FC = () => {
   const [tabs, setTabs] = useState<ToolTab[]>(DEFAULT_TOOL_TABS);
   const [activeId, setActiveId] = useState<string>('daily-news');
   const [reloadKey, setReloadKey] = useState<number>(0);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newTool, setNewTool] = useState({ label: '', emoji: '🧰', desc: '', src: '' });
 
   // Built-in quick DevToys state
   const [inputText, setInputText] = useState('{\n  "product": "PMOS",\n  "version": "V0.2",\n  "role": "AI Product Manager"\n}');
   const [outputText, setOutputText] = useState('');
 
   useEffect(() => {
+    setIsAdmin(localStorage.getItem('admin_authenticated') === 'true');
     const saved = localStorage.getItem('custom_tools');
     if (saved) {
       try {
@@ -68,6 +72,28 @@ export const ToolboxViewer: React.FC = () => {
       } catch {}
     }
   }, []);
+
+  const handleAddTool = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newTool.label.trim() || !newTool.src.trim()) return;
+    const item: ToolTab = {
+      id: `custom-${Date.now()}`,
+      label: newTool.label.trim(),
+      emoji: newTool.emoji.trim() || '🧰',
+      desc: newTool.desc.trim() || newTool.src.trim(),
+      src: newTool.src.trim(),
+      externalUrl: newTool.src.trim(),
+      type: 'iframe',
+    };
+    const saved = localStorage.getItem('custom_tools');
+    const prev = saved ? JSON.parse(saved) : [];
+    const updatedCustom = [...prev, item];
+    localStorage.setItem('custom_tools', JSON.stringify(updatedCustom));
+    setTabs([...DEFAULT_TOOL_TABS, ...updatedCustom]);
+    setActiveId(item.id);
+    setNewTool({ label: '', emoji: '🧰', desc: '', src: '' });
+    setShowAddModal(false);
+  };
 
   const activeTab = tabs.find((t) => t.id === activeId) || tabs[0];
 
@@ -106,6 +132,7 @@ export const ToolboxViewer: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveId(tab.id)}
+                style={{ transform: 'scale(var(--pill-scale, 1))' }}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all border ${
                   isActive
                     ? 'bg-terracotta text-white border-terracotta shadow-md'
@@ -117,6 +144,14 @@ export const ToolboxViewer: React.FC = () => {
               </button>
             );
           })}
+          {isAdmin && (
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-mono hover:bg-emerald-500/25 transition-all"
+            >
+              <Plus className="w-3.5 h-3.5" /> 新增工具
+            </button>
+          )}
         </div>
 
         <span className="text-xs font-mono text-charcoal-100 dark:text-cream-400 hidden lg:inline">
@@ -125,7 +160,10 @@ export const ToolboxViewer: React.FC = () => {
       </div>
 
       {/* Single Large Picture-in-Picture Frame */}
-      <div className="rounded-3xl border border-charcoal-500/10 dark:border-white/10 overflow-hidden bg-white/60 dark:bg-zinc-900/70 backdrop-blur-xl shadow-2xl flex flex-col h-[78vh] min-h-[560px]">
+      <div
+        style={{ height: 'var(--pip-height, 78vh)' }}
+        className="rounded-3xl border border-charcoal-500/10 dark:border-white/10 overflow-hidden bg-white/60 dark:bg-zinc-900/70 backdrop-blur-xl shadow-2xl flex flex-col min-h-[520px]"
+      >
         <div className="flex items-center justify-between px-5 py-2.5 border-b border-charcoal-500/10 dark:border-white/10 bg-cream-100/80 dark:bg-zinc-950/60 shrink-0">
           <div className="flex items-center gap-3 min-w-0">
             <div className="flex gap-1.5 shrink-0">
@@ -199,6 +237,25 @@ export const ToolboxViewer: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Inline Admin Add Tool Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm">
+          <form onSubmit={handleAddTool} className="w-full max-w-md rounded-3xl bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/15 p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-lg font-bold">🛠️ 新增工具箱 Tab</h3>
+              <button type="button" onClick={() => setShowAddModal(false)} className="p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10"><X className="w-4 h-4" /></button>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <input type="text" placeholder="名称 *" required value={newTool.label} onChange={e => setNewTool({ ...newTool, label: e.target.value })} className="col-span-2 px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+              <input type="text" placeholder="Emoji" value={newTool.emoji} onChange={e => setNewTool({ ...newTool, emoji: e.target.value })} className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm text-center" />
+            </div>
+            <input type="url" placeholder="内嵌网页 URL https://... *" required value={newTool.src} onChange={e => setNewTool({ ...newTool, src: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+            <input type="text" placeholder="工具简述" value={newTool.desc} onChange={e => setNewTool({ ...newTool, desc: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+            <button type="submit" className="w-full py-2.5 rounded-xl bg-terracotta text-white text-xs font-mono font-semibold hover:opacity-90">保存并立即生效</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

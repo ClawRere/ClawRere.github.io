@@ -71,6 +71,7 @@ export const NetEaseMusicPlayer: React.FC = () => {
         onClick={() => setIsExpanded(!isExpanded)}
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.97 }}
+        style={{ transform: 'scale(var(--pill-scale, 1))', transformOrigin: 'bottom left' }}
         className="flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-zinc-900/90 dark:bg-black/80 border border-white/15 shadow-2xl backdrop-blur-xl text-white hover:border-terracotta/50 transition-all group"
         title={isExpanded ? '收起音乐播放器' : '展开网易云音乐播放器'}
       >

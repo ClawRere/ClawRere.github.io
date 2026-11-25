@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, ExternalLink, Copy, Check, LayoutGrid, List, Monitor } from 'lucide-react';
+import { Search, ExternalLink, Copy, Check, LayoutGrid, List, Monitor, Plus, X } from 'lucide-react';
 import linksData from '@/data/links.json';
 
 export interface LinkItem {
@@ -39,8 +39,12 @@ function resolveAvatar(avatar: string, link: string): string {
 
 export const LinksExplorer: React.FC = () => {
   const [customLinks, setCustomLinks] = useState<LinkItem[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newLink, setNewLink] = useState<LinkItem>({ name: '', link: '', avatar: '', descr: '', category: '友情链接' });
 
   useEffect(() => {
+    setIsAdmin(localStorage.getItem('admin_authenticated') === 'true');
     const savedCustom = localStorage.getItem('custom_links');
     if (savedCustom) {
       try {
@@ -49,6 +53,16 @@ export const LinksExplorer: React.FC = () => {
       } catch {}
     }
   }, []);
+
+  const handleAddLink = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newLink.name.trim() || !newLink.link.trim()) return;
+    const updated = [newLink, ...customLinks];
+    setCustomLinks(updated);
+    localStorage.setItem('custom_links', JSON.stringify(updated));
+    setNewLink({ name: '', link: '', avatar: '', descr: '', category: '友情链接' });
+    setShowAddModal(false);
+  };
 
   const allLinks = useMemo(() => {
     const base = (linksData as CategoryGroup[]).flatMap((c) => c.links.map((l) => ({ ...l, category: c.name })));
@@ -158,6 +172,15 @@ export const LinksExplorer: React.FC = () => {
               </button>
             ))}
           </div>
+
+          {isAdmin && (
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-mono hover:bg-emerald-500/25 transition-all"
+            >
+              <Plus className="w-3.5 h-3.5" /> 新增友链
+            </button>
+          )}
         </div>
 
         {/* Centered category pills */}
@@ -181,7 +204,7 @@ export const LinksExplorer: React.FC = () => {
       {/* Main Content */}
       {layoutMode === 'split' ? (
         /* Split PiP occupies full screen width (83%+ iframe) */
-        <div className="flex flex-col lg:flex-row gap-3 h-[calc(100vh-10.5rem)] min-h-[600px]">
+        <div style={{ height: 'var(--pip-height, 82vh)' }} className="flex flex-col lg:flex-row gap-3 min-h-[580px]">
           <div className="w-full lg:w-56 max-h-44 lg:max-h-full flex-shrink-0 overflow-y-auto space-y-1 pr-1 lg:border-r border-charcoal-500/10 dark:border-white/8">
             {filteredLinks.map((item, idx) => (
               <button
@@ -316,6 +339,23 @@ export const LinksExplorer: React.FC = () => {
               </button>
             </a>
           ))}
+        </div>
+      )}
+
+      {/* Inline Admin Add Link Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm">
+          <form onSubmit={handleAddLink} className="w-full max-w-md rounded-3xl bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/15 p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-lg font-bold">🔖 新增友链 / 导航站点</h3>
+              <button type="button" onClick={() => setShowAddModal(false)} className="p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10"><X className="w-4 h-4" /></button>
+            </div>
+            <input type="text" placeholder="站点名称 *" required value={newLink.name} onChange={e => setNewLink({ ...newLink, name: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+            <input type="url" placeholder="网址 https://... *" required value={newLink.link} onChange={e => setNewLink({ ...newLink, link: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+            <input type="text" placeholder="分类 (如：友情链接、AI工具)" value={newLink.category} onChange={e => setNewLink({ ...newLink, category: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+            <input type="text" placeholder="简短描述" value={newLink.descr} onChange={e => setNewLink({ ...newLink, descr: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+            <button type="submit" className="w-full py-2.5 rounded-xl bg-terracotta text-white text-xs font-mono font-semibold hover:opacity-90">保存并立即添加到导航</button>
+          </form>
         </div>
       )}
     </div>

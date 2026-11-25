@@ -1,117 +1,70 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
-  Settings,
   ShieldCheck,
   MessageSquare,
   Trash2,
   Check,
   LogOut,
-  FileText,
-  Link2,
-  Wrench,
-  Gamepad2,
   KeyRound,
-  Send,
-  Download,
-  Plus,
   Home,
+  Sliders,
+  MoveDiagonal2,
+  RotateCcw,
+  ExternalLink,
   AlertCircle,
 } from 'lucide-react';
 
-type AdminTab = 'home' | 'posts' | 'links' | 'tools' | 'entertain' | 'guestbook' | 'api';
-
-interface CustomLink {
-  name: string;
-  link: string;
-  avatar: string;
-  descr: string;
-  category: string;
-}
-
-interface CustomTool {
-  id: string;
-  label: string;
-  emoji: string;
-  desc: string;
-  src: string;
-  externalUrl: string;
-  type: 'iframe';
-}
-
-interface CustomEntertain {
-  id: string;
-  title: string;
-  emoji: string;
-  desc: string;
-  link: string;
-}
+type AdminTab = 'layout' | 'home' | 'guestbook' | 'api';
 
 export const AdminDashboard: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(false);
-  const [activeTab, setActiveTab] = useState<AdminTab>('home');
+  const [activeTab, setActiveTab] = useState<AdminTab>('layout');
   const [toast, setToast] = useState<{ type: 'ok' | 'err'; msg: string } | null>(null);
 
-  // 1. Global / Home states
+  // Draggable layout sizes
+  const [cardScale, setCardScale] = useState(1.0);
+  const [pillScale, setPillScale] = useState(1.0);
+  const [pipHeightVh, setPipHeightVh] = useState(78);
+  const [linkLayout, setLinkLayout] = useState('card');
+
+  // Global / Home states
   const [showMusic, setShowMusic] = useState(true);
   const [isNightTheme, setIsNightTheme] = useState(false);
-  const [heroBgUrl, setHeroBgUrl] = useState('');
   const [heroPhrasesText, setHeroPhrasesText] = useState(
     '用 AI 重新定义产品边界 · Co-creating with Intelligence\n5W1H 穿透本质 · 假设与事实分层决策\nApple 流体动效 × Claude 人文温润质感\n欢迎来到磊大大的数字花园 · Digital Garden'
   );
 
-  // 2. Post creator states
-  const [postTitle, setPostTitle] = useState('');
-  const [postCategory, setPostCategory] = useState('AI 产品');
-  const [postTags, setPostTags] = useState('AI, 产品思考');
-  const [postDesc, setPostDesc] = useState('');
-  const [postCover, setPostCover] = useState('');
-  const [postBody, setPostBody] = useState('## 背景\n\n## 核心思路\n\n## 总结\n');
-  const [isPublishing, setIsPublishing] = useState(false);
-
-  // 3. Links manager states
-  const [linkLayout, setLinkLayout] = useState('card');
-  const [customLinks, setCustomLinks] = useState<CustomLink[]>([]);
-  const [newLink, setNewLink] = useState<CustomLink>({
-    name: '',
-    link: '',
-    avatar: '',
-    descr: '',
-    category: '友情链接',
-  });
-
-  // 4. Tools manager states
-  const [customTools, setCustomTools] = useState<CustomTool[]>([]);
-  const [newTool, setNewTool] = useState({ label: '', emoji: '🧰', desc: '', src: '' });
-
-  // 5. Entertain manager states
-  const [customEntertain, setCustomEntertain] = useState<CustomEntertain[]>([]);
-  const [newEntertain, setNewEntertain] = useState({ title: '', emoji: '🎮', desc: '', link: '' });
-
-  // 6. Guestbook states
+  // Guestbook states
   const [messages, setMessages] = useState<Array<{ id: number; name: string; content: string; date: string }>>([
     { id: 1, name: '小N同学', content: '磊大大的网站升级后动效太丝滑了！PMOS 产品模型很有启发。', date: '2026-11-20' },
     { id: 2, name: 'Hexo极客', content: '求问 93+ 原生动效是用什么方式内嵌无缝运行的？已收藏！', date: '2026-11-22' },
   ]);
 
-  // 7. API config states
+  // API config states
   const [ghRepo, setGhRepo] = useState('ClawRere/ClawRere.github.io');
   const [ghToken, setGhToken] = useState('');
   const [webhookUrl, setWebhookUrl] = useState('');
   const [webhookKey, setWebhookKey] = useState('');
 
+  // Dragging refs
+  const draggingRef = useRef<'card' | 'pill' | 'pip' | null>(null);
+  const startPosRef = useRef<{ x: number; y: number; initVal: number }>({ x: 0, y: 0, initVal: 1 });
+
   useEffect(() => {
     if (localStorage.getItem('admin_authenticated') === 'true') setIsAdmin(true);
 
+    const cs = parseFloat(localStorage.getItem('layout_card_scale') || '1');
+    if (!isNaN(cs)) setCardScale(cs);
+    const ps = parseFloat(localStorage.getItem('layout_pill_scale') || '1');
+    if (!isNaN(ps)) setPillScale(ps);
+    const ph = parseInt(localStorage.getItem('layout_pip_vh') || '78', 10);
+    if (!isNaN(ph)) setPipHeightVh(ph);
+
+    const layout = localStorage.getItem('links_layout');
+    if (layout) setLinkLayout(layout);
+
     if (localStorage.getItem('show_music') === 'false') setShowMusic(false);
     setIsNightTheme(document.documentElement.classList.contains('dark'));
-
-    const bg = localStorage.getItem('blogbg');
-    if (bg) {
-      try {
-        const parsed = JSON.parse(bg);
-        if (parsed.value) setHeroBgUrl(parsed.value);
-      } catch {}
-    }
 
     const savedPhrases = localStorage.getItem('hero_phrases');
     if (savedPhrases) {
@@ -121,16 +74,7 @@ export const AdminDashboard: React.FC = () => {
       } catch {}
     }
 
-    const layout = localStorage.getItem('links_layout');
-    if (layout) setLinkLayout(layout);
-
     try {
-      const cl = localStorage.getItem('custom_links');
-      if (cl) setCustomLinks(JSON.parse(cl));
-      const ct = localStorage.getItem('custom_tools');
-      if (ct) setCustomTools(JSON.parse(ct));
-      const ce = localStorage.getItem('custom_entertain');
-      if (ce) setCustomEntertain(JSON.parse(ce));
       const gm = localStorage.getItem('guestbook_messages');
       if (gm) setMessages(JSON.parse(gm));
     } catch {}
@@ -141,9 +85,72 @@ export const AdminDashboard: React.FC = () => {
     setWebhookKey(localStorage.getItem('admin_webhook_key') || '');
   }, []);
 
+  // Global mouse move / up listeners for drag-to-resize handles
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (!draggingRef.current) return;
+      const dx = e.clientX - startPosRef.current.x;
+      const dy = e.clientY - startPosRef.current.y;
+
+      if (draggingRef.current === 'card') {
+        const next = Math.max(0.75, Math.min(1.35, Number((startPosRef.current.initVal + dx / 240).toFixed(2))));
+        setCardScale(next);
+        document.documentElement.style.setProperty('--card-scale', String(next));
+        localStorage.setItem('layout_card_scale', String(next));
+      } else if (draggingRef.current === 'pill') {
+        const next = Math.max(0.75, Math.min(1.4, Number((startPosRef.current.initVal + dx / 200).toFixed(2))));
+        setPillScale(next);
+        document.documentElement.style.setProperty('--pill-scale', String(next));
+        localStorage.setItem('layout_pill_scale', String(next));
+      } else if (draggingRef.current === 'pip') {
+        const next = Math.max(55, Math.min(90, Math.round(startPosRef.current.initVal + dy / 4)));
+        setPipHeightVh(next);
+        document.documentElement.style.setProperty('--pip-height', `${next}vh`);
+        localStorage.setItem('layout_pip_vh', String(next));
+      }
+    };
+
+    const onUp = () => {
+      if (draggingRef.current) {
+        draggingRef.current = null;
+        notify('板块尺寸已实时保存并应用至全站');
+      }
+    };
+
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+  }, []);
+
+  const startDrag = (type: 'card' | 'pill' | 'pip', e: React.MouseEvent) => {
+    e.preventDefault();
+    draggingRef.current = type;
+    startPosRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      initVal: type === 'card' ? cardScale : type === 'pill' ? pillScale : pipHeightVh,
+    };
+  };
+
+  const resetSizes = () => {
+    setCardScale(1);
+    setPillScale(1);
+    setPipHeightVh(78);
+    localStorage.setItem('layout_card_scale', '1');
+    localStorage.setItem('layout_pill_scale', '1');
+    localStorage.setItem('layout_pip_vh', '78');
+    document.documentElement.style.setProperty('--card-scale', '1');
+    document.documentElement.style.setProperty('--pill-scale', '1');
+    document.documentElement.style.setProperty('--pip-height', '78vh');
+    notify('已恢复所有板块默认尺寸');
+  };
+
   const notify = (msg: string, type: 'ok' | 'err' = 'ok') => {
     setToast({ type, msg });
-    setTimeout(() => setToast(null), 3500);
+    setTimeout(() => setToast(null), 3000);
   };
 
   const handleLogout = () => {
@@ -151,12 +158,11 @@ export const AdminDashboard: React.FC = () => {
     window.location.href = '/login';
   };
 
-  // --- Home & Global Handlers ---
   const toggleMusic = () => {
     const next = !showMusic;
     setShowMusic(next);
     localStorage.setItem('show_music', String(next));
-    notify(next ? '已开启左下角同步音乐胶囊' : '已隐藏音乐胶囊');
+    notify(next ? '已开启左下角音乐胶囊' : '已隐藏音乐胶囊');
   };
 
   const toggleDayNight = () => {
@@ -167,200 +173,18 @@ export const AdminDashboard: React.FC = () => {
     notify(next ? '已切换为夜间模式（萤火虫背景）' : '已切换为白天模式（飘雪背景）');
   };
 
-  const saveHeroSettings = () => {
-    if (heroBgUrl.trim()) {
-      const type = heroBgUrl.startsWith('#') ? 'color' : heroBgUrl.includes('gradient') ? 'gradient' : 'image';
-      localStorage.setItem('blogbg', JSON.stringify({ type, value: heroBgUrl.trim() }));
-    }
-    const phrases = heroPhrasesText
-      .split('\n')
-      .map((s) => s.trim())
-      .filter(Boolean);
-    localStorage.setItem('hero_phrases', JSON.stringify(phrases));
-    notify('首页封面与打字机文案已保存！刷新首页即可查看效果');
-  };
-
-  // --- GitHub API Helper ---
-  const pushToGitHub = async (path: string, contentText: string, commitMsg: string) => {
-    if (!ghToken.trim()) {
-      throw new Error('请先在「API 接入配置」中填写 GitHub Personal Access Token');
-    }
-    const apiUrl = `https://api.github.com/repos/${ghRepo}/contents/${path}`;
-    let sha: string | undefined;
-    const checkRes = await fetch(apiUrl, {
-      headers: { Authorization: `token ${ghToken.trim()}`, Accept: 'application/vnd.github.v3+json' },
-    });
-    if (checkRes.ok) {
-      const existing = await checkRes.json();
-      sha = existing.sha;
-    }
-
-    const encoded = btoa(unescape(encodeURIComponent(contentText)));
-    const putRes = await fetch(apiUrl, {
-      method: 'PUT',
-      headers: {
-        Authorization: `token ${ghToken.trim()}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: commitMsg,
-        content: encoded,
-        ...(sha ? { sha } : {}),
-      }),
-    });
-
-    if (!putRes.ok) {
-      const errData = await putRes.json().catch(() => ({}));
-      throw new Error(errData.message || `GitHub API 返回状态 ${putRes.status}`);
-    }
-    return true;
-  };
-
-  // --- Post Handlers ---
-  const buildPostMarkdown = () => {
-    const today = new Date().toISOString().slice(0, 10);
-    const tagsArr = postTags
-      .split(/[,，]/)
-      .map((t) => t.trim())
-      .filter(Boolean);
-    return `---
-title: "${postTitle.replace(/"/g, '\\"')}"
-date: ${today}
-categories: "${postCategory}"
-tags:
-${tagsArr.map((t) => `  - "${t}"`).join('\n')}
-description: "${postDesc.replace(/"/g, '\\"')}"
-${postCover ? `cover: "${postCover}"\n` : ''}author: "Larry"
----
-
-${postBody}
-`;
-  };
-
-  const handlePublishPostViaAPI = async () => {
-    if (!postTitle.trim()) return notify('请输入文章标题', 'err');
-    setIsPublishing(true);
-    try {
-      const md = buildPostMarkdown();
-      const slug = postTitle
-        .trim()
-        .toLowerCase()
-        .replace(/[^\w\u4e00-\u9fa5-]+/g, '-')
-        .replace(/^-|-$/g, '') || `post-${Date.now()}`;
-
-      if (ghToken.trim()) {
-        await pushToGitHub(`src/content/posts/${slug}.md`, md, `feat(post): add ${postTitle}`);
-        notify(`文章《${postTitle}》已通过 GitHub API 直发仓库，Pages 将自动重新构建！`);
-      } else if (webhookUrl.trim()) {
-        const res = await fetch(webhookUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            ...(webhookKey ? { Authorization: `Bearer ${webhookKey}` } : {}),
-          },
-          body: JSON.stringify({ type: 'post', slug, markdown: md }),
-        });
-        if (!res.ok) throw new Error(`Webhook 返回 ${res.status}`);
-        notify(`文章《${postTitle}》已推送至自定义 API！`);
-      } else {
-        throw new Error('未配置 GitHub Token 或 Webhook API，请先前往「API 接入」配置，或点击下载 .md 文件');
-      }
-    } catch (e: any) {
-      notify(e.message || '发布失败', 'err');
-    } finally {
-      setIsPublishing(false);
-    }
-  };
-
-  const handleDownloadPostMd = () => {
-    if (!postTitle.trim()) return notify('请输入文章标题', 'err');
-    const blob = new Blob([buildPostMarkdown()], { type: 'text/markdown;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${postTitle.trim()}.md`;
-    a.click();
-    URL.revokeObjectURL(url);
-    notify('Markdown 文件已生成并开始下载');
-  };
-
-  // --- Link Handlers ---
   const handleLayoutChange = (layout: string) => {
     setLinkLayout(layout);
     localStorage.setItem('links_layout', layout);
     notify(`友链默认视图已切换为：${layout === 'card' ? '卡片' : layout === 'compact' ? '列表' : '画中画 (80%+)'}`);
   };
 
-  const handleAddLink = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newLink.name.trim() || !newLink.link.trim()) return notify('请填写名称和网址', 'err');
-    const updated = [newLink, ...customLinks];
-    setCustomLinks(updated);
-    localStorage.setItem('custom_links', JSON.stringify(updated));
-    setNewLink({ name: '', link: '', avatar: '', descr: '', category: '友情链接' });
-    notify(`已添加站点「${newLink.name}」到友链页面！`);
+  const saveHeroPhrases = () => {
+    const phrases = heroPhrasesText.split('\n').map((s) => s.trim()).filter(Boolean);
+    localStorage.setItem('hero_phrases', JSON.stringify(phrases));
+    notify('打字机标语已更新');
   };
 
-  const removeCustomLink = (idx: number) => {
-    const updated = customLinks.filter((_, i) => i !== idx);
-    setCustomLinks(updated);
-    localStorage.setItem('custom_links', JSON.stringify(updated));
-    notify('已移除自定义链接');
-  };
-
-  // --- Tool Handlers ---
-  const handleAddTool = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newTool.label.trim() || !newTool.src.trim()) return notify('请填写工具名称与 URL', 'err');
-    const item: CustomTool = {
-      id: `custom-${Date.now()}`,
-      label: newTool.label.trim(),
-      emoji: newTool.emoji.trim() || '🧰',
-      desc: newTool.desc.trim() || newTool.src.trim(),
-      src: newTool.src.trim(),
-      externalUrl: newTool.src.trim(),
-      type: 'iframe',
-    };
-    const updated = [...customTools, item];
-    setCustomTools(updated);
-    localStorage.setItem('custom_tools', JSON.stringify(updated));
-    setNewTool({ label: '', emoji: '🧰', desc: '', src: '' });
-    notify(`已添加工具「${item.label}」，可在 /tools 画中画 Tab 查看！`);
-  };
-
-  const removeCustomTool = (id: string) => {
-    const updated = customTools.filter((t) => t.id !== id);
-    setCustomTools(updated);
-    localStorage.setItem('custom_tools', JSON.stringify(updated));
-    notify('已移除工具');
-  };
-
-  // --- Entertain Handlers ---
-  const handleAddEntertain = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newEntertain.title.trim() || !newEntertain.link.trim()) return notify('请填写娱乐项名称与 URL', 'err');
-    const item: CustomEntertain = {
-      id: `ent-${Date.now()}`,
-      title: newEntertain.title.trim(),
-      emoji: newEntertain.emoji.trim() || '🎮',
-      desc: newEntertain.desc.trim() || '自定义娱乐互动页',
-      link: newEntertain.link.trim(),
-    };
-    const updated = [...customEntertain, item];
-    setCustomEntertain(updated);
-    localStorage.setItem('custom_entertain', JSON.stringify(updated));
-    setNewEntertain({ title: '', emoji: '🎮', desc: '', link: '' });
-    notify(`已添加娱乐项目「${item.title}」！`);
-  };
-
-  const removeCustomEntertain = (id: string) => {
-    const updated = customEntertain.filter((e) => e.id !== id);
-    setCustomEntertain(updated);
-    localStorage.setItem('custom_entertain', JSON.stringify(updated));
-    notify('已移除娱乐项目');
-  };
-
-  // --- Guestbook ---
   const deleteMessage = (id: number) => {
     const updated = messages.filter((m) => m.id !== id);
     setMessages(updated);
@@ -368,7 +192,6 @@ ${postBody}
     notify('留言已删除');
   };
 
-  // --- API Config Save ---
   const saveApiConfig = () => {
     localStorage.setItem('admin_gh_repo', ghRepo.trim());
     localStorage.setItem('admin_gh_token', ghToken.trim());
@@ -382,12 +205,9 @@ ${postBody}
       <div className="p-8 rounded-3xl glass border border-charcoal-500/10 dark:border-white/10 text-center max-w-md mx-auto space-y-4 my-12">
         <h2 className="font-serif text-xl font-bold">请先登录管理员账号</h2>
         <p className="text-xs text-charcoal-100 dark:text-cream-400">
-          全站管理工作台支持管理首页、博客文章、友链、工具、娱乐页与 API 自动发布。
+          登录后可拖拽调节全站板块与胶囊大小，并在博客、友链、工具箱页面直接新增内容。
         </p>
-        <a
-          href="/login"
-          className="inline-block px-5 py-2.5 rounded-full bg-terracotta text-white font-mono text-xs"
-        >
+        <a href="/login" className="inline-block px-5 py-2.5 rounded-full bg-terracotta text-white font-mono text-xs">
           前往登录页面
         </a>
       </div>
@@ -395,13 +215,10 @@ ${postBody}
   }
 
   const navTabs: Array<{ id: AdminTab; label: string; icon: React.ComponentType<{ className?: string }> }> = [
-    { id: 'home', label: '首页与全局', icon: Home },
-    { id: 'posts', label: '新增文章', icon: FileText },
-    { id: 'links', label: '友链管理', icon: Link2 },
-    { id: 'tools', label: '工具箱管理', icon: Wrench },
-    { id: 'entertain', label: '娱乐馆管理', icon: Gamepad2 },
-    { id: 'guestbook', label: '留言审核', icon: MessageSquare },
-    { id: 'api', label: 'API 接入配置', icon: KeyRound },
+    { id: 'layout', label: '拖拽调节板块大小', icon: Sliders },
+    { id: 'home', label: '全局开关与标语', icon: Home },
+    { id: 'guestbook', label: '留言板审核', icon: MessageSquare },
+    { id: 'api', label: 'API 发布配置', icon: KeyRound },
   ];
 
   return (
@@ -414,38 +231,45 @@ ${postBody}
           </div>
           <div>
             <h1 className="font-serif text-xl sm:text-2xl font-bold text-charcoal-DEFAULT dark:text-cream-50">
-              全站管理与内容发布中心
+              全站布局与板块尺寸控制台
             </h1>
             <p className="text-xs font-mono text-charcoal-100 dark:text-cream-400">
-              Admin: ldd · 支持全页面配置 & GitHub / Webhook API 发布
+              提示：文章、友链、工具的新增按钮已直接内嵌在各页面顶部（仅登录后可见）
             </p>
           </div>
         </div>
 
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-full glass hover:bg-red-500 hover:text-white text-xs font-mono transition-colors"
-        >
+        <button onClick={handleLogout} className="flex items-center gap-1.5 px-4 py-2 rounded-full glass hover:bg-red-500 hover:text-white text-xs font-mono transition-colors">
           <LogOut className="w-3.5 h-3.5" />
           <span>退出登录</span>
         </button>
       </div>
 
-      {/* Toast */}
+      {/* Quick Jump Links to Page-level Editors */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {[
+          { href: '/posts', title: '✍️ 前往博客页写新文章', sub: '页面右上角「写新文章」按钮' },
+          { href: '/links', title: '🔖 前往友链页新增站点', sub: '顶部工具栏「+ 新增友链」按钮' },
+          { href: '/tools', title: '🛠️ 前往工具箱新增画中画', sub: '标签栏右侧「+ 新增工具」按钮' },
+        ].map((item) => (
+          <a key={item.href} href={item.href} className="p-4 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 transition-all flex items-center justify-between group">
+            <div>
+              <div className="font-semibold text-sm group-hover:text-terracotta transition-colors">{item.title}</div>
+              <div className="text-[11px] opacity-65 mt-0.5">{item.sub}</div>
+            </div>
+            <ExternalLink className="w-4 h-4 opacity-50 group-hover:text-terracotta group-hover:opacity-100" />
+          </a>
+        ))}
+      </div>
+
       {toast && (
-        <div
-          className={`p-3.5 rounded-2xl border text-xs font-mono flex items-center gap-2 ${
-            toast.type === 'ok'
-              ? 'bg-emerald-500/10 border-emerald-500/25 text-emerald-600 dark:text-emerald-400'
-              : 'bg-red-500/10 border-red-500/25 text-red-500'
-          }`}
-        >
+        <div className={`p-3.5 rounded-2xl border text-xs font-mono flex items-center gap-2 ${toast.type === 'ok' ? 'bg-emerald-500/10 border-emerald-500/25 text-emerald-500' : 'bg-red-500/10 border-red-500/25 text-red-500'}`}>
           {toast.type === 'ok' ? <Check className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
           <span>{toast.msg}</span>
         </div>
       )}
 
-      {/* Navigation Tabs */}
+      {/* Tabs */}
       <div className="flex flex-wrap gap-2">
         {navTabs.map((t) => {
           const Icon = t.icon;
@@ -455,9 +279,7 @@ ${postBody}
               key={t.id}
               onClick={() => setActiveTab(t.id)}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium transition-all border ${
-                active
-                  ? 'bg-terracotta text-white border-terracotta shadow-sm'
-                  : 'glass border-charcoal-500/10 dark:border-white/10 text-charcoal-200 dark:text-cream-300 hover:border-terracotta/40'
+                active ? 'bg-terracotta text-white border-terracotta shadow-sm' : 'glass border-charcoal-500/10 dark:border-white/10 text-charcoal-200 dark:text-cream-300 hover:border-terracotta/40'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -467,147 +289,148 @@ ${postBody}
         })}
       </div>
 
-      {/* Tab Panels */}
       <div className="p-6 rounded-3xl glass border border-charcoal-500/10 dark:border-white/10 space-y-6">
-        {/* 1. HOME & GLOBAL */}
-        {activeTab === 'home' && (
+        {/* 1. DRAG-TO-RESIZE LAYOUT PANEL */}
+        {activeTab === 'layout' && (
           <div className="space-y-6">
-            <h2 className="font-serif text-lg font-bold">首页视觉与全站环境控制</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-2xl border border-charcoal-500/10 dark:border-white/10 flex items-center justify-between">
-                <div>
-                  <span className="font-bold text-sm block">场景模式（白天飘雪 / 夜间萤火虫）</span>
-                  <span className="text-xs opacity-60">当前：{isNightTheme ? '✨ 夜间萤火虫' : '❄️ 白天飘雪'}</span>
-                </div>
-                <button onClick={toggleDayNight} className="px-3 py-1.5 rounded-xl bg-terracotta/15 text-terracotta text-xs font-mono">
-                  一键切换
-                </button>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 className="font-serif text-lg font-bold">可视化拖拽调整板块、卡片与胶囊大小</h2>
+                <p className="text-xs opacity-65 mt-0.5">按住下方示例组件右下角手柄左右/上下拖拽，即可实时调整全站比例</p>
               </div>
-
-              <div className="p-4 rounded-2xl border border-charcoal-500/10 dark:border-white/10 flex items-center justify-between">
-                <div>
-                  <span className="font-bold text-sm block">左下角同步音乐胶囊</span>
-                  <span className="text-xs opacity-60">歌单 ID: 9333187603</span>
-                </div>
-                <button
-                  onClick={toggleMusic}
-                  className={`px-3 py-1.5 rounded-xl font-mono text-xs ${
-                    showMusic ? 'bg-emerald-500/15 text-emerald-500' : 'bg-red-500/15 text-red-500'
-                  }`}
-                >
-                  {showMusic ? '已开启' : '已关闭'}
-                </button>
-              </div>
+              <button onClick={resetSizes} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-charcoal-500/15 dark:border-white/15 text-xs font-mono hover:border-terracotta">
+                <RotateCcw className="w-3.5 h-3.5" /> 恢复默认
+              </button>
             </div>
 
-            <div className="space-y-4 pt-2 border-t border-charcoal-500/10 dark:border-white/10">
-              <div>
-                <label className="block text-xs font-mono mb-1.5">首页默认封面壁纸 URL / 纯色 Hex / 渐变 CSS</label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Drag 1: Card Size */}
+              <div className="p-5 rounded-2xl border border-charcoal-500/10 dark:border-white/10 bg-black/5 dark:bg-white/5 space-y-4">
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="font-bold">1. 跳转卡片缩放比例</span>
+                  <span className="text-terracotta font-semibold">{Math.round(cardScale * 100)}%</span>
+                </div>
+
+                <div className="h-36 flex items-center justify-center overflow-hidden">
+                  <div
+                    style={{ transform: `scale(${cardScale})` }}
+                    className="relative w-52 p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-terracotta/30 shadow-lg select-none"
+                  >
+                    <div className="text-lg">🚀</div>
+                    <div className="font-bold text-sm mt-1">示例跳转卡片</div>
+                    <div className="text-[11px] opacity-60">拖拽右下角调节大小</div>
+                    <div
+                      onMouseDown={(e) => startDrag('card', e)}
+                      className="absolute -bottom-2 -right-2 w-6 h-6 rounded-full bg-terracotta text-white flex items-center justify-center cursor-ew-resize shadow-md"
+                      title="按住左右拖拽调节卡片大小"
+                    >
+                      <MoveDiagonal2 className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+                </div>
+
                 <input
-                  type="text"
-                  value={heroBgUrl}
-                  onChange={(e) => setHeroBgUrl(e.target.value)}
-                  placeholder="https://images.unsplash.com/... 或 #141413"
-                  className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono"
+                  type="range"
+                  min={0.75}
+                  max={1.35}
+                  step={0.05}
+                  value={cardScale}
+                  onChange={(e) => {
+                    const v = Number(e.target.value);
+                    setCardScale(v);
+                    document.documentElement.style.setProperty('--card-scale', String(v));
+                    localStorage.setItem('layout_card_scale', String(v));
+                  }}
+                  className="w-full accent-terracotta"
                 />
               </div>
-              <div>
-                <label className="block text-xs font-mono mb-1.5">首页打字机轮播标语（每行一条）</label>
-                <textarea
-                  rows={4}
-                  value={heroPhrasesText}
-                  onChange={(e) => setHeroPhrasesText(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono"
+
+              {/* Drag 2: Capsule Pill Size */}
+              <div className="p-5 rounded-2xl border border-charcoal-500/10 dark:border-white/10 bg-black/5 dark:bg-white/5 space-y-4">
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="font-bold">2. 胶囊按钮缩放比例</span>
+                  <span className="text-terracotta font-semibold">{Math.round(pillScale * 100)}%</span>
+                </div>
+
+                <div className="h-36 flex items-center justify-center overflow-hidden">
+                  <div
+                    style={{ transform: `scale(${pillScale})` }}
+                    className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900 text-white border border-white/20 shadow-xl select-none"
+                  >
+                    <span className="w-2.5 h-2.5 rounded-full bg-terracotta" />
+                    <span className="text-xs font-medium">示例胶囊 (音乐/工具Tab)</span>
+                    <div
+                      onMouseDown={(e) => startDrag('pill', e)}
+                      className="ml-1 w-5 h-5 rounded-full bg-terracotta text-white flex items-center justify-center cursor-ew-resize shadow"
+                      title="按住左右拖拽调节胶囊大小"
+                    >
+                      <MoveDiagonal2 className="w-3 h-3" />
+                    </div>
+                  </div>
+                </div>
+
+                <input
+                  type="range"
+                  min={0.75}
+                  max={1.4}
+                  step={0.05}
+                  value={pillScale}
+                  onChange={(e) => {
+                    const v = Number(e.target.value);
+                    setPillScale(v);
+                    document.documentElement.style.setProperty('--pill-scale', String(v));
+                    localStorage.setItem('layout_pill_scale', String(v));
+                  }}
+                  className="w-full accent-terracotta"
                 />
               </div>
-              <button onClick={saveHeroSettings} className="px-5 py-2 rounded-xl bg-terracotta text-white text-xs font-mono hover:opacity-90">
-                保存首页配置
-              </button>
             </div>
-          </div>
-        )}
 
-        {/* 2. ADD POST */}
-        {activeTab === 'posts' && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="font-serif text-lg font-bold">撰写与发布新文章 (支持 API 直发)</h2>
-              <a href="/posts" className="text-xs font-mono text-terracotta hover:underline">查看博客列表 →</a>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="文章标题 *"
-                value={postTitle}
-                onChange={(e) => setPostTitle(e.target.value)}
-                className="px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-              />
-              <input
-                type="text"
-                placeholder="分类 (如：AI 产品、技术随笔)"
-                value={postCategory}
-                onChange={(e) => setPostCategory(e.target.value)}
-                className="px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-              />
-              <input
-                type="text"
-                placeholder="标签 (逗号分隔，如: Agent, Prompt)"
-                value={postTags}
-                onChange={(e) => setPostTags(e.target.value)}
-                className="px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-              />
-              <input
-                type="text"
-                placeholder="封面图片 URL (可选，留空自动匹配高清封面)"
-                value={postCover}
-                onChange={(e) => setPostCover(e.target.value)}
-                className="px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-              />
-            </div>
-            <input
-              type="text"
-              placeholder="一句话摘要"
-              value={postDesc}
-              onChange={(e) => setPostDesc(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-            />
-            <textarea
-              rows={8}
-              value={postBody}
-              onChange={(e) => setPostBody(e.target.value)}
-              placeholder="Markdown 正文..."
-              className="w-full p-3.5 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono"
-            />
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={handlePublishPostViaAPI}
-                disabled={isPublishing}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-terracotta text-white text-xs font-mono hover:opacity-90 disabled:opacity-50"
-              >
-                <Send className="w-3.5 h-3.5" />
-                <span>{isPublishing ? '发布中...' : '通过 API 一键发布到网站'}</span>
-              </button>
-              <button
-                onClick={handleDownloadPostMd}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl glass border border-charcoal-500/15 dark:border-white/15 text-xs font-mono"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>下载 .md 文件</span>
-              </button>
-            </div>
-          </div>
-        )}
+            {/* Drag 3: PiP Height */}
+            <div className="p-5 rounded-2xl border border-charcoal-500/10 dark:border-white/10 bg-black/5 dark:bg-white/5 space-y-3">
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="font-bold">3. 画中画容器视口高度（工具箱 & 友链分栏模式）</span>
+                <span className="text-terracotta font-semibold">{pipHeightVh}vh</span>
+              </div>
 
-        {/* 3. LINKS */}
-        {activeTab === 'links' && (
-          <div className="space-y-6">
-            <div>
-              <h2 className="font-serif text-lg font-bold mb-3">友链页面默认布局</h2>
+              <div
+                style={{ height: `${Math.round(pipHeightVh * 1.4)}px` }}
+                className="relative w-full rounded-2xl border border-terracotta/30 bg-white/60 dark:bg-zinc-900/70 flex items-center justify-center text-xs font-mono opacity-80 select-none transition-[height]"
+              >
+                画中画窗口高度预览 ({pipHeightVh}% 视口高度)
+                <div
+                  onMouseDown={(e) => startDrag('pip', e)}
+                  className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-4 py-0.5 rounded-full bg-terracotta text-white text-[10px] cursor-ns-resize shadow-md"
+                  title="按住上下拖拽调节画中画高度"
+                >
+                  ↕ 上下拖拽高度
+                </div>
+              </div>
+
+              <input
+                type="range"
+                min={55}
+                max={90}
+                step={1}
+                value={pipHeightVh}
+                onChange={(e) => {
+                  const v = Number(e.target.value);
+                  setPipHeightVh(v);
+                  document.documentElement.style.setProperty('--pip-height', `${v}vh`);
+                  localStorage.setItem('layout_pip_vh', String(v));
+                }}
+                className="w-full accent-terracotta"
+              />
+            </div>
+
+            {/* Link default mode */}
+            <div className="pt-2 border-t border-charcoal-500/10 dark:border-white/10">
+              <span className="block text-xs font-mono mb-2.5 font-bold">友链默认展示模式：</span>
               <div className="flex flex-wrap gap-2.5">
                 {[
                   { id: 'card', name: '🗂️ 卡片网格' },
                   { id: 'compact', name: '📋 紧凑列表' },
-                  { id: 'split', name: '🖥️ 画中画模式 (80%+)' },
+                  { id: 'split', name: '🖥️ 画中画 (80%+)' },
                 ].map((item) => (
                   <button
                     key={item.id}
@@ -621,175 +444,58 @@ ${postBody}
                 ))}
               </div>
             </div>
-
-            <form onSubmit={handleAddLink} className="space-y-3 pt-4 border-t border-charcoal-500/10 dark:border-white/10">
-              <h3 className="font-bold text-sm">添加新友链 / 导航站点</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <input
-                  type="text"
-                  placeholder="站点名称 *"
-                  value={newLink.name}
-                  onChange={(e) => setNewLink({ ...newLink, name: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-                />
-                <input
-                  type="url"
-                  placeholder="网址 https://... *"
-                  value={newLink.link}
-                  onChange={(e) => setNewLink({ ...newLink, link: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-                />
-                <input
-                  type="text"
-                  placeholder="分类 (如：友情链接、AI工具)"
-                  value={newLink.category}
-                  onChange={(e) => setNewLink({ ...newLink, category: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-                />
-                <input
-                  type="text"
-                  placeholder="简短描述"
-                  value={newLink.descr}
-                  onChange={(e) => setNewLink({ ...newLink, descr: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-                />
-              </div>
-              <button type="submit" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-terracotta text-white text-xs font-mono">
-                <Plus className="w-3.5 h-3.5" /> 添加到友链导航
-              </button>
-            </form>
-
-            {customLinks.length > 0 && (
-              <div className="space-y-2 pt-2">
-                <h4 className="text-xs font-mono opacity-70">已添加的自定义站点 ({customLinks.length})</h4>
-                {customLinks.map((l, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 rounded-xl border border-charcoal-500/10 dark:border-white/10 text-xs">
-                    <span><strong>{l.name}</strong> ({l.category}) — {l.link}</span>
-                    <button onClick={() => removeCustomLink(idx)} className="text-red-500 p-1"><Trash2 className="w-3.5 h-3.5" /></button>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         )}
 
-        {/* 4. TOOLS */}
-        {activeTab === 'tools' && (
+        {/* 2. HOME & GLOBAL */}
+        {activeTab === 'home' && (
           <div className="space-y-6">
-            <form onSubmit={handleAddTool} className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h2 className="font-serif text-lg font-bold">添加工具箱画中画 Tab</h2>
-                <a href="/tools" className="text-xs font-mono text-terracotta hover:underline">前往工具箱 →</a>
+            <h2 className="font-serif text-lg font-bold">全站环境开关与首页打字机标语</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-2xl border border-charcoal-500/10 dark:border-white/10 flex items-center justify-between">
+                <div>
+                  <span className="font-bold text-sm block">场景模式（白天飘雪 / 夜间萤火虫）</span>
+                  <span className="text-xs opacity-60">当前：{isNightTheme ? '✨ 夜间萤火虫' : '❄️ 白天飘雪'}</span>
+                </div>
+                <button onClick={toggleDayNight} className="px-3 py-1.5 rounded-xl bg-terracotta/15 text-terracotta text-xs font-mono">
+                  一键切换
+                </button>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <input
-                  type="text"
-                  placeholder="工具名称 *"
-                  value={newTool.label}
-                  onChange={(e) => setNewTool({ ...newTool, label: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-                />
-                <input
-                  type="text"
-                  placeholder="Emoji 图标 (如 🧰)"
-                  value={newTool.emoji}
-                  onChange={(e) => setNewTool({ ...newTool, emoji: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-                />
-                <input
-                  type="url"
-                  placeholder="内嵌网页 URL https://... *"
-                  value={newTool.src}
-                  onChange={(e) => setNewTool({ ...newTool, src: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm sm:col-span-2"
-                />
-                <input
-                  type="text"
-                  placeholder="工具描述"
-                  value={newTool.desc}
-                  onChange={(e) => setNewTool({ ...newTool, desc: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm sm:col-span-2"
-                />
-              </div>
-              <button type="submit" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-terracotta text-white text-xs font-mono">
-                <Plus className="w-3.5 h-3.5" /> 新增工具 Tab
-              </button>
-            </form>
 
-            {customTools.length > 0 && (
-              <div className="space-y-2">
-                {customTools.map((t) => (
-                  <div key={t.id} className="flex items-center justify-between p-3 rounded-xl border border-charcoal-500/10 dark:border-white/10 text-xs">
-                    <span>{t.emoji} <strong>{t.label}</strong> — {t.src}</span>
-                    <button onClick={() => removeCustomTool(t.id)} className="text-red-500 p-1"><Trash2 className="w-3.5 h-3.5" /></button>
-                  </div>
-                ))}
+              <div className="p-4 rounded-2xl border border-charcoal-500/10 dark:border-white/10 flex items-center justify-between">
+                <div>
+                  <span className="font-bold text-sm block">左下角网易云音乐胶囊</span>
+                  <span className="text-xs opacity-60">歌单 ID: 9333187603</span>
+                </div>
+                <button
+                  onClick={toggleMusic}
+                  className={`px-3 py-1.5 rounded-xl font-mono text-xs ${showMusic ? 'bg-emerald-500/15 text-emerald-500' : 'bg-red-500/15 text-red-500'}`}
+                >
+                  {showMusic ? '已开启' : '已关闭'}
+                </button>
               </div>
-            )}
+            </div>
+
+            <div className="space-y-3 pt-2 border-t border-charcoal-500/10 dark:border-white/10">
+              <label className="block text-xs font-mono">首页打字机轮播标语（每行一条）</label>
+              <textarea
+                rows={4}
+                value={heroPhrasesText}
+                onChange={(e) => setHeroPhrasesText(e.target.value)}
+                className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono"
+              />
+              <button onClick={saveHeroPhrases} className="px-5 py-2 rounded-xl bg-terracotta text-white text-xs font-mono hover:opacity-90">
+                保存打字机标语
+              </button>
+            </div>
           </div>
         )}
 
-        {/* 5. ENTERTAIN */}
-        {activeTab === 'entertain' && (
-          <div className="space-y-6">
-            <form onSubmit={handleAddEntertain} className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h2 className="font-serif text-lg font-bold">添加娱乐馆互动页面</h2>
-                <a href="/entertain" className="text-xs font-mono text-terracotta hover:underline">前往娱乐馆 →</a>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <input
-                  type="text"
-                  placeholder="项目名称 *"
-                  value={newEntertain.title}
-                  onChange={(e) => setNewEntertain({ ...newEntertain, title: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-                />
-                <input
-                  type="text"
-                  placeholder="Emoji 图标 (如 🎮)"
-                  value={newEntertain.emoji}
-                  onChange={(e) => setNewEntertain({ ...newEntertain, emoji: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
-                />
-                <input
-                  type="text"
-                  placeholder="页面路径或 URL (如 /effects/tetris/index.html) *"
-                  value={newEntertain.link}
-                  onChange={(e) => setNewEntertain({ ...newEntertain, link: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm sm:col-span-2"
-                />
-                <input
-                  type="text"
-                  placeholder="简介"
-                  value={newEntertain.desc}
-                  onChange={(e) => setNewEntertain({ ...newEntertain, desc: e.target.value })}
-                  className="px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm sm:col-span-2"
-                />
-              </div>
-              <button type="submit" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-terracotta text-white text-xs font-mono">
-                <Plus className="w-3.5 h-3.5" /> 添加娱乐项目
-              </button>
-            </form>
-
-            {customEntertain.length > 0 && (
-              <div className="space-y-2">
-                {customEntertain.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between p-3 rounded-xl border border-charcoal-500/10 dark:border-white/10 text-xs">
-                    <span>{item.emoji} <strong>{item.title}</strong> — {item.link}</span>
-                    <button onClick={() => removeCustomEntertain(item.id)} className="text-red-500 p-1"><Trash2 className="w-3.5 h-3.5" /></button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* 6. GUESTBOOK */}
+        {/* 3. GUESTBOOK */}
         {activeTab === 'guestbook' && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="font-serif text-lg font-bold">留言板审核与维护 ({messages.length})</h2>
+              <h2 className="font-serif text-lg font-bold">留言板审核 ({messages.length})</h2>
               <a href="/messageboard" className="text-xs font-mono text-terracotta hover:underline">查看留言板 →</a>
             </div>
             <div className="divide-y divide-charcoal-500/10 dark:divide-white/10">
@@ -811,66 +517,36 @@ ${postBody}
           </div>
         )}
 
-        {/* 7. API CONFIG */}
+        {/* 4. API CONFIG */}
         {activeTab === 'api' && (
           <div className="space-y-5">
             <div>
               <h2 className="font-serif text-lg font-bold">API 自动化发布接入配置</h2>
               <p className="text-xs opacity-70 mt-1">
-                配置 GitHub Token 后，可在「新增文章」页面直接通过 GitHub Contents API 提交 Markdown 到仓库并自动部署；也可对接自定义 Webhook API。Token 仅保存在您本地浏览器中。
+                配置后，在博客页「写新文章」点击 API 一键发布即可自动提交到 GitHub 仓库触发部署。
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-mono mb-1">GitHub 仓库 (owner/repo)</label>
-                <input
-                  type="text"
-                  value={ghRepo}
-                  onChange={(e) => setGhRepo(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono"
-                />
+                <input type="text" value={ghRepo} onChange={(e) => setGhRepo(e.target.value)} className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono" />
               </div>
               <div>
                 <label className="block text-xs font-mono mb-1">GitHub Personal Access Token</label>
-                <input
-                  type="password"
-                  value={ghToken}
-                  onChange={(e) => setGhToken(e.target.value)}
-                  placeholder="ghp_xxxxxxxxxxxx"
-                  className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono"
-                />
+                <input type="password" value={ghToken} onChange={(e) => setGhToken(e.target.value)} placeholder="ghp_xxxxxxxxxxxx" className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono" />
               </div>
               <div>
                 <label className="block text-xs font-mono mb-1">自定义 Webhook API Endpoint (可选)</label>
-                <input
-                  type="url"
-                  value={webhookUrl}
-                  onChange={(e) => setWebhookUrl(e.target.value)}
-                  placeholder="https://your-api.example.com/publish"
-                  className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono"
-                />
+                <input type="url" value={webhookUrl} onChange={(e) => setWebhookUrl(e.target.value)} placeholder="https://your-api.example.com/publish" className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono" />
               </div>
               <div>
                 <label className="block text-xs font-mono mb-1">Webhook Bearer Key (可选)</label>
-                <input
-                  type="password"
-                  value={webhookKey}
-                  onChange={(e) => setWebhookKey(e.target.value)}
-                  placeholder="sk-..."
-                  className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono"
-                />
+                <input type="password" value={webhookKey} onChange={(e) => setWebhookKey(e.target.value)} placeholder="sk-..." className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono" />
               </div>
             </div>
-
             <button onClick={saveApiConfig} className="px-5 py-2.5 rounded-xl bg-terracotta text-white text-xs font-mono hover:opacity-90">
               保存 API 凭证
             </button>
-
-            <div className="p-4 rounded-2xl bg-zinc-950 text-emerald-300 font-mono text-[11px] overflow-x-auto space-y-1">
-              <div className="text-white/50"># 外部脚本 / AI Agent 通过 GitHub API 新增文章示例：</div>
-              <div>PUT https://api.github.com/repos/{ghRepo}/contents/src/content/posts/my-post.md</div>
-              <div>Header: Authorization: token &lt;YOUR_TOKEN&gt;</div>
-            </div>
           </div>
         )}
       </div>

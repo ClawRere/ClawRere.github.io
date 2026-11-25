@@ -19,8 +19,8 @@ export const LoginForm: React.FC = () => {
     e.preventDefault();
     setError('');
 
-    // Admin credentials (from Hexo admin / user preferences)
-    if ((username === 'ldd' || username === 'admin') && (password === 'ldd98534' || password === 'admin' || password === '123456')) {
+    // Admin credentials
+    if ((username === 'ldd' || username === 'admin') && password === 'ldd534') {
       localStorage.setItem('admin_authenticated', 'true');
       setIsAdmin(true);
       setSuccess('登录成功！正在跳转至管理工作台...');
@@ -28,7 +28,7 @@ export const LoginForm: React.FC = () => {
         window.location.href = '/admin';
       }, 800);
     } else {
-      setError('用户名或密码有误，请核对后重试（测试账号: ldd / ldd98534）');
+      setError('用户名或密码有误，请核对后重试');
     }
   };
 

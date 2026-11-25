@@ -18,6 +18,8 @@ type AdminTab = 'layout' | 'home' | 'about' | 'guestbook' | 'api';
 
 export const AdminDashboard: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loginPass, setLoginPass] = useState('');
+  const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState<AdminTab>('layout');
   const [toast, setToast] = useState<{ type: 'ok' | 'err'; msg: string } | null>(null);
 
@@ -215,16 +217,46 @@ export const AdminDashboard: React.FC = () => {
     notify('API 凭证已安全保存至本地浏览器');
   };
 
+  const handleLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (loginPass === 'ldd534') {
+      localStorage.setItem('admin_authenticated', 'true');
+      setIsAdmin(true);
+      setLoginError('');
+    } else {
+      setLoginError('密码错误，请重试');
+    }
+  };
+
   if (!isAdmin) {
     return (
-      <div className="p-8 rounded-3xl glass border border-charcoal-500/10 dark:border-white/10 text-center max-w-md mx-auto space-y-4 my-12">
-        <h2 className="font-serif text-xl font-bold">请先登录管理员账号</h2>
-        <p className="text-xs text-charcoal-100 dark:text-cream-400">
-          登录后可拖拽调节全站板块与胶囊大小，并在博客、友链、工具箱页面直接新增内容。
-        </p>
-        <a href="/login" className="inline-block px-5 py-2.5 rounded-full bg-terracotta text-white font-mono text-xs">
-          前往登录页面
-        </a>
+      <div className="p-8 rounded-3xl glass border border-charcoal-500/10 dark:border-white/10 max-w-md mx-auto space-y-5 my-12 shadow-2xl">
+        <div className="text-center space-y-2">
+          <div className="w-12 h-12 rounded-2xl bg-terracotta/15 text-terracotta flex items-center justify-center mx-auto">
+            <KeyRound className="w-6 h-6" />
+          </div>
+          <h2 className="font-serif text-2xl font-bold text-charcoal-DEFAULT dark:text-cream-50">管理员验证</h2>
+          <p className="text-xs text-charcoal-100 dark:text-cream-400">
+            仅在 /admin/ 路由需要输入管理密码
+          </p>
+        </div>
+        <form onSubmit={handleLoginSubmit} className="space-y-4">
+          <input
+            type="password"
+            value={loginPass}
+            onChange={(e) => setLoginPass(e.target.value)}
+            placeholder="请输入管理密码"
+            required
+            className="w-full px-4 py-2.5 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm focus:outline-none focus:border-terracotta"
+          />
+          {loginError && <p className="text-xs text-red-500 font-mono">{loginError}</p>}
+          <button
+            type="submit"
+            className="w-full py-2.5 rounded-xl bg-terracotta text-white font-mono text-xs font-semibold hover:opacity-90 transition-opacity"
+          >
+            验证并进入控制台
+          </button>
+        </form>
       </div>
     );
   }

@@ -52,7 +52,7 @@ class GlobalMusicStore {
     tracks: FALLBACK_TRACKS,
     currentIndex: 0,
     isPlaying: false,
-    volume: 70,
+    volume: 40,
     isMuted: false,
     currentTime: 0,
     duration: 0,

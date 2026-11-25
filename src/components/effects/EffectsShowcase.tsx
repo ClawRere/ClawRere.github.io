@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Sparkles, ExternalLink, Play, X, Maximize2, Tag, Layers } from 'lucide-react';
+import { Search, Sparkles, ExternalLink, Play, X, Maximize2, Eye, Box, Loader2, Gamepad2, MousePointerClick, Component } from 'lucide-react';
 import effectsData from '@/data/effects.json';
 
 interface EffectItem {
@@ -10,10 +10,20 @@ interface EffectItem {
   category: string;
 }
 
+const CATEGORY_STYLES: Record<string, { gradient: string; Icon: React.ComponentType<{ className?: string }> }> = {
+  '3D视觉': { gradient: 'from-violet-600/25 via-indigo-500/15 to-cyan-500/20', Icon: Box },
+  '趣味动效': { gradient: 'from-rose-500/25 via-amber-500/15 to-orange-500/20', Icon: Sparkles },
+  '加载动画': { gradient: 'from-sky-500/25 via-blue-500/15 to-indigo-500/20', Icon: Loader2 },
+  'UI交互': { gradient: 'from-emerald-500/25 via-teal-500/15 to-cyan-500/20', Icon: MousePointerClick },
+  '互动游戏': { gradient: 'from-amber-500/25 via-orange-500/15 to-red-500/20', Icon: Gamepad2 },
+  '实用组件': { gradient: 'from-fuchsia-500/25 via-purple-500/15 to-pink-500/20', Icon: Component },
+};
+
 export const EffectsShowcase: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('全部');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeModalEffect, setActiveModalEffect] = useState<EffectItem | null>(null);
+  const [inlinePreviewPaths, setInlinePreviewPaths] = useState<Record<string, boolean>>({});
 
   const categories = ['全部', '3D视觉', '趣味动效', '加载动画', 'UI交互', '互动游戏', '实用组件'];
 
@@ -29,6 +39,10 @@ export const EffectsShowcase: React.FC = () => {
     });
   }, [selectedCategory, searchQuery]);
 
+  const toggleInlinePreview = (path: string) => {
+    setInlinePreviewPaths((prev) => ({ ...prev, [path]: !prev[path] }));
+  };
+
   return (
     <div className="space-y-8">
       {/* 1. Header Banner */}
@@ -43,7 +57,7 @@ export const EffectsShowcase: React.FC = () => {
               原生 Web 特效与互动实验室
             </h1>
             <p className="mt-2 text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 max-w-xl leading-relaxed">
-              汇集原 Hexo 博客珍藏的 <strong>{effectsData.length} 个</strong> 原生 HTML+CSS+JS 独立动效。每一个均可即时在线体验、沉浸式全屏试玩或嵌入作品。
+              汇集原博客珍藏的 <strong>{effectsData.length} 个</strong> 原生 HTML+CSS+JS 独立动效。点击「实时预览」直接在卡片内运行，或点击「网页内试玩」放大体验。
             </p>
           </div>
 
@@ -56,7 +70,6 @@ export const EffectsShowcase: React.FC = () => {
 
       {/* 2. Controls & Filter */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-        {/* Search Input */}
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-charcoal-100 dark:text-cream-400 pointer-events-none" />
           <input
@@ -100,68 +113,88 @@ export const EffectsShowcase: React.FC = () => {
 
       {/* 3. Visual Effects Card Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredEffects.map((effect) => (
-          <div
-            key={effect.title + effect.path}
-            className="group flex flex-col rounded-2xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 dark:hover:border-terracotta/40 hover:shadow-2xl transition-all duration-300"
-          >
-            {/* Visual Thumbnail / Animated Preview */}
-            <div className="h-48 w-full relative overflow-hidden bg-black/5 dark:bg-black/40 flex items-center justify-center">
-              <img
-                src={effect.image}
-                alt={effect.title}
-                loading="lazy"
-                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+        {filteredEffects.map((effect) => {
+          const styleCfg = CATEGORY_STYLES[effect.category] || CATEGORY_STYLES['趣味动效'];
+          const Icon = styleCfg.Icon;
+          const isLive = !!inlinePreviewPaths[effect.path];
 
-              {/* Category Pill */}
-              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md text-[10px] font-mono font-medium text-charcoal-DEFAULT dark:text-cream-100 shadow-sm">
-                {effect.category}
-              </span>
+          return (
+            <div
+              key={effect.title + effect.path}
+              className="group flex flex-col rounded-2xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 dark:hover:border-terracotta/40 hover:shadow-2xl transition-all duration-300"
+            >
+              {/* Preview Window: Live Iframe on demand OR Clean Styled Card */}
+              <div className={`h-52 w-full relative overflow-hidden bg-gradient-to-br ${styleCfg.gradient} flex items-center justify-center`}>
+                {isLive ? (
+                  <iframe
+                    src={effect.path}
+                    title={effect.title}
+                    className="w-full h-full border-0 bg-zinc-950"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center gap-3 p-6 text-center">
+                    <div className="w-14 h-14 rounded-2xl bg-white/15 dark:bg-black/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-terracotta group-hover:scale-110 transition-transform shadow-lg">
+                      <Icon className="w-7 h-7" />
+                    </div>
+                    <div className="text-xs font-mono text-charcoal-200 dark:text-cream-200 opacity-80">
+                      {effect.path}
+                    </div>
+                  </div>
+                )}
 
-              {/* Hover Quick Action Play Overlay */}
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center gap-3">
-                <button
-                  onClick={() => setActiveModalEffect(effect)}
-                  className="px-3.5 py-2 rounded-xl bg-terracotta text-white text-xs font-medium flex items-center gap-1.5 shadow-lg hover:scale-105 transition-transform"
-                >
-                  <Play className="w-3.5 h-3.5 fill-current" />
-                  网页内试玩
-                </button>
+                {/* Category Pill */}
+                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md text-[10px] font-mono font-medium text-charcoal-DEFAULT dark:text-cream-100 shadow-sm pointer-events-none">
+                  {effect.category}
+                </span>
+
+                {/* Action buttons */}
+                <div className="absolute bottom-3 right-3 flex items-center gap-2 z-10">
+                  <button
+                    onClick={() => toggleInlinePreview(effect.path)}
+                    className={`px-2.5 py-1.5 rounded-xl text-[11px] font-mono flex items-center gap-1 shadow-md transition-all ${
+                      isLive
+                        ? 'bg-zinc-900/90 text-white border border-white/20'
+                        : 'bg-white/90 dark:bg-black/80 text-charcoal-DEFAULT dark:text-cream-100 hover:bg-terracotta hover:text-white'
+                    }`}
+                  >
+                    <Eye className="w-3 h-3" />
+                    {isLive ? '关闭预览' : '直接看效果'}
+                  </button>
+                  <button
+                    onClick={() => setActiveModalEffect(effect)}
+                    className="px-2.5 py-1.5 rounded-xl bg-terracotta text-white text-[11px] font-mono flex items-center gap-1 shadow-md hover:scale-105 transition-transform"
+                  >
+                    <Play className="w-3 h-3 fill-current" />
+                    放大试玩
+                  </button>
+                </div>
+              </div>
+
+              {/* Card Info Bottom */}
+              <div className="p-4 flex items-center justify-between">
+                <div className="min-w-0">
+                  <h3 className="font-serif text-base font-medium text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors truncate">
+                    {effect.title}
+                  </h3>
+                  <span className="text-[11px] font-mono text-charcoal-100 dark:text-cream-400">
+                    {effect.category}
+                  </span>
+                </div>
+
                 <a
                   href={effect.path}
                   target="_blank"
                   rel="noreferrer"
-                  className="p-2 rounded-xl bg-white/90 dark:bg-obsidian-card text-charcoal-DEFAULT dark:text-cream-100 hover:scale-105 transition-transform"
-                  title="在新标签页全屏打开"
+                  className="p-1.5 rounded-lg text-charcoal-100 dark:text-cream-400 hover:text-terracotta hover:bg-terracotta/10 transition-colors shrink-0"
+                  title="新标签页全屏打开"
                 >
                   <Maximize2 className="w-4 h-4" />
                 </a>
               </div>
             </div>
-
-            {/* Card Info Bottom */}
-            <div className="p-4 flex items-center justify-between">
-              <div>
-                <h3 className="font-serif text-base font-medium text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors line-clamp-1">
-                  {effect.title}
-                </h3>
-                <span className="text-[11px] font-mono text-charcoal-100 dark:text-cream-400">
-                  {effect.path}
-                </span>
-              </div>
-
-              <button
-                onClick={() => setActiveModalEffect(effect)}
-                className="p-1.5 rounded-lg text-terracotta hover:bg-terracotta/10 transition-colors"
-                title="即刻试玩"
-              >
-                <Play className="w-4 h-4 fill-current" />
-              </button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* 4. Live Interactive Modal Player */}
@@ -174,7 +207,6 @@ export const EffectsShowcase: React.FC = () => {
               exit={{ scale: 0.95, opacity: 0 }}
               className="relative w-full max-w-4xl h-[85vh] rounded-3xl glass overflow-hidden border border-white/20 shadow-2xl flex flex-col bg-cream-50 dark:bg-obsidian"
             >
-              {/* Modal Top Bar */}
               <div className="px-5 py-3.5 border-b border-charcoal-500/10 dark:border-white/10 flex items-center justify-between bg-cream-100/80 dark:bg-obsidian-card">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -192,7 +224,6 @@ export const EffectsShowcase: React.FC = () => {
                     target="_blank"
                     rel="noreferrer"
                     className="p-1.5 rounded-lg glass hover:text-terracotta text-xs font-mono flex items-center gap-1"
-                    title="新窗口全屏打开"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
                     全屏独立运行
@@ -206,7 +237,6 @@ export const EffectsShowcase: React.FC = () => {
                 </div>
               </div>
 
-              {/* Iframe Live Sandbox Window */}
               <div className="flex-1 w-full h-full relative bg-black/5">
                 <iframe
                   src={activeModalEffect.path}

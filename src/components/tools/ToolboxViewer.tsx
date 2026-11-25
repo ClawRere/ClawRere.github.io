@@ -13,8 +13,17 @@ export interface ToolTab {
 
 const DEFAULT_TOOL_TABS: ToolTab[] = [
   {
+    id: 'hot-rank',
+    label: '速知热榜',
+    emoji: '🔥',
+    desc: '每日热点聚合 · 全网热搜实时榜',
+    src: 'https://suzhi.fun/',
+    externalUrl: 'https://suzhi.fun/',
+    type: 'iframe',
+  },
+  {
     id: 'daily-news',
-    label: '今日 AI 早报',
+    label: '科技头条',
     emoji: '📰',
     desc: 'HackerNews & 科技头条每日聚合 (SuperTechFans)',
     src: 'https://www.supertechfans.com/cn',
@@ -22,12 +31,21 @@ const DEFAULT_TOOL_TABS: ToolTab[] = [
     type: 'iframe',
   },
   {
-    id: 'hot-rank',
-    label: '速知热榜',
-    emoji: '🔥',
-    desc: '全网热点与前沿资讯速览',
-    src: 'https://suzhi.fun/',
-    externalUrl: 'https://suzhi.fun/',
+    id: 'pdf2doc',
+    label: 'PDF 转 Word',
+    emoji: '📄',
+    desc: '文档格式在线转换神器 (PDFPai)',
+    src: 'https://www.pdfpai.com/',
+    externalUrl: 'https://www.pdfpai.com/',
+    type: 'iframe',
+  },
+  {
+    id: 'keepvid',
+    label: '视频下载',
+    emoji: '🎬',
+    desc: '多平台在线视频解析下载 (KeepVid)',
+    src: 'https://keepvid.tools/',
+    externalUrl: 'https://keepvid.tools/',
     type: 'iframe',
   },
   {
@@ -50,7 +68,7 @@ const DEFAULT_TOOL_TABS: ToolTab[] = [
 
 export const ToolboxViewer: React.FC = () => {
   const [tabs, setTabs] = useState<ToolTab[]>(DEFAULT_TOOL_TABS);
-  const [activeId, setActiveId] = useState<string>('daily-news');
+  const [activeId, setActiveId] = useState<string>('hot-rank');
   const [reloadKey, setReloadKey] = useState<number>(0);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);

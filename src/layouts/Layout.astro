@@ -22,7 +22,9 @@ const currentPath = Astro.url.pathname;
 
 const entertainItems = [
   { name: '音乐馆', href: '/entertain/music', emoji: '🎵' },
+  { name: '壁纸图库', href: '/entertain/gallery', emoji: '🖼️' },
   { name: '93+ 特效实验室', href: '/effects', emoji: '✨' },
+  { name: 'Cover 极简主页', href: '/cover/index.html', emoji: '🧭' },
   { name: '烟花秀', href: '/entertain/fireworks', emoji: '🎆' },
   { name: '雨声院', href: '/entertain/rain', emoji: '🌧️' },
   { name: '变形金刚', href: '/effects/optimus_prime/index.html', emoji: '🤖' },
@@ -84,19 +86,9 @@ const entertainItems = [
     <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl border-b border-black/5 dark:border-white/5 bg-cream-50/80 dark:bg-obsidian/80">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
         
-        <!-- Logo -->
-        <a href="/" class="flex items-center gap-2.5 group shrink-0">
-          <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-terracotta to-amber-500 text-white flex items-center justify-center font-serif font-bold text-sm shadow-glow-terracotta group-hover:scale-105 transition-transform">
-            L
-          </span>
-          <div class="hidden sm:flex flex-col">
-            <span class="font-serif font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors leading-none">
-              磊大大 Larry
-            </span>
-            <span class="text-[10px] font-mono text-charcoal-100 dark:text-cream-400 leading-none mt-0.5">
-              AI PM · PMOS
-            </span>
-          </div>
+        <!-- Logo: clean pure text -->
+        <a href="/" class="font-serif font-bold text-base tracking-tight text-charcoal-DEFAULT dark:text-cream-50 hover:text-terracotta transition-colors shrink-0">
+          磊大大の小栈
         </a>
 
         <!-- Center Navigation -->

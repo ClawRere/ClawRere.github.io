@@ -55,6 +55,7 @@ export const HeroCover: React.FC = () => {
 
   // Custom color & gradient controls
   const [customColor, setCustomColor] = useState('#D97757');
+  const [customImageUrl, setCustomImageUrl] = useState('');
   const [gradStart, setGradStart] = useState('#667eea');
   const [gradEnd, setGradEnd] = useState('#764ba2');
   const [gradAngle, setGradAngle] = useState(135);
@@ -220,23 +221,50 @@ export const HeroCover: React.FC = () => {
               </div>
 
               {activeTab === 'wallpaper' && (
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-80 overflow-y-auto pr-1">
-                  {wallpaperPresets.map((p) => (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-64 overflow-y-auto pr-1">
+                    {wallpaperPresets.map((p) => (
+                      <button
+                        key={p.url}
+                        onClick={() => selectBg(p.type, p.url)}
+                        className="relative h-24 rounded-2xl overflow-hidden border-2 border-transparent hover:border-white/70 transition-all group"
+                        style={{ backgroundImage: `url(${p.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                        title={p.name}
+                      >
+                        {currentBg.value === p.url && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/35">
+                            <Check className="w-5 h-5 text-white" />
+                          </div>
+                        )}
+                        <span className="absolute bottom-0 inset-x-0 bg-black/60 py-1 text-[11px] text-white/95 truncate px-1.5">{p.name}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Paste Custom / Gallery Image URL */}
+                  <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex flex-wrap items-center gap-2">
+                    <input
+                      type="url"
+                      placeholder="粘贴图库链接或任意壁纸 URL (https://...)"
+                      value={customImageUrl}
+                      onChange={(e) => setCustomImageUrl(e.target.value)}
+                      className="flex-1 min-w-[200px] px-3 py-2 rounded-xl bg-black/40 border border-white/15 text-xs font-mono text-white"
+                    />
                     <button
-                      key={p.url}
-                      onClick={() => selectBg(p.type, p.url)}
-                      className="relative h-24 rounded-2xl overflow-hidden border-2 border-transparent hover:border-white/70 transition-all group"
-                      style={{ backgroundImage: `url(${p.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-                      title={p.name}
+                      onClick={() => {
+                        if (customImageUrl.trim()) {
+                          selectBg('image', customImageUrl.trim());
+                          setCustomImageUrl('');
+                        }
+                      }}
+                      className="px-4 py-2 rounded-xl bg-terracotta hover:bg-terracotta/90 text-white text-xs font-mono font-semibold"
                     >
-                      {currentBg.value === p.url && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/35">
-                          <Check className="w-5 h-5 text-white" />
-                        </div>
-                      )}
-                      <span className="absolute bottom-0 inset-x-0 bg-black/60 py-1 text-[11px] text-white/95 truncate px-1.5">{p.name}</span>
+                      应用链接
                     </button>
-                  ))}
+                    <a href="/entertain/gallery" className="text-[11px] font-mono text-amber-300 hover:underline px-1">
+                      去图库挑一张 →
+                    </a>
+                  </div>
                 </div>
               )}
 

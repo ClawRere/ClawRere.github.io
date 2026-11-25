@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ExternalLink, Copy, Check, LayoutGrid, List, Monitor, X, Bookmark, Globe } from 'lucide-react';
+import { Search, ExternalLink, Copy, Check, LayoutGrid, List, Monitor, X } from 'lucide-react';
 import linksData from '@/data/links.json';
 
 interface LinkItem {
@@ -16,38 +16,50 @@ interface CategoryGroup {
   links: LinkItem[];
 }
 
+type LayoutMode = 'card' | 'compact' | 'split';
+
 export const LinksExplorer: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('全部');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [layoutMode, setLayoutMode] = useState<'card' | 'compact' | 'split'>('card');
+  const [layoutMode, setLayoutMode] = useState<LayoutMode>('card');
   const [previewLink, setPreviewLink] = useState<LinkItem | null>(null);
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
+  const [showIntro, setShowIntro] = useState(true);
 
-  const categories = useMemo(() => {
-    return ['全部', ...(linksData as CategoryGroup[]).map((c) => c.name)];
+  // Hide intro after 4 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => setShowIntro(false), 4000);
+    return () => clearTimeout(timer);
   }, []);
 
-  const allLinks = useMemo(() => {
-    return (linksData as CategoryGroup[]).flatMap((c) =>
-      c.links.map((l) => ({ ...l, category: c.name }))
-    );
+  // Persist layout preference
+  useEffect(() => {
+    const saved = localStorage.getItem('links_layout') as LayoutMode | null;
+    if (saved) setLayoutMode(saved);
   }, []);
+  const switchLayout = (mode: LayoutMode) => {
+    setLayoutMode(mode);
+    localStorage.setItem('links_layout', mode);
+    if (mode !== 'split') setPreviewLink(null);
+  };
 
+  const categories = useMemo(() => ['全部', ...(linksData as CategoryGroup[]).map(c => c.name)], []);
+  const allLinks = useMemo(
+    () => (linksData as CategoryGroup[]).flatMap(c => c.links.map(l => ({ ...l, category: c.name }))),
+    []
+  );
   const filteredLinks = useMemo(() => {
-    return allLinks.filter((item) => {
+    return allLinks.filter(item => {
       const matchCat = selectedCategory === '全部' || item.category === selectedCategory;
       const q = searchQuery.trim().toLowerCase();
-      const matchQuery =
-        !q ||
-        item.name.toLowerCase().includes(q) ||
-        item.descr.toLowerCase().includes(q) ||
-        item.link.toLowerCase().includes(q);
-      return matchCat && matchQuery;
+      const matchQ = !q || item.name.toLowerCase().includes(q) || item.descr.toLowerCase().includes(q) || item.link.toLowerCase().includes(q);
+      return matchCat && matchQ;
     });
   }, [allLinks, selectedCategory, searchQuery]);
 
   const handleCopy = (e: React.MouseEvent, url: string) => {
     e.stopPropagation();
+    e.preventDefault();
     navigator.clipboard.writeText(url);
     setCopiedUrl(url);
     setTimeout(() => setCopiedUrl(null), 2000);
@@ -61,257 +73,222 @@ export const LinksExplorer: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* 1. Header Banner */}
-      <div className="p-6 sm:p-8 rounded-3xl glass border border-charcoal-500/10 dark:border-white/10 relative overflow-hidden bg-gradient-to-br from-cream-100/60 via-cream-50/30 to-amber-50/20 dark:from-obsidian-card dark:to-obsidian">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta mb-2 font-semibold">
-              <Bookmark className="w-3.5 h-3.5" />
-              Resource Directory & Bookmarks
+    <div className="space-y-5">
+      {/* Brief intro banner - auto-dismiss after 4s */}
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            initial={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+            transition={{ duration: 0.5 }}
+            className="overflow-hidden"
+          >
+            <div className="relative p-4 rounded-2xl bg-terracotta/8 border border-terracotta/20 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">🔖</span>
+                <div>
+                  <span className="font-semibold text-sm text-charcoal-DEFAULT dark:text-cream-50">
+                    {allLinks.length} 个精选站点 · {categories.length - 1} 个分类
+                  </span>
+                  <p className="text-xs text-charcoal-100 dark:text-cream-400 mt-0.5">
+                    支持卡片、列表、画中画三种浏览方式 · 右下角切换封面壁纸
+                  </p>
+                </div>
+              </div>
+              <button onClick={() => setShowIntro(false)} className="text-charcoal-100 dark:text-cream-400 hover:text-terracotta p-1">
+                <X className="w-4 h-4" />
+              </button>
             </div>
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-DEFAULT dark:text-cream-50">
-              精选资源与书签导航库
-            </h1>
-            <p className="mt-2 text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 max-w-xl leading-relaxed">
-              沉淀 <strong>{allLinks.length} 个</strong> 优质站点与工具链接。支持自由切换<strong>沉浸卡片</strong>、<strong>紧凑单链</strong>或<strong>画中画内嵌预览</strong>三种布局。
-            </p>
-          </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-          {/* Layout Mode Switcher */}
-          <div className="flex items-center gap-1 p-1 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 bg-white/50 dark:bg-black/30">
-            <button
-              onClick={() => setLayoutMode('card')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-all ${
-                layoutMode === 'card' ? 'bg-terracotta text-white shadow-sm' : 'text-charcoal-100 dark:text-cream-400 hover:text-charcoal'
-              }`}
-              title="卡片网格模式"
-            >
-              <LayoutGrid className="w-3.5 h-3.5" />
-              <span>卡片</span>
-            </button>
-            <button
-              onClick={() => setLayoutMode('compact')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-all ${
-                layoutMode === 'compact' ? 'bg-terracotta text-white shadow-sm' : 'text-charcoal-100 dark:text-cream-400 hover:text-charcoal'
-              }`}
-              title="紧凑单链模式"
-            >
-              <List className="w-3.5 h-3.5" />
-              <span>单链</span>
-            </button>
-            <button
-              onClick={() => setLayoutMode('split')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-all ${
-                layoutMode === 'split' ? 'bg-terracotta text-white shadow-sm' : 'text-charcoal-100 dark:text-cream-400 hover:text-charcoal'
-              }`}
-              title="画中画内嵌预览模式"
-            >
-              <Monitor className="w-3.5 h-3.5" />
-              <span>画中画</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Controls & Search */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-        <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-charcoal-100 dark:text-cream-400 pointer-events-none" />
+      {/* Search + Layout switcher row */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-100 dark:text-cream-400" />
           <input
             type="text"
+            placeholder="搜索站点名、描述或链接..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="搜索书签标题、简介或网址..."
-            className="w-full pl-10 pr-9 py-2.5 rounded-2xl glass text-xs sm:text-sm text-charcoal-DEFAULT dark:text-cream-50 placeholder:text-charcoal-100/60 dark:placeholder:text-cream-400/60 focus:outline-none focus:border-terracotta/50 transition-colors"
+            onChange={e => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-zinc-900/60 text-sm text-charcoal-DEFAULT dark:text-cream-100 placeholder-charcoal-100 dark:placeholder-cream-400 backdrop-blur-sm focus:outline-none focus:border-terracotta/50 transition-colors"
           />
-          {searchQuery && (
-            <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal-100 hover:text-charcoal">
-              <X className="w-3.5 h-3.5" />
-            </button>
-          )}
         </div>
 
-        <span className="text-xs font-mono text-charcoal-100 dark:text-cream-400 self-center">
-          显示 <strong className="text-terracotta">{filteredLinks.length}</strong> / {allLinks.length} 个书签
-        </span>
+        <div className="flex items-center gap-1 p-1 rounded-xl border border-charcoal-500/10 dark:border-white/10 bg-white/40 dark:bg-black/20">
+          {([['card', '卡片', LayoutGrid], ['compact', '列表', List], ['split', '画中画', Monitor]] as const).map(([mode, label, Icon]) => (
+            <button
+              key={mode}
+              onClick={() => switchLayout(mode)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                layoutMode === mode ? 'bg-terracotta text-white shadow-sm' : 'text-charcoal-100 dark:text-cream-400 hover:text-charcoal dark:hover:text-white'
+              }`}
+            >
+              <Icon className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">{label}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Category Pills Bar */}
-      <div className="flex flex-wrap gap-2 pb-2 border-b border-charcoal-500/10 dark:border-white/10">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-              selectedCategory === cat
-                ? 'bg-terracotta text-white shadow-glow-terracotta'
-                : 'glass text-charcoal-200 dark:text-cream-300 hover:bg-cream-200 dark:hover:bg-obsidian-hover'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+      {/* Category tabs - scrollable */}
+      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+        {categories.map(cat => {
+          const count = cat === '全部' ? allLinks.length : (linksData as CategoryGroup[]).find(c => c.name === cat)?.links.length ?? 0;
+          return (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border ${
+                selectedCategory === cat
+                  ? 'bg-terracotta text-white border-terracotta shadow-sm'
+                  : 'border-charcoal-500/15 dark:border-white/10 text-charcoal-200 dark:text-cream-300 hover:border-terracotta/40 hover:text-terracotta'
+              }`}
+            >
+              {cat} <span className="opacity-60">({count})</span>
+            </button>
+          );
+        })}
       </div>
 
-      {/* 3. Layout Rendering */}
-      {layoutMode === 'card' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filteredLinks.map((item, idx) => (
+      {/* Results count */}
+      <p className="text-xs font-mono text-charcoal-100 dark:text-cream-400">
+        找到 <span className="text-terracotta font-semibold">{filteredLinks.length}</span> 个站点
+        {searchQuery && <span> · 匹配 "{searchQuery}"</span>}
+      </p>
+
+      {/* Content: split view or list/card */}
+      {layoutMode === 'split' ? (
+        <div className="flex gap-4" style={{ minHeight: '70vh' }}>
+          {/* Left list - 30% */}
+          <div className="w-72 flex-shrink-0 overflow-y-auto space-y-1 pr-1 border-r border-charcoal-500/10 dark:border-white/8">
+            {filteredLinks.map(item => (
+              <button
+                key={item.link}
+                onClick={(e) => handleItemClick(e, item)}
+                className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all ${
+                  previewLink?.link === item.link
+                    ? 'bg-terracotta/10 border border-terracotta/30'
+                    : 'hover:bg-black/5 dark:hover:bg-white/5 border border-transparent'
+                }`}
+              >
+                <img
+                  src={item.avatar}
+                  alt={item.name}
+                  className="w-8 h-8 rounded-lg object-cover flex-shrink-0 bg-cream-200 dark:bg-zinc-800"
+                  onError={(e) => { (e.target as HTMLImageElement).src = '/img/friend_404.gif'; }}
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-medium text-charcoal-DEFAULT dark:text-cream-50 truncate">{item.name}</div>
+                  <div className="text-xs text-charcoal-100 dark:text-cream-400 truncate">{item.descr}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Right iframe preview - 70% */}
+          <div className="flex-1 min-w-0">
+            {previewLink ? (
+              <div className="h-full flex flex-col rounded-2xl overflow-hidden border border-charcoal-500/10 dark:border-white/10">
+                <div className="flex items-center justify-between px-4 py-2.5 bg-cream-100/80 dark:bg-zinc-900/80 border-b border-charcoal-500/8 dark:border-white/8">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-400/70" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
+                    </div>
+                    <span className="text-xs font-mono text-charcoal-100 dark:text-cream-400 ml-1 truncate max-w-[200px]">{previewLink.link}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button onClick={e => handleCopy(e, previewLink.link)} className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors">
+                      {copiedUrl === previewLink.link ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                    </button>
+                    <a href={previewLink.link} target="_blank" rel="noopener noreferrer" className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors">
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                    <button onClick={() => setPreviewLink(null)} className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-charcoal-100 dark:text-cream-400 transition-colors">
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+                <iframe
+                  key={previewLink.link}
+                  src={previewLink.link}
+                  title={previewLink.name}
+                  className="flex-1 w-full border-0"
+                  sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                />
+              </div>
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center text-center rounded-2xl border-2 border-dashed border-charcoal-500/10 dark:border-white/10">
+                <Monitor className="w-12 h-12 text-charcoal-100 dark:text-cream-400 mb-4 opacity-40" />
+                <p className="text-sm font-medium text-charcoal-100 dark:text-cream-400 opacity-60">点击左侧站点预览</p>
+                <p className="text-xs text-charcoal-100 dark:text-cream-400 opacity-40 mt-1">在右侧画中画中浏览</p>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : layoutMode === 'compact' ? (
+        /* Compact list */
+        <div className="space-y-1">
+          {filteredLinks.map(item => (
             <a
-              key={item.name + idx}
+              key={item.link}
               href={item.link}
               target="_blank"
-              rel="noreferrer"
-              className="group p-5 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 dark:hover:border-terracotta/40 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-4 p-3 rounded-xl hover:bg-black/4 dark:hover:bg-white/4 border border-transparent hover:border-charcoal-500/10 dark:hover:border-white/8 transition-all"
             >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-cream-200 dark:bg-obsidian-border flex items-center justify-center overflow-hidden border border-charcoal-500/10 dark:border-white/10">
-                    <img
-                      src={item.avatar.startsWith('http') ? item.avatar : `https://www.google.com/s2/favicons?domain=${item.link}&sz=64`}
-                      alt={item.name}
-                      onError={(e) => {
-                        (e.target as HTMLElement).style.display = 'none';
-                      }}
-                      className="w-7 h-7 object-contain rounded-lg"
-                    />
-                  </div>
-                  <span className="px-2 py-0.5 rounded-full bg-cream-200/60 dark:bg-obsidian-border text-[10px] font-mono text-charcoal-100 dark:text-cream-400">
-                    {item.category}
-                  </span>
-                </div>
-
-                <h3 className="font-serif font-bold text-base text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors line-clamp-1">
-                  {item.name}
-                </h3>
-                <p className="mt-1 text-xs text-charcoal-100 dark:text-cream-300 line-clamp-2 leading-relaxed">
-                  {item.descr || '暂无描述'}
-                </p>
+              <img
+                src={item.avatar}
+                alt={item.name}
+                className="w-7 h-7 rounded-lg object-cover flex-shrink-0 bg-cream-200 dark:bg-zinc-800"
+                onError={(e) => { (e.target as HTMLImageElement).src = '/img/friend_404.gif'; }}
+              />
+              <div className="flex-1 min-w-0 flex items-center gap-4">
+                <span className="font-medium text-sm text-charcoal-DEFAULT dark:text-cream-50 w-32 flex-shrink-0 truncate">{item.name}</span>
+                <span className="text-xs text-charcoal-100 dark:text-cream-400 truncate flex-1">{item.descr}</span>
+                <span className="text-[10px] font-mono text-charcoal-100/50 dark:text-cream-400/50 hidden lg:block truncate max-w-[180px]">{item.link}</span>
               </div>
-
-              <div className="mt-4 pt-3 border-t border-charcoal-500/10 dark:border-white/10 flex items-center justify-between text-xs font-mono text-charcoal-100 dark:text-cream-400">
-                <span className="truncate max-w-[170px] text-[11px] opacity-75">{item.link.replace(/^https?:\/\//, '')}</span>
-                <div className="flex items-center gap-1.5 text-terracotta">
-                  <button
-                    onClick={(e) => handleCopy(e, item.link)}
-                    className="p-1 rounded hover:bg-terracotta/10 transition-colors"
-                    title="复制链接"
-                  >
-                    {copiedUrl === item.link ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-                  </button>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </div>
+              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button onClick={e => handleCopy(e, item.link)} className="p-1.5 rounded-lg hover:bg-terracotta/10 text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors">
+                  {copiedUrl === item.link ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                </button>
+                <ExternalLink className="w-3.5 h-3.5 text-charcoal-100 dark:text-cream-400 group-hover:text-terracotta transition-colors" />
               </div>
             </a>
           ))}
         </div>
-      )}
-
-      {layoutMode === 'compact' && (
-        <div className="divide-y divide-charcoal-500/10 dark:divide-white/10 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 overflow-hidden">
-          {filteredLinks.map((item, idx) => (
-            <div
-              key={item.name + idx}
-              className="py-3 px-4 flex items-center justify-between gap-4 hover:bg-cream-100/50 dark:hover:bg-obsidian-card/50 transition-colors"
+      ) : (
+        /* Card grid */
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          {filteredLinks.map(item => (
+            <a
+              key={item.link}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative p-4 rounded-2xl border border-charcoal-500/10 dark:border-white/8 hover:border-terracotta/30 dark:hover:border-terracotta/30 hover:shadow-lg bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm transition-all duration-200 flex flex-col items-center text-center gap-3"
             >
-              <div className="flex items-center gap-3 min-w-0">
-                <Globe className="w-4 h-4 text-terracotta shrink-0" />
-                <a
-                  href={item.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-medium text-xs sm:text-sm text-charcoal-DEFAULT dark:text-cream-100 hover:text-terracotta transition-colors truncate"
-                >
-                  {item.name}
-                </a>
-                <span className="hidden sm:inline text-xs text-charcoal-100 dark:text-cream-400 truncate max-w-xs">
-                  - {item.descr}
-                </span>
+              <img
+                src={item.avatar}
+                alt={item.name}
+                className="w-12 h-12 rounded-xl object-cover bg-cream-200 dark:bg-zinc-800 group-hover:scale-105 transition-transform"
+                onError={(e) => { (e.target as HTMLImageElement).src = '/img/friend_404.gif'; }}
+              />
+              <div className="w-full">
+                <div className="font-semibold text-sm text-charcoal-DEFAULT dark:text-cream-50 truncate group-hover:text-terracotta transition-colors">{item.name}</div>
+                <div className="text-xs text-charcoal-100 dark:text-cream-400 line-clamp-2 mt-0.5 leading-relaxed">{item.descr}</div>
               </div>
-
-              <div className="flex items-center gap-3 shrink-0 text-xs font-mono">
-                <span className="hidden md:inline px-2 py-0.5 rounded bg-cream-200/60 dark:bg-obsidian-border text-[10px] text-charcoal-100 dark:text-cream-400">
-                  {item.category}
-                </span>
-                <button
-                  onClick={(e) => handleCopy(e, item.link)}
-                  className="p-1 rounded text-charcoal-100 hover:text-terracotta"
-                  title="复制链接"
-                >
-                  {copiedUrl === item.link ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-                </button>
-                <a
-                  href={item.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-1 text-terracotta hover:underline flex items-center gap-0.5"
-                >
-                  <span>访问</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {layoutMode === 'split' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-5 max-h-[75vh] overflow-y-auto divide-y divide-charcoal-500/10 dark:divide-white/10 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 pr-1">
-            {filteredLinks.map((item, idx) => (
-              <div
-                key={item.name + idx}
-                onClick={() => setPreviewLink(item)}
-                className={`p-3.5 cursor-pointer flex items-center justify-between gap-2 transition-all ${
-                  previewLink?.link === item.link
-                    ? 'bg-terracotta/10 border-l-4 border-terracotta'
-                    : 'hover:bg-cream-100/50 dark:hover:bg-obsidian-card/50'
-                }`}
+              <button
+                onClick={e => handleCopy(e, item.link)}
+                className="absolute top-2 right-2 p-1 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-terracotta/10 text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-all"
               >
-                <div className="min-w-0">
-                  <div className="font-medium text-xs sm:text-sm text-charcoal-DEFAULT dark:text-cream-100 truncate">
-                    {item.name}
-                  </div>
-                  <div className="text-[11px] text-charcoal-100 dark:text-cream-400 truncate mt-0.5">
-                    {item.descr || item.link}
-                  </div>
-                </div>
-                <span className="text-[10px] font-mono text-terracotta shrink-0">预览 →</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="lg:col-span-7 h-[75vh] rounded-3xl glass border border-charcoal-500/10 dark:border-white/10 overflow-hidden flex flex-col shadow-2xl bg-white dark:bg-black">
-            {previewLink ? (
-              <>
-                <div className="px-4 py-3 border-b border-charcoal-500/10 dark:border-white/10 flex items-center justify-between bg-cream-100/80 dark:bg-obsidian-card text-xs font-mono">
-                  <span className="font-bold truncate max-w-sm">{previewLink.name}</span>
-                  <a
-                    href={previewLink.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-terracotta hover:underline flex items-center gap-1"
-                  >
-                    <span>新窗口全屏打开</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-                <iframe
-                  src={previewLink.link}
-                  className="w-full flex-1 border-0"
-                  title={previewLink.name}
-                  sandbox="allow-scripts allow-same-origin allow-forms"
-                />
-              </>
-            ) : (
-              <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-charcoal-100 dark:text-cream-400">
-                <Monitor className="w-12 h-12 text-terracotta/40 mb-3" />
-                <p className="font-serif text-sm">点击左侧任意链接，在此处开启实时内嵌画中画预览</p>
-                <span className="text-xs font-mono opacity-60 mt-1">(部分由于安全策略禁止 iframe 嵌入的网站可点击新窗口打开)</span>
-              </div>
-            )}
-          </div>
+                {copiedUrl === item.link ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+              </button>
+            </a>
+          ))}
         </div>
       )}
     </div>

@@ -1,0 +1,728 @@
+﻿[
+  {
+    "name": "<i class=",
+    "desc": "鏈€鍙剾鐨勬湅鍙嬪湪閫欒",
+    "links": [
+      {
+        "name": "纾婂ぇ澶?,
+        "link": "/",
+        "avatar": "/img/profile/澶村儚.jpg",
+        "descr": "娆㈣繋鏉ョ帺~"
+      },
+      {
+        "name": "Hexo",
+        "link": "https://hexo.io/zh-tw/",
+        "avatar": "https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg",
+        "descr": "蹇€熴€佺啊鍠笖寮峰ぇ鐨勭恫瑾屾鏋?
+      },
+      {
+        "name": "Butterfly-github",
+        "link": "https://github.com/jerryc127/hexo-theme-butterfly",
+        "avatar": "/img/avatar.png",
+        "descr": "馃 A Hexo Theme: Butterfly--github婧愮爜"
+      },
+      {
+        "name": "Butterfly",
+        "link": "https://butterfly.js.org/",
+        "avatar": "/img/avatar.png",
+        "descr": "馃 A Hexo Theme: Butterfly"
+      },
+      {
+        "name": "瀹夌煡楸?,
+        "link": "https://blog.anheyu.com/",
+        "avatar": "https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg",
+        "descr": "鐢熸椿鏄庢湕锛屼竾鐗╁彲鐖?
+      },
+      {
+        "name": "寮犳椽Heo",
+        "link": "https://blog.zhheo.com/",
+        "avatar": "https://bu.dusays.com/2022/12/28/63ac2812183aa.png",
+        "descr": "鍒嗕韩璁捐涓庣鎶€鐢熸椿"
+      },
+      {
+        "name": "Akilar銇硸鏋滃眿",
+        "link": "https://akilar.top/",
+        "avatar": "https://img02.anheyu.com/adminuploads/1/2022/09/02/6311fc9de6507.webp",
+        "descr": "鏈熷緟鎮ㄧ殑鍏変复锛?
+      },
+      {
+        "name": "灏廚鍚屽",
+        "link": "https://www.imcharon.com/",
+        "avatar": "https://public.cdn.nesxc.com/avatar.jpg",
+        "descr": "闈掔煶钀芥櫄宸?鏁呬汉鏈繕涔?
+      }
+    ]
+  },
+  {
+    "name": "澹佺焊缃戠珯",
+    "desc": "鐪嬬湅椋庢櫙~",
+    "links": [
+      {
+        "name": "simperdesk",
+        "link": "https://simpledesktops.com/",
+        "avatar": "https://static.simpledesktops.com/static/favicon.ico",
+        "descr": "绠€娲佸彲鐖憋紝鏋佺畝涓讳箟鎺ㄨ崘锛?
+      },
+      {
+        "name": "WallpapersCraft",
+        "link": "https://wallpaperscraft.com/",
+        "avatar": "https://wallpaperscraft.com/public/img/general/favicon.ico?v=3c8163e3d",
+        "descr": "椋庢牸寰堝锛岄€夋嫨寰堝銆?
+      },
+      {
+        "name": "colorr4bg",
+        "link": "https://www.color4bg.com/zh-hans/",
+        "avatar": "https://www.color4bg.com/static/images/favicon.ico",
+        "descr": "鍏嶈垂鐨勬娊璞¤壓鏈褰╄壊鑳屾櫙,濂界湅鐨勫鑹茶儗鏅敓鎴愬櫒锛屼綘鍙互鑷繁瀹氬埗棰滆壊銆佸苟涓斿綍鍒惰棰戞垨瀵煎嚭鍥剧墖."
+      }
+    ]
+  },
+  {
+    "name": "鍥炬爣缃戠珯",
+    "desc": "濂界湅鐨勫浘鏍噡",
+    "links": [
+      {
+        "name": "fontawesome",
+        "link": "https://fontawesome.com/",
+        "avatar": "https://fontawesome.com/favicon.ico",
+        "descr": "鏈綉绔欎富瑕佷娇鐢ㄧ殑鍥炬爣缃戠珯"
+      },
+      {
+        "name": "闃块噷鐭㈤噺鍥惧簱",
+        "link": "https://www.iconfont.cn/",
+        "avatar": "https://img.alicdn.com/imgextra/i4/O1CN01Z5paLz1O0zuCC7osS_!!6000000001644-55-tps-83-82.svg",
+        "descr": "闃块噷绯诲浘鏍囷紝鍏嶈垂濂界敤锛?
+      },
+      {
+        "name": "IconPark",
+        "link": "https://iconpark.oceanengine.com/home",
+        "avatar": "/img/friend_404.gif",
+        "descr": "IconPark鍥炬爣搴撴槸涓€涓€氳繃鎶€鏈┍鍔ㄧ煝閲忓浘鏍囨牱寮忕殑寮€婧愬浘鏍囧簱锛屽彲浠ュ疄鐜版牴鎹崟涓€SVG婧愭枃浠跺彉鎹㈠嚭澶氱涓婚"
+      },
+      {
+        "name": "icons8",
+        "link": "https://icons8.com/icons/color",
+        "avatar": "https://maxst.icons8.com/vue-static/icon/menu/logo.svg",
+        "descr": "鎵佸钩鑹插僵鐨勯鏍硷紝绠€鍗曠殑褰㈢姸鍜屽厖婊℃椿鍔涚殑璋冭壊鏉裤€?
+      },
+      {
+        "name": "Remix Icon",
+        "link": "https://remixicon.cn/",
+        "avatar": "https://remixicon.cn/img/logo/light/text.svg",
+        "descr": "涓鸿璁″笀鍜屽紑鍙戜汉鍛樼簿蹇冨埗浣滅殑寮€婧愪腑鎬ч鏍肩郴缁熺鍙枫€?
+      },
+      {
+        "name": "freepik",
+        "link": "https://www.freepik.com/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "杩欎釜缃戠珯閲岄潰鍥炬爣绮剧編锛屽彲浠ョ偣鍑诲乏渚ц彍鍗曞垏鎹笉鍚岀被鍨嬬殑鍥炬爣"
+      },
+      {
+        "name": "undraw",
+        "link": "https://undraw.co/illustrations",
+        "avatar": "/img/friend_404.gif",
+        "descr": "杩欎釜缃戠珯閲岄潰涓昏鏄竴浜涚簿缇庣殑鎻掔敾锛屽浘鐗囧彲浠ユ洿鎹㈠枩娆㈢殑棰滆壊涓婚鐒跺悗鍐嶄笅杞?
+      }
+    ]
+  },
+  {
+    "name": "AI缃戠珯",
+    "desc": "AI鍚堥泦",
+    "links": [
+      {
+        "name": "ChatGPT锛堝厤姊級",
+        "link": "http://gpt4.xn--fiqq6k90ovivepbxtg0bz10m.xyz/",
+        "avatar": "https://t10.baidu.com/it/u=3001416051,198333688&fm=30&app=106&f=JPEG?w=640&h=640&s=A6938D6264C55AF6101FC252020010FD",
+        "descr": "缃戠珯闇€浣跨敤涓汉璐﹀彿鐧诲綍锛屾彁渚涗竴涓厤姊幆澧冦€?
+      },
+      {
+        "name": "鍥藉唴鍏泭chatgpt",
+        "link": "https://sharedchat.fun/",
+        "avatar": "https://t10.baidu.com/it/u=3001416051,198333688&fm=30&app=106&f=JPEG?w=640&h=640&s=A6938D6264C55AF6101FC252020010FD",
+        "descr": "缃戠珯鍖呭惈gpt4锛屾斁蹇冧娇鐢ㄣ€?
+      },
+      {
+        "name": "鍥藉唴鍏泭chatgpt",
+        "link": "https://chatgptplus.cn/",
+        "avatar": "https://t10.baidu.com/it/u=3001416051,198333688&fm=30&app=106&f=JPEG?w=640&h=640&s=A6938D6264C55AF6101FC252020010FD",
+        "descr": "娴嬭瘯姝ｅ父鍙敤銆?
+      },
+      {
+        "name": "ai姹囨€?,
+        "link": "https://www.aihub.cn/",
+        "avatar": "https://www.aihub.cn/wp-content/uploads/2023/08/aihub_cn_logo.png",
+        "descr": "浼樿川AI宸ュ叿姹囨€?
+      },
+      {
+        "name": "鍗冨浘璁捐瀹?,
+        "link": "https://hisheai.com/",
+        "avatar": "https://pic.hisheai.com/static/images/public/favicon.ico",
+        "descr": "鍥剧墖澶勭悊宸ュ叿"
+      },
+      {
+        "name": "闊宠櫕",
+        "link": "https://www.soundbug.com/",
+        "avatar": "https://www.soundbug.com/favicon.ico",
+        "descr": "闊宠櫕锛圫oundBug锛夋槸涓€娆剧敤浜庨煶涔愮紪鏇插拰褰曢煶鐨勮蒋浠?
+      }
+    ]
+  },
+  {
+    "name": "鏂囨湰AI缃戠珯",
+    "desc": "鏂囨湰AI",
+    "links": [
+      {
+        "name": "鏂囧績涓€瑷€",
+        "link": "https://yiyan.baidu.com/",
+        "avatar": "https://nlp-eb.cdn.bcebos.com/static/eb/asset/logo.8a6b508d.png",
+        "descr": "鐧惧害鎺ㄥ嚭鐨勫璇濆紡AI宸ュ叿锛屼腑鏂囩悊瑙ｅ拰鐢熸垚鑳藉姏寮哄ぇ銆?
+      },
+      {
+        "name": "璁鏄熺伀",
+        "link": "https://xinghuo.xfyun.cn/",
+        "avatar": "https://xinghuo.xfyun.cn/spark-icon.ico",
+        "descr": "绉戝ぇ璁鐨勬櫤鑳藉璇濆姪鎵嬶紝涓绘墦璇煶璇嗗埆涓庢櫤鑳藉璇濄€?
+      },
+      {
+        "name": "鐧惧害Chat",
+        "link": "https://chat.baidu.com/",
+        "avatar": "https://psstatic.cdn.bcebos.com/basics/chat/aiassistants_1722495738000.png",
+        "descr": "鐧惧害鏃椾笅鐨勯€氱敤瀵硅瘽AI锛岄€傜敤浜庡悇绉嶈亰澶╁満鏅€?
+      },
+      {
+        "name": "娓呭崕鏅鸿氨娓呰█",
+        "link": "https://chatglm.cn/",
+        "avatar": "https://chatglm.cn/img/icons/favicon-32x32.png",
+        "descr": "娓呭崕澶у鍑哄搧鐨勯珮姘村钩瀵硅瘽AI锛岀爺绌舵€ц緝寮恒€?
+      },
+      {
+        "name": "璞嗗寘",
+        "link": "https://www.doubao.com/",
+        "avatar": "https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/web/static/image/logo-icon-white-bg.f3acc228.png",
+        "descr": "杞婚噺绾у璇滱I宸ュ叿锛屾惌閰峜oze浣跨敤浣撻獙鏇村ソ銆?
+      },
+      {
+        "name": "閫氫箟鍗冮棶",
+        "link": "https://tongyi.aliyun.com/",
+        "avatar": "https://img.alicdn.com/imgextra/i3/O1CN01O4Zouy1qaXx8mPVnp_!!6000000005512-2-tps-134-133.png",
+        "descr": "闃块噷宸村反鎺ㄥ嚭鐨凙I鍔╂墜锛岄€傚悎浼佷笟绾у簲鐢ㄥ満鏅€?
+      },
+      {
+        "name": "Kimi-鏈堜箣鏆楅潰",
+        "link": "https://kimi.moonshot.cn/",
+        "avatar": "https://statics.moonshot.cn/kimi-chat/favicon.ico",
+        "descr": "KIMI AI 鏉ヨ嚜鏈堜箣鏆楅潰鐨勮秴鐏獳I"
+      }
+    ]
+  },
+  {
+    "name": "鍥惧儚AI缃戠珯",
+    "desc": "鍥惧儚AI",
+    "links": [
+      {
+        "name": "鏃犻檺鐢?,
+        "link": "https://ibaotu.com/?m=AigcTi",
+        "avatar": "https://s.ibaotu.com/next/img/new/logo.da18.png",
+        "descr": "涓撴敞浜庨珮璐ㄩ噺鍥惧儚鐢熸垚鐨凙I宸ュ叿锛岄€傜敤浜庤壓鏈垱浣溿€?
+      },
+      {
+        "name": "缇庡浘璁捐瀹?,
+        "link": "https://www.designkit.com/",
+        "avatar": "https://public.static.meitudata.com/xiuxiu-pc/xdesign-widgets/images/logo/logo-light.png",
+        "descr": "缇庡浘鍏徃鎺ㄥ嚭鐨勮璁″伐鍏凤紝闆嗘垚浜嗗绉岮I鍥惧儚澶勭悊鍔熻兘銆?
+      },
+      {
+        "name": "鏂囧績涓€鏍?,
+        "link": "https://yige.baidu.com/",
+        "avatar": "https://yige.baidu.com/favicon.png",
+        "descr": "鐧惧害鎺ㄥ嚭鐨凙I缁樺浘宸ュ叿锛岄€傚悎鐢熸垚澶氭牱鍖栫殑鍥惧儚鍐呭銆?
+      },
+      {
+        "name": "闃块噷閫氫箟涓囩浉",
+        "link": "https://tongyi.aliyun.com/wanxiang/",
+        "avatar": "https://img.alicdn.com/imgextra/i4/O1CN01tKHYG31nxV2ZRMlB9_!!6000000005156-55-tps-261-62.svg",
+        "descr": "闃块噷浜戠殑AI鍥惧儚鐢熸垚骞冲彴锛岄€傚悎鍟嗕笟鍖栧満鏅娇鐢ㄣ€?
+      },
+      {
+        "name": "鏃犵晫AI",
+        "link": "https://www.wujieai.com/",
+        "avatar": "https://cdn.wujiebantu.com/upload/8A9FBA86DE2EA52AC1A24BDC692FF171/1712129887561/FmNieqg-bOfiZ97cu2ZtoAmJdbp7.png",
+        "descr": "澶氬姛鑳紸I骞冲彴锛屾敮鎸佸浘鍍忕敓鎴愩€佸鐞嗗強澶氱鍏朵粬搴旂敤銆?
+      },
+      {
+        "name": "閫氫箟涓囪薄",
+        "link": "https://tongyi.aliyun.com/wanxiang/",
+        "avatar": "https://img.alicdn.com/imgextra/i3/O1CN01O4Zouy1qaXx8mPVnp_!!6000000005512-2-tps-134-133.png",
+        "descr": "闃块噷鎺ㄥ嚭鐨勪竴娆惧ぇ妯″瀷AI缁樼敾锛屾瘡鏃ュ厤璐逛娇鐢?0娆°€?
+      },
+      {
+        "name": "鍚愬徃ai",
+        "link": "https://tusiart.com/",
+        "avatar": "https://images.tusiassets.com/system/5c80acde65a0b0a52bacdc181811fd62.png!mfit_w240_h240_jpg_avif",
+        "descr": "鍦ㄧ嚎鏂囩敓鍥? https://www.aihub.cn/tools/music/soundbug/"
+      },
+      {
+        "name": "BigJpg AI",
+        "link": "https://bigjpg.ai/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "BigJpg AI鏄竴涓熀浜庝汉宸ユ櫤鑳界殑鍥剧墖鏀惧ぇ宸ュ叿銆?
+      },
+      {
+        "name": "椴滆壓AI鎶犲浘",
+        "link": "https://kt.94xy.com/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "椴滆壓AI鎶犲浘鏄竴涓厤璐逛笖鏃犻渶鑱旂綉鐨凙I鎶犲浘宸ュ叿銆?
+      }
+    ]
+  },
+  {
+    "name": "瑙嗛AI缃戠珯",
+    "desc": "瑙嗛鍓緫AI",
+    "links": [
+      {
+        "name": "鑵捐鏅哄奖",
+        "link": "https://zenvideo.qq.com/",
+        "avatar": "https://zenvideo.gtimg.com/grail/dist/favicon.ico",
+        "descr": "鑵捐鎺ㄥ嚭鐨凙I瑙嗛鍓緫宸ュ叿锛屾搷浣滅畝渚匡紝鍔熻兘涓板瘜銆?
+      },
+      {
+        "name": "涓€甯х鍒?,
+        "link": "https://aigc.yizhentv.com/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "AI椹卞姩鐨勯珮鏁堣棰戝埗浣滃伐鍏凤紝閫傚悎鐭棰戝唴瀹瑰垱浣溿€?
+      },
+      {
+        "name": "缁樺奖瀛楀箷",
+        "link": "https://huiyingzimu.com/",
+        "avatar": "https://huiyingzimu.com/img/HY_header_logo.19ea9684.png",
+        "descr": "涓撴敞浜庤棰戣嚜鍔ㄥ姞瀛楀箷鐨勫伐鍏凤紝鐪佹椂鐪佸姏銆?
+      },
+      {
+        "name": "鏉ョ敾",
+        "link": "https://www.laihua.com/",
+        "avatar": "https://www.laihua.com//favicon.ico",
+        "descr": "渚挎嵎鐨凙I瑙嗛鍒涗綔宸ュ叿锛岄€傚悎鍚勭椋庢牸鐨勮棰戝埗浣溿€?
+      },
+      {
+        "name": "涓囧僵寰奖",
+        "link": "https://www.animiz.cn/microvideo/",
+        "avatar": "https://www.animiz.cn/microvideo.ico",
+        "descr": "绠€鍗曟槗鐢ㄧ殑寰棰戝埗浣滃钩鍙帮紝鏀寔涓板瘜鐨勫姩鐢绘晥鏋溿€?
+      },
+      {
+        "name": "鍙伒-蹇墜",
+        "link": "https://klingai.kuaishou.com/",
+        "avatar": "https://ali2.a.kwimgs.com/kos/nlav10378/aiwp/favicon.ico",
+        "descr": "鍥藉唴鏈€濂界敤鐨凙I瑙嗛鍒涗綔宸ュ叿锛孲ora鐨勫浗鍐呭钩鏇?
+      }
+    ]
+  },
+  {
+    "name": "PPT-AI缃戠珯",
+    "desc": "AI鍋歅PT",
+    "links": [
+      {
+        "name": "鍗氭€滱I鐧芥澘",
+        "link": "https://boardmix.cn/",
+        "avatar": "https://cms.boardmix.cn/images/board.ico",
+        "descr": "鎻愪緵鏅鸿兘鍖朠PT鍒朵綔鐨凙I宸ュ叿锛岃嚜鍔ㄥ寲鐢熸垚婕旂ず鏂囩銆?
+      },
+      {
+        "name": "蹇呬紭ChatPPT",
+        "link": "https://www.chatppt.com/",
+        "avatar": "https://www.chatppt.com/img/favicon.png",
+        "descr": "楂樻晥鐨凙I杈呭姪PPT鍒朵綔宸ュ叿锛岀畝鍖栫箒鐞愮殑PPT璁捐娴佺▼銆?
+      },
+      {
+        "name": "chatPPT",
+        "link": "https://www.chat-ppt.com",
+        "avatar": "https://www.chat-ppt.com/static/img/logo_icon.76b4d398.svg",
+        "descr": "鐩存帴杈撳叆PPT涓婚鍗冲彲蹇€熶竴閿敓鎴愭枃妗?
+      }
+    ]
+  },
+  {
+    "name": "宸ュ叿缃戠珯",
+    "desc": "宸ュ叿鍚堥泦",
+    "links": [
+      {
+        "name": "pdf杞崲",
+        "link": "https://www.cleverpdf.com/cn",
+        "avatar": "https://www.cleverpdf.com/statics/images/index_logo.svg",
+        "descr": "鍑犲崄涓己澶х殑PDF鍦ㄧ嚎宸ュ叿锛屾棤闇€娉ㄥ唽浼氬憳锛屾案涔呭厤璐癸紒"
+      },
+      {
+        "name": "ALL to ALL",
+        "link": "https://www.alltoall.net/",
+        "avatar": "https://www.alltoall.net/qfy-content/uploads/2022/07/b42759ab5cf74aa8f1ce08d1317b6940-80.webp",
+        "descr": "ALL TO ALL鏄竴涓厤璐圭殑涓囪兘鏍煎紡杞崲鍣ㄣ€?
+      },
+      {
+        "name": "PDF24 Tools",
+        "link": "https://tools.pdf24.org/zh/",
+        "avatar": "https://tools.pdf24.org/static/img/pdf24.png",
+        "descr": "PDF24 Tools 鏄竴涓厤璐圭殑鍦ㄧ嚎PDF缂栬緫澶勭悊宸ュ叿銆?
+      },
+      {
+        "name": "閫熷啓绠€鍘?,
+        "link": "https://www.jianlisx.com/",
+        "avatar": "https://www.jianlisx.com/img/logo.png",
+        "descr": "閫熷啓绠€鍘嗘槸涓€涓彁渚涚畝鍘嗘ā鏉垮拰灏侀潰銆佹眰鑱屾妧宸с€佹嫑鑱樹俊鎭瓑璧勬簮鐨勫厤璐圭綉绔欍€?
+      },
+      {
+        "name": "鐭ヤ箮鐩寸瓟",
+        "link": "https://zhida.zhihu.com/",
+        "avatar": "https://pica.zhimg.com/v2-79e835d86b026c7c499de99d49906814.png",
+        "descr": "鐭ヤ箮瀹樻柟鎺ㄥ嚭鐨勬煡鎵鹃棶棰樹笌绛旀宸ュ叿"
+      },
+      {
+        "name": "Cat Meme Template Video",
+        "link": "https://www.memesstyle.com/region/en",
+        "avatar": "https://pica.zhimg.com/v2-79e835d86b026c7c499de99d49906814.png",
+        "descr": "鐚玬eme绱犳潗涔熻兘涓€閿笅杞?
+      },
+      {
+        "name": "Tools-Web",
+        "link": "https://tools.ranblogs.com/",
+        "avatar": "https://www.memesstyle.com/mylogo.png",
+        "descr": "寮€鍙戣繍缁淬€佹枃鏈鐞嗐€佹暀鑲插鏈€佸浘鐗囧鐞嗐€佹暟鎹浘琛ㄣ€侀€夋嫨闅忔満绛夌被鍨嬬殑宸ュ叿"
+      },
+      {
+        "name": "鏀瑰浘瀹?,
+        "link": "https://www.gaitubao.com/",
+        "avatar": "https://gtb-static.nasack.net/img/logo.svg",
+        "descr": "鍦ㄧ嚎淇敼鍥剧墖宸ュ叿锛屽ぇ閮ㄥ垎宸ュ叿鏄彲浠ュ厤璐逛娇鐢ㄧ殑銆?
+      },
+      {
+        "name": "ILovePDF3",
+        "link": "https://ilovepdf3.com/",
+        "avatar": "https://ilovepdf3.com/wp-content/uploads/2024/05/WhatsApp-Image-2024-05-18-at-5.46.02-PM.jpeg",
+        "descr": "鍏嶈垂鍦ㄧ嚎PDF銆佸浘鍍忓拰鏂囦欢杞崲鍣ㄣ€?
+      },
+      {
+        "name": "璺熷搱宸ュ叿",
+        "link": "https://www.genha.com/",
+        "avatar": "https://www.genha.com/assets/img/logo.png",
+        "descr": "鍦ㄧ嚎缈昏瘧杞崲鍣ㄣ€佸浘鐗囧帇缂╁伐鍏枫€佹懜楸兼彁閱掗€氱煡銆佹垚璇ぇ鍏ㄣ€佷笘鐣屾腐鍙ｅぇ鍏ㄣ€佸湴鐮栬绠楀櫒銆乄ord&Excel&PPT蹇嵎閿ぇ鍏ㄣ€侀殢鏈哄瘑鐮佺敓鎴愬櫒绛夊父鐢ㄧ殑宸ュ叿"
+      },
+      {
+        "name": "鏁堢巼宸ュ叿鎸囧崡",
+        "link": "https://penghh.fun/",
+        "avatar": "https://penghh.fun/img/blogicon.png",
+        "descr": "杞欢娴嬭瘎銆佷釜浜虹數瀛愪骇鍝佷娇鐢ㄥ績寰楀拰鏁堢巼宸ュ叿浣跨敤鎸囧崡绛?
+      },
+      {
+        "name": "鐭摼鐢熸垚",
+        "link": "https://tool.chinaz.com/Tools/dwz.aspx https://github.com/OpenGithubs/github-daily-rank?tab=readme-ov-file",
+        "avatar": "https://csstools.chinaz.com/tools/images/public/logos/logo-index.png",
+        "descr": "鐢熸垚QQ寰俊鍙敤鐨勭煭缃戝潃渚夸簬鍒嗕韩"
+      },
+      {
+        "name": "瑙嗛杞琯if",
+        "link": "https://dongci.kawo.com/",
+        "avatar": "https://dongci.kawo.com/app/images/39XUnMH.png",
+        "descr": "瑙嗛鐩磋浆gif"
+      },
+      {
+        "name": "jscool",
+        "link": "https://jscool.cn/",
+        "avatar": "https://jscool.cn/favicon.ico",
+        "descr": "jscool锛屾槸涓€涓笓娉ㄤ簬鍒嗕韩涓€浜涜秴閰风殑鍓嶇璧勬簮鐨勭綉绔欍€?
+      },
+      {
+        "name": "缇庡浗韬唤鐢熸垚",
+        "link": "https://www.ssnzk.com/",
+        "avatar": "",
+        "descr": "鍦ㄧ嚎淇℃伅鐢熸垚锛屽寘鍚編鍥斤紝鑻卞浗锛屾棩鏈紝婢冲ぇ鍒╀簹绛夊叏涓栫晫鍚勪釜鍥藉鐨勪釜浜恒€佽閬撳湴鍧€鐢熸垚锛岀編鍥絊SN鐢熸垚浠ュ強鍏朵粬涓汉鐢熸垚銆?
+      },
+      {
+        "name": "Indie Hacker Tools",
+        "link": "https://indiehackertools.net/",
+        "avatar": "https://indiehackertools.net/_next/image?url=%2Fheader-logo.png&w=48&q=75",
+        "descr": "Indie Hacker Tools鏄竴涓嫭绔嬪紑鍙戣€呭嚭娴峰伐鍏风銆傜被鍨嬫兜鐩栫伒鎰熴€佹帹骞裤€佸彉鐜版敮浠樸€佺簿閫夋ā鏉裤€丩ogo鍒朵綔銆佸唴瀹瑰瓨鍌ㄣ€丄I寮€鍙戣祫婧愩€佸煙鍚嶃€侀儴缃叉墭绠°€丼EO銆佽嚜濯掍綋璧勮銆佹晥鐜囩瓑銆?
+      },
+      {
+        "name": "memocard",
+        "link": "https://memocard.net/",
+        "avatar": "https://memocard.net/favicon.ico",
+        "descr": "Memo Card鏄竴涓厤璐圭殑鏂囧瓧鍗＄墖缃戠珯銆?
+      },
+      {
+        "name": "娣辫█杈炬剰",
+        "link": "https://www.shenyandayi.com/",
+        "avatar": "娣辫█杈炬剰鏄竴涓敮鎸佹壘璇嶆壘鍙ワ紝杩樿嚜甯︾礌鏉愬簱鐨勫湪绾垮伐鍏枫€傛敮鎸佹嵁鎰忔煡璇嶏紝杈撳叆浣犳兂琛ㄨ揪鐨勬剰鎬濓紝瀹冧細甯綘鎵惧埌鏇翠赴瀵屾洿鎭板綋鐨勮〃杈炬柟寮忋€?,
+        "descr": ""
+      },
+      {
+        "name": "浠ｇ爜缇庡寲宸ュ叿",
+        "link": "https://codebeautify.org/",
+        "avatar": "https://codebeautify.org/img/nlogo.webp",
+        "descr": "浠ｇ爜缇庡寲鍦ㄧ嚎宸ュ叿绠憋紝鍗崇敤鍗宠蛋"
+      },
+      {
+        "name": "uuid鐢熸垚",
+        "link": "https://1024tools.com/uuid",
+        "avatar": "/img/friend_404.gif",
+        "descr": "闅忔満鐢熸垚uuid"
+      },
+      {
+        "name": "patorjk",
+        "link": "https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20",
+        "avatar": "/img/friend_404.gif",
+        "descr": "鐢熸垚Ascll瀛楃鍥?
+      },
+      {
+        "name": "鍒囦節鍥?,
+        "link": "https://v.magiconch.com/sns-image",
+        "avatar": "/img/friend_404.gif",
+        "descr": "鍒囦節鍥炬槸涓€涓厤璐圭殑灏嗗浘鐗囧垏鍓叉垚涔濆鏍兼垨鑰呭洓瀹牸鐨勫湪绾垮伐鍏枫€?
+      },
+      {
+        "name": "杩濈璇嶆娴?,
+        "link": "https://www.newrank.cn/creator/forbiddenWords",
+        "avatar": "https://chs.newrank.cn/logo/logo-newrank.svg",
+        "descr": "涓€閿娴嬪叕浼楀彿銆佸皬绾功銆佹姈闊宠繚绂佽瘝"
+      },
+      {
+        "name": "琛ㄦ儏鍖呭埗浣?,
+        "link": "https://www.doutub.com/",
+        "avatar": "https://www.doutub.com/images/logo.png",
+        "descr": "鍦ㄧ嚎鍒朵綔琛ㄦ儏鍖呫€丟IF鍔ㄥ浘"
+      },
+      {
+        "name": "TTSMAKER",
+        "link": "https://ttsmaker.cn/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "TTSMAKER鏄竴涓厤璐圭殑鏂囧瓧杞闊冲湪绾垮伐鍏枫€?
+      },
+      {
+        "name": "涓存椂閭1",
+        "link": "https://temp.now/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "涓存椂鍖垮悕閭"
+      },
+      {
+        "name": "涓存椂閭2",
+        "link": "https://smail.pw/zh-CN",
+        "avatar": "/img/friend_404.gif",
+        "descr": "涓存椂鍖垮悕閭"
+      },
+      {
+        "name": "鏂囧瓧瀵规瘮宸ュ叿",
+        "link": "https://www.littlediffer.com/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "涓€涓畬鍏ㄥ厤璐圭殑宸ュ叿锛屾棤闇€鐧诲綍娉ㄥ唽鍗冲彲浣跨敤锛屽姛鑳藉氨鏄姣斾袱娈垫枃瀛椼€佷唬鐮佺殑涓嶅悓锛岃緭鍏ュ悗鑳藉娓呮櫚鐨勫睍绀哄嚭鏉ャ€?
+      },
+      {
+        "name": "鏌ョ湅璐㈡姤",
+        "link": "https://discountingcashflows.com/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "鍟嗗姟浜哄＋蹇呭锛屼笉鐭ラ亾鎶曡韩鑲″競鐨勬懜鍙嬩細涓嶄細鍒嗘瀽鍒嗘瀽涓婂競鍏徃璐㈡姤锛熻繖涓綉绔欏彲浠ュ緢鏂逛究鐨勬煡鐪嬪悇澶т笂甯傚叕鍙哥殑璐㈡姤绛夋暟鎹紝鑰屼笖鏃犻渶鐧诲綍鍗冲彲鍏嶈垂浣跨敤銆?
+      },
+      {
+        "name": "鐏溅绁ㄧ紪杈戝櫒",
+        "link": "https://fog.vicc.wang/ticket.html",
+        "avatar": "/img/friend_404.gif",
+        "descr": "鑷鍒朵綔鐏溅绁紝绾㈣壊鏅エ銆佽摑鑹查珮閾佺エ1閮藉彲浠?
+      },
+      {
+        "name": "鑻辨枃瀛椾綋杞崲鍣?,
+        "link": "http://www.akuziti.com/yw/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "鑻辨枃瀛椾綋杞崲鍣ㄦ槸涓€涓厤璐瑰皢鏂囧瓧杞垚鍚勭濂界湅鐨勮嫳鏂囪壓鏈瓧浣撶殑鍦ㄧ嚎宸ュ叿銆?
+      }
+    ]
+  },
+  {
+    "name": "绱犳潗缃戠珯",
+    "desc": "绱犳潗缃戠珯鍚堥泦",
+    "links": [
+      {
+        "name": "404 Illustrations锛堥渶瑕侀瓟娉曪級",
+        "link": "https://error404.fun/",
+        "avatar": "https://error404.fun/img/apple-icon-180x180.png",
+        "descr": "鍏嶈垂鎻愪緵404閿欒椤甸潰绱犳潗鐨勭綉绔?
+      },
+      {
+        "name": "CocoMaterial",
+        "link": "https://cocomaterial.com/",
+        "avatar": "https://cocomaterial.com/img/logo.5db4d01a.svg",
+        "descr": "鍏嶈垂寮€婧愮殑鎵嬬粯鎻掔敾绱犳潗搴撱€侰C0鍗忚锛屾剰鍛崇潃涓嬭浇鐨勮繖浜涚礌鏉愪笉浠呭彲浠ョ敤浜庝釜浜虹敤閫旓紝涔熷彲浠ョ敤浜庡晢涓氱敤閫旓紝鑰屼笖涓嶉渶瑕佹敞鏄庡嚭澶勩€?
+      },
+      {
+        "name": "Dareful",
+        "link": "https://dareful.com/",
+        "avatar": "https://dareful.com/wp-content/themes/dareful-v1.0/assets/images/dareful-logo.svg",
+        "descr": "鍏嶈垂鐨勯珮娓呰棰戠礌鏉愪笅杞界綉绔?
+      },
+      {
+        "name": "鐏板ぇ璁捐瀵艰埅",
+        "link": "https://www.huisezhizhao.com/",
+        "avatar": "https://www.huisezhizhao.com/nav/images/nav.ico",
+        "descr": "涓撻棬鏀跺綍璁捐宸ュ叿銆佺礌鏉愩€佹彃浠剁瓑璧勬簮鐨勫鑸綉绔?
+      },
+      {
+        "name": "澶村儚鐢熸垚鍣?,
+        "link": "http://www.atoolbox.net/Topic.php?Id=4",
+        "avatar": "http://www.atoolbox.net/favicon.ico",
+        "descr": "涓€涓伐鍏风锛屾彁渚涗簡寰堝澶村儚鐢熸垚鍣ㄣ€?
+      },
+      {
+        "name": "椋熺敤鎵嬪唽",
+        "link": "https://cook.yunyoujun.cn/",
+        "avatar": "https://cook.yunyoujun.cn/favicon.svg",
+        "descr": "椋熺敤鎵嬪唽鏄竴涓厤璐瑰紑婧愮殑鑿滆氨缁勫悎宸ュ叿锛岀敱缃戝弸@浜戞父鍚涘紑鍙戙€傚彲浠ュ府鍔╃敤鎴锋牴鎹幇鏈夐鏉愬鎵惧埌鍚堥€傜殑鑿滆氨銆?
+      },
+      {
+        "name": "鏈夎叮鐨刪tml5浠ｇ爜",
+        "link": "https://www.html5tricks.com/",
+        "avatar": "https://www.html5tricks.com/wp-content/uploads/2014/06/html5tricks-logo.jpg",
+        "descr": "鍚勭鏈夎叮鐨刪tml5浠ｇ爜鏍蜂緥"
+      },
+      {
+        "name": "VELeap",
+        "link": "https://veleap.com/console/works/material/font",
+        "avatar": "https://static.atvideo.cc/2021/08/23/17/19/favicon.ico",
+        "descr": "VELeap鏄竴涓笓涓鸿璁″笀鎻愪緵鍘熷垱AE鎻掍欢銆佽剼鏈瓑宸ュ叿璧勬簮鐨勫钩鍙般€?
+      },
+      {
+        "name": "AirPano",
+        "link": "https://www.airpano.com/",
+        "avatar": "https://www.airpano.ru/images/fb/1.jpg",
+        "descr": "AirPano鏄竴涓浣犺冻涓嶅嚭鎴蜂篃鑳界幆娓镐笘鐣岀殑缃戠珯銆傜洰鍓嶈繖閲屾湁3980涓叏鏅浘鍜?01涓叏鏅棰戙€?
+      }
+    ]
+  },
+  {
+    "name": "鍓嶇宸ュ叿",
+    "desc": "鍓嶇宸ュ叿鍚堥泦",
+    "links": [
+      {
+        "name": "pug to html",
+        "link": "https://codebeautify.org/pug-to-html-converter",
+        "avatar": "https://codebeautify.org/img/nlogo.webp",
+        "descr": "灏唒ug杞寲涓篽tml鐨勫湪绾垮伐鍏?
+      },
+      {
+        "name": "scss to css",
+        "link": "http://scss.jsrun.net/",
+        "avatar": "http://cdn.jsrun.top/favicon.png",
+        "descr": "灏唖css杞寲涓篶ss鐨勫湪绾垮伐鍏?
+      },
+      {
+        "name": "瀛楀簱鏄熺悆瀵艰埅缃戠珯",
+        "link": "https://hao.mfonts.cn/",
+        "avatar": "https://hao.mfonts.cn/storage/upload/20240811/66b8bc911584d.ico",
+        "descr": "瀛楀簱鏄熺悆瀵艰埅瀹樼綉鏄竴涓彁渚涘浗鍐呬笓涓氳璁″笀缃戠珯瀵艰埅鐨勫钩鍙般€?
+      },
+      {
+        "name": "Branding Colors",
+        "link": "https://brandingcolors.net/",
+        "avatar": "https://brandingcolors.net/assets/images/og.png",
+        "descr": "Branding Colors鏄竴涓墜宸ョ簿鎸戠粏閫夌殑鍝佺墝閰嶈壊鏂规缃戠珯銆?
+      },
+      {
+        "name": "UILibHub",
+        "link": "https://uilibhub.com/zh",
+        "avatar": "https://uilibhub.com/favicon.png",
+        "descr": "UILibHub鏄竴涓笓娉ㄦ敹闆嗗拰鍒嗕韩React銆乂ue鍜屽皬绋嬪簭缁勪欢搴撶殑骞冲彴銆?
+      },
+      {
+        "name": "CodePen",
+        "link": "https://codepen.io/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "鍦ㄧ嚎浠ｇ爜缂栬緫鍣ㄣ€傚彲浠ュ揩閫熺紪鍐橦TML銆丆SS鍜孞avaScript,瀹炴椂棰勮鏁堟灉,骞惰交鏉句笌鍥㈤槦鍒嗕韩銆?
+      },
+      {
+        "name": "Animista",
+        "link": "https://animista.net/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "鍔ㄥ姩鎵嬫寚灏辩敓鎴愬鏉傜殑CSS鍔ㄧ敾"
+      },
+      {
+        "name": "InVision",
+        "link": "https://proto.io/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "鍒涘缓浜や簰寮忓師鍨嬭繘琛岀敤鎴锋祴璇?
+      },
+      {
+        "name": "Iconify",
+        "link": "https://iconify.design/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "缁熶竴绠＄悊澶氫釜椤圭洰鐨勫浘鏍囷紝鍦ㄤ篃涓嶇敤鎷呭績鍥炬爣涓嶅鐢ㄧ殑闂"
+      },
+      {
+        "name": "html杞琾ug",
+        "link": "https://codebeautify.org/html-to-pug-converter",
+        "avatar": "https://codebeautify.org/img/nlogo.webp",
+        "descr": "灏唄tml杞负pug"
+      }
+    ]
+  },
+  {
+    "name": "鍏朵粬",
+    "desc": "澶囩敤鍒嗙被",
+    "links": [
+      {
+        "name": "github姣忔棩Star椋欏崌姒?,
+        "link": "https://github.com/OpenGithubs/github-daily-rank?tab=readme-ov-file",
+        "avatar": "https://github.githubassets.com/favicons/favicon.png",
+        "descr": "github鐨凷tar椋欏崌姒?
+      },
+      {
+        "name": "绛旀涔嬩功绾夸笂",
+        "link": "https://answersbook.iwhy.dev/zh/",
+        "avatar": "/img/friend_404.gif",
+        "descr": "鎵撳紑杩欎釜缃戠珯锛岄棴涓婄溂鐫涳紝鍐呭績鎯崇潃閭ｄ釜鍥版壈浣犲緢涔呬簡鐨勯棶棰橈紝鐐瑰嚮瀵绘眰绛旀锛屼篃璁镐綘浼氬緱鍒板惎鍙戙€?
+      }
+    ]
+  },
+  {
+    "name": "鐭ヨ瘑搴?,
+    "desc": "鏈夌敤鐨勭煡璇嗗簱锛岄摼鎺ヤ竾鐗?,
+    "links": [
+      {
+        "name": "閫氬線 AGI 涔嬭矾",
+        "link": "https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "鎻愪緵涓€涓叏闈㈢郴缁熺殑 AI 瀛︿範璺緞锛屽府鍔╂偍浜嗚В浠?AI 甯歌鍚嶈瘝鍒?AI 搴旂敤绛夊悇鏂归潰鐭ヨ瘑"
+      },
+      {
+        "name": "AGI 鎺橀噾鐭ヨ瘑搴?,
+        "link": "https://km3dl0ffdl.feishu.cn/wiki/UvJPwhfkiitMzhkhEfycUnS9nAm",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "涓€瀹朵笓娉ㄤ簬 AGI 鐩稿叧鐮旂┒鍜屽簲鐢ㄧ殑鍒涙柊鍨嬬煡璇嗗钩鍙般€?
+      },
+      {
+        "name": "濂旇荡 AGI",
+        "link": "https://aigcreative.feishu.cn/wiki/DQGiwCAwji9ZoAkwZ7Tcvqhvngf",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "濂旇荡 AGI 鐭ヨ瘑搴撴槸涓€涓畬鍏ㄥ厤璐广€佸紑鏀俱€佸ぇ瀹朵竴璧峰缓璁惧拰鍒嗕韩鐨勫钩鍙帮紝涓撻棬鏀堕泦鍜屽垎浜渶鏂般€佹渶鏈夊垱鎰忕殑 AIGC 瀛︿範璧勬簮銆?
+      },
+      {
+        "name": "LangGPT 缁撴瀯鍖栨彁绀鸿瘝",
+        "link": "https://langgptai.feishu.cn/wiki/RXdbwRyASiShtDky381ciwFEnpe",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "LangGPT 鏄竴涓府鍔╀綘缂栧啓楂樿川閲忔彁绀鸿瘝鐨勫伐鍏凤紝鐞嗚鍩虹鏄垜浠彁鍑虹殑涓€濂楁ā鍧楀寲銆佹爣鍑嗗寲鐨勬彁绀鸿瘝缂栧啓鏂规硶璁衡€斺€旂粨鏋勫寲鎻愮ず璇嶃€?
+      },
+      {
+        "name": "AI 浜у搧姒?,
+        "link": "https://dnipkggqxh.feishu.cn/wiki/YTIUwM6Vmij4IQkSm9PctPWunIb",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "AI 浜у搧姒滃崟鐢辨潕姒滀富涓诲锛岃仈鍚?30 澶氫綅 AI 棰嗗煙鍏紬鍙蜂富鐞嗕汉鍙戝竷锛屾槸鈥滆浼楀鏉冨▉濯掍綋鍜屼笓瀹跺紩鐢ㄦ渶澶氱殑姒滃崟鈥濄€?
+      },
+      {
+        "name": "鍗氱墿棣?,
+        "link": "https://hsiaohsihsi.feishu.cn/wiki/NRN7wKiJGioZtIkojr2cYNVknrd",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "鍗氱墿棣嗛钘忓悎闆?
+      },
+      {
+        "name": "LangGPT鎻愮ず璇?,
+        "link": "https://langgptai.feishu.cn/wiki/RXdbwRyASiShtDky381ciwFEnpe",
+        "avatar": "https://lf-scm-cn.feishucdn.com/ccm/pc/web/resource/bear/feishu.ico",
+        "descr": "LangGPT 鏄竴涓府鍔╀綘缂栧啓楂樿川閲忔彁绀鸿瘝鐨勫伐鍏?涓哄ぇ浼楁彁渚涗竴濂楀彲鎿嶄綔銆佸彲澶嶇幇鐨勬彁绀鸿瘝鏂规硶璁恒€佸伐鍏峰拰浜ゆ祦绀剧兢銆?
+      }
+    ]
+  }
+]

@@ -1,53 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Image, Palette, Sparkles, ArrowDown, RefreshCw, X, Check, Volume2 } from 'lucide-react';
+import { Palette, ChevronDown, X, Check } from 'lucide-react';
 
 const wallpaperPresets = [
-  { name: '低多边形冰淇淋', url: 'https://static.simpledesktops.com/uploads/desktops/2020/11/21/low-poly-ice-cream.png', type: 'image' },
-  { name: '雨天窗景', url: 'https://static.simpledesktops.com/uploads/desktops/2014/04/24/rainyDay_2880x1800.png', type: 'image' },
-  { name: '幽深暗鹿', url: 'https://static.simpledesktops.com/uploads/desktops/2014/03/05/dark_deer.png', type: 'image' },
-  { name: '群山连绵', url: 'https://static.simpledesktops.com/uploads/desktops/2012/06/12/Mountain.png', type: 'image' },
-  { name: '钢铁之心', url: 'https://static.simpledesktops.com/uploads/desktops/2012/10/14/Iron_Man.png', type: 'image' },
-  { name: '俄罗斯方块', url: 'https://static.simpledesktops.com/uploads/desktops/2012/01/25/tetris.png', type: 'image' },
-  { name: '赛博极客', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1800&auto=format&fit=crop', type: 'image' },
+  { name: 'SimpleDark', url: 'https://static.simpledesktops.com/uploads/desktops/2014/03/05/dark_deer.png', type: 'image' },
+  { name: 'Mountain', url: 'https://static.simpledesktops.com/uploads/desktops/2012/06/12/Mountain.png', type: 'image' },
+  { name: 'Rainy Day', url: 'https://static.simpledesktops.com/uploads/desktops/2014/04/24/rainyDay_2880x1800.png', type: 'image' },
+  { name: 'Tetris', url: 'https://static.simpledesktops.com/uploads/desktops/2012/01/25/tetris.png', type: 'image' },
+  { name: 'Cyber', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1800&auto=format&fit=crop', type: 'image' },
+  { name: 'Nordic', url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1800&auto=format&fit=crop', type: 'image' },
+  { name: 'Minimal', url: 'https://images.unsplash.com/photo-1557682250-33bd709cbe85?q=80&w=1800&auto=format&fit=crop', type: 'image' },
 ];
 
 const colorPresets = [
-  { name: '暖陶土橙', value: '#ee7959', type: 'color' },
-  { name: '抹茶森林', value: '#5d8351', type: 'color' },
-  { name: '湖水薄荷', value: '#b1d5c8', type: 'color' },
-  { name: '燕麦温润', value: '#bfa782', type: 'color' },
-  { name: '深邃暗夜', value: '#141413', type: 'color' },
+  { name: 'Terracotta', value: '#ee7959', type: 'color' },
+  { name: 'Forest', value: '#2d4a3e', type: 'color' },
+  { name: 'Obsidian', value: '#141413', type: 'color' },
+  { name: 'Lapis', value: '#1a2b4a', type: 'color' },
+  { name: 'Plum', value: '#2d1b4e', type: 'color' },
 ];
 
 const gradientPresets = [
-  { name: '暮光樱花', value: 'linear-gradient(135deg, #eecda3, #ef629f)', type: 'gradient' },
-  { name: '蜜桃落日', value: 'linear-gradient(135deg, #fce38a, #f38181)', type: 'gradient' },
-  { name: '蔚蓝天际', value: 'linear-gradient(135deg, #abdcff, #0396ff)', type: 'gradient' },
-  { name: '暖金流光', value: 'linear-gradient(135deg, #fad7a1, #e96d71)', type: 'gradient' },
+  { name: 'Dusk', value: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)', type: 'gradient' },
+  { name: 'Aurora', value: 'linear-gradient(135deg, #0d1117, #1a4a3a, #0d1117)', type: 'gradient' },
+  { name: 'Coral', value: 'linear-gradient(135deg, #1a0a0a, #3d1515, #ee7959)', type: 'gradient' },
+  { name: 'Steel', value: 'linear-gradient(135deg, #0d1117, #161b22, #21262d)', type: 'gradient' },
+  { name: 'Neon', value: 'linear-gradient(135deg, #0a0a0a, #0d2137, #001f3f)', type: 'gradient' },
 ];
 
 export const HeroCover: React.FC = () => {
   const [currentBg, setCurrentBg] = useState<{ type: string; value: string }>({
     type: 'gradient',
-    value: 'linear-gradient(135deg, rgba(217, 119, 87, 0.75), rgba(245, 158, 11, 0.6))',
+    value: 'linear-gradient(135deg, #0d1117, #1a1a2e, #16213e)',
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'wallpaper' | 'color' | 'gradient'>('wallpaper');
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'wallpaper' | 'color' | 'gradient'>('gradient');
 
   useEffect(() => {
     const saved = localStorage.getItem('blogbg');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (parsed.type && parsed.value) {
-          setCurrentBg(parsed);
-        }
-      } catch (e) {
-        // Fallback to string if old format
-        if (saved.startsWith('http')) {
-          setCurrentBg({ type: 'image', value: saved });
-        }
+        if (parsed.type && parsed.value) setCurrentBg(parsed);
+      } catch {
+        if (saved.startsWith('http')) setCurrentBg({ type: 'image', value: saved });
       }
     }
   }, []);
@@ -56,212 +52,195 @@ export const HeroCover: React.FC = () => {
     const next = { type, value };
     setCurrentBg(next);
     localStorage.setItem('blogbg', JSON.stringify(next));
-    setIsModalOpen(false);
+    setIsOpen(false);
   };
 
-  const getBackgroundStyle = () => {
-    if (currentBg.type === 'image') {
-      return {
-        backgroundImage: `url(${currentBg.value})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      };
-    } else if (currentBg.type === 'color') {
-      return { backgroundColor: currentBg.value };
-    } else {
-      return { backgroundImage: currentBg.value };
-    }
-  };
+  const bgStyle =
+    currentBg.type === 'image'
+      ? { backgroundImage: `url(${currentBg.value})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+      : currentBg.type === 'color'
+      ? { backgroundColor: currentBg.value }
+      : { backgroundImage: currentBg.value };
 
   return (
-    <div className="relative w-full rounded-3xl overflow-hidden mb-12 shadow-2xl transition-all duration-700">
-      {/* 1. Large Dynamic Hero Banner Background */}
+    <div
+      style={bgStyle}
+      className="relative w-screen -mx-4 sm:-mx-6 left-0 right-0 h-screen max-h-screen flex flex-col items-center justify-center overflow-hidden mb-16 transition-all duration-700"
+    >
+      {/* Dark vignette overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20 pointer-events-none z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none z-10" />
+
+      {/* Animated noise grain for depth */}
       <div
-        style={getBackgroundStyle()}
-        className="w-full min-h-[460px] sm:min-h-[520px] flex flex-col justify-between p-6 sm:p-12 relative transition-all duration-700"
-      >
-        {/* Dark overlay mask to ensure white text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/30 pointer-events-none" />
+        className="absolute inset-0 opacity-[0.03] pointer-events-none z-10"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")', backgroundRepeat: 'repeat', backgroundSize: '128px' }}
+      />
 
-        {/* Top bar on banner */}
-        <div className="relative z-10 flex items-center justify-between">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-mono border border-white/25">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>AI Product Manager · Larry's Space</span>
-          </div>
-
-          {/* Switch Cover Pill Button */}
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md text-white text-xs font-mono border border-white/20 hover:border-white/40 transition-all hover:scale-105"
-          >
-            <Palette className="w-3.5 h-3.5 text-amber-300" />
-            <span>切换封面 (壁纸/纯色)</span>
-          </button>
-        </div>
-
-        {/* Hero Center Text & Identity */}
-        <div className="relative z-10 max-w-2xl py-8">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-terracotta to-amber-500 text-white flex items-center justify-center font-serif font-bold text-2xl shadow-glow-terracotta border-2 border-white/40">
-              L
-            </div>
-            <div>
-              <h1 className="text-white font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight drop-shadow-md">
-                磊大大 Larry
-              </h1>
-              <p className="text-white/80 font-mono text-xs sm:text-sm mt-0.5">
-                AI 产品经理 · PMOS 创作者 · 全栈探索者
-              </p>
-            </div>
-          </div>
-
-          <p className="text-white/90 font-serif text-base sm:text-lg leading-relaxed mt-4 drop-shadow">
-            “专注于陪伴、成长与分享，愿你总能遇到温柔的人！” <br />
-            以产品思维定义人机边界，把需求、PRD、可操作原型与 93+ 交互动效融为一体。
-          </p>
-
-          <div className="flex flex-wrap items-center gap-3 mt-6">
-            <a
-              href="/portfolio"
-              className="px-5 py-2.5 rounded-full bg-terracotta hover:bg-terracotta-500 text-white font-medium text-xs sm:text-sm shadow-lg transition-transform hover:scale-105"
-            >
-              🚀 查看旗舰 PMOS 与作品集
-            </a>
-            <a
-              href="/entertain"
-              className="px-4 py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-medium text-xs sm:text-sm border border-white/30 transition-transform hover:scale-105"
-            >
-              ✨ 娱乐馆 (音乐/烟花/雨声)
-            </a>
-            <a
-              href="/tools"
-              className="px-4 py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-medium text-xs sm:text-sm border border-white/30 transition-transform hover:scale-105"
-            >
-              🛠️ 工具与书签库
-            </a>
-          </div>
-        </div>
-
-        {/* Bottom Banner Stats Pill */}
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/20 text-white/80 text-xs font-mono">
-          <div className="flex items-center gap-4 sm:gap-6">
-            <span>📚 <strong>99+</strong> 篇技术沉淀</span>
-            <span>🎨 <strong>93+</strong> 个原生动效</span>
-            <span>🔗 <strong>108+</strong> 个精选链接</span>
-          </div>
-          <span className="text-[11px] opacity-75">
-            滚动浏览人机协同内容 ↓
+      {/* Center content - minimal & impactful */}
+      <div className="relative z-20 text-center space-y-6 px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/20 text-white/70 text-xs font-mono backdrop-blur-md bg-white/5 mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            AI Product Manager & Co-creator
           </span>
-        </div>
+
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white leading-none tracking-tighter">
+            磊大大
+          </h1>
+          <p className="mt-4 text-white/50 text-sm sm:text-base font-mono tracking-widest uppercase">
+            Larry · AI PM · Digital Garden
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-wrap items-center justify-center gap-3 pt-4"
+        >
+          <a
+            href="/portfolio"
+            className="px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition-all shadow-2xl"
+          >
+            查看作品集
+          </a>
+          <a
+            href="/about"
+            className="px-6 py-2.5 rounded-full border border-white/30 text-white text-sm font-medium hover:bg-white/10 backdrop-blur-md transition-all"
+          >
+            关于我
+          </a>
+        </motion.div>
       </div>
 
-      {/* 2. Switch Cover Modal Dialog */}
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/40 text-xs font-mono"
+      >
+        <span>scroll</span>
+        <ChevronDown className="w-4 h-4 animate-bounce" />
+      </motion.div>
+
+      {/* Cover Switcher Button - bottom right */}
+      <button
+        onClick={() => setIsOpen(true)}
+        className="absolute bottom-10 right-6 z-30 flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/15 hover:border-white/30 text-white/70 hover:text-white text-xs font-mono transition-all"
+        title="切换封面"
+      >
+        <Palette className="w-3.5 h-3.5" />
+        <span className="hidden sm:inline">切换封面</span>
+      </button>
+
+      {/* Switcher Modal */}
       <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4"
+          >
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="relative w-full max-w-xl rounded-3xl glass p-6 border border-white/20 shadow-2xl bg-cream-50 dark:bg-obsidian"
+              initial={{ y: 60, opacity: 0, scale: 0.95 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{ y: 60, opacity: 0, scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className="relative w-full max-w-sm rounded-3xl bg-zinc-900/95 border border-white/10 backdrop-blur-2xl p-5 shadow-2xl"
             >
-              <div className="flex items-center justify-between pb-4 border-b border-charcoal-500/10 dark:border-white/10">
-                <div className="flex items-center gap-2">
-                  <Palette className="w-5 h-5 text-terracotta" />
-                  <h3 className="font-serif text-lg font-bold text-charcoal-DEFAULT dark:text-cream-50">
-                    自由切换封面风格
-                  </h3>
-                </div>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="p-1.5 rounded-xl glass hover:bg-red-500 hover:text-white transition-colors"
-                >
+              <div className="flex items-center justify-between mb-4">
+                <span className="font-semibold text-white text-sm">切换封面背景</span>
+                <button onClick={() => setIsOpen(false)} className="text-white/40 hover:text-white transition-colors">
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
               {/* Tabs */}
-              <div className="flex gap-2 my-4">
-                <button
-                  onClick={() => setActiveTab('wallpaper')}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                    activeTab === 'wallpaper' ? 'bg-terracotta text-white' : 'glass text-charcoal-100 dark:text-cream-300'
-                  }`}
-                >
-                  🖼️ 精选壁纸
-                </button>
-                <button
-                  onClick={() => setActiveTab('gradient')}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                    activeTab === 'gradient' ? 'bg-terracotta text-white' : 'glass text-charcoal-100 dark:text-cream-300'
-                  }`}
-                >
-                  🌈 流光渐变
-                </button>
-                <button
-                  onClick={() => setActiveTab('color')}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                    activeTab === 'color' ? 'bg-terracotta text-white' : 'glass text-charcoal-100 dark:text-cream-300'
-                  }`}
-                >
-                  🎨 纯色温润
-                </button>
+              <div className="flex gap-1 p-1 rounded-xl bg-white/5 mb-4">
+                {(['gradient', 'wallpaper', 'color'] as const).map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                      activeTab === tab ? 'bg-white text-black' : 'text-white/50 hover:text-white'
+                    }`}
+                  >
+                    {tab === 'gradient' ? '渐变' : tab === 'wallpaper' ? '壁纸' : '纯色'}
+                  </button>
+                ))}
               </div>
 
-              {/* Grid content */}
-              <div className="max-h-72 overflow-y-auto pr-1">
-                {activeTab === 'wallpaper' && (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {wallpaperPresets.map((wp) => (
-                      <div
-                        key={wp.name}
-                        onClick={() => selectBg('image', wp.url)}
-                        className="group relative h-24 rounded-xl overflow-hidden cursor-pointer border border-charcoal-500/10 hover:border-terracotta transition-all"
-                      >
-                        <img src={wp.url} alt={wp.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                        <span className="absolute bottom-1 left-2 text-[10px] text-white bg-black/60 px-1.5 py-0.5 rounded backdrop-blur">
-                          {wp.name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+              {/* Gradient swatches */}
+              {activeTab === 'gradient' && (
+                <div className="grid grid-cols-3 gap-2">
+                  {gradientPresets.map((p) => (
+                    <button
+                      key={p.value}
+                      onClick={() => selectBg(p.type, p.value)}
+                      className="relative h-16 rounded-xl overflow-hidden border-2 border-transparent hover:border-white/50 transition-all"
+                      style={{ backgroundImage: p.value }}
+                      title={p.name}
+                    >
+                      {currentBg.value === p.value && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                          <Check className="w-4 h-4 text-white" />
+                        </div>
+                      )}
+                      <span className="absolute bottom-1 left-0 right-0 text-center text-[9px] text-white/70 font-mono">{p.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
 
-                {activeTab === 'gradient' && (
-                  <div className="grid grid-cols-2 gap-3">
-                    {gradientPresets.map((gp) => (
-                      <div
-                        key={gp.name}
-                        onClick={() => selectBg('gradient', gp.value)}
-                        style={{ backgroundImage: gp.value }}
-                        className="h-20 rounded-xl p-3 flex items-end justify-between text-white font-medium text-xs cursor-pointer shadow hover:scale-102 transition-transform"
-                      >
-                        <span>{gp.name}</span>
-                        <Check className="w-4 h-4 opacity-75" />
-                      </div>
-                    ))}
-                  </div>
-                )}
+              {/* Wallpaper swatches */}
+              {activeTab === 'wallpaper' && (
+                <div className="grid grid-cols-3 gap-2">
+                  {wallpaperPresets.map((p) => (
+                    <button
+                      key={p.url}
+                      onClick={() => selectBg(p.type, p.url)}
+                      className="relative h-16 rounded-xl overflow-hidden border-2 border-transparent hover:border-white/50 transition-all"
+                      style={{ backgroundImage: `url(${p.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                      title={p.name}
+                    >
+                      {currentBg.value === p.url && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                          <Check className="w-4 h-4 text-white" />
+                        </div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
 
-                {activeTab === 'color' && (
-                  <div className="grid grid-cols-3 gap-3">
-                    {colorPresets.map((cp) => (
-                      <div
-                        key={cp.name}
-                        onClick={() => selectBg('color', cp.value)}
-                        style={{ backgroundColor: cp.value }}
-                        className="h-20 rounded-xl p-3 flex items-end justify-between text-white font-medium text-xs cursor-pointer shadow hover:scale-102 transition-transform"
-                      >
-                        <span>{cp.name}</span>
-                        <span className="text-[10px] font-mono opacity-80">{cp.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              {/* Color swatches */}
+              {activeTab === 'color' && (
+                <div className="flex gap-3 flex-wrap">
+                  {colorPresets.map((p) => (
+                    <button
+                      key={p.value}
+                      onClick={() => selectBg(p.type, p.value)}
+                      className="w-14 h-14 rounded-2xl border-2 border-transparent hover:border-white/60 transition-all relative shadow-lg"
+                      style={{ backgroundColor: p.value }}
+                      title={p.name}
+                    >
+                      {currentBg.value === p.value && (
+                        <Check className="w-4 h-4 text-white absolute inset-0 m-auto" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

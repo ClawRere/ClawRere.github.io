@@ -1,182 +1,99 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { CoCreationBadge } from '@/components/portfolio/CoCreationBadge';
 import { getCollection } from 'astro:content';
-import { Sparkles, ArrowUpRight, FolderGit2, Star, Layers, Cpu, ExternalLink } from 'lucide-react';
 
-const projects = await getCollection('projects');
-const sortedProjects = projects.sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-);
-
-const flagshipProject = sortedProjects.find((p) => p.data.category === 'AI Product Systems') || sortedProjects[0];
-const regularProjects = sortedProjects.filter((p) => p.id !== flagshipProject.id);
-
-const categories = [
-  '全部',
-  'AI Product Systems',
-  'AI Agent',
-  'GenAI Interactive',
-  'Fullstack Experiment',
-  'Visual Effects',
-];
+// Only show projects that have real content (description + cover)
+const allProjects = await getCollection('projects');
+const validProjects = allProjects
+  .filter(p => p.data.description && p.data.title)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 
-<Layout title="AI 产品经理与共创作品集 | 磊大大 Larry">
-  <div class="py-8 space-y-12">
-    <!-- 1. Header Banner -->
-    <div class="max-w-3xl">
-      <div class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta mb-2">
-        <Sparkles class="w-3.5 h-3.5" />
-        AI Product Manager & Co-creation Portfolio
-      </div>
-      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal-DEFAULT dark:text-cream-50 leading-[1.15]">
-        AI 产品构思与人机共创作品集
-      </h1>
-      <p class="mt-4 text-sm sm:text-base text-charcoal-100 dark:text-cream-300 leading-relaxed font-serif">
-        以<strong>产品经理（PM）视角</strong>定义需求边界与业务事实，协同先进大模型完成全栈原型验证。这里展示从 AI 操作系统（PMOS）、智能 Agent 到原生交互动效的全链路作品。
+<Layout title="AI 共创作品集 | 磊大大 Larry">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+
+    <div class="mb-10">
+      <p class="text-xs font-mono uppercase tracking-widest text-terracotta mb-2">Portfolio · {validProjects.length} projects</p>
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-charcoal-DEFAULT dark:text-cream-50 tracking-tight">AI 共创作品集</h1>
+      <p class="mt-3 text-charcoal-100 dark:text-cream-300 text-sm max-w-xl">
+        PMOS 产品系统 · AI 工作流 · 开发原型 · 视效研究
       </p>
     </div>
 
-    <!-- 2. Flagship Project Highlight Card: PMOS -->
-    {flagshipProject && (
-      <div class="p-6 sm:p-8 rounded-3xl glass border-2 border-terracotta/30 dark:border-terracotta/40 shadow-2xl relative overflow-hidden bg-gradient-to-br from-cream-100/80 via-cream-50/50 to-terracotta-50/30 dark:from-obsidian-card dark:to-obsidian">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-terracotta text-white text-xs font-mono font-medium shadow-sm">
-            <Star class="w-3.5 h-3.5 fill-current" />
-            旗舰产品工程 · PMOS
-          </span>
-          <span class="text-xs font-mono text-terracotta font-semibold">
-            Product Manager Operating System
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div class="lg:col-span-7 space-y-4">
-            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-DEFAULT dark:text-cream-50 leading-tight">
-              <a href={`/portfolio/${flagshipProject.id}`} class="hover:text-terracotta transition-colors">
-                {flagshipProject.data.title}
-              </a>
-            </h2>
-
-            <p class="text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 leading-relaxed">
-              {flagshipProject.data.description}
-            </p>
-
-            <div class="flex flex-wrap gap-2 pt-1">
-              {['四层推进工作流', '@生成物定向修改', '影响面基线同步', 'Vue 3 + FastAPI'].map((feat) => (
-                <span class="px-2.5 py-1 rounded-lg bg-white/70 dark:bg-black/30 text-[11px] font-mono text-charcoal-200 dark:text-cream-300 border border-charcoal-500/10 dark:border-white/10">
-                  ✓ {feat}
-                </span>
-              ))}
-            </div>
-
-            <div class="pt-4 border-t border-charcoal-500/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-4">
-              <CoCreationBadge
-                humanShare={flagshipProject.data.coCreation.humanShare}
-                aiShare={flagshipProject.data.coCreation.aiShare}
-                models={flagshipProject.data.coCreation.models}
-              />
-
-              <a
-                href={`/portfolio/${flagshipProject.id}`}
-                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-terracotta text-white font-medium text-xs shadow-glow-terracotta hover:bg-terracotta-500 transition-all"
-              >
-                深入阅读 PRD 与设计复盘
-                <ArrowUpRight class="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-
-          <div class="lg:col-span-5">
-            <a href={`/portfolio/${flagshipProject.id}`} class="block rounded-2xl overflow-hidden shadow-apple-card group border border-charcoal-500/10 dark:border-white/10">
-              <img
-                src={flagshipProject.data.cover}
-                alt={flagshipProject.data.title}
-                class="w-full h-64 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-            </a>
-          </div>
-        </div>
+    {validProjects.length === 0 ? (
+      <div class="py-20 text-center text-charcoal-100 dark:text-cream-400">
+        <p class="text-4xl mb-4">🚧</p>
+        <p class="font-semibold text-lg">作品集建设中，敬请期待</p>
+        <p class="text-sm mt-2 opacity-70">在 src/content/projects/ 下添加 .md 文件即可自动展示</p>
       </div>
-    )}
-
-    <!-- 3. Category Filter Tabs -->
-    <div class="flex flex-wrap gap-2 pb-2 border-b border-charcoal-500/10 dark:border-white/10">
-      {categories.map((cat, idx) => (
-        <span
-          class={`px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-all ${
-            idx === 0
-              ? 'bg-terracotta text-white shadow-glow-terracotta'
-              : 'glass text-charcoal-200 dark:text-cream-300 hover:bg-cream-200 dark:hover:bg-obsidian-hover'
-          }`}
-        >
-          {cat}
-        </span>
-      ))}
-    </div>
-
-    <!-- 4. Visual Project Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {regularProjects.map((project) => (
-        <div class="group flex flex-col rounded-3xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 dark:hover:border-terracotta/40 hover:shadow-2xl transition-all duration-300">
-          <!-- Visual Cover Image -->
-          <a href={`/portfolio/${project.id}`} class="h-56 w-full relative overflow-hidden bg-cream-200 dark:bg-obsidian-card block">
-            <img
-              src={project.data.cover}
-              alt={project.data.title}
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-70" />
-
-            <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md text-[11px] font-mono font-medium text-charcoal-DEFAULT dark:text-cream-100 shadow-sm">
-              {project.data.category}
-            </span>
-
-            <span class="absolute bottom-3 right-4 text-xs font-mono text-white/90">
-              {new Date(project.data.date).getFullYear()}
-            </span>
-          </a>
-
-          <!-- Content Details -->
-          <div class="p-6 flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="font-serif text-xl font-bold text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors leading-snug">
-                <a href={`/portfolio/${project.id}`}>
-                  {project.data.title}
-                </a>
-              </h3>
-
-              <p class="mt-2.5 text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 line-clamp-2 leading-relaxed">
-                {project.data.description}
-              </p>
-
-              <div class="flex flex-wrap gap-1.5 mt-4">
-                {project.data.tags.map((tag) => (
-                  <span class="px-2 py-0.5 rounded-md bg-cream-200/60 dark:bg-obsidian-border text-[10px] font-mono text-charcoal-100 dark:text-cream-400">
-                    #{tag}
+    ) : (
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {validProjects.map((project, idx) => {
+          const isLarge = idx === 0;
+          return (
+            <div class={`group flex flex-col rounded-3xl border border-charcoal-500/10 dark:border-white/8 overflow-hidden hover:border-terracotta/30 hover:shadow-2xl transition-all duration-300 bg-white/50 dark:bg-zinc-900/50 ${isLarge ? 'md:col-span-2' : ''}`}>
+              {/* Cover */}
+              {project.data.cover && (
+                <a href={`/portfolio/${project.id}`} class={`relative block overflow-hidden ${isLarge ? 'h-72' : 'h-52'}`}>
+                  <img
+                    src={project.data.cover}
+                    alt={project.data.title}
+                    loading="lazy"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md text-xs font-mono text-white/90 border border-white/15">
+                    {project.data.category}
                   </span>
-                ))}
+                </a>
+              )}
+
+              {/* Content */}
+              <div class="p-6 flex-1 flex flex-col">
+                <h2 class={`font-bold text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors leading-snug ${isLarge ? 'text-2xl' : 'text-xl'}`}>
+                  <a href={`/portfolio/${project.id}`}>{project.data.title}</a>
+                </h2>
+
+                <p class="mt-2.5 text-sm text-charcoal-100 dark:text-cream-300 line-clamp-3 leading-relaxed flex-1">
+                  {project.data.description}
+                </p>
+
+                {/* Tags */}
+                {project.data.tags && project.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-1.5 mt-4">
+                    {project.data.tags.slice(0, 5).map((tag: string) => (
+                      <span class="px-2.5 py-1 rounded-full text-xs bg-terracotta/8 text-terracotta border border-terracotta/15 font-mono">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Footer row - only show real links */}
+                <div class="mt-5 pt-4 border-t border-charcoal-500/8 dark:border-white/8 flex items-center justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    {project.data.githubUrl && (
+                      <a href={project.data.githubUrl} target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-charcoal-100 dark:text-cream-400 hover:text-terracotta flex items-center gap-1 transition-colors">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
+                      </a>
+                    )}
+                    {project.data.demoUrl && (
+                      <a href={project.data.demoUrl} target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-charcoal-100 dark:text-cream-400 hover:text-terracotta flex items-center gap-1 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                        Demo
+                      </a>
+                    )}
+                  </div>
+                  <a href={`/portfolio/${project.id}`} class="text-sm font-semibold text-terracotta group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                    复盘分析 →
+                  </a>
+                </div>
               </div>
             </div>
-
-            <div class="mt-6 pt-4 border-t border-charcoal-500/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-3">
-              <CoCreationBadge
-                humanShare={project.data.coCreation.humanShare}
-                aiShare={project.data.coCreation.aiShare}
-                models={project.data.coCreation.models}
-              />
-
-              <a
-                href={`/portfolio/${project.id}`}
-                class="text-xs font-mono font-medium text-terracotta flex items-center gap-1 group-hover:translate-x-1 transition-transform"
-              >
-                复盘分析 →
-              </a>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
+          );
+        })}
+      </div>
+    )}
   </div>
 </Layout>

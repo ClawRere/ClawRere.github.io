@@ -9,14 +9,24 @@ import '@/styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  hideFooter?: boolean;
 }
 
 const {
   title = '磊大大 Larry | AI 产品经理与共创作品集',
   description = '以产品思维定义人机边界，以工程实践打磨 AI 生产力工具。面向 AI 协同时代的数字花园。',
+  hideFooter = false,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
+
+const entertainItems = [
+  { name: '音乐馆', href: '/entertain/music', emoji: '🎵' },
+  { name: '烟花秀', href: '/entertain/fireworks', emoji: '🎆' },
+  { name: '雨声院', href: '/entertain/rain', emoji: '🌧️' },
+  { name: '变形金刚', href: '/effects/optimus_prime/index.html', emoji: '🤖' },
+  { name: '飞机大战', href: '/effects/flight_game/index.html', emoji: '✈️' },
+];
 ---
 
 <!doctype html>
@@ -31,98 +41,127 @@ const currentPath = Astro.url.pathname;
     <ClientRouter />
   </head>
   <body class="min-h-screen flex flex-col bg-cream-50 dark:bg-obsidian text-charcoal-DEFAULT dark:text-cream-100 transition-colors duration-300 relative selection:bg-terracotta/20 selection:text-terracotta">
-    <!-- Top delicate glow banner -->
-    <div class="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-terracotta to-transparent opacity-60 z-50 pointer-events-none" />
+    <!-- Top accent line -->
+    <div class="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-terracotta/60 to-transparent z-50 pointer-events-none" />
 
-    <!-- Interactive Living Background Canvas (Apple/Claude Particle Constellation) -->
+    <!-- Background Canvas -->
     <BackgroundCanvas client:load />
 
-    <!-- Ambient background gradient mesh -->
+    <!-- Ambient gradient mesh -->
     <div class="fixed inset-0 pointer-events-none z-[-2] overflow-hidden">
-      <div class="absolute top-[-10%] left-[-10%] w-[550px] h-[550px] rounded-full bg-terracotta/10 dark:bg-terracotta/15 blur-[140px]" />
-      <div class="absolute top-[35%] right-[-10%] w-[500px] h-[500px] rounded-full bg-amber-500/10 dark:bg-amber-500/10 blur-[130px]" />
+      <div class="absolute top-[-10%] left-[-10%] w-[550px] h-[550px] rounded-full bg-terracotta/8 dark:bg-terracotta/10 blur-[140px]" />
+      <div class="absolute top-[35%] right-[-10%] w-[500px] h-[500px] rounded-full bg-amber-500/8 dark:bg-amber-500/8 blur-[130px]" />
     </div>
 
-    <!-- Header bar -->
-    <header class="max-w-6xl w-full mx-auto px-4 sm:px-6 py-5 flex items-center justify-between relative z-30">
-      <a href="/" class="flex items-center gap-3 group">
-        <span class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-terracotta to-amber-500 text-white flex items-center justify-center font-serif font-bold text-base shadow-glow-terracotta group-hover:scale-105 transition-transform">
-          L
-        </span>
-        <div class="flex flex-col">
-          <span class="font-serif font-bold text-base tracking-tight text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors">
-            磊大大 Larry
+    <!-- TOP NAVIGATION BAR -->
+    <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl border-b border-white/5 bg-cream-50/80 dark:bg-obsidian/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+        
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2.5 group shrink-0">
+          <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-terracotta to-amber-500 text-white flex items-center justify-center font-serif font-bold text-sm shadow-glow-terracotta group-hover:scale-105 transition-transform">
+            L
           </span>
-          <span class="text-[11px] font-mono text-charcoal-100 dark:text-cream-400">
-            AI Product Manager · PMOS Creator
-          </span>
+          <div class="hidden sm:flex flex-col">
+            <span class="font-serif font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors leading-none">
+              磊大大 Larry
+            </span>
+            <span class="text-[10px] font-mono text-charcoal-100 dark:text-cream-400 leading-none mt-0.5">
+              AI PM · PMOS
+            </span>
+          </div>
+        </a>
+
+        <!-- Center Navigation -->
+        <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+          <a href="/" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/' ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>首页</a>
+          <a href="/portfolio" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath.startsWith('/portfolio') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>作品集</a>
+          <a href="/posts" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath.startsWith('/posts') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>博客</a>
+          
+          <!-- Entertainment dropdown -->
+          <div class="relative group/entertain">
+            <button class={`px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 ${currentPath.startsWith('/entertain') || currentPath.startsWith('/effects/optimus') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>
+              娱乐馆
+              <svg class="w-3 h-3 transition-transform group-hover/entertain:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+            </button>
+            <div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-44 py-1.5 rounded-2xl bg-white dark:bg-zinc-900 border border-black/8 dark:border-white/10 shadow-2xl backdrop-blur-xl opacity-0 invisible group-hover/entertain:opacity-100 group-hover/entertain:visible transition-all duration-200 z-50">
+              {entertainItems.map(item => (
+                <a href={item.href} class="flex items-center gap-2.5 px-4 py-2 text-sm text-charcoal-200 dark:text-cream-300 hover:text-terracotta hover:bg-terracotta/5 transition-colors" target={item.href.endsWith('.html') ? '_blank' : undefined} rel={item.href.endsWith('.html') ? 'noopener' : undefined}>
+                  <span>{item.emoji}</span>
+                  <span>{item.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <a href="/tools" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath.startsWith('/tools') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>工具箱</a>
+          <a href="/links" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath.startsWith('/links') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>友链</a>
+          <a href="/about" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath.startsWith('/about') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>关于</a>
+        </nav>
+
+        <!-- Right actions -->
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="/messageboard" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors">
+            💌 留言
+          </a>
+          <a href="/login" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors">
+            🔐 管理
+          </a>
+
+          <!-- Mobile hamburger -->
+          <details class="md:hidden relative group/mobile">
+            <summary class="list-none cursor-pointer p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-charcoal-200 dark:text-cream-300">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </summary>
+            <div class="absolute top-full right-0 mt-2 w-52 py-2 rounded-2xl bg-white dark:bg-zinc-900 border border-black/8 dark:border-white/10 shadow-2xl backdrop-blur-xl z-50">
+              {[
+                { name: '首页', href: '/' },
+                { name: '作品集', href: '/portfolio' },
+                { name: '博客', href: '/posts' },
+                { name: '娱乐 · 音乐馆', href: '/entertain/music' },
+                { name: '娱乐 · 烟花', href: '/entertain/fireworks' },
+                { name: '娱乐 · 雨声', href: '/entertain/rain' },
+                { name: '工具箱', href: '/tools' },
+                { name: '友链', href: '/links' },
+                { name: '关于', href: '/about' },
+                { name: '留言板', href: '/messageboard' },
+              ].map(item => (
+                <a href={item.href} class="block px-4 py-2 text-sm text-charcoal-200 dark:text-cream-300 hover:text-terracotta hover:bg-terracotta/5 transition-colors">{item.name}</a>
+              ))}
+            </div>
+          </details>
         </div>
-      </a>
-
-      <!-- Quick Actions Header Menu -->
-      <div class="flex items-center gap-2 sm:gap-3 text-xs font-mono">
-        <a
-          href="/effects"
-          class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass hover:border-terracotta/40 text-charcoal-DEFAULT dark:text-cream-100 transition-colors shadow-sm"
-          title="浏览 93+ 原生动效"
-        >
-          <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
-          <span>93+ 交互视效</span>
-        </a>
-
-        <a
-          href="/messageboard"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass hover:border-pink-500/40 text-charcoal-DEFAULT dark:text-cream-100 transition-colors shadow-sm"
-          title="留言板与友链申请"
-        >
-          <span class="text-pink-400">💌</span>
-          <span class="hidden md:inline">留言板</span>
-        </a>
-
-        <a
-          href="/login"
-          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-charcoal-100 dark:text-cream-300 transition-colors"
-          title="管理员登录 / 控制台"
-        >
-          <span>🔐</span>
-          <span class="hidden md:inline">管理</span>
-        </a>
       </div>
     </header>
 
-    <!-- Main Content Slot -->
-    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 pb-28 relative z-10">
+    <!-- Main Content Slot (pt-14 to clear fixed header) -->
+    <main class="flex-1 w-full pt-14 relative z-10">
       <slot />
     </main>
 
-    <!-- Global Floating Butterfly (Hexo easter egg) -->
+    <!-- Global Easter Eggs -->
     <FlyingButterfly client:load />
-
-    <!-- Global NetEase Music Player (Hexo playlist 901594222) -->
     <NetEaseMusicPlayer client:load />
 
-    <!-- Floating Dock Navigation Bar -->
-    <FloatingDock client:load currentPath={currentPath} />
-
     <!-- Footer -->
-    <footer class="border-t border-charcoal-500/10 dark:border-white/10 py-10 text-center text-xs text-charcoal-100 dark:text-cream-400 relative z-20">
-      <div class="max-w-4xl mx-auto px-4 space-y-3">
-        <p class="font-serif text-sm">
-          Crafted with <span class="text-terracotta animate-pulse">♥</span> by Larry (磊大大) & AI Co-creators (Claude, Gemini & Cursor)
-        </p>
-        <p class="font-mono text-[11px] opacity-75">
-          AI Product Management · PMOS V0.2 · 380+ 持续演进天数 · 108+ 灵感导航 · 93+ 原生动效
-        </p>
-        <div class="flex items-center justify-center gap-4 text-[11px] pt-1 opacity-60">
-          <a href="/login" class="hover:text-terracotta transition-colors">系统管理</a>
-          <span>•</span>
-          <a href="/messageboard" class="hover:text-terracotta transition-colors">友链互换</a>
-          <span>•</span>
-          <a href="/tools/dayly" class="hover:text-terracotta transition-colors">今日AI早报</a>
-          <span>•</span>
-          <a href="https://github.com/ClawRere" target="_blank" rel="noopener noreferrer" class="hover:text-terracotta transition-colors">GitHub</a>
+    {!hideFooter && (
+      <footer class="border-t border-charcoal-500/10 dark:border-white/10 py-10 text-center text-xs text-charcoal-100 dark:text-cream-400 relative z-20">
+        <div class="max-w-4xl mx-auto px-4 space-y-3">
+          <p class="font-serif text-sm">
+            Crafted with <span class="text-terracotta animate-pulse">♥</span> by Larry & AI Co-creators
+          </p>
+          <p class="font-mono text-[11px] opacity-75">
+            PMOS V0.2 · 380+ 演进天数 · 108+ 灵感导航 · 93+ 原生动效
+          </p>
+          <div class="flex items-center justify-center gap-4 text-[11px] pt-1 opacity-60">
+            <a href="/messageboard" class="hover:text-terracotta transition-colors">友链互换</a>
+            <span>•</span>
+            <a href="/tools/dayly" class="hover:text-terracotta transition-colors">AI日报</a>
+            <span>•</span>
+            <a href="https://github.com/ClawRere" target="_blank" rel="noopener noreferrer" class="hover:text-terracotta transition-colors">GitHub</a>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    )}
   </body>
 </html>

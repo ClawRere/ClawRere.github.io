@@ -1,15 +1,14 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { HeroCover } from '@/components/home/HeroCover';
-import { BentoGrid } from '@/components/portfolio/BentoGrid';
 import { CoCreationBadge } from '@/components/portfolio/CoCreationBadge';
 import { getCollection } from 'astro:content';
 import { getPostCover } from '@/lib/covers';
-import { ArrowUpRight, BookOpen, Sparkles, Calendar, Wand2, Star, Gamepad2, Wrench, Link2, MessageSquare, Compass, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Sparkles, Calendar, Gamepad2, Wrench, Link2, MessageSquare } from 'lucide-react';
 
-// Fetch projects and posts
 const allProjects = await getCollection('projects');
 const featuredProjects = allProjects
+  .filter(p => p.data.featured && p.data.description)
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 4);
 
@@ -20,235 +19,119 @@ const latestPosts = allPosts
 ---
 
 <Layout title="磊大大 Larry | AI 产品经理与共创作品集">
-  <!-- 1. Hexo-style Switchable Hero Banner (Wallpapers / Gradients / Solid Colors) -->
+  <!-- Full viewport hero cover (1st screen) -->
   <HeroCover client:load />
 
-  <!-- 2. Apple x Claude Interactive Bento Grid & Live Metrics -->
-  <BentoGrid client:load />
+  <!-- Page body content inside constrained container -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 pb-20 space-y-20">
 
-  <!-- 3. Hub Fast Entry (Entertain / Tools / Links / Guestbook) -->
-  <section class="my-14">
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-      <a
-        href="/entertain"
-        class="group p-5 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-pink-500/40 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-      >
-        <div class="flex items-center justify-between">
-          <div class="w-10 h-10 rounded-xl bg-pink-500/10 text-pink-500 flex items-center justify-center font-bold">
-            <Gamepad2 class="w-5 h-5 group-hover:scale-110 transition-transform" />
-          </div>
-          <ArrowUpRight class="w-4 h-4 text-charcoal-100 dark:text-cream-400 group-hover:text-pink-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-        </div>
-        <div class="mt-4">
-          <h3 class="font-serif font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-pink-500 transition-colors">
-            娱乐与视效馆
-          </h3>
-          <p class="text-[11px] text-charcoal-100 dark:text-cream-400 mt-1">
-            烟花 · 雨声影院 · 音乐 · 游戏
-          </p>
-        </div>
-      </a>
-
-      <a
-        href="/tools"
-        class="group p-5 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-cyan-500/40 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-      >
-        <div class="flex items-center justify-between">
-          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center font-bold">
-            <Wrench class="w-5 h-5 group-hover:scale-110 transition-transform" />
-          </div>
-          <ArrowUpRight class="w-4 h-4 text-charcoal-100 dark:text-cream-400 group-hover:text-cyan-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-        </div>
-        <div class="mt-4">
-          <h3 class="font-serif font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-cyan-500 transition-colors">
-            生产力工具箱
-          </h3>
-          <p class="text-[11px] text-charcoal-100 dark:text-cream-400 mt-1">
-            今日AI早报 · 工具测评与推荐
-          </p>
-        </div>
-      </a>
-
-      <a
-        href="/links"
-        class="group p-5 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-amber-500/40 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-      >
-        <div class="flex items-center justify-between">
-          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold">
-            <Link2 class="w-5 h-5 group-hover:scale-110 transition-transform" />
-          </div>
-          <ArrowUpRight class="w-4 h-4 text-charcoal-100 dark:text-cream-400 group-hover:text-amber-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-        </div>
-        <div class="mt-4">
-          <h3 class="font-serif font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-amber-500 transition-colors">
-            108+ 灵感导航
-          </h3>
-          <p class="text-[11px] text-charcoal-100 dark:text-cream-400 mt-1">
-            卡片 / 列表 / 抽屉内嵌多视图
-          </p>
-        </div>
-      </a>
-
-      <a
-        href="/messageboard"
-        class="group p-5 rounded-2xl glass border border-charcoal-500/10 dark:border-white/10 hover:border-purple-500/40 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-      >
-        <div class="flex items-center justify-between">
-          <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold">
-            <MessageSquare class="w-5 h-5 group-hover:scale-110 transition-transform" />
-          </div>
-          <ArrowUpRight class="w-4 h-4 text-charcoal-100 dark:text-cream-400 group-hover:text-purple-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-        </div>
-        <div class="mt-4">
-          <h3 class="font-serif font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-purple-500 transition-colors">
-            互动留言板
-          </h3>
-          <p class="text-[11px] text-charcoal-100 dark:text-cream-400 mt-1">
-            交流心智 · 交换友链与灵感
-          </p>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- 4. AI Co-Creation Showcases Section (Visual Cards) -->
-  <section class="my-16">
-    <div class="flex items-end justify-between mb-8 pb-4 border-b border-charcoal-500/10 dark:border-white/10">
-      <div>
-        <div class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta mb-1 font-semibold">
-          <Sparkles class="w-3.5 h-3.5" />
-          Selected Works & Products
-        </div>
-        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-DEFAULT dark:text-cream-50">
-          AI 产品与共创作品精选
-        </h2>
-      </div>
-      <a
-        href="/portfolio"
-        class="text-xs sm:text-sm font-mono text-terracotta hover:underline inline-flex items-center gap-1"
-      >
-        浏览全部作品集 ({allProjects.length})
-        <ArrowUpRight class="w-4 h-4" />
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {featuredProjects.map((project) => (
-        <div class="group flex flex-col rounded-3xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 dark:hover:border-terracotta/40 hover:shadow-2xl transition-all duration-300">
-          <a href={`/portfolio/${project.id}`} class="h-52 w-full relative overflow-hidden bg-cream-200 dark:bg-obsidian-card block">
-            <img
-              src={project.data.cover}
-              alt={project.data.title}
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-              loading="lazy"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-70" />
-
-            <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md text-[11px] font-mono font-medium text-charcoal-DEFAULT dark:text-cream-100 shadow-sm">
-              {project.data.category}
-            </span>
-          </a>
-
-          <div class="p-6 flex-1 flex flex-col justify-between">
+    <!-- Quick hub entry cards -->
+    <section>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {[
+          { href: '/entertain/music', icon: Gamepad2, emoji: '🎵', title: '娱乐馆', sub: '音乐 · 烟花 · 雨声', color: 'hover:border-pink-500/40 group-hover:text-pink-500' },
+          { href: '/tools', icon: Wrench, emoji: '🛠️', title: '工具箱', sub: '今日AI早报 · 推荐', color: 'hover:border-cyan-500/40 group-hover:text-cyan-500' },
+          { href: '/links', icon: Link2, emoji: '🔖', title: '108+ 友链', sub: '卡片 / 列表 / 画中画', color: 'hover:border-amber-500/40 group-hover:text-amber-500' },
+          { href: '/messageboard', icon: MessageSquare, emoji: '💌', title: '留言板', sub: '交流 · 友链申请', color: 'hover:border-purple-500/40 group-hover:text-purple-500' },
+        ].map(item => (
+          <a href={item.href} class={`group p-4 rounded-2xl border border-charcoal-500/10 dark:border-white/8 ${item.color} bg-white/50 dark:bg-zinc-900/50 hover:shadow-lg transition-all duration-300 flex flex-col justify-between gap-3`}>
+            <div class="flex items-center justify-between">
+              <span class="text-2xl">{item.emoji}</span>
+              <ArrowUpRight class="w-4 h-4 text-charcoal-100 dark:text-cream-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+            </div>
             <div>
-              <h3 class="font-serif text-xl font-bold text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors leading-snug">
-                <a href={`/portfolio/${project.id}`}>
-                  {project.data.title}
-                </a>
-              </h3>
-
-              <p class="mt-2.5 text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 line-clamp-2 leading-relaxed">
-                {project.data.description}
-              </p>
+              <h3 class="font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 transition-colors">{item.title}</h3>
+              <p class="text-[11px] text-charcoal-100 dark:text-cream-400 mt-0.5">{item.sub}</p>
             </div>
-
-            <div class="mt-6 pt-4 border-t border-charcoal-500/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-3">
-              <CoCreationBadge
-                humanShare={project.data.coCreation.humanShare}
-                aiShare={project.data.coCreation.aiShare}
-                models={project.data.coCreation.models}
-              />
-
-              <a
-                href={`/portfolio/${project.id}`}
-                class="text-xs font-mono font-medium text-terracotta flex items-center gap-1 group-hover:translate-x-1 transition-transform"
-              >
-                复盘分析 →
-              </a>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- 5. Recent Technical Blog Notes Section (With Visual Image Cards) -->
-  <section class="my-16">
-    <div class="flex items-end justify-between mb-8 pb-4 border-b border-charcoal-500/10 dark:border-white/10">
-      <div>
-        <div class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-amber-500 mb-1 font-semibold">
-          <BookOpen class="w-3.5 h-3.5" />
-          Technical Blog
-        </div>
-        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-DEFAULT dark:text-cream-50">
-          个人技术博客精选
-        </h2>
+          </a>
+        ))}
       </div>
-      <a
-        href="/posts"
-        class="text-xs sm:text-sm font-mono text-terracotta hover:underline inline-flex items-center gap-1"
-      >
-        检索全部文章 ({allPosts.length})
-        <ArrowUpRight class="w-4 h-4" />
-      </a>
-    </div>
+    </section>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {latestPosts.map((post, idx) => {
-        const coverImg = getPostCover(post.data.cover, post.data.title, idx);
-        const categoryName = Array.isArray(post.data.categories)
-          ? post.data.categories[0]
-          : post.data.categories || '技术笔记';
-
-        return (
-          <a
-            href={`/posts/${post.id}`}
-            class="group flex flex-col rounded-2xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 dark:hover:border-terracotta/40 hover:shadow-xl transition-all duration-300"
-          >
-            <div class="h-44 w-full relative overflow-hidden bg-cream-200 dark:bg-obsidian-card">
-              <img
-                src={coverImg}
-                alt={post.data.title}
-                loading="lazy"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-
-              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md text-[10px] font-mono font-medium text-charcoal-DEFAULT dark:text-cream-100 shadow-sm">
-                {categoryName}
-              </span>
+    <!-- Featured projects -->
+    {featuredProjects.length > 0 && (
+      <section>
+        <div class="flex items-end justify-between mb-8 pb-4 border-b border-charcoal-500/8 dark:border-white/8">
+          <div>
+            <div class="text-xs font-mono uppercase tracking-widest text-terracotta mb-1 font-semibold flex items-center gap-1.5">
+              <Sparkles class="w-3.5 h-3.5" /> Selected Works
             </div>
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-DEFAULT dark:text-cream-50">AI 共创作品精选</h2>
+          </div>
+          <a href="/portfolio" class="text-xs sm:text-sm font-mono text-terracotta hover:underline inline-flex items-center gap-1">
+            全部作品 ({allProjects.length}) <ArrowUpRight class="w-4 h-4" />
+          </a>
+        </div>
 
-            <div class="p-5 flex-1 flex flex-col justify-between">
-              <div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {featuredProjects.map(project => (
+            <div class="group flex flex-col rounded-3xl border border-charcoal-500/10 dark:border-white/8 overflow-hidden hover:border-terracotta/30 hover:shadow-2xl transition-all duration-300 bg-white/50 dark:bg-zinc-900/50">
+              <a href={`/portfolio/${project.id}`} class="h-52 w-full relative overflow-hidden block">
+                <img src={project.data.cover} alt={project.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" loading="lazy" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md text-[11px] font-mono text-white/90 border border-white/15">{project.data.category}</span>
+              </a>
+              <div class="p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 class="font-serif text-xl font-bold text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors leading-snug">
+                    <a href={`/portfolio/${project.id}`}>{project.data.title}</a>
+                  </h3>
+                  <p class="mt-2.5 text-sm text-charcoal-100 dark:text-cream-300 line-clamp-2 leading-relaxed">{project.data.description}</p>
+                </div>
+                <div class="mt-5 pt-4 border-t border-charcoal-500/8 dark:border-white/8 flex items-center justify-between gap-3">
+                  <CoCreationBadge humanShare={project.data.coCreation.humanShare} aiShare={project.data.coCreation.aiShare} models={project.data.coCreation.models} />
+                  <a href={`/portfolio/${project.id}`} class="text-xs font-mono text-terracotta group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 font-semibold">
+                    复盘分析 →
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Latest blog posts -->
+    <section>
+      <div class="flex items-end justify-between mb-8 pb-4 border-b border-charcoal-500/8 dark:border-white/8">
+        <div>
+          <div class="text-xs font-mono uppercase tracking-widest text-amber-500 mb-1 font-semibold flex items-center gap-1.5">
+            <BookOpen class="w-3.5 h-3.5" /> Technical Blog
+          </div>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-DEFAULT dark:text-cream-50">最新博客精选</h2>
+        </div>
+        <a href="/posts" class="text-xs sm:text-sm font-mono text-terracotta hover:underline inline-flex items-center gap-1">
+          全部文章 ({allPosts.length}) <ArrowUpRight class="w-4 h-4" />
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {latestPosts.map((post, idx) => {
+          const coverImg = getPostCover(post.data.cover, post.data.title, idx);
+          const categoryName = Array.isArray(post.data.categories) ? post.data.categories[0] : post.data.categories || '笔记';
+          return (
+            <a href={`/posts/${post.id}`} class="group flex flex-col rounded-2xl border border-charcoal-500/10 dark:border-white/8 overflow-hidden hover:border-terracotta/30 hover:shadow-xl transition-all duration-300 bg-white/50 dark:bg-zinc-900/50">
+              <div class="h-44 relative overflow-hidden">
+                <img src={coverImg} alt={post.data.title} loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-[10px] font-mono text-white/90 border border-white/15">{categoryName}</span>
+              </div>
+              <div class="p-5 flex-1 flex flex-col">
                 <div class="flex items-center gap-2 text-[11px] font-mono text-charcoal-100 dark:text-cream-400 mb-2">
                   <Calendar class="w-3 h-3 text-terracotta" />
                   <span>{new Date(post.data.date).toLocaleDateString('zh-CN')}</span>
                 </div>
-
-                <h3 class="font-serif text-base font-bold text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors line-clamp-2 leading-snug">
-                  {post.data.title}
-                </h3>
+                <h3 class="font-bold text-base text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors line-clamp-2 leading-snug flex-1">{post.data.title}</h3>
+                <div class="mt-4 pt-3 border-t border-charcoal-500/8 dark:border-white/8 flex items-center justify-between text-xs font-mono text-terracotta">
+                  <span>阅读文章</span>
+                  <ArrowUpRight class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
               </div>
+            </a>
+          );
+        })}
+      </div>
+    </section>
 
-              <div class="mt-4 pt-3 border-t border-charcoal-500/10 dark:border-white/10 flex items-center justify-between text-xs font-mono text-terracotta">
-                <span>阅读文章</span>
-                <ArrowUpRight class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </div>
-            </div>
-          </a>
-        );
-      })}
-    </div>
-  </section>
+  </div>
 </Layout>

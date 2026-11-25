@@ -1,7 +1,7 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// 1. Knowledge Base Posts (知识库文章集合 - 兼容现有 Hexo 99+ 篇 Markdown)
+// 1. Knowledge Base Posts
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
   schema: z.object({
@@ -24,7 +24,7 @@ const posts = defineCollection({
   }),
 });
 
-// 2. AI Co-Creation Projects (与 AI 共创作品集集合)
+// 2. AI Co-Creation & Product Portfolio Projects
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: z.object({
@@ -33,6 +33,8 @@ const projects = defineCollection({
     category: z.enum([
       'AI Product Systems',
       'AI Agent',
+      'Education & SaaS',
+      'Algorithm & Data',
       'GenAI Interactive',
       'Fullstack Experiment',
       'Visual Effects',

@@ -1,5 +1,5 @@
 ---
-title: "PMOS：面向产品经理的 AI 协作工作台操作系统"
+title: "PMOS 产品经理工作台｜AI 协作工作台 (个人可操作 Demo)"
 description: "把需求讨论中的证据、决策与变更，持续绑定到 PRD、可操作原型和版本基线。以对话推动产品从模糊构思走向敏捷交付。"
 category: "AI Product Systems"
 date: 2026-10-25

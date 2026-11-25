@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Newspaper, Wrench, Bookmark, Sparkles, ExternalLink, RefreshCw, Code2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ExternalLink, RefreshCw } from 'lucide-react';
 
-interface ToolTab {
+export interface ToolTab {
   id: string;
   label: string;
   emoji: string;
@@ -11,7 +11,7 @@ interface ToolTab {
   type: 'iframe' | 'devtoys';
 }
 
-const TOOL_TABS: ToolTab[] = [
+const DEFAULT_TOOL_TABS: ToolTab[] = [
   {
     id: 'daily-news',
     label: '今日 AI 早报',
@@ -31,21 +31,12 @@ const TOOL_TABS: ToolTab[] = [
     type: 'iframe',
   },
   {
-    id: 'recommend',
-    label: 'AI 工具精选',
-    emoji: '🛠️',
-    desc: 'Cursor · Claude · Faster-Whisper · Obsidian 效率矩阵',
-    src: '/tools/recommend',
-    externalUrl: '/tools/recommend',
-    type: 'iframe',
-  },
-  {
-    id: 'links-pip',
-    label: '108+ 灵感导航',
-    emoji: '🔖',
-    desc: '设计灵感、壁纸、图标库与 AGI 知识库直达',
-    src: '/links',
-    externalUrl: '/links',
+    id: 'futurepedia',
+    label: 'AI 工具导航',
+    emoji: '🤖',
+    desc: '全球最新 AI 生产力工具与评测榜单',
+    src: 'https://www.futurepedia.io/',
+    externalUrl: 'https://www.futurepedia.io/',
     type: 'iframe',
   },
   {
@@ -58,6 +49,7 @@ const TOOL_TABS: ToolTab[] = [
 ];
 
 export const ToolboxViewer: React.FC = () => {
+  const [tabs, setTabs] = useState<ToolTab[]>(DEFAULT_TOOL_TABS);
   const [activeId, setActiveId] = useState<string>('daily-news');
   const [reloadKey, setReloadKey] = useState<number>(0);
 
@@ -65,7 +57,19 @@ export const ToolboxViewer: React.FC = () => {
   const [inputText, setInputText] = useState('{\n  "product": "PMOS",\n  "version": "V0.2",\n  "role": "AI Product Manager"\n}');
   const [outputText, setOutputText] = useState('');
 
-  const activeTab = TOOL_TABS.find((t) => t.id === activeId) || TOOL_TABS[0];
+  useEffect(() => {
+    const saved = localStorage.getItem('custom_tools');
+    if (saved) {
+      try {
+        const custom: ToolTab[] = JSON.parse(saved);
+        if (Array.isArray(custom) && custom.length > 0) {
+          setTabs([...DEFAULT_TOOL_TABS, ...custom]);
+        }
+      } catch {}
+    }
+  }, []);
+
+  const activeTab = tabs.find((t) => t.id === activeId) || tabs[0];
 
   const formatJson = () => {
     try {
@@ -92,11 +96,11 @@ export const ToolboxViewer: React.FC = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       {/* Top Tab Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
-          {TOOL_TABS.map((tab) => {
+          {tabs.map((tab) => {
             const isActive = tab.id === activeId;
             return (
               <button
@@ -121,9 +125,8 @@ export const ToolboxViewer: React.FC = () => {
       </div>
 
       {/* Single Large Picture-in-Picture Frame */}
-      <div className="rounded-3xl border border-charcoal-500/10 dark:border-white/10 overflow-hidden bg-white/60 dark:bg-zinc-900/70 backdrop-blur-xl shadow-2xl flex flex-col h-[75vh] min-h-[540px]">
-        {/* Window Title Bar */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-charcoal-500/10 dark:border-white/10 bg-cream-100/80 dark:bg-zinc-950/60 shrink-0">
+      <div className="rounded-3xl border border-charcoal-500/10 dark:border-white/10 overflow-hidden bg-white/60 dark:bg-zinc-900/70 backdrop-blur-xl shadow-2xl flex flex-col h-[78vh] min-h-[560px]">
+        <div className="flex items-center justify-between px-5 py-2.5 border-b border-charcoal-500/10 dark:border-white/10 bg-cream-100/80 dark:bg-zinc-950/60 shrink-0">
           <div className="flex items-center gap-3 min-w-0">
             <div className="flex gap-1.5 shrink-0">
               <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
@@ -131,7 +134,7 @@ export const ToolboxViewer: React.FC = () => {
               <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
             </div>
             <span className="text-xs font-mono text-charcoal-DEFAULT dark:text-cream-100 truncate">
-              {activeTab.emoji} {activeTab.label} — {activeTab.desc}
+              {activeTab.emoji} {activeTab.label}
             </span>
           </div>
 
@@ -159,7 +162,6 @@ export const ToolboxViewer: React.FC = () => {
           </div>
         </div>
 
-        {/* Single Active Content */}
         {activeTab.type === 'iframe' ? (
           <iframe
             key={`${activeTab.id}-${reloadKey}`}

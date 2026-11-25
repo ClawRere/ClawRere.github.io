@@ -35,7 +35,7 @@ const gradientPresets = [
   { name: '暖金流光', value: 'linear-gradient(135deg, #f6d365, #fda085)', type: 'gradient' },
 ];
 
-const typewriterPhrases = [
+const defaultPhrases = [
   '用 AI 重新定义产品边界 · Co-creating with Intelligence',
   '5W1H 穿透本质 · 假设与事实分层决策',
   'Apple 流体动效 × Claude 人文温润质感',
@@ -47,10 +47,10 @@ export const HeroCover: React.FC = () => {
     type: 'image',
     value: wallpaperPresets[0].url,
   });
+  const [phrases, setPhrases] = useState<string[]>(defaultPhrases);
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'wallpaper' | 'color' | 'gradient'>('wallpaper');
 
-  // Typewriter state
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -65,11 +65,17 @@ export const HeroCover: React.FC = () => {
         if (saved.startsWith('http')) setCurrentBg({ type: 'image', value: saved });
       }
     }
+    const savedPhrases = localStorage.getItem('hero_phrases');
+    if (savedPhrases) {
+      try {
+        const arr = JSON.parse(savedPhrases);
+        if (Array.isArray(arr) && arr.length > 0) setPhrases(arr);
+      } catch {}
+    }
   }, []);
 
-  // Typewriter animation loop
   useEffect(() => {
-    const currentPhrase = typewriterPhrases[phraseIndex];
+    const currentPhrase = phrases[phraseIndex % phrases.length] || defaultPhrases[0];
     let timeout: ReturnType<typeof setTimeout>;
 
     if (!isDeleting && charIndex < currentPhrase.length) {
@@ -80,11 +86,11 @@ export const HeroCover: React.FC = () => {
       timeout = setTimeout(() => setCharIndex(charIndex - 1), 32);
     } else if (isDeleting && charIndex === 0) {
       setIsDeleting(false);
-      setPhraseIndex((phraseIndex + 1) % typewriterPhrases.length);
+      setPhraseIndex((phraseIndex + 1) % phrases.length);
     }
 
     return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, phraseIndex]);
+  }, [charIndex, isDeleting, phraseIndex, phrases]);
 
   const selectBg = (type: string, value: string) => {
     const next = { type, value };
@@ -100,13 +106,14 @@ export const HeroCover: React.FC = () => {
       ? { backgroundColor: currentBg.value }
       : { backgroundImage: currentBg.value };
 
+  const activePhrase = phrases[phraseIndex % phrases.length] || defaultPhrases[0];
+
   return (
     <div
       style={bgStyle}
       className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center overflow-hidden mb-14 transition-all duration-700"
     >
-      {/* Light vignette only at bottom/center for text clarity without washing out wallpaper */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/55 pointer-events-none z-10" />
+      {/* Pure crisp image - NO grey/black overlay */}
 
       {/* Center Minimal Title + Typewriter */}
       <div className="relative z-20 text-center px-6 max-w-3xl mx-auto">
@@ -114,7 +121,7 @@ export const HeroCover: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl sm:text-7xl md:text-8xl font-extrabold text-white tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.45)] select-none"
+          className="text-5xl sm:text-7xl md:text-8xl font-extrabold text-white tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.45)] select-none"
         >
           磊大大
         </motion.h1>
@@ -124,31 +131,31 @@ export const HeroCover: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-6 inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-black/30 backdrop-blur-md border border-white/15 shadow-xl"
+          className="mt-6 inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-black/25 backdrop-blur-md border border-white/20 shadow-xl"
         >
-          <span className="text-sm sm:text-base md:text-lg font-mono text-white/95 tracking-wide">
-            {typewriterPhrases[phraseIndex].slice(0, charIndex)}
+          <span className="text-sm sm:text-base md:text-lg font-mono text-white tracking-wide drop-shadow-sm">
+            {activePhrase.slice(0, charIndex)}
           </span>
           <span className="inline-block w-[2px] h-5 bg-terracotta ml-1 animate-pulse" />
         </motion.div>
       </div>
 
-      {/* Scroll Down Wave / Arrow */}
+      {/* Scroll Down Arrow */}
       <motion.a
         href="#hub-section"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 p-2 rounded-full text-white/75 hover:text-white transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 p-2 rounded-full text-white/85 hover:text-white drop-shadow transition-colors"
         aria-label="向下滚动"
       >
         <ChevronDown className="w-7 h-7 animate-bounce" />
       </motion.a>
 
-      {/* Subtle Cover Switcher Icon Button - bottom right */}
+      {/* Subtle Cover Switcher Icon Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="absolute bottom-8 right-6 z-30 p-3 rounded-full bg-black/35 hover:bg-black/60 backdrop-blur-md border border-white/20 text-white/80 hover:text-white transition-all shadow-lg hover:scale-105"
+        className="absolute bottom-8 right-6 z-30 p-3 rounded-full bg-black/30 hover:bg-black/55 backdrop-blur-md border border-white/25 text-white transition-all shadow-lg hover:scale-105"
         title="切换封面壁纸 / 纯色 / 渐变"
       >
         <Palette className="w-4 h-4" />
@@ -163,7 +170,7 @@ export const HeroCover: React.FC = () => {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4"
           >
-            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
             <motion.div
               initial={{ y: 50, opacity: 0, scale: 0.96 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}

@@ -1,9 +1,9 @@
----
+﻿---
 title: "93+ 原生 Web 动效与交互沙盒矩阵"
 description: "收录 3D 视觉、趣味交互、粒子特效与物理小游戏的独立动效实验室。支持单卡独立沙盒即时试玩与代码解耦复用。"
 category: "Visual Effects"
 date: 2026-02-28
-featured: true
+featured: false
 cover: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200&auto=format&fit=crop"
 coCreation:
   humanShare: 35
@@ -32,3 +32,4 @@ tags:
 - **零外部依赖框架侵入**：93 个动效均以独立 HTML/CSS/JS 沙盒封装，互不污染全局环境。
 - **即时交互验证**：支持在主站内通过弹窗无刷新内嵌试玩，也可一键全屏独立运行。
 - **分类覆盖**：涵盖 3D警车、海底泡泡多角鱼、彩色时钟、飞机大战与物理重力小球等。
+

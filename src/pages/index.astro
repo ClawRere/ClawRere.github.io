@@ -4,13 +4,17 @@ import { HeroCover } from '@/components/home/HeroCover';
 import { CoCreationBadge } from '@/components/portfolio/CoCreationBadge';
 import { getCollection } from 'astro:content';
 import { getPostCover } from '@/lib/covers';
-import { ArrowUpRight, BookOpen, Sparkles, Calendar, Gamepad2, Wrench, Link2, MessageSquare } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Sparkles, Calendar, Gamepad2, Wrench, Link2, MessageSquare, GraduationCap } from 'lucide-react';
 
 const allProjects = await getCollection('projects');
 const featuredProjects = allProjects
   .filter(p => p.data.featured && p.data.description)
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 4);
+
+const eduMiniProjects = allProjects.filter(
+  p => p.id === 'ccnu-xiaoya-ai' || p.id === 'wuhan-air-classroom'
+);
 
 const allPosts = await getCollection('posts');
 const latestPosts = allPosts
@@ -48,15 +52,15 @@ const latestPosts = allPosts
       </div>
     </section>
 
-    <!-- Featured projects -->
+    <!-- Featured projects (4 core cases + 2 edu mini cards) -->
     {featuredProjects.length > 0 && (
-      <section>
-        <div class="flex items-end justify-between mb-8 pb-4 border-b border-charcoal-500/8 dark:border-white/8">
+      <section class="space-y-8">
+        <div class="flex items-end justify-between pb-4 border-b border-charcoal-500/8 dark:border-white/8">
           <div>
             <div class="text-xs font-mono uppercase tracking-widest text-terracotta mb-1 font-semibold flex items-center gap-1.5">
               <Sparkles class="w-3.5 h-3.5" /> Selected Works
             </div>
-            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-DEFAULT dark:text-cream-50">AI 共创作品精选</h2>
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-DEFAULT dark:text-cream-50">产品与 AI 作品精选</h2>
           </div>
           <a href="/portfolio" class="text-xs sm:text-sm font-mono text-terracotta hover:underline inline-flex items-center gap-1">
             全部作品 ({allProjects.length}) <ArrowUpRight class="w-4 h-4" />
@@ -88,6 +92,27 @@ const latestPosts = allPosts
             </div>
           ))}
         </div>
+
+        {/* 2 Education AI Mini Cards */}
+        {eduMiniProjects.length > 0 && (
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
+            {eduMiniProjects.map(project => (
+              <a href={`/portfolio/${project.id}`} class="group p-5 rounded-2xl border border-charcoal-500/10 dark:border-white/8 hover:border-terracotta/30 bg-white/40 dark:bg-zinc-900/40 hover:shadow-lg transition-all flex items-start gap-4">
+                <div class="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
+                  <GraduationCap class="w-5 h-5" />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="text-[10px] font-mono text-terracotta uppercase tracking-wider">教育专题补充</span>
+                    <ArrowUpRight class="w-3.5 h-3.5 text-charcoal-100 dark:text-cream-400 group-hover:text-terracotta transition-colors" />
+                  </div>
+                  <h4 class="font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors mt-0.5 truncate">{project.data.title}</h4>
+                  <p class="text-xs text-charcoal-100 dark:text-cream-400 line-clamp-2 mt-1 leading-relaxed">{project.data.description}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
       </section>
     )}
 

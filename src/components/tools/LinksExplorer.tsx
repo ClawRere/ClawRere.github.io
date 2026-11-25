@@ -1,9 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ExternalLink, Copy, Check, LayoutGrid, List, Monitor, X } from 'lucide-react';
+import { Search, ExternalLink, Copy, Check, LayoutGrid, List, Monitor } from 'lucide-react';
 import linksData from '@/data/links.json';
 
-interface LinkItem {
+export interface LinkItem {
   name: string;
   link: string;
   avatar: string;
@@ -34,20 +33,34 @@ function resolveAvatar(avatar: string, link: string): string {
       const host = new URL(link).hostname;
       return `https://www.google.com/s2/favicons?domain=${host}&sz=128`;
     }
-  } catch {
-    // ignore invalid URL
-  }
+  } catch {}
   return DEFAULT_AVATAR_SVG;
 }
 
 export const LinksExplorer: React.FC = () => {
-  const categories = useMemo(() => ['全部', ...(linksData as CategoryGroup[]).map((c) => c.name)], []);
-  const allLinks = useMemo(
-    () => (linksData as CategoryGroup[]).flatMap((c) => c.links.map((l) => ({ ...l, category: c.name }))),
-    []
-  );
+  const [customLinks, setCustomLinks] = useState<LinkItem[]>([]);
 
-  // Default PiP link is "磊大大" (or first item)
+  useEffect(() => {
+    const savedCustom = localStorage.getItem('custom_links');
+    if (savedCustom) {
+      try {
+        const parsed = JSON.parse(savedCustom);
+        if (Array.isArray(parsed)) setCustomLinks(parsed);
+      } catch {}
+    }
+  }, []);
+
+  const allLinks = useMemo(() => {
+    const base = (linksData as CategoryGroup[]).flatMap((c) => c.links.map((l) => ({ ...l, category: c.name })));
+    return [...customLinks, ...base];
+  }, [customLinks]);
+
+  const categories = useMemo(() => {
+    const baseCats = (linksData as CategoryGroup[]).map((c) => c.name);
+    const extraCats = customLinks.map((c) => c.category || '自定义').filter((c) => !baseCats.includes(c));
+    return ['全部', ...extraCats, ...baseCats];
+  }, [customLinks]);
+
   const defaultPreview = useMemo(
     () => allLinks.find((l) => l.name.includes('磊大大')) || allLinks[0] || null,
     [allLinks]
@@ -58,12 +71,6 @@ export const LinksExplorer: React.FC = () => {
   const [layoutMode, setLayoutMode] = useState<LayoutMode>('card');
   const [previewLink, setPreviewLink] = useState<LinkItem | null>(defaultPreview);
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
-  const [showIntro, setShowIntro] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShowIntro(false), 3500);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem('links_layout') as LayoutMode | null;
@@ -109,54 +116,29 @@ export const LinksExplorer: React.FC = () => {
     }
   };
 
-  // Prevent infinite self-iframe recursion if link is "/"
   const getSafeIframeSrc = (link: string) => (link === '/' ? '/about' : link);
 
   return (
-    <div className="space-y-5">
-      {/* Brief intro banner - auto-dismiss */}
-      <AnimatePresence>
-        {showIntro && (
-          <motion.div
-            initial={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-            transition={{ duration: 0.45 }}
-            className="overflow-hidden"
-          >
-            <div className="relative p-4 rounded-2xl bg-terracotta/8 border border-terracotta/20 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">🔖</span>
-                <div>
-                  <span className="font-semibold text-sm text-charcoal-DEFAULT dark:text-cream-50">
-                    {allLinks.length} 个精选站点 · {categories.length - 1} 个分类
-                  </span>
-                  <p className="text-xs text-charcoal-100 dark:text-cream-400 mt-0.5">
-                    支持卡片、列表、画中画三种浏览方式
-                  </p>
-                </div>
-              </div>
-              <button onClick={() => setShowIntro(false)} className="text-charcoal-100 dark:text-cream-400 hover:text-terracotta p-1">
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div className="space-y-3">
+      {/* Ultra-compact Single Top Toolbar */}
+      <div className="flex flex-wrap items-center gap-2.5">
+        <h1 className="text-base sm:text-lg font-bold text-charcoal-DEFAULT dark:text-cream-50 shrink-0 mr-1">
+          🔖 友链导航 <span className="text-xs font-mono text-terracotta font-normal">({filteredLinks.length})</span>
+        </h1>
 
-      {/* Search + Layout switcher */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-100 dark:text-cream-400" />
+        <div className="relative flex-1 min-w-[180px] max-w-xs">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-charcoal-100 dark:text-cream-400" />
           <input
             type="text"
-            placeholder="搜索站点名、描述或链接..."
+            placeholder="搜索站点..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-zinc-900/60 text-sm text-charcoal-DEFAULT dark:text-cream-100 placeholder-charcoal-100 dark:placeholder-cream-400 backdrop-blur-sm focus:outline-none focus:border-terracotta/50 transition-colors"
+            className="w-full pl-8 pr-3 py-1.5 rounded-lg border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-zinc-900/60 text-xs text-charcoal-DEFAULT dark:text-cream-100 focus:outline-none focus:border-terracotta/50"
           />
         </div>
 
-        <div className="flex items-center gap-1 p-1 rounded-xl border border-charcoal-500/10 dark:border-white/10 bg-white/40 dark:bg-black/20">
+        {/* Layout mode switcher */}
+        <div className="flex items-center gap-1 p-0.5 rounded-lg border border-charcoal-500/10 dark:border-white/10 bg-white/40 dark:bg-black/20">
           {([
             ['card', '卡片', LayoutGrid],
             ['compact', '列表', List],
@@ -165,81 +147,72 @@ export const LinksExplorer: React.FC = () => {
             <button
               key={mode}
               onClick={() => switchLayout(mode)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
                 layoutMode === mode
                   ? 'bg-terracotta text-white shadow-sm'
                   : 'text-charcoal-100 dark:text-cream-400 hover:text-charcoal dark:hover:text-white'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{label}</span>
+              <span>{label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Inline scrollable category pills */}
+        <div className="flex gap-1.5 overflow-x-auto pb-0.5 w-full scrollbar-none">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`flex-shrink-0 px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border ${
+                selectedCategory === cat
+                  ? 'bg-terracotta text-white border-terracotta'
+                  : 'border-charcoal-500/15 dark:border-white/10 text-charcoal-200 dark:text-cream-300 hover:border-terracotta/40 hover:text-terracotta'
+              }`}
+            >
+              {cat}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Category tabs */}
-      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-        {categories.map((cat) => {
-          const count = cat === '全部' ? allLinks.length : (linksData as CategoryGroup[]).find((c) => c.name === cat)?.links.length ?? 0;
-          return (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border ${
-                selectedCategory === cat
-                  ? 'bg-terracotta text-white border-terracotta shadow-sm'
-                  : 'border-charcoal-500/15 dark:border-white/10 text-charcoal-200 dark:text-cream-300 hover:border-terracotta/40 hover:text-terracotta'
-              }`}
-            >
-              {cat} <span className="opacity-60">({count})</span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Results count */}
-      <p className="text-xs font-mono text-charcoal-100 dark:text-cream-400">
-        找到 <span className="text-terracotta font-semibold">{filteredLinks.length}</span> 个站点
-        {searchQuery && <span> · 匹配 "{searchQuery}"</span>}
-      </p>
-
-      {/* Content */}
+      {/* Main Content */}
       {layoutMode === 'split' ? (
-        <div className="flex flex-col lg:flex-row gap-4" style={{ minHeight: '72vh' }}>
-          {/* Left list - 28% */}
-          <div className="w-full lg:w-[28%] max-h-60 lg:max-h-[72vh] flex-shrink-0 overflow-y-auto space-y-1 pr-1 lg:border-r border-charcoal-500/10 dark:border-white/8">
+        /* Split PiP occupies 82%+ width and full viewport height */
+        <div className="flex flex-col lg:flex-row gap-3 h-[calc(100vh-10.5rem)] min-h-[600px]">
+          {/* Narrow Left Sidebar ~17% */}
+          <div className="w-full lg:w-56 max-h-44 lg:max-h-full flex-shrink-0 overflow-y-auto space-y-1 pr-1 lg:border-r border-charcoal-500/10 dark:border-white/8">
             {filteredLinks.map((item, idx) => (
               <button
                 key={`split-${item.category}-${item.name}-${idx}`}
                 onClick={(e) => handleItemClick(e, item)}
-                className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all ${
+                className={`w-full flex items-center gap-2.5 p-2 rounded-lg text-left transition-all ${
                   previewLink?.name === item.name && previewLink?.link === item.link
-                    ? 'bg-terracotta/10 border border-terracotta/30'
+                    ? 'bg-terracotta/15 border border-terracotta/30'
                     : 'hover:bg-black/5 dark:hover:bg-white/5 border border-transparent'
                 }`}
               >
                 <img
                   src={resolveAvatar(item.avatar, item.link)}
                   alt={item.name}
-                  className="w-8 h-8 rounded-lg object-cover flex-shrink-0 bg-cream-200 dark:bg-zinc-800"
+                  className="w-6 h-6 rounded-md object-cover flex-shrink-0 bg-cream-200 dark:bg-zinc-800"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = DEFAULT_AVATAR_SVG;
                   }}
                 />
                 <div className="min-w-0 flex-1">
-                  <div className="text-sm font-medium text-charcoal-DEFAULT dark:text-cream-50 truncate">{item.name}</div>
-                  <div className="text-xs text-charcoal-100 dark:text-cream-400 truncate">{item.descr}</div>
+                  <div className="text-xs font-medium text-charcoal-DEFAULT dark:text-cream-50 truncate">{item.name}</div>
                 </div>
               </button>
             ))}
           </div>
 
-          {/* Right iframe preview - 72% */}
-          <div className="flex-1 min-w-0 min-h-[520px]">
-            {previewLink ? (
-              <div className="h-full flex flex-col rounded-2xl overflow-hidden border border-charcoal-500/10 dark:border-white/10 bg-white dark:bg-zinc-950">
-                <div className="flex items-center justify-between px-4 py-2.5 bg-cream-100/80 dark:bg-zinc-900/80 border-b border-charcoal-500/8 dark:border-white/8">
+          {/* Wide Right PiP Preview ~83% */}
+          <div className="flex-1 min-w-0 h-full">
+            {previewLink && (
+              <div className="h-full flex flex-col rounded-2xl overflow-hidden border border-charcoal-500/10 dark:border-white/10 bg-white dark:bg-zinc-950 shadow-2xl">
+                <div className="flex items-center justify-between px-4 py-2 bg-cream-100/80 dark:bg-zinc-900/80 border-b border-charcoal-500/8 dark:border-white/8 shrink-0">
                   <div className="flex items-center gap-2 min-w-0">
                     <div className="flex gap-1.5 shrink-0">
                       <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
@@ -253,7 +226,7 @@ export const LinksExplorer: React.FC = () => {
                   <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={(e) => handleCopy(e, previewLink.link)}
-                      className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors"
+                      className="p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/5 text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors"
                     >
                       {copiedUrl === previewLink.link ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                     </button>
@@ -261,7 +234,7 @@ export const LinksExplorer: React.FC = () => {
                       href={previewLink.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors"
+                      className="p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/5 text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
@@ -271,11 +244,11 @@ export const LinksExplorer: React.FC = () => {
                   key={`${previewLink.name}-${previewLink.link}`}
                   src={getSafeIframeSrc(previewLink.link)}
                   title={previewLink.name}
-                  className="flex-1 w-full border-0 min-h-[480px]"
+                  className="flex-1 w-full border-0"
                   sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
                 />
               </div>
-            ) : null}
+            )}
           </div>
         </div>
       ) : layoutMode === 'compact' ? (
@@ -314,19 +287,19 @@ export const LinksExplorer: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3.5">
           {filteredLinks.map((item, idx) => (
             <a
               key={`card-${item.category}-${item.name}-${idx}`}
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative p-4 rounded-2xl border border-charcoal-500/10 dark:border-white/8 hover:border-terracotta/30 dark:hover:border-terracotta/30 hover:shadow-lg bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm transition-all duration-200 flex flex-col items-center text-center gap-3"
+              className="group relative p-4 rounded-2xl border border-charcoal-500/10 dark:border-white/8 hover:border-terracotta/30 dark:hover:border-terracotta/30 hover:shadow-lg bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm transition-all duration-200 flex flex-col items-center text-center gap-2.5"
             >
               <img
                 src={resolveAvatar(item.avatar, item.link)}
                 alt={item.name}
-                className="w-12 h-12 rounded-xl object-cover bg-cream-200 dark:bg-zinc-800 group-hover:scale-105 transition-transform"
+                className="w-11 h-11 rounded-xl object-cover bg-cream-200 dark:bg-zinc-800 group-hover:scale-105 transition-transform"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = DEFAULT_AVATAR_SVG;
                 }}

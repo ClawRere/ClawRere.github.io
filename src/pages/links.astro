@@ -3,16 +3,8 @@ import Layout from '@/layouts/Layout.astro';
 import { LinksExplorer } from '@/components/tools/LinksExplorer';
 ---
 
-<Layout title="友链与精选站点导航 | 磊大大 Larry">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-
-    <div class="mb-8">
-      <p class="text-xs font-mono uppercase tracking-widest text-terracotta mb-2">Links · 108+</p>
-      <h1 class="text-3xl sm:text-4xl font-extrabold text-charcoal-DEFAULT dark:text-cream-50 tracking-tight">
-        友链 & 灵感导航
-      </h1>
-    </div>
-
+<Layout title="友链与精选站点导航 | 磊大大 Larry" fullWidth={true} hideFooter={true}>
+  <div class="w-full px-3 sm:px-6 py-4">
     <LinksExplorer client:load />
   </div>
 </Layout>

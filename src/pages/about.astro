@@ -97,10 +97,10 @@ const metrics = [
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-medium text-amber-300">
             ✨ 以工程严谨度衡量需求，以艺术家眼光雕琢体验
           </div>
-          <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
+          <h1 id="about-name" class="text-3xl md:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
             磊大大 <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-300 to-purple-400">Larry</span>
           </h1>
-          <p class="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed max-w-xl">
+          <p id="about-bio" class="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed max-w-xl">
             AI 产品经理 / 体验架构师 / 数字花园园丁。专注于
             <strong class="text-zinc-900 dark:text-white font-medium">Agent 操作系统</strong>、
             <strong class="text-zinc-900 dark:text-white font-medium">证据分层决策</strong>与
@@ -201,7 +201,7 @@ const metrics = [
         无论是探讨 Agent 架构、产品设计方案，还是交流前沿视效灵感，都欢迎随时联系。
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4">
-        <a href="mailto:2472919073@qq.com" class="px-5 py-2.5 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-black font-semibold text-sm hover:opacity-90 transition-opacity shadow-lg">
+        <a id="about-email-btn" href="mailto:2472919073@qq.com" class="px-5 py-2.5 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-black font-semibold text-sm hover:opacity-90 transition-opacity shadow-lg">
           发邮件联系
         </a>
         <a href="/messageboard" class="px-5 py-2.5 rounded-xl border border-zinc-200 dark:border-white/15 text-zinc-900 dark:text-white font-medium text-sm hover:bg-zinc-100 dark:hover:bg-white/8 transition-colors">
@@ -211,4 +211,22 @@ const metrics = [
     </div>
 
   </div>
+
+  <script is:inline>
+    (function () {
+      try {
+        var raw = localStorage.getItem('about_config');
+        if (!raw) return;
+        var cfg = JSON.parse(raw);
+        if (cfg.bio) {
+          var bioEl = document.getElementById('about-bio');
+          if (bioEl) bioEl.textContent = cfg.bio;
+        }
+        if (cfg.email) {
+          var mailEl = document.getElementById('about-email-btn');
+          if (mailEl) mailEl.setAttribute('href', 'mailto:' + cfg.email);
+        }
+      } catch (e) {}
+    })();
+  </script>
 </Layout>

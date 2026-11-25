@@ -55,6 +55,8 @@ export const ToolboxViewer: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newTool, setNewTool] = useState({ label: '', emoji: '🧰', desc: '', src: '' });
+  const [pipVh, setPipVh] = useState(78);
+  const [savedNotice, setSavedNotice] = useState(false);
 
   // Built-in quick DevToys state
   const [inputText, setInputText] = useState('{\n  "product": "PMOS",\n  "version": "V0.2",\n  "role": "AI Product Manager"\n}');
@@ -62,6 +64,8 @@ export const ToolboxViewer: React.FC = () => {
 
   useEffect(() => {
     setIsAdmin(localStorage.getItem('admin_authenticated') === 'true');
+    const savedVh = parseInt(localStorage.getItem('layout_pip_vh') || '78', 10);
+    if (!isNaN(savedVh)) setPipVh(savedVh);
     const saved = localStorage.getItem('custom_tools');
     if (saved) {
       try {
@@ -72,6 +76,30 @@ export const ToolboxViewer: React.FC = () => {
       } catch {}
     }
   }, []);
+
+  const startResizePip = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const startY = e.clientY;
+    const initVh = pipVh;
+    const onMove = (ev: MouseEvent) => {
+      const deltaVh = ((ev.clientY - startY) / window.innerHeight) * 100;
+      const next = Math.max(45, Math.min(90, Math.round(initVh + deltaVh)));
+      setPipVh(next);
+    };
+    const onUp = () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  };
+
+  const savePipSize = () => {
+    localStorage.setItem('layout_pip_vh', String(pipVh));
+    document.documentElement.style.setProperty('--pip-height', `${pipVh}vh`);
+    setSavedNotice(true);
+    setTimeout(() => setSavedNotice(false), 2000);
+  };
 
   const handleAddTool = (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,8 +189,8 @@ export const ToolboxViewer: React.FC = () => {
 
       {/* Single Large Picture-in-Picture Frame */}
       <div
-        style={{ height: 'var(--pip-height, 78vh)' }}
-        className="rounded-3xl border border-charcoal-500/10 dark:border-white/10 overflow-hidden bg-white/60 dark:bg-zinc-900/70 backdrop-blur-xl shadow-2xl flex flex-col min-h-[520px]"
+        style={{ height: `${pipVh}vh` }}
+        className="relative rounded-3xl border border-charcoal-500/10 dark:border-white/10 overflow-hidden bg-white/60 dark:bg-zinc-900/70 backdrop-blur-xl shadow-2xl flex flex-col min-h-[420px]"
       >
         <div className="flex items-center justify-between px-5 py-2.5 border-b border-charcoal-500/10 dark:border-white/10 bg-cream-100/80 dark:bg-zinc-950/60 shrink-0">
           <div className="flex items-center gap-3 min-w-0">
@@ -237,6 +265,25 @@ export const ToolboxViewer: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Admin Direct On-Page Drag-to-Resize Bar */}
+      {isAdmin && (
+        <div className="flex items-center justify-center gap-3 pt-1">
+          <div
+            onMouseDown={startResizePip}
+            className="px-4 py-1.5 rounded-full bg-zinc-900/85 text-white border border-white/15 text-xs font-mono cursor-ns-resize select-none shadow hover:border-terracotta transition-colors"
+            title="按住上下拖拽实时调节画中画高度"
+          >
+            ↕ 拖拽调节画中画高度 ({pipVh}vh)
+          </div>
+          <button
+            onClick={savePipSize}
+            className="px-3.5 py-1.5 rounded-full bg-terracotta text-white text-xs font-mono hover:opacity-90 shadow"
+          >
+            {savedNotice ? '✓ 已保存' : '保存尺寸'}
+          </button>
+        </div>
+      )}
 
       {/* Inline Admin Add Tool Modal */}
       {showAddModal && (

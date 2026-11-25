@@ -22,6 +22,7 @@ const currentPath = Astro.url.pathname;
 
 const entertainItems = [
   { name: '音乐馆', href: '/entertain/music', emoji: '🎵' },
+  { name: '93+ 特效实验室', href: '/effects', emoji: '✨' },
   { name: '烟花秀', href: '/entertain/fireworks', emoji: '🎆' },
   { name: '雨声院', href: '/entertain/rain', emoji: '🌧️' },
   { name: '变形金刚', href: '/effects/optimus_prime/index.html', emoji: '🤖' },
@@ -40,7 +41,7 @@ const entertainItems = [
     <title>{title}</title>
     <meta name="description" content={description} />
     <script is:inline>
-      (function () {
+      window.__applySitePrefs = function () {
         try {
           var bg = localStorage.getItem('blogbg');
           if (bg) {
@@ -57,7 +58,9 @@ const entertainItems = [
           var ph = localStorage.getItem('layout_pip_vh');
           if (ph) document.documentElement.style.setProperty('--pip-height', ph + 'vh');
         } catch (e) {}
-      })();
+      };
+      window.__applySitePrefs();
+      document.addEventListener('astro:after-swap', window.__applySitePrefs);
     </script>
     <ClientRouter />
   </head>
@@ -65,25 +68,17 @@ const entertainItems = [
     <!-- Top accent line -->
     <div class="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-terracotta/60 to-transparent z-50 pointer-events-none" />
 
-    <!-- Daytime Snowflakes / Nighttime Fireflies Interactive Canvas -->
-    <BackgroundCanvas client:load />
-
-    <!-- Blurred Ambient Hero Background across the entire site -->
-    <div
-      class="fixed inset-0 pointer-events-none z-[-3] overflow-hidden"
-      aria-hidden="true"
-    >
+    <!-- Blurred Ambient Hero Background across the entire site (z-0 so it sits ABOVE body bg and softly shows through!) -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
       <div
-        class="w-full h-full scale-110 blur-[60px] saturate-125 opacity-30 dark:opacity-25 transition-all duration-700"
+        id="global-blurred-bg"
+        class="w-full h-full scale-105 blur-[24px] saturate-125 opacity-35 dark:opacity-30 transition-all duration-700"
         style="background: var(--hero-bg, url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat);"
       />
     </div>
 
-    <!-- Ambient gradient mesh -->
-    <div class="fixed inset-0 pointer-events-none z-[-2] overflow-hidden">
-      <div class="absolute top-[-10%] left-[-10%] w-[550px] h-[550px] rounded-full bg-terracotta/8 dark:bg-terracotta/10 blur-[140px]" />
-      <div class="absolute top-[35%] right-[-10%] w-[500px] h-[500px] rounded-full bg-amber-500/8 dark:bg-amber-500/8 blur-[130px]" />
-    </div>
+    <!-- Daytime Snowflakes / Nighttime Fireflies Interactive Canvas -->
+    <BackgroundCanvas client:load />
 
     <!-- TOP NAVIGATION BAR -->
     <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl border-b border-black/5 dark:border-white/5 bg-cream-50/80 dark:bg-obsidian/80">
@@ -112,11 +107,11 @@ const entertainItems = [
           
           <!-- Entertainment hover dropdown -->
           <div class="relative group/entertain">
-            <a href="/entertain" class={`px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 ${currentPath.startsWith('/entertain') || currentPath.startsWith('/effects/optimus') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>
+            <a href="/entertain" class={`px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 ${currentPath.startsWith('/entertain') || currentPath.startsWith('/effects') ? 'text-terracotta bg-terracotta/8' : 'text-charcoal-200 dark:text-cream-300 hover:text-charcoal dark:hover:text-cream-50 hover:bg-black/5 dark:hover:bg-white/5'}`}>
               娱乐馆
               <svg class="w-3 h-3 transition-transform group-hover/entertain:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
             </a>
-            <div class="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-44 py-1.5 rounded-2xl bg-white dark:bg-zinc-900 border border-black/8 dark:border-white/10 shadow-2xl backdrop-blur-xl opacity-0 invisible group-hover/entertain:opacity-100 group-hover/entertain:visible transition-all duration-200 z-50">
+            <div class="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-48 py-1.5 rounded-2xl bg-white dark:bg-zinc-900 border border-black/8 dark:border-white/10 shadow-2xl backdrop-blur-xl opacity-0 invisible group-hover/entertain:opacity-100 group-hover/entertain:visible transition-all duration-200 z-50">
               {entertainItems.map(item => (
                 <a href={item.href} class="flex items-center gap-2.5 px-4 py-2 text-sm text-charcoal-200 dark:text-cream-300 hover:text-terracotta hover:bg-terracotta/5 transition-colors" target={item.href.endsWith('.html') ? '_blank' : undefined} rel={item.href.endsWith('.html') ? 'noopener' : undefined}>
                   <span>{item.emoji}</span>
@@ -160,6 +155,7 @@ const entertainItems = [
                 { name: '作品集', href: '/portfolio' },
                 { name: '博客', href: '/posts' },
                 { name: '娱乐 · 音乐馆', href: '/entertain/music' },
+                { name: '娱乐 · 93+特效', href: '/effects' },
                 { name: '娱乐 · 烟花', href: '/entertain/fireworks' },
                 { name: '娱乐 · 雨声', href: '/entertain/rain' },
                 { name: '工具箱', href: '/tools' },
@@ -180,7 +176,7 @@ const entertainItems = [
       <slot />
     </main>
 
-    <!-- Synced NetEase Music Player -->
+    <!-- Synced Mineradio-style NetEase Music Player -->
     <NetEaseMusicPlayer client:load />
 
     <!-- Footer -->

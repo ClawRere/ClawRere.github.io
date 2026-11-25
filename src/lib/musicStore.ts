@@ -3,7 +3,6 @@ export interface Track {
   author: string;
   url: string;
   pic: string;
-  lrc?: string;
 }
 
 export const PLAYLIST_ID = '9333187603';
@@ -12,19 +11,19 @@ const FALLBACK_TRACKS: Track[] = [
   {
     title: '夜的钢琴曲 (五)',
     author: '石进',
-    url: `https://music.163.com/song/media/outer/url?id=149297.mp3`,
+    url: 'https://music.163.com/song/media/outer/url?id=149297.mp3',
     pic: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&q=80',
   },
   {
     title: 'River Flows in You',
     author: 'Yiruma',
-    url: `https://music.163.com/song/media/outer/url?id=149294.mp3`,
+    url: 'https://music.163.com/song/media/outer/url?id=149294.mp3',
     pic: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=400&q=80',
   },
   {
     title: 'Summer',
     author: '久石让',
-    url: `https://music.163.com/song/media/outer/url?id=441552.mp3`,
+    url: 'https://music.163.com/song/media/outer/url?id=441552.mp3',
     pic: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&q=80',
   },
 ];
@@ -38,6 +37,7 @@ interface MusicState {
   currentTime: number;
   duration: number;
   isLoading: boolean;
+  errorMsg: string;
 }
 
 type Listener = (state: MusicState) => void;
@@ -46,6 +46,7 @@ class GlobalMusicStore {
   private audio: HTMLAudioElement | null = null;
   private listeners = new Set<Listener>();
   private initialized = false;
+  private consecutiveErrors = 0;
 
   public state: MusicState = {
     tracks: FALLBACK_TRACKS,
@@ -56,13 +57,13 @@ class GlobalMusicStore {
     currentTime: 0,
     duration: 0,
     isLoading: true,
+    errorMsg: '',
   };
 
   private initAudio() {
     if (typeof window === 'undefined' || this.initialized) return;
     this.initialized = true;
 
-    // Reuse existing audio element across Astro View Transitions
     const win = window as any;
     if (win.__larryAudio instanceof HTMLAudioElement) {
       this.audio = win.__larryAudio;
@@ -78,17 +79,24 @@ class GlobalMusicStore {
 
     const audio = this.audio;
     audio.ontimeupdate = () => {
-      this.update({ currentTime: audio.currentTime, duration: audio.duration || 0 });
+      this.consecutiveErrors = 0;
+      this.update({ currentTime: audio.currentTime, duration: audio.duration || 0, errorMsg: '' });
     };
-    audio.onplay = () => this.update({ isPlaying: true });
+    audio.onplay = () => this.update({ isPlaying: true, errorMsg: '' });
     audio.onpause = () => this.update({ isPlaying: false });
-    audio.onended = () => this.next();
+    audio.onended = () => {
+      this.consecutiveErrors = 0;
+      this.next();
+    };
     audio.onerror = () => {
-      // Auto-skip to next playable track if a track fails
-      if (this.state.tracks.length > 1 && this.state.isPlaying) {
-        setTimeout(() => this.next(), 400);
+      this.consecutiveErrors += 1;
+      if (this.consecutiveErrors < 2 && this.state.tracks.length > 1) {
+        setTimeout(() => this.next(), 350);
       } else {
-        this.update({ isPlaying: false });
+        this.update({
+          isPlaying: false,
+          errorMsg: '当前音源受限，请点击其他曲目或切换「网易云官方外链」播放',
+        });
       }
     };
   }
@@ -96,7 +104,7 @@ class GlobalMusicStore {
   private async fetchPlaylist() {
     const apis = [
       `https://api.i-meto.com/meting/api?server=netease&type=playlist&id=${PLAYLIST_ID}`,
-      `https://meting.qjqq.cn/?type=playlist&id=${PLAYLIST_ID}`,
+      `https://api.injahow.cn/meting/?type=playlist&id=${PLAYLIST_ID}`,
     ];
     for (const api of apis) {
       try {
@@ -111,7 +119,6 @@ class GlobalMusicStore {
               author: t.author || t.artist || '未知歌手',
               url: t.url.replace(/^http:\/\//, 'https://'),
               pic: (t.pic || '').replace(/^http:\/\//, 'https://') || FALLBACK_TRACKS[0].pic,
-              lrc: t.lrc,
             }));
           if (parsed.length > 0) {
             this.update({ tracks: parsed, isLoading: false });
@@ -121,9 +128,7 @@ class GlobalMusicStore {
             return;
           }
         }
-      } catch {
-        // try next API
-      }
+      } catch {}
     }
     this.update({ isLoading: false });
     if (this.audio && !this.audio.src) {
@@ -150,24 +155,30 @@ class GlobalMusicStore {
 
   public playTrack(index: number) {
     this.initAudio();
+    this.consecutiveErrors = 0;
     const safeIdx = (index + this.state.tracks.length) % this.state.tracks.length;
     const track = this.state.tracks[safeIdx];
     if (!this.audio || !track) return;
     if (this.audio.src !== track.url) {
       this.audio.src = track.url;
     }
-    this.update({ currentIndex: safeIdx });
-    this.audio.play().catch(() => {});
+    this.update({ currentIndex: safeIdx, errorMsg: '' });
+    this.audio.play().catch(() => {
+      this.update({ isPlaying: false });
+    });
   }
 
   public togglePlay() {
     this.initAudio();
+    this.consecutiveErrors = 0;
     if (!this.audio) return;
     if (!this.audio.src && this.state.tracks[this.state.currentIndex]) {
       this.audio.src = this.state.tracks[this.state.currentIndex].url;
     }
     if (this.audio.paused) {
-      this.audio.play().catch(() => {});
+      this.audio.play().catch(() => {
+        this.update({ isPlaying: false, errorMsg: '浏览器拦截或音源不可用，请点击曲目或使用官方外链' });
+      });
     } else {
       this.audio.pause();
     }

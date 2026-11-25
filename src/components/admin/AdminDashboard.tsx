@@ -14,7 +14,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 
-type AdminTab = 'layout' | 'home' | 'guestbook' | 'api';
+type AdminTab = 'layout' | 'home' | 'about' | 'guestbook' | 'api';
 
 export const AdminDashboard: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -33,6 +33,10 @@ export const AdminDashboard: React.FC = () => {
   const [heroPhrasesText, setHeroPhrasesText] = useState(
     '用 AI 重新定义产品边界 · Co-creating with Intelligence\n5W1H 穿透本质 · 假设与事实分层决策\nApple 流体动效 × Claude 人文温润质感\n欢迎来到磊大大的数字花园 · Digital Garden'
   );
+
+  // About page states
+  const [aboutBio, setAboutBio] = useState('AI 产品经理 / 体验架构师 / 数字花园园丁。专注于 Agent 操作系统、证据分层决策与极致流体交互。');
+  const [aboutEmail, setAboutEmail] = useState('2472919073@qq.com');
 
   // Guestbook states
   const [messages, setMessages] = useState<Array<{ id: number; name: string; content: string; date: string }>>([
@@ -75,6 +79,12 @@ export const AdminDashboard: React.FC = () => {
     }
 
     try {
+      const ac = localStorage.getItem('about_config');
+      if (ac) {
+        const parsed = JSON.parse(ac);
+        if (parsed.bio) setAboutBio(parsed.bio);
+        if (parsed.email) setAboutEmail(parsed.email);
+      }
       const gm = localStorage.getItem('guestbook_messages');
       if (gm) setMessages(JSON.parse(gm));
     } catch {}
@@ -185,6 +195,11 @@ export const AdminDashboard: React.FC = () => {
     notify('打字机标语已更新');
   };
 
+  const saveAboutConfig = () => {
+    localStorage.setItem('about_config', JSON.stringify({ bio: aboutBio.trim(), email: aboutEmail.trim() }));
+    notify('关于页面内容已保存，访问 /about 即可查看！');
+  };
+
   const deleteMessage = (id: number) => {
     const updated = messages.filter((m) => m.id !== id);
     setMessages(updated);
@@ -217,6 +232,7 @@ export const AdminDashboard: React.FC = () => {
   const navTabs: Array<{ id: AdminTab; label: string; icon: React.ComponentType<{ className?: string }> }> = [
     { id: 'layout', label: '拖拽调节板块大小', icon: Sliders },
     { id: 'home', label: '全局开关与标语', icon: Home },
+    { id: 'about', label: '关于页面管理', icon: ShieldCheck },
     { id: 'guestbook', label: '留言板审核', icon: MessageSquare },
     { id: 'api', label: 'API 发布配置', icon: KeyRound },
   ];
@@ -491,7 +507,38 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* 3. GUESTBOOK */}
+        {/* 3. ABOUT PAGE */}
+        {activeTab === 'about' && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="font-serif text-lg font-bold">关于页面内容管理 (/about)</h2>
+              <a href="/about" className="text-xs font-mono text-terracotta hover:underline">预览关于页面 →</a>
+            </div>
+            <div>
+              <label className="block text-xs font-mono mb-1.5">个人简介文案</label>
+              <textarea
+                rows={4}
+                value={aboutBio}
+                onChange={(e) => setAboutBio(e.target.value)}
+                className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-mono mb-1.5">联系邮箱</label>
+              <input
+                type="email"
+                value={aboutEmail}
+                onChange={(e) => setAboutEmail(e.target.value)}
+                className="w-full px-3.5 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm font-mono"
+              />
+            </div>
+            <button onClick={saveAboutConfig} className="px-5 py-2 rounded-xl bg-terracotta text-white text-xs font-mono hover:opacity-90">
+              保存关于页面配置
+            </button>
+          </div>
+        )}
+
+        {/* 4. GUESTBOOK */}
         {activeTab === 'guestbook' && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">

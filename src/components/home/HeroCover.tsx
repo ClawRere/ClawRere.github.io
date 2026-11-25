@@ -43,18 +43,11 @@ const defaultPhrases = [
 ];
 
 export const HeroCover: React.FC = () => {
-  const [currentBg, setCurrentBg] = useState<{ type: string; value: string }>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('blogbg');
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (parsed?.type && parsed?.value) return parsed;
-        }
-      } catch {}
-    }
-    return { type: 'image', value: wallpaperPresets[0].url };
+  const [currentBg, setCurrentBg] = useState<{ type: string; value: string }>({
+    type: 'image',
+    value: wallpaperPresets[0].url,
   });
+  const [hasLoadedStorage, setHasLoadedStorage] = useState(false);
 
   const [phrases, setPhrases] = useState<string[]>(defaultPhrases);
   const [isOpen, setIsOpen] = useState(false);
@@ -71,6 +64,19 @@ export const HeroCover: React.FC = () => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem('blogbg');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed?.type && parsed?.value) {
+          setCurrentBg(parsed);
+          const cssVal = parsed.type === 'image' ? `url("${parsed.value}") center/cover no-repeat` : parsed.value;
+          document.documentElement.style.setProperty('--hero-bg', cssVal);
+        }
+      }
+    } catch {}
+    setHasLoadedStorage(true);
+
     const savedPhrases = localStorage.getItem('hero_phrases');
     if (savedPhrases) {
       try {
@@ -104,6 +110,8 @@ export const HeroCover: React.FC = () => {
     localStorage.setItem('blogbg', JSON.stringify(next));
     const cssVal = type === 'image' ? `url("${value}") center/cover no-repeat` : value;
     document.documentElement.style.setProperty('--hero-bg', cssVal);
+    const globalBg = document.getElementById('global-blurred-bg');
+    if (globalBg) globalBg.style.background = cssVal;
     setIsOpen(false);
   };
 
@@ -111,9 +119,17 @@ export const HeroCover: React.FC = () => {
   const customGradPreview = `linear-gradient(${gradAngle}deg, ${gradStart}, ${gradEnd})`;
   const activePhrase = phrases[phraseIndex % phrases.length] || defaultPhrases[0];
 
+  const resolvedStyle: React.CSSProperties = hasLoadedStorage
+    ? currentBg.type === 'image'
+      ? { backgroundImage: `url("${currentBg.value}")`, backgroundSize: 'cover', backgroundPosition: 'center' }
+      : currentBg.type === 'color'
+      ? { backgroundColor: currentBg.value }
+      : { backgroundImage: currentBg.value }
+    : { background: `var(--hero-bg, ${defaultBgCss})` };
+
   return (
     <div
-      style={{ background: `var(--hero-bg, ${defaultBgCss})` }}
+      style={resolvedStyle}
       className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center overflow-hidden mb-14 transition-all duration-500"
     >
       {/* Center Minimal Title + Typewriter */}

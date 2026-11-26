@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { HeroCover } from '@/components/home/HeroCover';
+import TidewellScrollStory from '@/components/home/TidewellScrollStory.astro';
+import { FireworksOverlay } from '@/components/home/FireworksOverlay';
 import { CoCreationBadge } from '@/components/portfolio/CoCreationBadge';
 import { getCollection } from 'astro:content';
 import { getPostCover } from '@/lib/covers';
@@ -22,11 +23,16 @@ const latestPosts = allPosts
 ---
 
 <Layout title="磊大大 Larry | AI 产品经理与共创作品集" fullWidth={true}>
-  <!-- Full viewport hero cover (1st screen) -->
-  <HeroCover client:load />
+  <!-- Tidewell "Tides in Motion" Scroll Story -->
+  <TidewellScrollStory />
+
+  <!-- Floating Fireworks Button on Homepage -->
+  <div class="fixed right-5 bottom-16 z-40">
+    <FireworksOverlay client:load />
+  </div>
 
   <!-- Page body content inside constrained container -->
-  <div id="hub-section" class="max-w-6xl mx-auto px-4 sm:px-6 pb-20 space-y-20">
+  <div id="hub-section" class="max-w-6xl mx-auto px-4 sm:px-6 pt-16 pb-20 space-y-20">
 
     <!-- Quick hub entry cards -->
     <section>

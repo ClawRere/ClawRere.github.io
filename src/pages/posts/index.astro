@@ -67,7 +67,7 @@ const categories = Array.from(
           <a
             href={`/posts/${post.id}`}
             data-category={category}
-            class={`post-card group relative flex flex-col overflow-hidden rounded-2xl border border-charcoal-500/10 dark:border-white/8 hover:border-terracotta/30 dark:hover:border-terracotta/30 hover:shadow-xl transition-all duration-300 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm ${isLarge ? 'sm:col-span-2 lg:col-span-2' : ''}`}
+            class={`post-card group relative flex flex-col overflow-hidden rounded-[18px] border border-charcoal-500/10 dark:border-white/10 ring-1 ring-inset ring-white/40 dark:ring-white/10 hover:border-terracotta/30 dark:hover:border-terracotta/30 shadow-[0_10px_28px_rgba(31,36,48,0.10)] hover:shadow-[0_18px_40px_rgba(31,36,48,0.18)] hover:-translate-y-1.5 transition-all duration-500 ease-[cubic-bezier(0.25,0.75,0.2,1)] bg-white/65 dark:bg-zinc-900/55 backdrop-blur-sm ${isLarge ? 'sm:col-span-2 lg:col-span-2' : ''}`}
           >
             <!-- Cover image -->
             <div class={`relative overflow-hidden ${isLarge ? 'h-56 sm:h-64' : 'h-40'}`}>

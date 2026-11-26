@@ -62,7 +62,7 @@ class GlobalMusicStore {
     tracks: FALLBACK_TRACKS,
     currentIndex: 0,
     isPlaying: false,
-    volume: 20,
+    volume: 10,
     isMuted: false,
     currentTime: 0,
     duration: 0,
@@ -76,7 +76,7 @@ class GlobalMusicStore {
 
     const savedId = localStorage.getItem('selected_playlist_id') || DEFAULT_PLAYLIST_ID;
     const savedVolRaw = localStorage.getItem('music_volume');
-    const initialVol = savedVolRaw !== null ? Math.max(0, Math.min(100, Number(savedVolRaw))) : 20;
+    const initialVol = savedVolRaw !== null ? Math.max(0, Math.min(100, Number(savedVolRaw))) : 10;
 
     const win = window as any;
     if (win.__larryAudio instanceof HTMLAudioElement) {

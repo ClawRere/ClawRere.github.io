@@ -134,12 +134,30 @@ export const HeroCover: React.FC = () => {
       style={resolvedStyle}
       className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center overflow-hidden mb-14 transition-all duration-500"
     >
-      {/* Center Minimal Title + Typewriter */}
+      {/* Center Minimal Title + Lightweight Tidewell Wipe-in & Pixel Accent */}
       <div className="relative z-20 text-center px-6 max-w-3xl mx-auto">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+        {/* Lightweight Tidewell 4-point sparkle + coastal pixel badges */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, ease: [0.25, 0.75, 0.2, 1] }}
+          className="mb-4 flex items-center justify-center gap-2"
+        >
+          <span className="px-3 py-1 rounded-full bg-[#F1ECEA]/90 text-[#1F2430] text-[11px] font-mono font-semibold shadow-lg -rotate-2">
+            AI · PMOS
+          </span>
+          <svg className="w-4 h-4 text-[#F4E3D3]" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M10 0c.8 5.6 3.6 8.6 10 10-6.4 1.4-9.2 4.4-10 10-.8-5.6-3.6-8.6-10-10 6.4-1.4 9.2-4.4 10-10z" fill="currentColor" />
+          </svg>
+          <span className="px-3 py-1 rounded-full bg-[#DDAD95]/95 text-[#1F2430] text-[11px] font-mono font-semibold shadow-lg rotate-2">
+            93+ 动效
+          </span>
+        </motion.div>
+
+        <motion.h1
+          initial={{ clipPath: 'inset(0 100% 0 0)', opacity: 0.3, y: 12 }}
+          animate={{ clipPath: 'inset(0 0% 0 0)', opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, ease: [0.25, 0.75, 0.2, 1] }}
           className="text-5xl sm:text-7xl md:text-8xl font-extrabold text-white tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.45)] select-none"
         >
           磊大大

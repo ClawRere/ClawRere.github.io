@@ -18,8 +18,8 @@ interface CommentItem {
 const initialMessages: CommentItem[] = [
   {
     id: 1,
-    name: '密信访客 · 可测试阅后即焚',
-    content: '这是一条「阅后即焚」加密留言！点击揭晓后开始 5 秒倒计时，倒计时结束物理火焰将从底部焚烧卡片，灰烬自然飘落堆积在下一条留言上方 🔥',
+    name: '密信访客 · 阅后即焚示例',
+    content: '这是一条「阅后即焚」密信！点击揭晓后开始 5 秒倒计时，倒计时结束将触发火焰焚毁消逝 🔥',
     date: '2026-11-26',
     isBurnAfterReading: true,
     likes: 5,
@@ -405,11 +405,7 @@ export const MessageBoard: React.FC = () => {
 
     setTimeout(() => {
       setMessages((curr) => {
-        const idx = curr.findIndex((m) => m.id === id);
-        if (idx === -1) return curr;
-        const updated = curr
-          .filter((m) => m.id !== id)
-          .map((m, i) => (i === idx ? { ...m, hasAshFromAbove: true } : m));
+        const updated = curr.filter((m) => m.id !== id);
         localStorage.setItem('guestbook_messages', JSON.stringify(updated));
         return updated;
       });
@@ -467,7 +463,7 @@ export const MessageBoard: React.FC = () => {
           <MessageSquare className="w-4 h-4" /> Community Guestbook
         </div>
         <p className="text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 leading-relaxed font-serif">
-          欢迎在此写下想法、点赞或申请友链。开启 <strong>「🔥 阅后即焚」</strong> 后将打马赛克，点击阅读 <strong>5 秒</strong> 后触发物理火焰焚毁并留下灰烬。
+          欢迎在此写下想法、点赞或申请友链，支持普通留言与 <strong>5s 阅后即焚</strong>。
         </p>
       </div>
 
@@ -479,18 +475,50 @@ export const MessageBoard: React.FC = () => {
             留下你的足迹
           </h2>
 
-          <button
-            type="button"
-            onClick={() => setIsBurnMode(!isBurnMode)}
-            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono transition-all border ${
-              isBurnMode
-                ? 'bg-gradient-to-r from-orange-500 to-red-600 text-white border-orange-400 shadow-lg'
-                : 'glass border-charcoal-500/15 dark:border-white/15 text-charcoal-200 dark:text-cream-300 hover:border-orange-400/50'
-            }`}
-          >
-            <Flame className={`w-3.5 h-3.5 ${isBurnMode ? 'animate-pulse' : ''}`} />
-            <span>{isBurnMode ? '🔥 5s 阅后即焚已开启' : '开启阅后即焚'}</span>
-          </button>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={(e) => {
+                const next = !isBurnMode;
+                setIsBurnMode(next);
+                if (next) {
+                  const host = e.currentTarget.parentElement;
+                  if (host) {
+                    const sparks = host.querySelectorAll('.ignite-spark');
+                    animate(sparks, {
+                      translateX: [0, (_el, i) => (i - 2.5) * 14],
+                      translateY: [0, (_el, i) => -14 - (i % 3) * 8],
+                      scale: [0.3, 1.15, 0],
+                      opacity: [0, 1, 0],
+                      duration: 600,
+                      ease: 'outCubic',
+                    });
+                  }
+                }
+              }}
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono transition-all border ${
+                isBurnMode
+                  ? 'bg-gradient-to-r from-orange-500 to-red-600 text-white border-orange-400 shadow-[0_0_14px_rgba(249,115,22,0.55)]'
+                  : 'glass border-charcoal-500/15 dark:border-white/15 text-charcoal-200 dark:text-cream-300 hover:border-orange-400/50'
+              }`}
+            >
+              <Flame className={`w-3.5 h-3.5 ${isBurnMode ? 'animate-pulse text-yellow-200' : ''}`} />
+              <span>阅后即焚</span>
+            </button>
+            {/* Mini ignition flame sparks when toggling ON */}
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <span
+                  key={i}
+                  className="ignite-spark absolute w-2 h-2 rounded-full opacity-0"
+                  style={{
+                    background: i % 2 === 0 ? '#fde047' : '#f97316',
+                    boxShadow: '0 0 6px rgba(249,115,22,0.9)',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -574,7 +602,6 @@ export const MessageBoard: React.FC = () => {
                     : 'border-charcoal-500/10 dark:border-white/10'
                 }`}
               >
-                {msg.hasAshFromAbove && <AshPile />}
                 {isBurning && <BurnCanvas />}
 
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">

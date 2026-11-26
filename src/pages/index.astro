@@ -1,7 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import TidewellScrollStory from '@/components/home/TidewellScrollStory.astro';
-import { FireworksOverlay } from '@/components/home/FireworksOverlay';
+import { HeroCover } from '@/components/home/HeroCover';
 import { CoCreationBadge } from '@/components/portfolio/CoCreationBadge';
 import { getCollection } from 'astro:content';
 import { getPostCover } from '@/lib/covers';
@@ -23,16 +22,11 @@ const latestPosts = allPosts
 ---
 
 <Layout title="磊大大 Larry | AI 产品经理与共创作品集" fullWidth={true}>
-  <!-- Tidewell "Tides in Motion" Scroll Story -->
-  <TidewellScrollStory />
-
-  <!-- Floating Fireworks Button on Homepage -->
-  <div class="fixed right-5 bottom-16 z-40">
-    <FireworksOverlay client:load />
-  </div>
+  <!-- Full viewport hero cover (1st screen, lightweight & interactive) -->
+  <HeroCover client:load />
 
   <!-- Page body content inside constrained container -->
-  <div id="hub-section" class="max-w-6xl mx-auto px-4 sm:px-6 pt-16 pb-20 space-y-20">
+  <div id="hub-section" class="max-w-6xl mx-auto px-4 sm:px-6 pb-20 space-y-20">
 
     <!-- Quick hub entry cards -->
     <section>
@@ -76,7 +70,7 @@ const latestPosts = allPosts
           {featuredProjects.map(project => {
             const canEmbed = isEmbeddableDemo(project.data.demoUrl);
             return (
-            <div class="group flex flex-col rounded-3xl border border-charcoal-500/10 dark:border-white/8 overflow-hidden hover:border-terracotta/30 hover:shadow-2xl transition-all duration-300 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md">
+            <div class="group flex flex-col rounded-[20px] border border-charcoal-500/10 dark:border-white/10 ring-1 ring-inset ring-white/40 dark:ring-white/10 overflow-hidden hover:border-terracotta/30 shadow-[0_12px_32px_rgba(31,36,48,0.12)] hover:shadow-[0_22px_48px_rgba(31,36,48,0.22)] hover:-translate-y-1.5 transition-all duration-500 ease-[cubic-bezier(0.25,0.75,0.2,1)] bg-white/70 dark:bg-zinc-900/65 backdrop-blur-md">
               <div class="h-56 w-full relative overflow-hidden bg-zinc-950">
                 {canEmbed ? (
                   <>
@@ -137,7 +131,7 @@ const latestPosts = allPosts
           const coverImg = getPostCover(post.data.cover, post.data.title, idx, post.body);
           const categoryName = Array.isArray(post.data.categories) ? post.data.categories[0] : post.data.categories || '笔记';
           return (
-            <a href={`/posts/${post.id}`} class="group flex flex-col rounded-2xl border border-charcoal-500/10 dark:border-white/8 overflow-hidden hover:border-terracotta/30 hover:shadow-xl transition-all duration-300 bg-white/50 dark:bg-zinc-900/50">
+            <a href={`/posts/${post.id}`} class="group flex flex-col rounded-[18px] border border-charcoal-500/10 dark:border-white/10 ring-1 ring-inset ring-white/40 dark:ring-white/10 overflow-hidden hover:border-terracotta/30 shadow-[0_10px_28px_rgba(31,36,48,0.10)] hover:shadow-[0_18px_40px_rgba(31,36,48,0.18)] hover:-translate-y-1.5 transition-all duration-500 ease-[cubic-bezier(0.25,0.75,0.2,1)] bg-white/65 dark:bg-zinc-900/55 backdrop-blur-sm">
               <div class="h-44 relative overflow-hidden">
                 <img src={coverImg} alt={post.data.title} loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />

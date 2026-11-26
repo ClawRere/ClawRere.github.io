@@ -47,7 +47,7 @@ export const MusicLounge: React.FC = () => {
                 {currentPlaylist.name}
                 <Sparkles className="w-4 h-4 text-amber-400" />
               </h2>
-              <p className="text-xs sm:text-sm text-white/60 mt-1">{currentPlaylist.desc}</p>
+              <p className="text-xs sm:text-sm text-white/60 mt-1">{currentPlaylist.desc} · 提示：官方外链音量可在播放器右下角或系统音量调节</p>
             </div>
           </div>
 

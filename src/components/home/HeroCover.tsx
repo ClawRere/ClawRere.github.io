@@ -134,8 +134,8 @@ export const HeroCover: React.FC = () => {
       style={resolvedStyle}
       className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center overflow-hidden mb-14 transition-all duration-500"
     >
-      {/* Center Minimal Title + Lightweight Tidewell Wipe-in & Pixel Accent */}
-      <div className="relative z-20 text-center px-6 max-w-3xl mx-auto">
+      {/* Center Minimal Title + Lightweight Tidewell Wipe-in & Pixel Accent (shifted slightly up to leave room for bottom card fan) */}
+      <div className="relative z-20 text-center px-6 max-w-3xl mx-auto -mt-28 sm:-mt-36">
         {/* Lightweight Tidewell 4-point sparkle + coastal pixel badges */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -180,16 +180,42 @@ export const HeroCover: React.FC = () => {
       {/* Random-position "放个烟花" button & canvas overlay */}
       <FireworksOverlay />
 
+      {/* 7 Scenic/Cartoon Curved Fan Cards in Bottom Red-Box Area of 1st Screen */}
+      <div className="group/fan absolute bottom-3 sm:bottom-5 inset-x-0 z-20 px-4 flex items-end justify-center gap-2 sm:gap-3.5 md:gap-4 pointer-events-none">
+        {[
+          { href: '/portfolio', title: '作品集', img: '/img/fan/card-1.svg', cls: 'hidden md:block translate-y-6 -rotate-9' },
+          { href: '/effects', title: '93+ 动效', img: '/img/fan/card-2.svg', cls: 'translate-y-4 -rotate-6' },
+          { href: '/posts', title: '博客归档', img: '/img/fan/card-3.svg', cls: 'translate-y-1.5 -rotate-3' },
+          { href: '/tools', title: '工具箱', img: '/img/fan/card-4.svg', cls: 'translate-y-0 rotate-0' },
+          { href: '/links', title: '友链导航', img: '/img/fan/card-5.svg', cls: 'translate-y-1.5 rotate-3' },
+          { href: '/entertain/music', title: '音乐电台', img: '/img/fan/card-6.svg', cls: 'translate-y-4 rotate-6' },
+          { href: '/messageboard', title: '留言板', img: '/img/fan/card-7.svg', cls: 'hidden md:block translate-y-6 rotate-9' },
+        ].map((card) => (
+          <a
+            key={card.href}
+            href={card.href}
+            className={`pointer-events-auto group/card relative w-20 sm:w-24 md:w-28 lg:w-32 aspect-[3/4] rounded-2xl overflow-hidden border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_14px_30px_rgba(0,0,0,0.35)] transition-all duration-400 ease-[cubic-bezier(0.25,0.75,0.2,1)] ${card.cls} group-hover/fan:opacity-75 hover:!opacity-100 hover:rotate-0 hover:-translate-y-4 hover:scale-110 hover:z-30 hover:ring-2 hover:ring-amber-300`}
+          >
+            <img src={card.img} alt={card.title} className="w-full h-full object-cover" />
+            <div className="absolute inset-x-0 bottom-0 py-1.5 px-2 bg-gradient-to-t from-black/70 via-black/30 to-transparent text-center">
+              <span className="text-[11px] sm:text-xs font-bold text-white tracking-wider drop-shadow">
+                {card.title}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+
       {/* Scroll Down Arrow */}
       <motion.a
         href="#hub-section"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 p-2 rounded-full text-white/85 hover:text-white drop-shadow transition-colors"
+        className="absolute bottom-2 left-1/2 -translate-x-1/2 z-30 p-1.5 rounded-full text-white/80 hover:text-white drop-shadow transition-colors"
         aria-label="向下滚动"
       >
-        <ChevronDown className="w-7 h-7 animate-bounce" />
+        <ChevronDown className="w-5 h-5 animate-bounce" />
       </motion.a>
 
       {/* Subtle Cover Switcher Icon Button */}

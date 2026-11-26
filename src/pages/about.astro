@@ -188,9 +188,46 @@ const metrics = [
       </div>
     </div>
 
-    <!-- Personal Bento Cards with ENTP Character Image -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      <div class="p-5 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/50 space-y-2 hover:-translate-y-1 transition-transform">
+    <!-- Pixel Character Walking Loop Strip (inspired by pixelfx / pixelgame.io) -->
+    <div class="relative h-16 rounded-2xl border border-white/20 dark:border-white/10 bg-white/50 dark:bg-zinc-900/55 backdrop-blur-md overflow-hidden shadow-inner flex items-end px-4">
+      <div class="absolute inset-x-0 bottom-0 h-2.5 bg-gradient-to-r from-emerald-500/40 via-teal-500/40 to-sky-500/40" />
+      <div class="pixel-walker-track relative w-full h-12">
+        <div class="pixel-walker inline-flex items-end gap-1.5">
+          <!-- 12x12 Crisp Pixel Adventurer (alternates 2 walk frames via CSS) -->
+          <svg class="w-10 h-10 pixel-walk-f1" viewBox="0 0 12 12" shape-rendering="crispEdges">
+            <rect x="4" y="1" width="4" height="1" fill="#1F2430"/>
+            <rect x="3" y="2" width="6" height="2" fill="#2D3748"/>
+            <rect x="3" y="4" width="6" height="3" fill="#FDE68A"/>
+            <rect x="4" y="5" width="1" height="1" fill="#1F2430"/>
+            <rect x="7" y="5" width="1" height="1" fill="#1F2430"/>
+            <rect x="3" y="7" width="6" height="3" fill="#EE7959"/>
+            <rect x="2" y="7" width="1" height="2" fill="#FDE68A"/>
+            <rect x="9" y="8" width="1" height="2" fill="#FDE68A"/>
+            <rect x="3" y="10" width="2" height="2" fill="#1F2430"/>
+            <rect x="7" y="10" width="2" height="1" fill="#1F2430"/>
+          </svg>
+          <svg class="w-10 h-10 pixel-walk-f2 hidden" viewBox="0 0 12 12" shape-rendering="crispEdges">
+            <rect x="4" y="1" width="4" height="1" fill="#1F2430"/>
+            <rect x="3" y="2" width="6" height="2" fill="#2D3748"/>
+            <rect x="3" y="4" width="6" height="3" fill="#FDE68A"/>
+            <rect x="4" y="5" width="1" height="1" fill="#1F2430"/>
+            <rect x="7" y="5" width="1" height="1" fill="#1F2430"/>
+            <rect x="3" y="7" width="6" height="3" fill="#EE7959"/>
+            <rect x="2" y="8" width="1" height="2" fill="#FDE68A"/>
+            <rect x="9" y="7" width="1" height="2" fill="#FDE68A"/>
+            <rect x="4" y="10" width="2" height="1" fill="#1F2430"/>
+            <rect x="6" y="10" width="2" height="2" fill="#1F2430"/>
+          </svg>
+          <span class="mb-6 px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-600 dark:text-amber-300 text-[10px] font-mono border border-amber-400/30">
+            Pixel Walker · 持续探索中
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal Bento Cards with 3D Perspective Tilt & Frosted Glass -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 [perspective:1000px]">
+      <div class="p-5 rounded-2xl border border-white/25 dark:border-white/12 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-xl space-y-2 transition-transform duration-500 hover:[transform:rotateY(6deg)_rotateX(4deg)_translateY(-6px)]">
         <div class="text-xs font-mono text-amber-500 uppercase tracking-wider">个人档案</div>
         <div class="space-y-2 text-sm pt-1">
           <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">生于</span><span class="font-semibold text-sky-500">1997 年</span></div>
@@ -200,8 +237,8 @@ const metrics = [
         </div>
       </div>
 
-      <!-- ENTP Card with Uploaded Cartoon Character -->
-      <div class="p-5 rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-500/10 via-white/60 to-transparent dark:from-purple-900/20 dark:via-zinc-900/50 flex items-center gap-4 hover:-translate-y-1 transition-transform">
+      <!-- ENTP Card with Uploaded Cartoon Character (3D Tilt + Frosted Glass) -->
+      <div class="p-5 rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/12 via-white/65 to-transparent dark:from-purple-900/25 dark:via-zinc-900/60 backdrop-blur-md shadow-xl flex items-center gap-4 transition-transform duration-500 hover:[transform:rotateY(-6deg)_rotateX(4deg)_translateY(-6px)]">
         <img
           src="/img/entp-character.jpg"
           alt="ENTP 辩论家卡通形象"
@@ -216,7 +253,7 @@ const metrics = [
         </div>
       </div>
 
-      <div class="p-5 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/50 space-y-2 hover:-translate-y-1 transition-transform">
+      <div class="p-5 rounded-2xl border border-white/25 dark:border-white/12 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-xl space-y-2 transition-transform duration-500 hover:[transform:rotateY(6deg)_rotateX(-4deg)_translateY(-6px)]">
         <div class="text-xs font-mono text-emerald-500 uppercase tracking-wider">幽默心路历程 😝</div>
         <div class="space-y-2 text-xs text-zinc-600 dark:text-zinc-300 pt-1">
           <div>✅ 擅长 PS/Pr/Ae/Ai 等软件安装与卸载 🎃</div>
@@ -309,4 +346,32 @@ const metrics = [
       } catch (e) {}
     })();
   </script>
+
+  <style>
+    @keyframes pixelPatrol {
+      0% { transform: translateX(0); }
+      48% { transform: translateX(calc(100% - 170px)); }
+      50% { transform: translateX(calc(100% - 170px)) scaleX(-1); }
+      98% { transform: translateX(0) scaleX(-1); }
+      100% { transform: translateX(0) scaleX(1); }
+    }
+    @keyframes pixelStep1 {
+      0%, 49% { display: block; }
+      50%, 100% { display: none; }
+    }
+    @keyframes pixelStep2 {
+      0%, 49% { display: none; }
+      50%, 100% { display: block; }
+    }
+    .pixel-walker {
+      width: 100%;
+      animation: pixelPatrol 14s linear infinite;
+    }
+    .pixel-walk-f1 {
+      animation: pixelStep1 0.45s steps(1) infinite;
+    }
+    .pixel-walk-f2 {
+      animation: pixelStep2 0.45s steps(1) infinite;
+    }
+  </style>
 </Layout>

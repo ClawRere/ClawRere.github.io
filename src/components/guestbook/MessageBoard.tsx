@@ -162,19 +162,19 @@ const BiomeDecoration: React.FC<{ biome: BiomeKind }> = ({ biome }) => {
           <path d="M17 16 H22 Q24 16 24 13 V10" stroke="#16a34a" strokeWidth="3.5" strokeLinecap="round" fill="none" />
         </svg>
 
-        {/* Periodic Sweeping Sandstorm Gust */}
-        <div className="tw-sandstorm-gust absolute inset-y-0 -left-1/2 w-1/2 pointer-events-none">
-          <div
-            className="w-full h-full"
-            style={{
-              background:
-                'linear-gradient(90deg, rgba(245,158,11,0) 0%, rgba(251,191,36,0.22) 45%, rgba(217,119,6,0.28) 70%, rgba(245,158,11,0) 100%)',
-            }}
-          />
-          <span className="absolute top-1/4 left-1/3 w-1.5 h-1.5 rounded-full bg-amber-300/80" />
-          <span className="absolute top-1/2 left-1/2 w-2 h-1 rounded-full bg-amber-400/75" />
-          <span className="absolute top-2/3 left-1/4 w-1.5 h-1 rounded-full bg-orange-300/80" />
-          <span className="absolute bottom-6 left-2/3 w-2.5 h-1 rounded-full bg-amber-200/80" />
+        {/* Periodic Slow Spinning Mini Sand Tornado (小龙卷风) */}
+        <div className="tw-sandstorm-gust absolute bottom-1.5 -left-24 w-28 h-24 pointer-events-none flex items-end justify-center">
+          <svg className="w-16 h-20 opacity-85" viewBox="0 0 64 80" fill="none">
+            <ellipse cx="32" cy="14" rx="24" ry="5" fill="#f59e0b" fillOpacity="0.28" className="tw-tornado-spin" />
+            <ellipse cx="30" cy="26" rx="19" ry="4.5" fill="#d97706" fillOpacity="0.32" />
+            <ellipse cx="33" cy="38" rx="14" ry="4" fill="#f59e0b" fillOpacity="0.38" />
+            <ellipse cx="31" cy="50" rx="9" ry="3" fill="#b45309" fillOpacity="0.42" />
+            <ellipse cx="32" cy="61" rx="5" ry="2.2" fill="#d97706" fillOpacity="0.5" />
+            <ellipse cx="32" cy="70" rx="2.5" ry="1.5" fill="#92400e" fillOpacity="0.55" />
+            <circle cx="14" cy="20" r="1.5" fill="#fde68a" />
+            <circle cx="48" cy="32" r="1.8" fill="#fbbf24" />
+            <circle cx="22" cy="44" r="1.3" fill="#fde68a" />
+          </svg>
         </div>
       </div>
     );
@@ -739,13 +739,13 @@ export const MessageBoard: React.FC = () => {
           animation: sheepGraze 3.8s ease-in-out infinite;
         }
         @keyframes sandstormSweep {
-          0%, 62% { transform: translateX(0%); opacity: 0; }
-          70% { opacity: 0.95; }
-          92% { transform: translateX(320%); opacity: 0.85; }
-          100% { transform: translateX(340%); opacity: 0; }
+          0%, 35% { transform: translateX(0%) scaleX(0.95); opacity: 0; }
+          45% { opacity: 0.9; }
+          88% { transform: translateX(480%) scaleX(1.05); opacity: 0.85; }
+          100% { transform: translateX(520%); opacity: 0; }
         }
         .tw-sandstorm-gust {
-          animation: sandstormSweep 7.5s ease-in-out infinite;
+          animation: sandstormSweep 13s ease-in-out infinite;
         }
       `}</style>
 
@@ -808,9 +808,6 @@ export const MessageBoard: React.FC = () => {
                       <User className="w-3.5 h-3.5" />
                     </div>
                     <span className="font-semibold text-sm text-charcoal-DEFAULT dark:text-cream-50">{msg.name}</span>
-                    <span className={`px-2 py-0.5 rounded-full border text-[10px] font-mono ${biome.badge}`}>
-                      {biome.label}
-                    </span>
                     {msg.isAdmin && (
                       <span className="px-2 py-0.5 rounded-full bg-terracotta text-white text-[10px] font-mono">站长</span>
                     )}

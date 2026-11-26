@@ -21,17 +21,20 @@ interface CommentItem {
   isBurnAfterReading?: boolean;
   likes?: number;
   replies?: ReplyItem[];
-  hasAshFromAbove?: boolean;
+  biome?: BiomeKind;
 }
+
+const ALL_BIOMES: BiomeKind[] = ['meadow', 'desert', 'stone', 'mountain', 'cornfield', 'coast'];
 
 const initialMessages: CommentItem[] = [
   {
     id: 1,
     name: '密信访客 · 阅后即焚示例',
-    content: '这是一条「阅后即焚」密信！点击揭晓后开始 5 秒倒计时，倒计时结束将触发火焰焚毁消逝 🔥',
+    content: '这是一条「阅后即焚」密信！点击揭晓后开始 5 秒倒计时，进度条完全归零后触发火焰粒子焚毁消逝 🔥',
     date: '2026-11-26',
     isBurnAfterReading: true,
     likes: 5,
+    biome: 'meadow',
     replies: [
       {
         id: 101,
@@ -48,6 +51,7 @@ const initialMessages: CommentItem[] = [
     content: '磊大大的网站升级后动效太丝滑了！PMOS 产品模型很有启发，期待后续更多 AI 作品上线！',
     date: '2026-11-22',
     likes: 12,
+    biome: 'desert',
     replies: [
       {
         id: 201,
@@ -71,6 +75,7 @@ const initialMessages: CommentItem[] = [
     date: '2026-11-20',
     isAdmin: true,
     likes: 18,
+    biome: 'stone',
     replies: [
       {
         id: 301,
@@ -114,7 +119,8 @@ const TidewellPixelRow: React.FC = () => (
   </div>
 );
 
-type BiomeKind = 'meadow' | 'desert' | 'stone' | 'coast';
+type BiomeKind = 'meadow' | 'desert' | 'stone' | 'mountain' | 'cornfield' | 'coast';
+type WeatherKind = 'sunny' | 'rainy' | 'snowy' | 'cloudy';
 
 // Physical Biome Border Decorations: Meadow (grass + grazing sheep), Desert (sand + sandstorm), Stone, Coast
 const BiomeDecoration: React.FC<{ biome: BiomeKind }> = ({ biome }) => {
@@ -230,21 +236,57 @@ const BiomeDecoration: React.FC<{ biome: BiomeKind }> = ({ biome }) => {
   if (biome === 'stone') {
     return (
       <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-2xl">
-        {/* Rugged Stone Masonry along bottom */}
+        {/* Jagged, Cracked, Uneven Varied-Size Stone Masonry */}
         <svg
-          className="absolute bottom-0 inset-x-0 w-full h-7"
-          viewBox="0 0 600 28"
+          className="absolute bottom-0 inset-x-0 w-full h-11"
+          viewBox="0 0 600 44"
           preserveAspectRatio="none"
         >
-          <rect x="0" y="16" width="84" height="12" rx="3" fill="#64748b" fillOpacity="0.45" stroke="#94a3b8" strokeOpacity="0.4" />
-          <rect x="86" y="14" width="102" height="14" rx="3" fill="#475569" fillOpacity="0.45" stroke="#94a3b8" strokeOpacity="0.4" />
-          <rect x="190" y="17" width="76" height="11" rx="3" fill="#64748b" fillOpacity="0.42" stroke="#94a3b8" strokeOpacity="0.4" />
-          <rect x="268" y="13" width="114" height="15" rx="3" fill="#475569" fillOpacity="0.48" stroke="#94a3b8" strokeOpacity="0.4" />
-          <rect x="384" y="16" width="96" height="12" rx="3" fill="#64748b" fillOpacity="0.44" stroke="#94a3b8" strokeOpacity="0.4" />
-          <rect x="482" y="14" width="118" height="14" rx="3" fill="#475569" fillOpacity="0.46" stroke="#94a3b8" strokeOpacity="0.4" />
-          {/* Tiny moss tuft */}
-          <ellipse cx="188" cy="15" rx="8" ry="3" fill="#4ade80" fillOpacity="0.55" />
-          <ellipse cx="382" cy="14" rx="9" ry="3" fill="#22c55e" fillOpacity="0.5" />
+          <polygon points="0,44 0,20 42,15 76,24 88,44" fill="#64748b" fillOpacity="0.52" stroke="#94a3b8" strokeOpacity="0.45" />
+          <polygon points="72,44 82,22 128,10 174,19 182,44" fill="#475569" fillOpacity="0.56" stroke="#94a3b8" strokeOpacity="0.45" />
+          <polygon points="168,44 178,27 215,24 238,31 246,44" fill="#64748b" fillOpacity="0.46" stroke="#94a3b8" strokeOpacity="0.4" />
+          <polygon points="236,44 248,14 302,8 348,22 356,44" fill="#334155" fillOpacity="0.55" stroke="#94a3b8" strokeOpacity="0.45" />
+          <polygon points="344,44 354,24 410,16 446,28 454,44" fill="#64748b" fillOpacity="0.5" stroke="#94a3b8" strokeOpacity="0.45" />
+          <polygon points="442,44 456,12 520,18 552,11 600,22 600,44" fill="#475569" fillOpacity="0.56" stroke="#94a3b8" strokeOpacity="0.45" />
+          {/* Cracks & moss */}
+          <path d="M128 10 L136 24 L124 34" stroke="#1e293b" strokeWidth="1.2" fill="none" strokeOpacity="0.6" />
+          <path d="M302 8 L294 21 L306 32" stroke="#1e293b" strokeWidth="1.2" fill="none" strokeOpacity="0.6" />
+          <ellipse cx="176" cy="24" rx="9" ry="3.5" fill="#4ade80" fillOpacity="0.6" />
+          <ellipse cx="450" cy="18" rx="10" ry="3.2" fill="#22c55e" fillOpacity="0.55" />
+        </svg>
+      </div>
+    );
+  }
+
+  if (biome === 'mountain') {
+    return (
+      <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-2xl">
+        {/* Layered Misty Mountain Peaks with Snow Caps */}
+        <svg className="absolute bottom-0 inset-x-0 w-full h-12" viewBox="0 0 600 48" preserveAspectRatio="none">
+          <polygon points="0,48 65,14 140,48" fill="#475569" fillOpacity="0.38" />
+          <polygon points="95,48 185,6 285,48" fill="#334155" fillOpacity="0.48" />
+          <polygon points="164,16 185,6 208,16 196,19 185,15 174,19" fill="#f8fafc" fillOpacity="0.8" />
+          <polygon points="240,48 345,12 450,48" fill="#475569" fillOpacity="0.42" />
+          <polygon points="390,48 490,8 600,48" fill="#334155" fillOpacity="0.52" />
+          <polygon points="468,17 490,8 514,18 500,20 490,16 479,20" fill="#f8fafc" fillOpacity="0.85" />
+        </svg>
+      </div>
+    );
+  }
+
+  if (biome === 'cornfield') {
+    return (
+      <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-2xl">
+        {/* Swaying Golden-Green Cornfield along bottom */}
+        <svg className="absolute bottom-0 inset-x-0 w-full h-11" viewBox="0 0 600 44" preserveAspectRatio="none">
+          <rect y="36" width="600" height="8" fill="#78350f" fillOpacity="0.4" />
+          {[28, 76, 128, 182, 240, 296, 352, 408, 464, 520, 568].map((x, idx) => (
+            <g key={x}>
+              <path d={`M${x} 40 Q${x + (idx % 2 === 0 ? 4 : -4)} 22 ${x} 8`} stroke="#15803d" strokeWidth="3" fill="none" strokeOpacity="0.7" />
+              <ellipse cx={x + 4} cy="22" rx="3" ry="6" transform={`rotate(22 ${x + 4} 22)`} fill="#facc15" fillOpacity="0.85" />
+              <path d={`M${x} 28 Q${x - 10} 22 ${x - 14} 28`} stroke="#22c55e" strokeWidth="2" fill="none" strokeOpacity="0.65" />
+            </g>
+          ))}
         </svg>
       </div>
     );
@@ -385,20 +427,20 @@ const BurnCanvas: React.FC = () => {
         ctx.fillRect(0, Math.max(0, burnLineY), w, h);
       }
 
-      // Spawn glowing flame embers & dark ash flakes along the burning edge
-      for (let i = 0; i < 12; i++) {
-        const isAsh = Math.random() > 0.56;
+      // Spawn dense glowing flame embers, golden sparks & dark ash flakes
+      for (let i = 0; i < 20; i++) {
+        const isAsh = Math.random() > 0.68;
         particles.push({
           x: Math.random() * w,
-          y: Math.max(0, Math.min(h, burnLineY + (Math.random() - 0.5) * 18)),
-          vx: (Math.random() - 0.5) * 1.8,
-          vy: isAsh ? 0.7 + Math.random() * 1.9 : -(1.8 + Math.random() * 3.8),
-          r: isAsh ? 1.8 + Math.random() * 2.6 : 1.6 + Math.random() * 3.4,
+          y: Math.max(0, Math.min(h, burnLineY + (Math.random() - 0.5) * 22)),
+          vx: (Math.random() - 0.5) * 2.6,
+          vy: isAsh ? 0.6 + Math.random() * 1.9 : -(2.2 + Math.random() * 4.8),
+          r: isAsh ? 1.8 + Math.random() * 2.5 : 1.6 + Math.random() * 3.8,
           life: 0,
-          maxLife: 24 + Math.random() * 34,
+          maxLife: 24 + Math.random() * 36,
           isAsh,
           rot: Math.random() * Math.PI * 2,
-          rotV: (Math.random() - 0.5) * 0.24,
+          rotV: (Math.random() - 0.5) * 0.26,
         });
       }
 
@@ -558,8 +600,10 @@ export const MessageBoard: React.FC = () => {
   const [isBurnMode, setIsBurnMode] = useState(false);
   const [toast, setToast] = useState('');
 
-  const [revealedIds, setRevealedIds] = useState<Record<number, number>>({});
+  const [revealedStartTimes, setRevealedStartTimes] = useState<Record<number, number>>({});
+  const [nowTick, setNowTick] = useState<number>(Date.now());
   const [burningIds, setBurningIds] = useState<Record<number, boolean>>({});
+  const [weatherOffset, setWeatherOffset] = useState<number>(() => Math.floor(Math.random() * 4));
   const [replyingToId, setReplyingToId] = useState<number | null>(null);
   const [replyName, setReplyName] = useState('');
   const [replyContent, setReplyContent] = useState('');
@@ -569,39 +613,52 @@ export const MessageBoard: React.FC = () => {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) setMessages(parsed);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Ensure every message keeps a fixed biome
+          const withBiomes = parsed.map((m: CommentItem, i: number) => ({
+            ...m,
+            biome: m.biome || ALL_BIOMES[i % ALL_BIOMES.length],
+          }));
+          setMessages(withBiomes);
+        }
       } catch {}
     }
+
+    // Cycle weather states smoothly every 12 seconds
+    const wTimer = setInterval(() => {
+      setWeatherOffset((prev) => (prev + 1) % 4);
+    }, 12000);
+    return () => clearInterval(wTimer);
   }, []);
 
-  // 5-second countdown tick
+  // Smooth 50ms progress tick so the 5s progress bar reaches 0% cleanly BEFORE burning starts
   useEffect(() => {
-    const activeIds = Object.keys(revealedIds).map(Number);
+    const activeIds = Object.keys(revealedStartTimes).map(Number);
     if (activeIds.length === 0) return;
 
     const timer = setInterval(() => {
-      setRevealedIds((prev) => {
-        const next: Record<number, number> = {};
-        const toBurn: number[] = [];
+      const now = Date.now();
+      setNowTick(now);
 
-        for (const [idStr, sec] of Object.entries(prev)) {
-          const id = Number(idStr);
-          if (sec <= 1) {
-            toBurn.push(id);
-          } else {
-            next[id] = sec - 1;
-          }
+      const expired: number[] = [];
+      for (const id of activeIds) {
+        if (now - revealedStartTimes[id] >= 5080) {
+          expired.push(id);
         }
+      }
 
-        if (toBurn.length > 0) {
-          toBurn.forEach((id) => triggerBurnAnimation(id));
-        }
-        return next;
-      });
-    }, 1000);
+      if (expired.length > 0) {
+        setRevealedStartTimes((prev) => {
+          const next = { ...prev };
+          expired.forEach((id) => delete next[id]);
+          return next;
+        });
+        expired.forEach((id) => triggerBurnAnimation(id));
+      }
+    }, 50);
 
     return () => clearInterval(timer);
-  }, [revealedIds]);
+  }, [revealedStartTimes]);
 
   const triggerBurnAnimation = (id: number) => {
     setBurningIds((prev) => ({ ...prev, [id]: true }));
@@ -621,8 +678,10 @@ export const MessageBoard: React.FC = () => {
   };
 
   const revealBurnMessage = (id: number) => {
-    if (revealedIds[id] !== undefined || burningIds[id]) return;
-    setRevealedIds((prev) => ({ ...prev, [id]: 5 }));
+    if (revealedStartTimes[id] !== undefined || burningIds[id]) return;
+    const now = Date.now();
+    setNowTick(now);
+    setRevealedStartTimes((prev) => ({ ...prev, [id]: now }));
   };
 
   const handleLike = (id: number) => {
@@ -667,6 +726,7 @@ export const MessageBoard: React.FC = () => {
       isAdmin,
       isBurnAfterReading: isBurnMode,
       likes: 0,
+      biome: ALL_BIOMES[Math.floor(Math.random() * ALL_BIOMES.length)],
     };
 
     const updated = [newMsg, ...messages];
@@ -849,36 +909,23 @@ export const MessageBoard: React.FC = () => {
       <div className="space-y-5">
         <AnimatePresence>
           {messages.map((msg, idx) => {
-            const countdown = revealedIds[msg.id];
-            const isRevealed = countdown !== undefined;
+            const startTime = revealedStartTimes[msg.id];
+            const isRevealed = startTime !== undefined;
+            const elapsedMs = isRevealed ? Math.max(0, nowTick - startTime) : 0;
+            const remainingPct = Math.max(0, 100 - (elapsedMs / 5000) * 100);
+            const countdown = Math.max(0, Math.ceil((5000 - elapsedMs) / 1000));
             const isBurning = !!burningIds[msg.id];
-            const biomeThemes: Array<{ kind: BiomeKind; label: string; cls: string; badge: string }> = [
-              {
-                kind: 'meadow',
-                label: '🌿 草原',
-                cls: 'border-2 border-emerald-500/45 shadow-[inset_0_0_0_2px_rgba(16,185,129,0.14)] bg-white/85 dark:bg-zinc-900/75',
-                badge: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/25',
-              },
-              {
-                kind: 'desert',
-                label: '🏜️ 荒漠',
-                cls: 'border-2 border-amber-500/45 shadow-[inset_0_0_0_2px_rgba(245,158,11,0.14)] bg-white/85 dark:bg-zinc-900/75',
-                badge: 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/25',
-              },
-              {
-                kind: 'stone',
-                label: '🪨 石壁',
-                cls: 'border-2 border-slate-400/50 shadow-[inset_0_0_0_2px_rgba(148,163,184,0.20)] bg-white/85 dark:bg-zinc-900/75',
-                badge: 'bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-400/30',
-              },
-              {
-                kind: 'coast',
-                label: '🌊 海岸',
-                cls: 'border-2 border-sky-400/45 shadow-[inset_0_0_0_2px_rgba(56,189,248,0.14)] bg-white/85 dark:bg-zinc-900/75',
-                badge: 'bg-sky-500/15 text-sky-700 dark:text-sky-300 border-sky-400/25',
-              },
-            ];
-            const biome = biomeThemes[idx % biomeThemes.length];
+            const biomeKind: BiomeKind = msg.biome || ALL_BIOMES[idx % ALL_BIOMES.length];
+            const biomeStyles: Record<BiomeKind, string> = {
+              meadow: 'border-2 border-emerald-500/45 shadow-[inset_0_0_0_2px_rgba(16,185,129,0.14)] bg-white/85 dark:bg-zinc-900/75',
+              desert: 'border-2 border-amber-500/45 shadow-[inset_0_0_0_2px_rgba(245,158,11,0.14)] bg-white/85 dark:bg-zinc-900/75',
+              stone: 'border-2 border-slate-400/50 shadow-[inset_0_0_0_2px_rgba(148,163,184,0.20)] bg-white/85 dark:bg-zinc-900/75',
+              mountain: 'border-2 border-indigo-400/45 shadow-[inset_0_0_0_2px_rgba(129,140,248,0.14)] bg-white/85 dark:bg-zinc-900/75',
+              cornfield: 'border-2 border-lime-500/45 shadow-[inset_0_0_0_2px_rgba(132,204,22,0.14)] bg-white/85 dark:bg-zinc-900/75',
+              coast: 'border-2 border-sky-400/45 shadow-[inset_0_0_0_2px_rgba(56,189,248,0.14)] bg-white/85 dark:bg-zinc-900/75',
+            };
+            const weathers: WeatherKind[] = ['sunny', 'rainy', 'snowy', 'cloudy'];
+            const weather = weathers[(msg.id + weatherOffset) % weathers.length];
 
             return (
               <motion.div
@@ -893,12 +940,12 @@ export const MessageBoard: React.FC = () => {
                 exit={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' }}
                 transition={{ duration: 0.45 }}
                 style={isBurning ? { filter: 'url(#burn-heat-filter)' } : undefined}
-                className={`relative rounded-2xl p-6 sm:p-7 pb-11 sm:pb-12 transition-all overflow-hidden ${biome.cls}`}
+                className={`relative rounded-2xl p-6 sm:p-7 pb-12 sm:pb-14 transition-all overflow-hidden ${biomeStyles[biomeKind]}`}
               >
-                <BiomeDecoration biome={biome.kind} />
-                {/* Weather Box Top-Right Ambient Weather Overlay */}
+                <BiomeDecoration biome={biomeKind} />
+                {/* Cycling Random Weather Overlay */}
                 <div className="pointer-events-none absolute top-0 right-16 w-28 h-20 overflow-hidden opacity-75 z-10" aria-hidden="true">
-                  {biome.kind === 'meadow' && (
+                  {weather === 'sunny' && (
                     <svg className="w-12 h-12 ml-auto mr-2 mt-1 animate-spin [animation-duration:18s]" viewBox="0 0 36 36">
                       <circle cx="18" cy="18" r="7" fill="#fbbf24" />
                       <g stroke="#f59e0b" strokeWidth="2" strokeLinecap="round">
@@ -909,19 +956,26 @@ export const MessageBoard: React.FC = () => {
                       </g>
                     </svg>
                   )}
-                  {biome.kind === 'coast' && (
+                  {weather === 'rainy' && (
                     <div className="relative w-full h-full">
                       {[12, 34, 56, 78].map((left, rIdx) => (
                         <span key={rIdx} style={{ left: `${left}%`, animationDelay: `${rIdx * 0.35}s` }} className="tw-raindrop absolute top-0 w-0.5 h-3 rounded-full bg-sky-400/75" />
                       ))}
                     </div>
                   )}
-                  {biome.kind === 'stone' && (
+                  {weather === 'snowy' && (
                     <div className="relative w-full h-full">
                       {[15, 42, 68, 86].map((left, sIdx) => (
                         <span key={sIdx} style={{ left: `${left}%`, animationDelay: `${sIdx * 0.7}s` }} className="tw-snowflake absolute top-0 w-1.5 h-1.5 rounded-full bg-white/85 shadow" />
                       ))}
                     </div>
+                  )}
+                  {weather === 'cloudy' && (
+                    <svg className="w-16 h-10 ml-auto mr-1 mt-1 opacity-70 animate-pulse" viewBox="0 0 64 36">
+                      <circle cx="24" cy="22" r="10" fill="#cbd5e1" />
+                      <circle cx="36" cy="18" r="12" fill="#e2e8f0" />
+                      <circle cx="48" cy="22" r="9" fill="#cbd5e1" />
+                    </svg>
                   )}
                 </div>
                 {isBurning && <BurnCanvas />}
@@ -992,8 +1046,8 @@ export const MessageBoard: React.FC = () => {
                     {isRevealed && !isBurning && (
                       <div className="mt-2.5 h-1 w-full rounded-full bg-orange-500/15 overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-[#DDAD95] via-orange-500 to-rose-500 transition-all duration-1000 ease-linear"
-                          style={{ width: `${(countdown / 5) * 100}%` }}
+                          className="h-full bg-gradient-to-r from-[#DDAD95] via-orange-500 to-rose-500"
+                          style={{ width: `${remainingPct}%` }}
                         />
                       </div>
                     )}

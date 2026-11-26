@@ -1,0 +1,43 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { DeviceLoader } from '@/components/ui/DeviceLoader';
+---
+
+<Layout title="404 · 页面迷路了 | 磊大大の小栈" sideTitle="404 · 页面未找到">
+  <div class="min-h-[72vh] flex flex-col items-center justify-center text-center px-4 py-12 space-y-6">
+    <div class="p-6 rounded-3xl glass border border-charcoal-500/15 dark:border-white/10 shadow-xl flex flex-col items-center gap-4">
+      <div class="text-terracotta py-2">
+        <DeviceLoader client:load />
+      </div>
+      <div class="text-6xl sm:text-7xl font-black tracking-tight text-charcoal-DEFAULT dark:text-cream-50 font-mono">
+        404
+      </div>
+      <h1 class="font-serif text-xl sm:text-2xl font-bold text-charcoal-DEFAULT dark:text-cream-50">
+        哎呀，这页顺着潮水漂走了
+      </h1>
+      <p class="text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 max-w-md leading-relaxed">
+        你访问的页面可能已被整理归档或地址有误。别担心，点击下方按钮即可回到数字花园主页。
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <a
+          href="/"
+          class="px-5 py-2.5 rounded-xl bg-terracotta text-white text-xs sm:text-sm font-semibold shadow-lg hover:bg-terracotta/90 transition-all hover:-translate-y-0.5"
+        >
+          返回首页
+        </a>
+        <a
+          href="/portfolio"
+          class="px-5 py-2.5 rounded-xl border border-charcoal-500/20 dark:border-white/15 text-xs sm:text-sm font-medium text-charcoal-DEFAULT dark:text-cream-100 hover:border-terracotta transition-colors"
+        >
+          浏览作品集
+        </a>
+        <a
+          href="/posts"
+          class="px-5 py-2.5 rounded-xl border border-charcoal-500/20 dark:border-white/15 text-xs sm:text-sm font-medium text-charcoal-DEFAULT dark:text-cream-100 hover:border-terracotta transition-colors"
+        >
+          阅读博客
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>

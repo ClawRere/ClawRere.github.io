@@ -70,6 +70,20 @@ const entertainItems = [
     <!-- Top accent line -->
     <div class="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-terracotta/60 to-transparent z-50 pointer-events-none" />
 
+    <!-- Global Page Loading Overlay (DeviceLoader) during View Transitions / initial ready -->
+    <div
+      id="page-loader-overlay"
+      class="fixed inset-0 z-[100] bg-cream-50 dark:bg-obsidian flex flex-col items-center justify-center gap-3 text-terracotta transition-opacity duration-300 pointer-events-none opacity-0"
+      aria-hidden="true"
+    >
+      <div class="device-loader">
+        <div class="device__a"><div class="device__a-1"></div><div class="device__a-2"></div></div>
+        <div class="device__b"></div><div class="device__c"></div><div class="device__d"></div>
+        <div class="device__e"></div><div class="device__f"></div><div class="device__g"></div>
+      </div>
+      <span class="text-xs font-mono text-charcoal-100 dark:text-cream-400 tracking-widest">LOADING...</span>
+    </div>
+
     <!-- Lightweight Ambient Hero Background (no live full-screen CSS blur, no continuous canvas RAF) -->
     <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" style="contain: strict;" aria-hidden="true">
       <div
@@ -250,6 +264,20 @@ const entertainItems = [
         } else {
           document.documentElement.classList.remove('dark');
         }
+
+        const loader = document.getElementById('page-loader-overlay');
+        document.addEventListener('astro:before-preparation', () => {
+          if (loader) {
+            loader.style.opacity = '1';
+            loader.style.pointerEvents = 'auto';
+          }
+        });
+        document.addEventListener('astro:page-load', () => {
+          if (loader) {
+            loader.style.opacity = '0';
+            loader.style.pointerEvents = 'none';
+          }
+        });
       })();
     </script>
   </body>

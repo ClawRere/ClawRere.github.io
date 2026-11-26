@@ -220,17 +220,14 @@ export const EffectsShowcase: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Side: Translucent Black-Masked Planet Orbit Showcase */}
-          <div className="lg:col-span-5 h-52 sm:h-56 rounded-2xl overflow-hidden relative bg-black/45 backdrop-blur-md border border-white/15 shadow-inner">
+          {/* Right Side: Borderless, Background-Free Floating Solar System Animation */}
+          <div className="lg:col-span-5 h-64 sm:h-72 relative overflow-visible flex items-center justify-center">
             <iframe
-              src="/effects/solar_animation"
+              src="/effects/solar_animation/widget.html"
               title="太阳系行星运行动画"
-              className="w-full h-full border-0 opacity-90 pointer-events-none"
-              style={{ background: 'transparent' }}
+              scrolling="no"
+              className="w-full h-full border-0 bg-transparent pointer-events-none"
             />
-            <span className="absolute bottom-2.5 right-3 px-2.5 py-0.5 rounded-full bg-black/50 text-[10px] font-mono text-white/75 border border-white/10">
-              🪐 行星运行实时动效
-            </span>
           </div>
         </div>
       </div>

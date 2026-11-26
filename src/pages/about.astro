@@ -97,8 +97,8 @@ const metrics = [
 <Layout title="关于我 | 磊大大の小栈" sideTitle="关于磊大大">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-12">
 
-    <!-- Hero -->
-    <div class="relative overflow-hidden rounded-3xl border border-white/10 dark:border-white/8 bg-gradient-to-br from-zinc-100/80 via-transparent to-transparent dark:from-zinc-800/40 p-8 md:p-10 group">
+    <!-- Hero (tilts toward cursor) -->
+    <div class="tilt-card relative overflow-hidden rounded-3xl border border-white/10 dark:border-white/8 bg-gradient-to-br from-zinc-100/80 via-transparent to-transparent dark:from-zinc-800/40 backdrop-blur-md p-8 md:p-10 group transition-transform duration-200 ease-out will-change-transform">
       <div class="absolute -top-32 -right-32 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700"></div>
       <div class="absolute -bottom-32 -left-32 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700"></div>
 
@@ -319,10 +319,10 @@ const metrics = [
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         {skills.map(s => (
-          <div class="glow-card relative rounded-2xl p-[1.5px] overflow-hidden group hover:-translate-y-1 transition-transform">
-            {/* Animated flowing conic gradient border — visible ONLY on hover */}
-            <div class={`absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0_240deg,currentColor_300deg,transparent_360deg)] animate-[spin_4s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${s.color}`} />
-            <div class="relative h-full rounded-[15px] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl p-5 space-y-4">
+          <div class="glow-card relative rounded-2xl p-[3px] overflow-hidden group hover:-translate-y-1.5 transition-all duration-300 group-hover:shadow-2xl">
+            {/* Vivid flowing conic gradient marquee border — visible ONLY on hover */}
+            <div class={`absolute inset-[-120%] bg-[conic-gradient(from_0deg,transparent_0_150deg,currentColor_240deg,#ffffff_290deg,currentColor_330deg,transparent_360deg)] animate-[spin_2.2s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${s.color}`} />
+            <div class="relative h-full rounded-[13px] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl p-5 space-y-4">
               <h3 class={`font-bold text-sm ${s.color}`}>{s.category}</h3>
               <div class="space-y-3">
                 {s.items.map(it => (
@@ -376,13 +376,14 @@ const metrics = [
       </div>
     </div>
 
-    <!-- Full-Bleed Borderless Canvas Crowd at Bottom (from /effects/canvas_crowd) -->
+    <!-- Full-Bleed Borderless Canvas Crowd at Bottom (taller, zero scrollbars) -->
     <div class="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden">
       <iframe
         src="/effects/canvas_crowd/index.html"
         title="Canvas 人群动画"
         loading="lazy"
-        class="w-full h-64 border-0 block"
+        scrolling="no"
+        class="w-full h-80 sm:h-96 border-0 block overflow-hidden"
       />
     </div>
 

@@ -26,19 +26,19 @@ const latestPosts = allPosts
   <HeroCover client:load />
 
   <!-- Page body content inside constrained container -->
-  <div id="hub-section" class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-20 space-y-20">
+  <div id="hub-section" class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-20 space-y-20">
 
-    <!-- Unified 7 Cards: Rich Scroll Drift + Inner Hover Lift Selection + Lock on Click -->
+    <!-- Unified 7 Cards: Wider Spread, Larger Size, Clean Top Title (No Black Mask) -->
     <section id="second-screen-cards" class="relative z-30 pt-2 pb-6">
-      <div class="group/fan grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4 items-center">
+      <div class="group/fan grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-5 sm:gap-6 items-center">
         {[
-          { href: '/portfolio', title: '作品集', img: '/img/fan/card-1.svg', rot: -14, arcY: 42, spreadX: -18 },
-          { href: '/effects', title: '93+ 动效', img: '/img/fan/card-2.svg', rot: -9, arcY: 20, spreadX: -10 },
-          { href: '/posts', title: '博客归档', img: '/img/fan/card-3.svg', rot: -4.5, arcY: 6, spreadX: -4 },
+          { href: '/portfolio', title: '作品集', img: '/img/fan/card-1.svg', rot: -15, arcY: 46, spreadX: -44 },
+          { href: '/effects', title: '93+ 动效', img: '/img/fan/card-2.svg', rot: -10, arcY: 22, spreadX: -26 },
+          { href: '/posts', title: '博客归档', img: '/img/fan/card-3.svg', rot: -5, arcY: 7, spreadX: -12 },
           { href: '/tools', title: '工具箱', img: '/img/fan/card-4.svg', rot: 0, arcY: 0, spreadX: 0 },
-          { href: '/links', title: '友链导航', img: '/img/fan/card-5.svg', rot: 4.5, arcY: 6, spreadX: 4 },
-          { href: '/entertain/music', title: '音乐电台', img: '/img/fan/card-6.svg', rot: 9, arcY: 20, spreadX: 10 },
-          { href: '/messageboard', title: '留言板', img: '/img/fan/card-7.svg', rot: 14, arcY: 42, spreadX: 18 },
+          { href: '/links', title: '友链导航', img: '/img/fan/card-5.svg', rot: 5, arcY: 7, spreadX: 12 },
+          { href: '/entertain/music', title: '音乐电台', img: '/img/fan/card-6.svg', rot: 10, arcY: 22, spreadX: 26 },
+          { href: '/messageboard', title: '留言板', img: '/img/fan/card-7.svg', rot: 15, arcY: 46, spreadX: 44 },
         ].map((card, i) => (
           <a
             href={card.href}
@@ -48,10 +48,12 @@ const latestPosts = allPosts
             style={`--bob-delay:${i * 0.35}s;`}
             class="unified-fan-card group/card relative block aspect-[3/4] will-change-transform group-hover/fan:opacity-75 hover:!opacity-100 hover:z-40"
           >
-            <div class="w-full h-full rounded-2xl overflow-hidden border border-white/55 dark:border-white/15 ring-1 ring-inset ring-white/40 shadow-[0_14px_30px_rgba(31,36,48,0.22)] transition-all duration-300 ease-out group-hover/card:-translate-y-5 group-hover/card:scale-105 group-hover/card:ring-2 group-hover/card:ring-terracotta group-hover/card:shadow-[0_24px_48px_rgba(31,36,48,0.34)]">
-              <img src={card.img} alt={card.title} loading="lazy" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" />
-              <div class="absolute inset-x-0 top-0 py-2 px-2 bg-gradient-to-b from-black/65 via-black/25 to-transparent text-center">
-                <span class="text-xs font-bold text-white tracking-wider drop-shadow">{card.title}</span>
+            <div class="w-full h-full rounded-2xl overflow-hidden border border-white/60 dark:border-white/15 ring-1 ring-inset ring-white/40 shadow-[0_14px_30px_rgba(31,36,48,0.22)] transition-all duration-300 ease-out group-hover/card:-translate-y-5 group-hover/card:scale-105 group-hover/card:ring-2 group-hover/card:ring-terracotta group-hover/card:shadow-[0_24px_48px_rgba(31,36,48,0.34)]">
+              <img src={card.img} alt={card.title} loading="lazy" class="w-full h-full object-cover rounded-2xl group-hover/card:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-x-0 top-2.5 flex justify-center pointer-events-none">
+                <span class="px-2.5 py-0.5 rounded-full bg-white/85 dark:bg-zinc-900/80 text-[#1F2430] dark:text-white text-[11px] font-bold tracking-wider shadow-sm">
+                  {card.title}
+                </span>
               </div>
             </div>
           </a>

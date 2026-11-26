@@ -5,12 +5,20 @@ export interface Track {
   pic: string;
 }
 
-export const PLAYLIST_ID = '9333187603';
+export const NETEASE_PLAYLISTS = [
+  { id: '711502311', name: '专注轻音乐', desc: '默认推荐 · I Still Want Your Love' },
+  { id: '9333187603', name: '免费精选歌单', desc: '全曲目免费可播' },
+  { id: '901594222', name: '磊大大私藏', desc: '原博客经典歌单' },
+  { id: '3778678', name: '网易云热歌榜', desc: '每周热门流行' },
+  { id: '2884035', name: '网易云原创榜', desc: '独立音乐人佳作' },
+];
+
+export const DEFAULT_PLAYLIST_ID = '711502311';
 
 const FALLBACK_TRACKS: Track[] = [
   {
-    title: '夜的钢琴曲 (五)',
-    author: '石进',
+    title: 'I Still Want Your Love',
+    author: '专注轻音乐精选',
     url: 'https://music.163.com/song/media/outer/url?id=149297.mp3',
     pic: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&q=80',
   },
@@ -29,6 +37,7 @@ const FALLBACK_TRACKS: Track[] = [
 ];
 
 interface MusicState {
+  playlistId: string;
   tracks: Track[];
   currentIndex: number;
   isPlaying: boolean;
@@ -49,10 +58,11 @@ class GlobalMusicStore {
   private consecutiveErrors = 0;
 
   public state: MusicState = {
+    playlistId: DEFAULT_PLAYLIST_ID,
     tracks: FALLBACK_TRACKS,
     currentIndex: 0,
     isPlaying: false,
-    volume: 40,
+    volume: 20,
     isMuted: false,
     currentTime: 0,
     duration: 0,
@@ -64,6 +74,10 @@ class GlobalMusicStore {
     if (typeof window === 'undefined' || this.initialized) return;
     this.initialized = true;
 
+    const savedId = localStorage.getItem('selected_playlist_id') || DEFAULT_PLAYLIST_ID;
+    const savedVolRaw = localStorage.getItem('music_volume');
+    const initialVol = savedVolRaw !== null ? Math.max(0, Math.min(100, Number(savedVolRaw))) : 20;
+
     const win = window as any;
     if (win.__larryAudio instanceof HTMLAudioElement) {
       this.audio = win.__larryAudio;
@@ -72,9 +86,10 @@ class GlobalMusicStore {
       }
     } else {
       this.audio = new Audio();
-      this.audio.volume = this.state.volume / 100;
+      this.audio.volume = initialVol / 100;
       win.__larryAudio = this.audio;
-      this.fetchPlaylist();
+      this.state = { ...this.state, playlistId: savedId, volume: initialVol };
+      this.fetchPlaylist(savedId);
     }
 
     const audio = this.audio;
@@ -95,16 +110,23 @@ class GlobalMusicStore {
       } else {
         this.update({
           isPlaying: false,
-          errorMsg: '当前音源受限，请点击其他曲目或切换「网易云官方外链」播放',
+          errorMsg: '该曲目受版权/外链限制，可点击其他曲目或切换「网易云外链」',
         });
       }
     };
   }
 
-  private async fetchPlaylist() {
+  public async switchPlaylist(id: string) {
+    this.initAudio();
+    localStorage.setItem('selected_playlist_id', id);
+    this.update({ playlistId: id, isLoading: true, errorMsg: '' });
+    await this.fetchPlaylist(id);
+  }
+
+  private async fetchPlaylist(id: string) {
     const apis = [
-      `https://api.i-meto.com/meting/api?server=netease&type=playlist&id=${PLAYLIST_ID}`,
-      `https://api.injahow.cn/meting/?type=playlist&id=${PLAYLIST_ID}`,
+      `https://api.i-meto.com/meting/api?server=netease&type=playlist&id=${id}`,
+      `https://api.injahow.cn/meting/?type=playlist&id=${id}`,
     ];
     for (const api of apis) {
       try {
@@ -121,9 +143,14 @@ class GlobalMusicStore {
               pic: (t.pic || '').replace(/^http:\/\//, 'https://') || FALLBACK_TRACKS[0].pic,
             }));
           if (parsed.length > 0) {
-            this.update({ tracks: parsed, isLoading: false });
-            if (this.audio && !this.audio.src) {
-              this.audio.src = parsed[0].url;
+            // Default to "I Still Want Your Love" when loading default playlist
+            const targetIdx = parsed.findIndex((t) =>
+              t.title.toLowerCase().includes('i still want your love')
+            );
+            const idx = targetIdx >= 0 ? targetIdx : 0;
+            this.update({ tracks: parsed, currentIndex: idx, isLoading: false });
+            if (this.audio && !this.state.isPlaying) {
+              this.audio.src = parsed[idx].url;
             }
             return;
           }
@@ -177,7 +204,7 @@ class GlobalMusicStore {
     }
     if (this.audio.paused) {
       this.audio.play().catch(() => {
-        this.update({ isPlaying: false, errorMsg: '浏览器拦截或音源不可用，请点击曲目或使用官方外链' });
+        this.update({ isPlaying: false, errorMsg: '请点击曲目播放，或使用网易云外链' });
       });
     } else {
       this.audio.pause();
@@ -199,6 +226,7 @@ class GlobalMusicStore {
       this.audio.volume = clamped / 100;
       this.audio.muted = false;
     }
+    localStorage.setItem('music_volume', String(clamped));
     this.update({ volume: clamped, isMuted: false });
   }
 

@@ -11,15 +11,12 @@ const isEmbeddableDemo = (url?: string | null) =>
   !!url && !url.includes('mp.weixin.qq.com');
 ---
 
-<Layout title="AI 共创作品集 | 磊大大の小栈">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+<Layout title="AI 共创作品集 | 磊大大の小栈" sideTitle="AI 共创作品集">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
 
-    <div class="mb-10">
-      <p class="text-xs font-mono uppercase tracking-widest text-terracotta mb-2">Portfolio · {validProjects.length} projects</p>
-      <h1 class="text-4xl sm:text-5xl font-extrabold text-charcoal-DEFAULT dark:text-cream-50 tracking-tight">AI 共创作品集</h1>
-      <p class="mt-3 text-charcoal-100 dark:text-cream-300 text-sm max-w-xl">
-        PMOS 产品工作台 · 日报工作台 · 人格测试 · 照片风格转译 · 93+ 动效 · 易理九宫 · Obsidian
-      </p>
+    <div class="mb-6 xl:hidden">
+      <p class="text-xs font-mono uppercase tracking-widest text-terracotta mb-1">Portfolio · {validProjects.length} projects</p>
+      <h1 class="text-3xl font-extrabold text-charcoal-DEFAULT dark:text-cream-50 tracking-tight">AI 共创作品集</h1>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

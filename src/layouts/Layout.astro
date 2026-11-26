@@ -9,6 +9,7 @@ interface Props {
   description?: string;
   hideFooter?: boolean;
   fullWidth?: boolean;
+  sideTitle?: string;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
   description = '以产品思维定义人机边界，以工程实践打磨 AI 生产力工具。面向 AI 协同时代的数字花园。',
   hideFooter = false,
   fullWidth = false,
+  sideTitle,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
@@ -26,9 +28,6 @@ const entertainItems = [
   { name: '93+ 特效实验室', href: '/effects', emoji: '✨' },
   { name: '烟花秀', href: '/entertain/fireworks', emoji: '🎆' },
   { name: '雨声院', href: '/entertain/rain', emoji: '🌧️' },
-  { name: '变形金刚', href: '/effects/optimus_prime/index.html', emoji: '🤖' },
-  { name: '飞机大战', href: '/effects/flight_game/index.html', emoji: '✈️' },
-  { name: '极速赛车', href: '/effects/car_racing_game/index.html', emoji: '🏎️' },
 ];
 ---
 
@@ -74,7 +73,7 @@ const entertainItems = [
       <div
         id="global-blurred-bg"
         class="w-full h-full scale-105 blur-[24px] saturate-125 opacity-35 dark:opacity-30 transition-all duration-700"
-        style="background: var(--hero-bg, url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat);"
+        style="background: var(--hero-bg, url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat);"
       />
     </div>
 
@@ -165,6 +164,20 @@ const entertainItems = [
         </div>
       </div>
     </header>
+
+    <!-- Left-Margin Vertical Page Title (hidden on mobile & excluded on /links) -->
+    {sideTitle && (
+      <aside class="hidden xl:flex fixed left-5 top-28 z-20 pointer-events-none select-none flex-col items-center gap-3">
+        <span class="w-1.5 h-1.5 rounded-full bg-terracotta/70" />
+        <div
+          style="writing-mode: vertical-rl;"
+          class="font-serif text-lg font-bold tracking-[0.25em] text-charcoal-DEFAULT/55 dark:text-cream-100/50"
+        >
+          {sideTitle}
+        </div>
+        <span class="w-[1px] h-14 bg-gradient-to-b from-terracotta/40 to-transparent" />
+      </aside>
+    )}
 
     <!-- Main Content Slot -->
     <main class={`flex-1 w-full pt-14 relative z-10 ${fullWidth ? '' : 'max-w-6xl mx-auto px-4 sm:px-6'}`}>

@@ -4,6 +4,7 @@ description: "基于提示词驱动的敏捷全栈开发范式，实现人机协
 category: "AI Agent"
 date: 2026-03-15
 featured: false
+hidden: true
 cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop"
 coCreation:
   humanShare: 25
@@ -43,4 +44,5 @@ tags:
 ## 成果与反思
 
 通过结构化的规范约束与类型定义，AI 生成代码的采纳率由传统补全的 40% 提升至 92%，极大降低了心智负担。
+
 

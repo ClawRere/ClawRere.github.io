@@ -19,19 +19,17 @@ const categories = Array.from(
 ) as string[];
 ---
 
-<Layout title="知识库与技术博客 | 磊大大 Larry">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+<Layout title="知识库与技术博客 | 磊大大の小栈" sideTitle="知识库与博客">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
 
-    <!-- Page hero -->
-    <div class="mb-12 flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <p class="text-xs font-mono uppercase tracking-widest text-terracotta mb-2">Technical Blog · {sortedPosts.length} articles</p>
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-charcoal-DEFAULT dark:text-cream-50 tracking-tight">
-          知识库
-        </h1>
-        <p class="mt-3 text-charcoal-100 dark:text-cream-300 text-sm max-w-xl">
-          AI 产品思维 · 前端工程 · 大模型实践 · 数字花园随笔
-        </p>
+    <!-- Page hero (title shown vertically in left margin on xl) -->
+    <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div class="xl:hidden">
+        <p class="text-xs font-mono uppercase tracking-widest text-terracotta mb-1">Technical Blog · {sortedPosts.length}</p>
+        <h1 class="text-3xl font-extrabold text-charcoal-DEFAULT dark:text-cream-50 tracking-tight">知识库</h1>
+      </div>
+      <div class="hidden xl:block text-xs font-mono text-terracotta">
+        Technical Blog · {sortedPosts.length} 篇文章
       </div>
       <QuickPostButton client:load />
     </div>
@@ -59,7 +57,7 @@ const categories = Array.from(
     <!-- Posts masonry-ish grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="posts-grid">
       {sortedPosts.map((post, idx) => {
-        const cover = getPostCover(post.data.cover, post.data.title, idx);
+        const cover = getPostCover(post.data.cover, post.data.title, idx, post.body);
         const category = Array.isArray(post.data.categories)
           ? post.data.categories[0]
           : post.data.categories || '笔记';

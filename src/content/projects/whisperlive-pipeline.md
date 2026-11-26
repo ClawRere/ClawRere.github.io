@@ -4,6 +4,7 @@ description: "基于 Faster-Whisper、WebSockets 与 VAD 静音切分算法，�
 category: "Fullstack Experiment"
 date: 2026-03-10
 featured: false
+hidden: true
 cover: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop"
 coCreation:
   humanShare: 30
@@ -30,4 +31,5 @@ tags:
 
 - **人类架构师**：重点突破 VAD 静音切分算法与并发音频帧的内存泄露。
 - **AI 智能体**：快速生成 Python 异步服务端与客户端 Web Audio API 捕获脚本。
+
 

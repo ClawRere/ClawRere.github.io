@@ -5,8 +5,7 @@ const skills = [
   {
     category: "AI 产品方法论 & 0-1 架构",
     color: "text-amber-400",
-    border: "border-amber-500/30",
-    bg: "bg-amber-500/8",
+    glow: "from-amber-400 via-orange-500 to-rose-500",
     items: [
       { name: "5W1H 深度拆解", desc: "穿透业务伪需求，从根本上定义 AI Agent 的系统边界与效用函数" },
       { name: "假设 vs 事实分层追踪", desc: "在 PRD 阶段隔离未知风险，建立自动化基线核验闭环" },
@@ -17,8 +16,7 @@ const skills = [
   {
     category: "设计工程 & 交互品味",
     color: "text-purple-400",
-    border: "border-purple-500/30",
-    bg: "bg-purple-500/8",
+    glow: "from-purple-400 via-fuchsia-500 to-pink-500",
     items: [
       { name: "Apple 流体动效与空间感", desc: "追求 120fps 极佳手感，弹簧物理动量与微交互细节" },
       { name: "Claude 式人文温润质感", desc: "克制的排版韵律，柔和暗色渐变，阅读呼吸感与沉浸感" },
@@ -29,8 +27,7 @@ const skills = [
   {
     category: "工程落地 & 数据分析工具栈",
     color: "text-cyan-400",
-    border: "border-cyan-500/30",
-    bg: "bg-cyan-500/8",
+    glow: "from-cyan-400 via-blue-500 to-indigo-500",
     items: [
       { name: "LLM / RAG / Multi-Agent", desc: "熟悉 Agentic Workflow 链路工程与评测体系" },
       { name: "Python / FineBI / Tableau / Matlab", desc: "数据采集清洗、自动化报告与多维分析驾驶舱搭建" },
@@ -45,13 +42,13 @@ const timeline = [
     period: "2024 - 至今",
     role: "AI 产品架构与独立共创实践",
     org: "PMOS / AI 工作流孵化",
-    highlight: "主导 PMOS 产品经理工作台 0-1 设计，围绕「需求对话—阶段结论—产品成果—影响分析—版本基线」构建可追溯的 AI 协作流；同步落地日报工作台、人格测试实验室、飞书 Agent 桥接等 10+ 独立产品。",
+    highlight: "主导 PMOS 产品经理工作台 0-1 设计，围绕「需求对话—阶段结论—产品成果—影响分析—版本基线」构建可追溯的 AI 协作流；同步落地日报工作台、人格测试实验室等独立产品。",
   },
   {
     period: "2021 - 2024",
     role: "SaaS & 算法产品经理",
     org: "企业数字化 / 智慧履约平台",
-    highlight: "主导企业级 AI 访谈、WIFI 指纹定位与到访识别（定位准确率 95% / 识别率 90%+）等核心产品从需求抽象、评测口径制定到线上交付闭环。",
+    highlight: "主导智慧履约 WIFI 指纹定位与到访识别（定位准确率 95% / 识别率 90%+）等核心产品从需求抽象、评测口径制定到线上交付闭环。",
   },
   {
     period: "2019 - 2021",
@@ -62,6 +59,13 @@ const timeline = [
 ];
 
 const interests = [
+  {
+    tag: "🐱 我的小猫 · 派派",
+    title: "派派的专属小站",
+    sub: "点击探望我的小猫派派 → paipai.ldddd.eu.org",
+    img: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=900&auto=format&fit=crop",
+    href: "https://paipai.ldddd.eu.org/",
+  },
   {
     tag: "爱好游戏 · 原神",
     title: "提瓦特大陆的奇幻冒险",
@@ -80,12 +84,6 @@ const interests = [
     sub: "本科 中南财经政法大学 · 硕士 华中科技大学",
     img: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=900&auto=format&fit=crop",
   },
-  {
-    tag: "热爱 · 编程 AI & 音乐",
-    title: "周杰伦 · 民谣 · 创造 Agent",
-    sub: "在代码与旋律之间寻找产品灵感",
-    img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=900&auto=format&fit=crop",
-  },
 ];
 
 const metrics = [
@@ -96,8 +94,8 @@ const metrics = [
 ];
 ---
 
-<Layout title="关于我 | 磊大大の小栈">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 space-y-14">
+<Layout title="关于我 | 磊大大の小栈" sideTitle="关于磊大大">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-12">
 
     <!-- Hero -->
     <div class="relative overflow-hidden rounded-3xl border border-white/10 dark:border-white/8 bg-gradient-to-br from-zinc-100/80 via-transparent to-transparent dark:from-zinc-800/40 p-8 md:p-10 group">
@@ -134,6 +132,9 @@ const metrics = [
             <a href="/portfolio/pmos-ai-workspace" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-black font-semibold text-sm transition-all shadow-lg hover:-translate-y-0.5">
               了解 PMOS →
             </a>
+            <a href="https://paipai.ldddd.eu.org/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-pink-500/15 text-pink-500 dark:text-pink-300 border border-pink-500/25 font-medium text-sm hover:bg-pink-500/25 transition-all hover:-translate-y-0.5">
+              🐱 探望小猫派派 ↗
+            </a>
             <a href="/messageboard" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/8 dark:bg-white/8 hover:bg-white/15 text-zinc-900 dark:text-white font-medium text-sm border border-zinc-200 dark:border-white/15 transition-all hover:-translate-y-0.5">
               💌 留言 / 友链
             </a>
@@ -152,38 +153,46 @@ const metrics = [
       </div>
     </div>
 
-    <!-- Visual Interest Gallery Cards with Interactive Hover Zoom -->
+    <!-- Visual Interest & Pet Cards -->
     <div class="space-y-4">
       <h2 class="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-        🎨 兴趣与生活切片
+        🎨 兴趣、派派与生活切片
       </h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {interests.map(item => (
-          <div class="group relative h-60 rounded-2xl overflow-hidden border border-zinc-200 dark:border-white/10 shadow-lg cursor-pointer">
-            <img
-              src={item.img}
-              alt={item.title}
-              loading="lazy"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent group-hover:from-black/90 transition-colors" />
-            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/55 backdrop-blur-md text-[10px] font-mono text-amber-300 border border-white/15">
-              {item.tag}
-            </span>
-            <div class="absolute bottom-0 inset-x-0 p-4 text-white transform translate-y-1 group-hover:translate-y-0 transition-transform">
-              <h3 class="font-bold text-sm">{item.title}</h3>
-              <p class="text-[11px] text-white/75 mt-1 leading-relaxed">{item.sub}</p>
-            </div>
-          </div>
-        ))}
+        {interests.map(item => {
+          const Wrapper = item.href ? 'a' : 'div';
+          return (
+            <Wrapper
+              href={item.href}
+              target={item.href ? '_blank' : undefined}
+              rel={item.href ? 'noopener noreferrer' : undefined}
+              class="group relative h-60 rounded-2xl overflow-hidden border border-zinc-200 dark:border-white/10 shadow-lg cursor-pointer block"
+            >
+              <img
+                src={item.img}
+                alt={item.title}
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent group-hover:from-black/90 transition-colors" />
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/55 backdrop-blur-md text-[10px] font-mono text-amber-300 border border-white/15">
+                {item.tag}
+              </span>
+              <div class="absolute bottom-0 inset-x-0 p-4 text-white transform translate-y-1 group-hover:translate-y-0 transition-transform">
+                <h3 class="font-bold text-sm">{item.title}</h3>
+                <p class="text-[11px] text-white/75 mt-1 leading-relaxed">{item.sub}</p>
+              </div>
+            </Wrapper>
+          );
+        })}
       </div>
     </div>
 
-    <!-- Personal Bento Cards -->
+    <!-- Personal Bento Cards with ENTP Character Image -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       <div class="p-5 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/50 space-y-2 hover:-translate-y-1 transition-transform">
         <div class="text-xs font-mono text-amber-500 uppercase tracking-wider">个人档案</div>
-        <div class="space-y-1.5 text-sm">
+        <div class="space-y-2 text-sm pt-1">
           <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">生于</span><span class="font-semibold text-sky-500">1997 年</span></div>
           <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">坐标</span><span class="font-semibold text-zinc-900 dark:text-white">中国 · 武汉市</span></div>
           <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">本科</span><span class="font-semibold text-amber-500">中南财经政法大学</span></div>
@@ -191,18 +200,25 @@ const metrics = [
         </div>
       </div>
 
-      <div class="p-5 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/50 space-y-2 hover:-translate-y-1 transition-transform">
-        <div class="text-xs font-mono text-purple-400 uppercase tracking-wider">性格与座右铭</div>
-        <div class="text-2xl font-extrabold text-purple-500 dark:text-purple-300">ENTP · 辩论家</div>
-        <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-          「充满好奇，保持理性。」<br />
-          给世界带来一点快乐的探索者，热衷把复杂概念拆成清晰可操作的系统。
-        </p>
+      <!-- ENTP Card with Uploaded Cartoon Character -->
+      <div class="p-5 rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-500/10 via-white/60 to-transparent dark:from-purple-900/20 dark:via-zinc-900/50 flex items-center gap-4 hover:-translate-y-1 transition-transform">
+        <img
+          src="/img/entp-character.jpg"
+          alt="ENTP 辩论家卡通形象"
+          class="w-24 h-28 rounded-xl object-cover shadow-md border border-purple-400/30 shrink-0 hover:scale-105 transition-transform"
+        />
+        <div class="space-y-1.5">
+          <div class="text-xs font-mono text-purple-400 uppercase tracking-wider">性格与座右铭</div>
+          <div class="text-xl font-extrabold text-purple-500 dark:text-purple-300">ENTP · 辩论家</div>
+          <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            「充满好奇，保持理性。」把复杂概念拆成清晰可操作的系统。
+          </p>
+        </div>
       </div>
 
       <div class="p-5 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/50 space-y-2 hover:-translate-y-1 transition-transform">
         <div class="text-xs font-mono text-emerald-500 uppercase tracking-wider">幽默心路历程 😝</div>
-        <div class="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
+        <div class="space-y-2 text-xs text-zinc-600 dark:text-zinc-300 pt-1">
           <div>✅ 擅长 PS/Pr/Ae/Ai 等软件安装与卸载 🎃</div>
           <div>✅ 精通 HTML/Vue/React/Python 单词拼写 🎲</div>
           <div>✅ 熟悉 Win/Linux/Mac/iOS 开关机 👻</div>
@@ -210,25 +226,29 @@ const metrics = [
       </div>
     </div>
 
-    <!-- Skills matrix -->
+    <!-- Skills matrix with Animated Glowing Border Flow (描边流光效果) -->
     <div class="space-y-5">
       <h2 class="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
         ⚙️ 全栈能力全景图
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         {skills.map(s => (
-          <div class={`rounded-2xl border p-5 space-y-4 ${s.border} ${s.bg} hover:-translate-y-1 transition-transform`}>
-            <h3 class={`font-bold text-sm ${s.color}`}>{s.category}</h3>
-            <div class="space-y-3">
-              {s.items.map(it => (
-                <div>
-                  <div class="text-sm font-semibold text-zinc-900 dark:text-white flex items-center gap-1.5">
-                    <span class={`w-1.5 h-1.5 rounded-full ${s.color.replace('text-', 'bg-')}`}></span>
-                    {it.name}
+          <div class="glow-card relative rounded-2xl p-[1.5px] overflow-hidden group hover:-translate-y-1 transition-transform">
+            {/* Animated flowing conic gradient border */}
+            <div class={`absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0_240deg,currentColor_300deg,transparent_360deg)] animate-[spin_4s_linear_infinite] opacity-60 group-hover:opacity-100 ${s.color}`} />
+            <div class="relative h-full rounded-[15px] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl p-5 space-y-4">
+              <h3 class={`font-bold text-sm ${s.color}`}>{s.category}</h3>
+              <div class="space-y-3">
+                {s.items.map(it => (
+                  <div>
+                    <div class="text-sm font-semibold text-zinc-900 dark:text-white flex items-center gap-1.5">
+                      <span class={`w-1.5 h-1.5 rounded-full ${s.color.replace('text-', 'bg-')}`}></span>
+                      {it.name}
+                    </div>
+                    <div class="text-xs text-zinc-600 dark:text-zinc-400 pl-3 mt-0.5 leading-relaxed">{it.desc}</div>
                   </div>
-                  <div class="text-xs text-zinc-600 dark:text-zinc-400 pl-3 mt-0.5 leading-relaxed">{it.desc}</div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         ))}
@@ -240,7 +260,7 @@ const metrics = [
       <h2 class="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
         🚀 经历与创作足迹
       </h2>
-      <div class="relative pl-6 border-l border-zinc-200 dark:border-white/10 space-y-8">
+      <div class="relative pl-6 border-l border-zinc-200 dark:border-white/10 space-y-6">
         {timeline.map(item => (
           <div class="relative group p-4 rounded-2xl hover:bg-white/50 dark:hover:bg-zinc-900/50 transition-colors">
             <div class="absolute -left-[31px] top-6 w-3.5 h-3.5 rounded-full border-2 border-white dark:border-zinc-900 bg-amber-400 group-hover:scale-125 transition-transform"></div>

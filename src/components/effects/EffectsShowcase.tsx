@@ -189,40 +189,48 @@ export const EffectsShowcase: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* 1. Header Banner */}
+      {/* 1. Header Banner + Right-Side Black-Masked Planet Animation */}
       <div className="p-6 sm:p-8 rounded-3xl glass border border-charcoal-500/10 dark:border-white/10 relative overflow-hidden bg-gradient-to-br from-cream-100/60 via-amber-50/20 to-terracotta-50/20 dark:from-obsidian-card dark:to-obsidian">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta mb-2">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div className="lg:col-span-7 space-y-4">
+            <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta">
               <Sparkles className="w-3.5 h-3.5" />
               Creative Code & Visual FX Vault
             </div>
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-DEFAULT dark:text-cream-50">
-              前端动效实验室与收藏库
-            </h1>
-            <p className="mt-2 text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 max-w-xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 max-w-xl leading-relaxed">
               收录 <strong>{allEffects.length} 个</strong> 原生动效。支持在线存储新的前端动效 URL 或 HTML/CSS 代码片段，随时一键预览与复制复用。
             </p>
+            <div className="flex flex-wrap items-center gap-2.5">
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-2xl bg-terracotta hover:bg-terracotta/90 text-white text-xs font-mono font-semibold shadow-lg transition-all"
+              >
+                <Plus className="w-4 h-4" />
+                <span>收藏新动效</span>
+              </button>
+              {customEffects.length > 0 && (
+                <button
+                  onClick={exportCustomEffects}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl glass border border-charcoal-500/15 dark:border-white/15 text-xs font-mono hover:border-terracotta"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>导出 ({customEffects.length})</span>
+                </button>
+              )}
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-            <button
-              onClick={() => setShowAddModal(true)}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-terracotta hover:bg-terracotta/90 text-white text-xs font-mono font-semibold shadow-lg transition-all"
-            >
-              <Plus className="w-4 h-4" />
-              <span>收藏新动效</span>
-            </button>
-            {customEffects.length > 0 && (
-              <button
-                onClick={exportCustomEffects}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-2xl glass border border-charcoal-500/15 dark:border-white/15 text-xs font-mono hover:border-terracotta"
-                title="导出我收藏的动效 JSON"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>导出 ({customEffects.length})</span>
-              </button>
-            )}
+          {/* Right Side: Translucent Black-Masked Planet Orbit Showcase */}
+          <div className="lg:col-span-5 h-52 sm:h-56 rounded-2xl overflow-hidden relative bg-black/45 backdrop-blur-md border border-white/15 shadow-inner">
+            <iframe
+              src="/effects/solar_animation"
+              title="太阳系行星运行动画"
+              className="w-full h-full border-0 opacity-90 pointer-events-none"
+              style={{ background: 'transparent' }}
+            />
+            <span className="absolute bottom-2.5 right-3 px-2.5 py-0.5 rounded-full bg-black/50 text-[10px] font-mono text-white/75 border border-white/10">
+              🪐 行星运行实时动效
+            </span>
           </div>
         </div>
       </div>

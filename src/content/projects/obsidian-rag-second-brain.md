@@ -4,6 +4,7 @@ description: "将 99+ 篇双链笔记转化为可检索的局部向量索引，�
 category: "GenAI Interactive"
 date: 2026-11-20
 featured: false
+hidden: true
 cover: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop"
 coCreation:
   humanShare: 40
@@ -31,4 +32,5 @@ tags:
 
 - **双链知识网络**：通过 Obsidian 双链结构映射领域认知。
 - **本地优先原则**：保证个人核心笔记与隐私数据不出本地，仅通过向量化索引供大模型检索调用。
+
 

@@ -128,7 +128,7 @@ const latestPosts = allPosts
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {latestPosts.map((post, idx) => {
-          const coverImg = getPostCover(post.data.cover, post.data.title, idx);
+          const coverImg = getPostCover(post.data.cover, post.data.title, idx, post.body);
           const categoryName = Array.isArray(post.data.categories) ? post.data.categories[0] : post.data.categories || '笔记';
           return (
             <a href={`/posts/${post.id}`} class="group flex flex-col rounded-2xl border border-charcoal-500/10 dark:border-white/8 overflow-hidden hover:border-terracotta/30 hover:shadow-xl transition-all duration-300 bg-white/50 dark:bg-zinc-900/50">

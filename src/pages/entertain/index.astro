@@ -48,50 +48,17 @@ const entertainModules = [
     tag: '沉浸白噪音',
     badge: 'Audio + Canvas',
   },
-  {
-    title: '擎天柱 3D 变形金刚 (Optimus Prime)',
-    desc: '纯 CSS 打造的 3D 擎天柱卡车与机器人变形动画，支持视角自由拖拽把玩。',
-    icon: Bot,
-    link: '/effects/optimus_prime/index.html',
-    color: 'from-red-500/20 to-blue-600/20',
-    tag: '硬核 3D 动效',
-    badge: 'CSS3 3D Transform',
-  },
-  {
-    title: '复古飞机大战 (Flight Battle)',
-    desc: '经典街机风格竖版弹幕射击游戏，拾取道具击落敌机，挑战最高分数！',
-    icon: Gamepad2,
-    link: '/effects/flight_game/index.html',
-    color: 'from-emerald-500/20 to-teal-500/20',
-    tag: '街机小游戏',
-    badge: 'HTML5 Arcade',
-  },
-  {
-    title: '急速赛车模拟 (Car Racing)',
-    desc: '极简 2D 赛车避障小游戏，键盘左右键高速变道超车，解压神器。',
-    icon: Gamepad2,
-    link: '/effects/car_racing_game/index.html',
-    color: 'from-purple-500/20 to-indigo-500/20',
-    tag: '休闲避障',
-    badge: 'Canvas Game',
-  },
 ];
 ---
 
-<Layout title="娱乐馆 | 音乐、烟花与雨声 | 磊大大 Larry">
-  <div class="py-8 space-y-10">
-    <!-- Header -->
-    <div class="max-w-2xl">
-      <div class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta mb-2 font-semibold">
-        <Sparkles class="w-3.5 h-3.5" />
-        Entertainment Lounge
+<Layout title="娱乐馆 | 磊大大の小栈" sideTitle="娱乐与休闲">
+  <div class="py-6 space-y-8">
+    <!-- Compact Header -->
+    <div class="max-w-2xl xl:hidden">
+      <div class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta mb-1 font-semibold">
+        <Sparkles class="w-3.5 h-3.5" /> Entertainment Lounge
       </div>
-      <h1 class="font-serif text-3xl sm:text-4xl font-bold text-charcoal-DEFAULT dark:text-cream-50">
-        娱乐与休闲体验馆
-      </h1>
-      <p class="mt-3 text-sm text-charcoal-100 dark:text-cream-300 leading-relaxed font-serif">
-        工作与代码之外的趣味避风港。收录从 Hexo 经典继承的网易云音乐馆、交互式烟花模拟器、雨声白噪音与街机小游戏。
-      </p>
+      <h1 class="font-serif text-3xl font-bold text-charcoal-DEFAULT dark:text-cream-50">娱乐与休闲</h1>
     </div>
 
     <!-- Cards Grid -->

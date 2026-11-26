@@ -34,19 +34,19 @@ tags:
 点击"运行"-"启动调试"，即可**一键运行代码**，你甚至可以指定获取某个文件夹的某个文件读取之后进行处理。
 ## 使用测试
 生成一个贪吃蛇游戏
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140955823.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140955823.png)
 
 已经在安装依赖与编写代码了
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140958977.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140958977.png)
 
 尝试运行
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140959997.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140959997.png)
 
 选择Python
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140959957.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140959957.png)
 
 程序出现啦！
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409141000325.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409141000325.png)
 
 
 还可以通过输入内容增加更多细节，比如控制速度，有开始、游戏结束的界面等等。
@@ -55,24 +55,24 @@ tags:
 
 
 **网址**：https://www.cursor.com/
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140921721.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140921721.png)
 
 **价格**：
 - 免费体验两周
 - 享受每月2000个代码补全
 - 50个慢速优先的高级请求
 - 200次使用cursor-small模型的次数。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140922648.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140922648.png)
 
 **使用方法**：
 1. 注册账号
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140931057.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140931057.png)
 
 注册完成后直接登录
 2. 汉化&插件
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140933153.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140933153.png)
 找到`Extentions`，进入商店，搜索`Chinese`
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140934092.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409140934092.png)
 
 搜索`Python`并安装（如果需要其他语音可以对应安装）
 
@@ -81,7 +81,7 @@ tags:
 按`Ctrl`+`L`，用聊天的方式了解代码内容；
 
 4. 修改模型
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409141019904.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409141019904.png)
 
 直接输出你的需求，让AI全自动生成代码。可以轻松完成以下功能：
 - 数据分析
@@ -105,5 +105,5 @@ tags:
 
 
 欢迎关注我的个人公众号【愿你总能遇到温柔的人】
-![wechat_plat.png](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409041405863.png)
+![wechat_plat.png](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409041405863.png)
 

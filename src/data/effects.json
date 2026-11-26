@@ -38,7 +38,7 @@
   {
     "title": "卫生纸开关",
     "path": "/effects/t_paper_butoom",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202411021436974.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202411021436974.png",
     "category": "UI交互"
   },
   {
@@ -56,7 +56,7 @@
   {
     "title": "彩色卡片",
     "path": "/effects/color_cards",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131435586.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131435586.png",
     "category": "趣味动效"
   },
   {
@@ -68,61 +68,61 @@
   {
     "title": "炫彩键盘",
     "path": "/effects/cool_keyboard",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131431366.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131431366.png",
     "category": "趣味动效"
   },
   {
     "title": "彩色数字时钟",
     "path": "/effects/colorful_clock",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131429118.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131429118.png",
     "category": "实用组件"
   },
   {
     "title": "阴天与晴天",
     "path": "/effects/sun_cloud_button",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131428219.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131428219.png",
     "category": "UI交互"
   },
   {
     "title": "灯光追踪",
     "path": "/effects/light_flow",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131427409.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131427409.png",
     "category": "趣味动效"
   },
   {
     "title": "3D警车模型",
     "path": "/effects/3d_police_car",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131425260.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131425260.png",
     "category": "3D视觉"
   },
   {
     "title": "漏水的水龙头",
     "path": "/effects/faucet_unlock",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131424620.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131424620.png",
     "category": "趣味动效"
   },
   {
     "title": "穿越太空的火箭",
     "path": "/effects/rocket_flying",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409141421409.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409141421409.png",
     "category": "趣味动效"
   },
   {
     "title": "会滑行的小球",
     "path": "/effects/slide_ball",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112031329.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112031329.png",
     "category": "趣味动效"
   },
   {
     "title": "线性切换",
     "path": "/effects/liner_buttom",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112030968.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112030968.png",
     "category": "趣味动效"
   },
   {
     "title": "战斗机出击",
     "path": "/effects/helicopter_fighting",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112029514.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112029514.png",
     "category": "趣味动效"
   },
   {
@@ -134,427 +134,427 @@
   {
     "title": "煎锅加载",
     "path": "/effects/cooking_loading",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061220393.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061220393.png",
     "category": "加载动画"
   },
   {
     "title": "动画表情评分",
     "path": "/effects/animated_emoticons",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061217459.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061217459.png",
     "category": "趣味动效"
   },
   {
     "title": "点击喜欢",
     "path": "/effects/click_heart",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061049574.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061049574.png",
     "category": "趣味动效"
   },
   {
     "title": "别捅马蜂窝",
     "path": "/effects/bee_hive",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061047295.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061047295.png",
     "category": "趣味动效"
   },
   {
     "title": "彩虹猪加载",
     "path": "/effect/rambo_pig_loding",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090007988.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090007988.png",
     "category": "加载动画"
   },
   {
     "title": "动态搜索框",
     "path": "/effects/search_box_dynamic",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090007983.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090007983.png",
     "category": "UI交互"
   },
   {
     "title": "水滴效果按钮",
     "path": "/effects/water_ripple_button",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090014866.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090014866.png",
     "category": "UI交互"
   },
   {
     "title": "内凹导航栏",
     "path": "/effects/navigation_bar_recessed",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090014348.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090014348.png",
     "category": "UI交互"
   },
   {
     "title": "环形图片墙",
     "path": "/effects/circle_bg",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090023266.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090023266.png",
     "category": "趣味动效"
   },
   {
     "title": "罗盘时钟",
     "path": "/effects/compass_clock",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020940.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020940.png",
     "category": "实用组件"
   },
   {
     "title": "日夜交替",
     "path": "/effects/day_night_change",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020217.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020217.png",
     "category": "趣味动效"
   },
   {
     "title": "烟花模拟器",
     "path": "/effects/fireworks",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020957.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020957.png",
     "category": "趣味动效"
   },
   {
     "title": "嘻嘻不嘻嘻",
     "path": "/effects/happy_button",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019278.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019278.png",
     "category": "UI交互"
   },
   {
     "title": "灯光效果按钮",
     "path": "/effects/lighting_button",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019535.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019535.png",
     "category": "UI交互"
   },
   {
     "title": "线性灯光文字",
     "path": "/effects/lighting_text",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090018031.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090018031.png",
     "category": "趣味动效"
   },
   {
     "title": "爱心柯基❤",
     "path": "/effects/lovely_dog",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019689.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019689.png",
     "category": "趣味动效"
   },
   {
     "title": "图片悬停组件",
     "path": "/effects/pic_floating",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090018182.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090018182.png",
     "category": "趣味动效"
   },
   {
     "title": "手风琴效果扩展",
     "path": "/effects/accordion_icon_expands",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171408766.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171408766.png",
     "category": "趣味动效"
   },
   {
     "title": "口香糖吹泡泡",
     "path": "/effects/blowing_bubbles",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171409051.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171409051.png",
     "category": "趣味动效"
   },
   {
     "title": "蜡烛吹灭动画",
     "path": "/effects/candle_bg",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171409469.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171409469.png",
     "category": "趣味动效"
   },
   {
     "title": "喵星人与洗衣机的快乐时光",
     "path": "/effects/cat_loding",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171410423.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171410423.png",
     "category": "加载动画"
   },
   {
     "title": "小幽灵盯着我的鼠标怎么办",
     "path": "/effects/ghost_bg",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171414983.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171414983.png",
     "category": "趣味动效"
   },
   {
     "title": "马里奥&坦克大战加载",
     "path": "/effects/mario_tanke_loding",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171418554.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171418554.png",
     "category": "加载动画"
   },
   {
     "title": "边缘融合加载组件",
     "path": "/effects/merge_loding",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171418233.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171418233.png",
     "category": "加载动画"
   },
   {
     "title": "星际旋转",
     "path": "/effects/solar_rotation",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171420600.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171420600.png",
     "category": "趣味动效"
   },
   {
     "title": "天气盒子",
     "path": "/effects/weather_box",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171429730.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171429730.png",
     "category": "UI交互"
   },
   {
     "title": "通用天气特效",
     "path": "/effects/weather_normal",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171431087.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171431087.png",
     "category": "趣味动效"
   },
   {
     "title": "简约登录注册表单",
     "path": "/effects/login_regist_page",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171603505.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171603505.png",
     "category": "趣味动效"
   },
   {
     "title": "右键菜单案例",
     "path": "/effects/right_menu_multi",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181438209.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181438209.png",
     "category": "趣味动效"
   },
   {
     "title": "开灯！关灯！",
     "path": "/effects/light_on_off",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181438685.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181438685.png",
     "category": "趣味动效"
   },
   {
     "title": "动态文本效果",
     "path": "/effects/text_animation",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181442310.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181442310.png",
     "category": "趣味动效"
   },
   {
     "title": "禁止打开盖子",
     "path": "/effects/open_lid",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181443027.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181443027.png",
     "category": "趣味动效"
   },
   {
     "title": "霓虹灯背景魔术卡",
     "path": "/effects/magic_card",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181446212.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181446212.png",
     "category": "趣味动效"
   },
   {
     "title": "虚拟键盘",
     "path": "/effects/keybord_vertual",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408191525656.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408191525656.png",
     "category": "趣味动效"
   },
   {
     "title": "四叶草布局特效",
     "path": "/effects/four_leaf_clover_card",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408191527811.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408191527811.png",
     "category": "趣味动效"
   },
   {
     "title": "3D渐变的轮播图效果",
     "path": "/effects/3d_photo_wall",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408211147704.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408211147704.png",
     "category": "3D视觉"
   },
   {
     "title": "鼠标粒子特效",
     "path": "/effects/mouse_effect",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408221048686.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408221048686.png",
     "category": "趣味动效"
   },
   {
     "title": "萤火虫按钮",
     "path": "/effects/fireflies_button",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251609915.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251609915.png",
     "category": "UI交互"
   },
   {
     "title": "好看的摆钟",
     "path": "/effects/pendulum_clock",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251609644.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251609644.png",
     "category": "实用组件"
   },
   {
     "title": "抓蝴蝶",
     "path": "/effects/catch_butterfly",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251622475.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251622475.png",
     "category": "趣味动效"
   },
   {
     "title": "会跳舞的花朵",
     "path": "/effects/dancing-flower",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251739657.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251739657.png",
     "category": "趣味动效"
   },
   {
     "title": "老爷爷拄拐杖",
     "path": "/effects/old_man_walking_loding",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251740223.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251740223.png",
     "category": "加载动画"
   },
   {
     "title": "人群流动模拟动画",
     "path": "/effects/canvas_crowd",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251814461.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251814461.png",
     "category": "趣味动效"
   },
   {
     "title": "碰撞检测穿马路动画游戏",
     "path": "/effects/impac_checking_game",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251822737.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251822737.png",
     "category": "互动游戏"
   },
   {
     "title": "3D鼠标滑过动画",
     "path": "/effects/3d_background",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251840965.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251840965.png",
     "category": "3D视觉"
   },
   {
     "title": "漩涡样式的Loading加载动画",
     "path": "/effects/swirl_loading",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251842455.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251842455.png",
     "category": "加载动画"
   },
   {
     "title": "图片切换动画",
     "path": "/effects/image_animation",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251850308.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251850308.png",
     "category": "趣味动效"
   },
   {
     "title": "动画表情",
     "path": "/effects/face_expression",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251913197.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251913197.png",
     "category": "趣味动效"
   },
   {
     "title": "青蛙表情",
     "path": "/effects/frog_expression",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251913725.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251913725.png",
     "category": "趣味动效"
   },
   {
     "title": "太阳系行星运行动画",
     "path": "/effects/solar_animation",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251950468.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251950468.png",
     "category": "趣味动效"
   },
   {
     "title": "模拟自行车行驶",
     "path": "/effects/bike_running",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251951345.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251951345.png",
     "category": "趣味动效"
   },
   {
     "title": "蓝蝴蝶",
     "path": "/effects/blue_butterfly",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251953299.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251953299.png",
     "category": "趣味动效"
   },
   {
     "title": "下雨动画",
     "path": "/effects/rain_movie",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251958805.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251958805.png",
     "category": "趣味动效"
   },
   {
     "title": "天气动画",
     "path": "/effects/weather_icon",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252003618.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252003618.png",
     "category": "趣味动效"
   },
   {
     "title": "小蜜蜂",
     "path": "/effects/bee",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252004620.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252004620.png",
     "category": "趣味动效"
   },
   {
     "title": "简易版仿超级玛丽小游戏",
     "path": "/effects/simple_mario_game",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252005494.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252005494.png",
     "category": "互动游戏"
   },
   {
     "title": "赛车游戏",
     "path": "/effects/car_racing_game",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252015601.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252015601.png",
     "category": "互动游戏"
   },
   {
     "title": "小猫咪挂在绳索上摇摆",
     "path": "/effects/cat_swinging",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408261913133.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408261913133.png",
     "category": "趣味动效"
   },
   {
     "title": "打字效果",
     "path": "/effects/typing_text",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408261920039.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408261920039.png",
     "category": "趣味动效"
   },
   {
     "title": "吐泡泡",
     "path": "/effects/bubbles_background",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281546972.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281546972.png",
     "category": "趣味动效"
   },
   {
     "title": "随机设备加载组件",
     "path": "/effects/random_device_loding",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281509884.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281509884.png",
     "category": "加载动画"
   },
   {
     "title": "隐式动态侧边栏",
     "path": "/effects/sidemenu_hide",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281547828.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281547828.png",
     "category": "趣味动效"
   },
   {
     "title": "可以射击的3D直升机",
     "path": "/effects/3d_helicopter",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281511956.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281511956.png",
     "category": "3D视觉"
   },
   {
     "title": "奔跑的小仓鼠",
     "path": "/effects/running_rate",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021214244.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021214244.png",
     "category": "趣味动效"
   },
   {
     "title": "带光按钮",
     "path": "/effects/button_with_light",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021219735.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021219735.png",
     "category": "UI交互"
   },
   {
     "title": "霓虹灯",
     "path": "/effects/neon_lights_button",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021221405.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021221405.png",
     "category": "UI交互"
   },
   {
     "title": "品字加载",
     "path": "/effects/pin_word_loding",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021225663.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021225663.png",
     "category": "加载动画"
   },
   {
     "title": "萤火虫背景",
     "path": "/effects/fireflies_background",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021400855.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021400855.png",
     "category": "趣味动效"
   },
   {
     "title": "擎天柱",
     "path": "/effects/optimus_prime",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021528376.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021528376.png",
     "category": "趣味动效"
   },
   {
     "title": "爱翻滚的龙猫",
     "path": "/effects/totoro",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021528556.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021528556.png",
     "category": "趣味动效"
   },
   {
     "title": "组装电脑加载",
     "path": "/effects/laptop_loading",
-    "image": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021530116.png",
+    "image": "https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021530116.png",
     "category": "加载动画"
   }
 ]

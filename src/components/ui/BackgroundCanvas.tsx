@@ -56,7 +56,7 @@ export const BackgroundCanvas: React.FC = () => {
       return hour >= 19 || hour < 6;
     };
 
-    const count = 42;
+    const count = 22;
     const particles: Particle[] = Array.from({ length: count }, () => {
       const baseVx = (Math.random() - 0.5) * 0.6;
       const baseVy = Math.random() * 0.8 + 0.4;
@@ -77,49 +77,46 @@ export const BackgroundCanvas: React.FC = () => {
     });
 
     const drawSnowflake = (x: number, y: number, r: number, rot: number, alpha: number) => {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(rot);
       ctx.globalAlpha = alpha;
       ctx.strokeStyle = 'rgba(186, 220, 255, 0.95)';
       ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
       ctx.lineWidth = 1.1;
 
-      // 6-branch delicate crystal
-      for (let i = 0; i < 6; i++) {
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(0, -r);
-        ctx.stroke();
-        ctx.rotate(Math.PI / 3);
-      }
       ctx.beginPath();
-      ctx.arc(0, 0, r * 0.28, 0, Math.PI * 2);
+      for (let i = 0; i < 6; i++) {
+        const a = rot + (i * Math.PI) / 3;
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + Math.sin(a) * r, y - Math.cos(a) * r);
+      }
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(x, y, r * 0.25, 0, Math.PI * 2);
       ctx.fill();
-      ctx.restore();
     };
 
     const drawFirefly = (x: number, y: number, r: number, glowAlpha: number) => {
-      ctx.save();
-      const outerR = r * 4.5;
-      const grad = ctx.createRadialGradient(x, y, 0, x, y, outerR);
-      grad.addColorStop(0, `rgba(255, 236, 130, ${glowAlpha})`);
-      grad.addColorStop(0.35, `rgba(190, 242, 100, ${glowAlpha * 0.5})`);
-      grad.addColorStop(1, 'rgba(190, 242, 100, 0)');
-
-      ctx.fillStyle = grad;
+      ctx.globalAlpha = glowAlpha;
+      ctx.fillStyle = 'rgba(255, 236, 130, 0.32)';
       ctx.beginPath();
-      ctx.arc(x, y, outerR, 0, Math.PI * 2);
+      ctx.arc(x, y, r * 2.4, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = `rgba(255, 250, 205, ${Math.min(1, glowAlpha + 0.25)})`;
+      ctx.globalAlpha = Math.min(1, glowAlpha + 0.3);
+      ctx.fillStyle = '#fffacd';
       ctx.beginPath();
-      ctx.arc(x, y, r * 0.55, 0, Math.PI * 2);
+      ctx.arc(x, y, r * 0.7, 0, Math.PI * 2);
       ctx.fill();
-      ctx.restore();
     };
 
-    const render = () => {
+    let lastFrame = 0;
+    const render = (now: number) => {
+      animationFrameId = requestAnimationFrame(render);
+      // Pause during fireworks & throttle to ~30fps for zero GPU contention
+      if ((window as any).__fireworksActive) return;
+      if (now - lastFrame < 32) return;
+      lastFrame = now;
+
       ctx.clearRect(0, 0, width, height);
       const isNight = checkIsNight();
       const repelRadius = 135;
@@ -177,10 +174,10 @@ export const BackgroundCanvas: React.FC = () => {
         }
       });
 
-      animationFrameId = requestAnimationFrame(render);
+      ctx.globalAlpha = 1;
     };
 
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener('resize', handleResize);

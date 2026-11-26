@@ -39,7 +39,7 @@ tinify官方：压缩后的图片对视觉的影响几乎不可见，但是在�
 tinify为开发者提供了多种api的使用方法，可以注册邮箱获取API key，一个API key每个月有500张免费次数可用，具体API的使用可以参考
 https://tinify.cn/developers
 - 申请完成会给你发一个邮件
-![tinify注册](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240603172917.png)
+![tinify注册](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240603172917.png)
 - 点击`Visit your dashboard`跳转API页面，保存`key`后续使用。
 ##### 安装picgo
 1. 使用插件模板
@@ -56,7 +56,7 @@ npm install picgo -g
 
 ##### 安装picgo插件 
 1. 打开`插件设置`-查找`tinypng`插件
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240603174825.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240603174825.png)
 2. 将第一步获得的key填入插件`配置`，并`启用`插件
-![配置插件](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240603175300.png)
+![配置插件](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240603175300.png)
 

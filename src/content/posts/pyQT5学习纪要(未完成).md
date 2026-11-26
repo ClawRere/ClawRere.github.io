@@ -21,7 +21,7 @@ tags:
 2、学习Qt 之 QWidget QLabel区别，生成布局内容
 3、学习QPushButtom相关，精细调整按钮的布局
 4、学习并解决QScrollBar滚动条的优化
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240613081208.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240613081208.png)
 整体：
 ```css
 /*滚动条样式，这里测试发现必须设置background:red，否则会出现问题，原因不清楚，如果不需要设置颜色，可以设置transparent*/

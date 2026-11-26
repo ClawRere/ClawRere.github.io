@@ -624,7 +624,7 @@ remark42:
   option:
 ```
 
-![](https://jsd.cdn.zzko.cn/gh/jerryc127/CDN@m2/img/hexo-butterfly-docs-remark42.png)
+![](https://cdn.jsdelivr.net/gh/jerryc127/CDN@m2/img/hexo-butterfly-docs-remark42.png)
 
 <!-- endtab -->
 
@@ -644,7 +644,7 @@ artalk:
   option:
 ```
 
-![](https://jsd.cdn.zzko.cn/gh/jerryc127/CDN@m2/img/hexo-butterfly-docs-artalk.png)
+![](https://cdn.jsdelivr.net/gh/jerryc127/CDN@m2/img/hexo-butterfly-docs-artalk.png)
 
 <!-- endtab -->
 
@@ -804,7 +804,7 @@ messenger:
 
 
 
-![](https://jsd.cdn.zzko.cn/gh/jerryc127/CDN@m2/img/hexo-butterfly-docs-messege.png)
+![](https://cdn.jsdelivr.net/gh/jerryc127/CDN@m2/img/hexo-butterfly-docs-messege.png)
 
 <!-- endtab -->
 

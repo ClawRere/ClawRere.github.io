@@ -4,8 +4,8 @@ import { Palette, ChevronDown, X, Check } from 'lucide-react';
 import { FireworksOverlay } from './FireworksOverlay';
 
 const wallpaperPresets = [
-  { name: '星海深空', url: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2000&auto=format&fit=crop', type: 'image' },
-  { name: '极光雪山', url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop', type: 'image' },
+  { name: '星海深空', url: '/img/starry-sky.jpg', type: 'image' },
+  { name: '极光雪山', url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1400&auto=format&fit=crop', type: 'image' },
   { name: '赛博流光', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop', type: 'image' },
   { name: '落日海岸', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000&auto=format&fit=crop', type: 'image' },
   { name: '京都暮色', url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2000&auto=format&fit=crop', type: 'image' },

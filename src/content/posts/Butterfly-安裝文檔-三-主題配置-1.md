@@ -1102,7 +1102,7 @@ darkmode:
 rightside_scroll_percent: true
 ```
 
-![](https://jsd.cdn.zzko.cn/gh/jerryc127/CDN@m2/img/hexo-butterfly-docs-scroll-percent-right-btn.gif)
+![](https://cdn.jsdelivr.net/gh/jerryc127/CDN@m2/img/hexo-butterfly-docs-scroll-percent-right-btn.gif)
 
 ### 按鈕排序
 
@@ -1870,20 +1870,20 @@ markdown 圖片格式
 ```json
 [
   {
-    "url": "https://jsd.cdn.zzko.cn/gh/jerryc127/CDN/img/IMG_0556.jpg",
+    "url": "https://cdn.jsdelivr.net/gh/jerryc127/CDN/img/IMG_0556.jpg",
     "alt": "IMG_0556.jpg",
      "title": "這是title"
   },
   {
-    "url": "https://jsd.cdn.zzko.cn/gh/jerryc127/CDN/img/IMG_0472.jpg",
+    "url": "https://cdn.jsdelivr.net/gh/jerryc127/CDN/img/IMG_0472.jpg",
     "alt": "IMG_0472.jpg"
   },
   {
-    "url": "https://jsd.cdn.zzko.cn/gh/jerryc127/CDN/img/IMG_0453.jpg",
+    "url": "https://cdn.jsdelivr.net/gh/jerryc127/CDN/img/IMG_0453.jpg",
     "alt": ""
   },
   {
-    "url": "https://jsd.cdn.zzko.cn/gh/jerryc127/CDN/img/IMG_0931.jpg",
+    "url": "https://cdn.jsdelivr.net/gh/jerryc127/CDN/img/IMG_0931.jpg",
     "alt": ""
   }
 ]

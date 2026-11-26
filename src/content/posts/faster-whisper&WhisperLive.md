@@ -24,7 +24,7 @@ faster-whisper是基于OpenAI的Whisper模型的高效实现，它利用CTransla
 
 #### 1.1 whisper
 OpenAI 的开源模型 whisper，可以执行 99 种语言的语音识别和文字转写。但是 whisper 模型占用计算资源多，命令行使用门槛高。whisper 模型本身还存在一些问题，例如 模型幻听问题（大部分的类似于不断重复同一句话、无语音部分复读莫名内容等都是由于这个原因造成的）。要更好使用 whsiper 模型就需要能够准确调试模型参数。但 whisper 模型参数众多，且命令行使用对使用者有一定要求，而且只有 torch 版可以做到调整参数。使用 VAD 类工具也需要一定的动手能力。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240616113434.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240616113434.png)
 
 #### 1.2 faster-whisper
 faster-whisper是具有完全的 whsiper 模型参数，且自带 VAD加持的 whisper 版本，该版本使用了 CTranslate2 来重新实现 whsiper 模型，CT2 对 transformer 类网络进行了优化，使模型推理效率更高。 相比于 openai/whisper，该实现在相同准确性下速度提高了 4 倍以上，同时使用的内存更少。
@@ -35,8 +35,8 @@ VAD地址：https://github.com/snakers4/silero-vad
 
 #### 1.3 性能对比
 在性能方面，faster-whisper展现了显著的优势。例如，在使用Large-v2模型和GPU进行13分钟音频的转录测试中，faster-whisper仅需54秒，而原始Whisper模型需要4分30秒。这一显著的性能提升，意味着在实际应用中，faster-whisper能够更快地处理大量数据，特别是在需要实时或近实时语音识别的场景中。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240616113424.png)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240616113427.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240616113424.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240616113427.png)
 
 
 

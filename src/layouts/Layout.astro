@@ -2,6 +2,7 @@
 import { ClientRouter } from 'astro:transitions';
 import { BackgroundCanvas } from '@/components/ui/BackgroundCanvas';
 import { NetEaseMusicPlayer } from '@/components/ui/NetEaseMusicPlayer';
+import { HangingSideBoard } from '@/components/ui/HangingSideBoard';
 import '@/styles/global.css';
 
 interface Props {
@@ -68,12 +69,12 @@ const entertainItems = [
     <!-- Top accent line -->
     <div class="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-terracotta/60 to-transparent z-50 pointer-events-none" />
 
-    <!-- Blurred Ambient Hero Background across the entire site (GPU promoted with contain:strict to prevent per-frame re-blurring) -->
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" style="contain: strict; transform: translateZ(0);" aria-hidden="true">
+    <!-- Lightweight Ambient Hero Background (no live full-screen CSS blur so animations stay 60fps!) -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" style="contain: strict;" aria-hidden="true">
       <div
         id="global-blurred-bg"
-        class="w-full h-full scale-105 blur-xl saturate-125 opacity-35 dark:opacity-30 transition-all duration-700 will-change-transform"
-        style="background: var(--hero-bg, url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat); transform: translateZ(0);"
+        class="w-full h-full opacity-20 dark:opacity-15 transition-opacity duration-500"
+        style="background: var(--hero-bg, url('/img/starry-sky.jpg') center/cover no-repeat);"
       />
     </div>
 
@@ -165,19 +166,8 @@ const entertainItems = [
       </div>
     </header>
 
-    <!-- Left-Margin Vertical Page Title (hidden on mobile & excluded on /links) -->
-    {sideTitle && (
-      <aside class="hidden xl:flex fixed left-5 top-28 z-20 pointer-events-none select-none flex-col items-center gap-3">
-        <span class="w-1.5 h-1.5 rounded-full bg-terracotta/70" />
-        <div
-          style="writing-mode: vertical-rl;"
-          class="font-serif text-lg font-bold tracking-[0.25em] text-charcoal-DEFAULT/55 dark:text-cream-100/50"
-        >
-          {sideTitle}
-        </div>
-        <span class="w-[1px] h-14 bg-gradient-to-b from-terracotta/40 to-transparent" />
-      </aside>
-    )}
+    <!-- Left-Margin Nail + Elastic Rope Hanging Wooden Title Board -->
+    {sideTitle && <HangingSideBoard client:load title={sideTitle} />}
 
     <!-- Main Content Slot -->
     <main class={`flex-1 w-full pt-14 relative z-10 ${fullWidth ? '' : 'max-w-6xl mx-auto px-4 sm:px-6'}`}>

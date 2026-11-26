@@ -35,21 +35,21 @@ categories:
 ```cmd
 nvidia-smi
 ```
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608203542.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608203542.png)
 #### cuda版本选择&下载
 cuda下载地址：`https://developer.nvidia.com/cuda-toolkit-archive`
 选择与本机匹配的版本，注意`CUDA Version`对应即可
-![选择合适本机的版本](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608203459.png)
+![选择合适本机的版本](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608203459.png)
 
-![cuda下载](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608203301.png)
+![cuda下载](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608203301.png)
 
 #### cuda安装
 
-![cuda临时安装文件夹](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608203408.png)
+![cuda临时安装文件夹](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608203408.png)
 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608203951.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608203951.png)
 建议取消勾选`Visual Studio Integration`，部分人存在保存情况
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608204002.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608204002.png)
 
 ## 2. pytorch安装
 
@@ -60,19 +60,19 @@ python -V
 ```
 > 注：如果装了多个版本，要看对应的python版本，如：`python3 -V`
 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608233633.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608233633.png)
 
 
 #### 版本选择&下载
 pytorch安装地址：`https://pytorch.org/`
 选择对应的版本，复制下面的命令运行`pip`、`pip3`有区别。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608201333.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608201333.png)
 
 #### 下载慢问题解决
 由于网站访问限制，官网下载速度很慢，甚至可能中断，建议根据上面的版本情况去找到对应版本直接下载。（可以利用idm高速下载。）
 pytorh选择地址：https://download.pytorch.org/whl/torch
 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608211005.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608211005.png)
 
 #### torch验证
 ```python
@@ -83,6 +83,6 @@ print(torch.cuda.is_available())
 print(torch.version.cuda)
 ```
 响应如下基本正常：**`torch.cuda.is_available()`** 要为***True***
-![响应](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608230213.png)
+![响应](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240608230213.png)
 
 

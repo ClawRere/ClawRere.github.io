@@ -22,16 +22,16 @@ hide:
 
 看大家对上次魔法世界的测试还挺感兴趣，正好最近搜到了另一个还比较全的测试网站**A Real Me**。
 中文网址如下：https://www.arealme.com/cn
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171606315.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171606315.png)
 里面有各类人格测试、趣味测试、知识测试等等，下面介绍几个通用的测试：
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171620582.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171620582.png)
 
 ## [哈利波特主题测试](https://www.arealme.com/category/harry-potter-quizzes/cn)
 包括你对每个人物的了解程度，你是XXX角色，你是XXX动物等等
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171629175.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171629175.png)
 ## [性格测试](https://www.arealme.com/category/personality-and-self/cn)
 包括MBTI的更细项的测试，以及各种性格分类的测试，可以自行探索。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171621067.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171621067.png)
 #### [性取向象限图坐标测试](https://www.arealme.com/sexuality-orientation-test/cn/)
 性取向象限图坐标测试是一款可以图像化某个人或者某类人性取向位置的在线评测工具。
 #### [西格玛男性测试](https://www.arealme.com/sigma-male-test/cn/)
@@ -44,13 +44,13 @@ hide:
 
 #### [动物人格测试](https://www.arealme.com/what-animal-am-i/cn/)
 动物人格测试是Arealme团队原创研发的心理测试，收录了常见且具有代表性的动物们，并将通过一系列趣味问答和科学分析得出结果。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171617650.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171617650.png)
 
 ## [动漫测试](https://www.arealme.com/category/anime-and-manga/cn)
 各种动漫知识测试、你属于XX动漫的哪个人物等等。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171627244.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171627244.png)
 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171626557.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171626557.png)
 
 
 没事干的时候测一测，当做娱乐消遣吧~

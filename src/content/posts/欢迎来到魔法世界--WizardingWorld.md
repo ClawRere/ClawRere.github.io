@@ -9,7 +9,7 @@ hidden: false
 aside: true
 comments: true
 description: 
-cover: https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061839111.png
+cover: https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061839111.png
 sticky: 
 top_img: 
 keywords: 日常,推文,介绍
@@ -21,12 +21,12 @@ tags:
 hide:
 ---
 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061839111.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061839111.png)
 
 探索《哈利·波特》魔法世界的非官方指南
 
 今天，带你深入了解一个由哈迷Vindaugar创建的非官方《哈利·波特》相关工具集网站。WizardingWorld的前身是Pottermore，是哈利波特魔法世界的官网，提供官方测试、官方资讯、补充设定等。目前主要开放魔法世界的相关测试：`https://wizard-tool.com/tests.html`
-<img src="https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061841479.png" width = 50% height=50% >
+<img src="https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061841479.png" width = 50% height=50% >
 
 
 ### 网站背景
@@ -36,14 +36,14 @@ Vindaugar是一位资深的《哈利·波特》爱好者，创建了这个非官
 - 中文版守护神测试
 - 中文版魔杖测试
 - 魔杖解析工具（测试版）
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061841965.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061841965.png)
 
 ### 霍格沃茨分院测试
 
 你会被分去哪个学院呢？是以勇敢和骑士精神而闻名的「格兰芬多」，是注重学生忠诚、勤奋、宽容的「赫奇帕奇」，还是以创造力和智慧为选拔条件的「拉文克劳」，亦或是重视野心、领导力和足智多谋的「斯莱特林」呢？
 
 测试地址：https://wizard-tool.com/tests/hogwarts-sorting.html
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061841731.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061841731.png)
 
 ### 守护神测试
 
@@ -51,7 +51,7 @@ Vindaugar是一位资深的《哈利·波特》爱好者，创建了这个非官
 《哈利波特》里的守护神(Patronus)是一种抵御摄魂怪的魔法，它是一种护卫，在你和摄魂怪之间形成了一道盾牌，保护你免受摄魂怪的伤害。它也是一种正面力量， 倡导的是快乐光明和活下去的希望。每一个守护神都是独一无二的，这是由于每个人的性格和内心世界是不同的，表达的情感也是不同的。
 
 测试地址：https://wizard-tool.com/tests/shouhushen.html
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061842709.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061842709.png)
 
 
 
@@ -68,15 +68,15 @@ Vindaugar是一位资深的《哈利·波特》爱好者，创建了这个非官
 #### 魔杖的选择过程
 在魔法世界中，魔杖选择巫师，而不是相反。这意味着魔杖会在某种程度上“感应”到它的主人，并表现出与之匹配的特性。因此，在选择魔杖时，巫师需要与多根魔杖进行尝试，直到找到那根对自己有强烈回应的魔杖。
 魔杖测试：https://wizard-tool.com/tests/wand.html
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061842801.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061842801.png)
 
 
 魔杖查询：https://wizard-tool.com/tools/whywand.html
 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061842022.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061842022.png)
 
 ### 分院介绍：
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061845708.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408061845708.png)
 
 
 <b><span style="color:#b8151a;">格兰芬多</span></b>

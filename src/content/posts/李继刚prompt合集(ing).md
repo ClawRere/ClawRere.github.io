@@ -1112,5 +1112,5 @@ h. 下一步打算：列出下一步的计划或在未来的会议中需要讨�
 
 
 欢迎关注我的个人公众号【愿你总能遇到温柔的人】
-![wechat_plat.png](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409041405863.png)
+![wechat_plat.png](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409041405863.png)
 

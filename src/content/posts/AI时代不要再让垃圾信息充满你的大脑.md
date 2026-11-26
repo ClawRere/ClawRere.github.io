@@ -48,7 +48,7 @@ hide:
 ## 费曼学习法
 
 **费曼学习法**，又称“费曼技巧”，由诺贝尔物理奖得主理查德·费曼提出。其核心在于“以教代学”，即通过向他人讲解自己学到的知识来加深理解和记忆。该方法分为四个步骤：确立学习对象、理解知识、复述知识（用简单语言）、教授他人。费曼学习法不仅提高了学习效率，还锻炼了表达能力和逻辑思维能力。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061612883.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061612883.png)
 为了贯彻这种学习方法，提升个人知识储备以及提升自己的表达能力。
 
 
@@ -94,14 +94,14 @@ hide:
 **其他的分类**：
 - [知识地图](https://zhuanlan.zhihu.com/p/107765881?utm_source=weibo&utm_medium=social&utm_content=snapshot&utm_oi=37378781609984)
 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061718279.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061718279.png)
 - 知识分类方法
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061721972.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061721972.png)
 
 - 古代知识分类法
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061728190.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061728190.png)
 - 亚里士多德的分类
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061729572.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061729572.png)
 > 参考资料：https://www.zhihu.com/question/20716696
 
 
@@ -110,11 +110,11 @@ hide:
 - **飞书、语雀**：低成本，只用开始写就行。
 最简单的**飞书**，我了解很多用飞书做知识库的大佬，在各行各业都赫赫有名。
 "**博物馆**"：https://hsiaohsihsi.feishu.cn/wiki/NRN7wKiJGioZtIkojr2cYNVknrd
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061828459.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061828459.png)
 
 "**通往 AGI 之路**"：https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e
 "**Gen AI 数据**"：https://zw73xyquvv.feishu.cn/wiki/HDdWwgzB3iYoEzk3S8pcohHUnnc
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061825703.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061825703.png)
 
 - **知识库软件**：软件下载，部分需要付费
 obsidian、notion...
@@ -136,21 +136,21 @@ coze、fastgpt...
 
 - 封面
 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061711055.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061711055.png)
 
 - 首页
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061711894.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061711894.png)
 
 - 文章页
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061713408.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061713408.png)
 
 - 工具汇总
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061713305.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061713305.png)
 - 友情链接&网站汇总
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061714095.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061714095.png)
 
 - 关于我
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061715136.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061715136.png)
 欢迎访问[我的博客网站：磊大大の小栈](https://ldddd.eu.org/)
 
 因为我有点喜欢开发，所以用hexo搭的博客网站，可以增加很多东西，比如在页面加一个蝴蝶，点击/滚动就会自动飞走；比如增加下雨/烟花页面，可以安静全屏体验；比如汇总网站，方便自己使用等等。
@@ -164,5 +164,5 @@ coze、fastgpt...
 
 
 欢迎关注我的个人公众号【愿你总能遇到温柔的人】
-![wechat_plat.png](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409041405863.png)
+![wechat_plat.png](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409041405863.png)
 

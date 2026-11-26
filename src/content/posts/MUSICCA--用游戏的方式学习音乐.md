@@ -26,16 +26,16 @@ hide:
 > “只要花 15 分钟的时间练习，每周固定两次，您会看见相当大的进展。”
 
 地址：https://www.musicca.com/zh/signup
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091501272.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091501272.png)
 
 
 ### **音乐练习**
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091522328.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091522328.png)
 
 - **音**练习
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091539028.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091539028.png)
 ### **音乐工具**
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091523366.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091523366.png)
 
 - **和弦播放器**
 
@@ -43,14 +43,14 @@ hide:
 - 发掘新的和弦进程
 - 为您的演奏或歌唱创建伴奏
 - 为您的即兴演奏创建伴奏
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091547254.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091547254.png)
 
 ### **音乐词典**
 本词典包含音符、和弦和音阶。音乐词典包含 1000 多个音乐术语。欲查找某个术语，请使用顶端的搜索功能，或者使用菜单中的链接。 、
 1. 的音。查找音的名称；例如C、降A、升D
 2. 和弦。查找和弦符号，例如Dm、Ebmaj7、或F#m9。
 3. 音阶。搜索音阶名称，例如E大调音阶、降B调蓝调音阶或升C自然小调音阶。查找音阶名称，例如E大调音阶、降B调音阶或升C自然小调音阶。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091523957.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409091523957.png)
 
 网站：https://www.musicca.com/zh/
 大家可以快乐地在这个网站自学音乐啦，还挺有趣的。
@@ -63,5 +63,5 @@ hide:
 
 
 欢迎关注我的个人公众号【愿你总能遇到温柔的人】
-![wechat_plat.png](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409041405863.png)
+![wechat_plat.png](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409041405863.png)
 

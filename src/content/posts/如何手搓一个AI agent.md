@@ -38,13 +38,13 @@ tags:
 - **Self-ask**：Self-ask 可能是指 AI 系统在处理问题时，自主提出问题以引导其思考过程。这类似于人类在面对问题时，会自问：“我接下来应该做什么？” 来推动解决问题的进程。+ 后见链（Chain of Hindsight）：通过向模型明确展示一系列过去的输出结果，鼓励模型改进自身的输出结果，使得下一次预测的行动比之前的试验取得更好的成绩。算法蒸馏（Algorithm Distillation）将同样的理念应用于强化学习任务中的跨集轨迹。
 ##### 为什么需要agent？人类与AI的协同关系
 如果说 Copilot 是 “副驾驶”，那么 Agent 则可以算得上一个初级的 “主驾驶”。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408092342865.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408092342865.png)
 
 
 二、基础原理
 **一个基于大模型的 AI Agent 系统可以拆分为大模型、规划、感知、记忆与工具使用五个组件部分。AI Agent 的原理主要包括感知、分析、决策和执行四大能力**。
 Agent的工作流程：由感知（Preception）处理来自外部环境的输入信息，作为规划、决策的信息来源，由Agent的大脑（LLM）对用户指令进行任务分解和规划（Planning），通过记忆（Memory）提升精准记忆和复杂推理能力，调用外部工具（Tools）协同执行各个子任务（Action），最后通过LLM汇总生成任务执行结果。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408092340115.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408092340115.png)
 
 ### 2.1 感知：Agent与环境交互的入口
 Agent通过感知模块感知外部环境，确定环境的相关状态和变化，并将空间扩展至多模态。然后将感知的信息作为后续规划决策的信息来源。Agent支持通过各种设备获取不同的环境信息，其感知空间包含文本、视觉、听觉等多模态领域。
@@ -67,7 +67,7 @@ Reflexion：一个让 AI Agent 具备动态记忆和自我反思能力以提高�
 - 感觉记忆：原始的输入，包括文本、图像或其他模态；
 - 短期记忆：即Prompt内的信息，所有上下文学习都可以视为利用模型的短期记忆进行学习。
 - 长期记忆：使得Agent能够长期保存和回忆（无限）信息的能力，通常使用外部向量存储和快速检索实现。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408092346909.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408092346909.png)
 ### 2.5 工具：懂得使用工具才会更像人类
 
 **AI Agent 与大模型的一大区别在于能够使用外部工具拓展模型能力**。Agent可以学习如何调用外部 API，以获取模型权重中缺少的额外信息，这些信息通常在预训练后很难更改，包括当前信息、代码执行能力、专有信息源的访问等。

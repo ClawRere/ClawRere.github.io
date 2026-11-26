@@ -24,14 +24,14 @@ keywords:
 ## 一、安装MySql
 MySQL下载地址：https://dev.mysql.com/downloads/installer/
 - **进入官网下载地址**
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731160519.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731160519.png)
 
 - **选择不登陆直接下载**
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731160345.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731160345.png)
 
 - **下载完成后直接双点击安装**
 - 选择`Full`之后一直下一步即可安装完成
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731160836.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731160836.png)
 
 **这里介绍一下各个组件的作用**：
 	- MySql Server：Mysql数据库的服务器，我们操作数据一般都是连接到该服务器进行操作
@@ -48,19 +48,19 @@ MySQL下载地址：https://dev.mysql.com/downloads/installer/
 	- Samples and Examples：例子
 
 下面这个页面为配置选项，红框中的要选择开发者电脑，端口之类的一般默认即可，绿框建议勾选上，以后编程可能有机会用上，可以直接默认
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161010.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161010.png)
 
 下图选择验证方法，建议使用老一点的，比较稳定，选择新版本可能导致某些开源代码不兼容
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161201.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161201.png)
 设置root密码，建议找地方记住密码，后面经常会用到
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161432.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161432.png)
 
 - **其他没提到到直接默认下一步即可，完成整个安装**
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161536.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161536.png)
 - **输入刚刚的密码，检查一下链接状态**
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161652.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161652.png)
 - 后续直接确认下一步即可，基本没什么问题了，安装完成会自动进入mysql 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161826.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731161826.png)
 ## 二、常见MySql指令
 #### 1.数据库相关
 |命令	|作用|

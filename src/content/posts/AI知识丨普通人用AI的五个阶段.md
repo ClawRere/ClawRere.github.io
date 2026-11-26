@@ -48,7 +48,7 @@ tags:
 你是一位专业管理专家，请你根据我接下来的任务 XXXXXXX，将它拆解成可以更好落地实现的：目标(Object)、关键结果(Key Results)、具体的行动项(Actions Items)。
 ```
 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409131306633.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409131306633.png)
 
 这些都是通过，丰富提问的内容，来让AI输出期望的回复，这是第一阶段，**使用**；
 
@@ -61,7 +61,7 @@ tags:
 编程领域：cursor、Github  Coplit等等；
 角色对话：Character.AI、猫箱AI、Talkie AI、彩云小梦等等；
 医疗领域：大医模型(商汤科技)、盘古药物分子大模型(华为云)、讯飞晓医(科大讯飞)等等；
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409131349425.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409131349425.png)
 学术领域：Storm(斯坦福)、秘塔AI、海鲸AI、Scholarcy、ResearchRabbit等等；
 
 直接使用落地应用的好处就是：直接使用，无需调优，专业领域专业知识。
@@ -75,7 +75,7 @@ tags:
 
 可以参考以下的优质prompt直接使用：[还不错的prompt整理](https://ldddd.eu.org/posts/c6492a1b)
 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409221614247.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409221614247.png)
 
 之前也写过怎么写标准有效的提示词的方法：[大模型提示词工程整理](https://ldddd.eu.org/posts/29dbdb32)
 
@@ -85,10 +85,10 @@ tags:
 
 例如，之前在[新功能丨我在公众号加入了汉语新解、八字...](https://mp.weixin.qq.com/s?__biz=MzIxOTQ5MDk4Mg==&mid=2247484437&idx=1&sn=62e15f9329db2394bf3a1a044b6b68aa&chksm=97db3bdca0acb2ca4972a1aeb2ae9987d7d31263099ea35e92b73b2d87fd5b06a4c2042039bd#rd)中提到的 **`汉语新解`** 就是让大模型输出固定格式的卡片结果。
 #### 新媒体博主
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409181409872.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409181409872.png)
 
 #### 中国男足
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409181404382.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409181404382.png)
 
 
 
@@ -101,12 +101,12 @@ tags:
 AI工作流中，大模型作为一项完整工作流程的一环，接收固定的输入，并按要求的格式输出内容，来达到**完整完成一套工作流程**的目的。
 
 这个流程一般都是简单、简短的某一项工作。像 **`coze`** 中，就有很多其他人创建的工作流，用来完成诸如：视频文案提取、网页内容摘要等等内容。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409221630292.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409221630292.png)
 
 我们可以点开看看这些工作流的完整流程，以下摘录了一个例子：
 #### arxiv论文获取与pdf快速阅读
 输入论文主题→**AI提取关键信息**→在arxiv中搜索对应的论文*(搜索工作流)* →**AI批量提取链接**→从链接中提取pdf标题&内容*(链接提取工作流)* →输出所有整理的内容
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409221634923.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409221634923.png)
 
 可以看到，整个工作流的目的是，通过简单输出主题，**在arxiv网站搜索相关的论文**并输出。但是这个过程中AI(带prompt)作为重要的衔接，同时调用了**其他的工作流**来完成这项工作。比如：论文搜索、从链接中提取网页信息..
 
@@ -116,7 +116,7 @@ AI工作流中，大模型作为一项完整工作流程的一环，接收固定
 **Agent**：也称智能体、BOT等。以LLM为大脑，感知、理解、处理并能自动化完成一系列复杂工作的系统。简单来说，输入你的需求，Agent会自动完成满足需求的所有工作。
 
 AI Agent = AI+规划（Planning）+记忆（Memory）+工具使用（Tool Use）+反思（Reflection）
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409221651421.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409221651421.png)
 
 #### 实际应用中的Agent
 其实那些落地应用的软件/网页基本都按agent来设计的。
@@ -130,7 +130,7 @@ AI Agent = AI+规划（Planning）+记忆（Memory）+工具使用（Tool Use）
 #### 概念区分：Agent、LLM、RPA
 LLM 和 Al Agent 的区别在于：Al Agent 可以独立思考，并做出行动。
 RPA 和 Al Agent 的区别在于：Al Agent 能够处理未知环境信息。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409221645402.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409221645402.png)
 
 普通人想要做一个agent还是比较困难的，不过能做到AI工作流的排布就已经可以解决大部分问题了。
 
@@ -146,5 +146,5 @@ RPA 和 Al Agent 的区别在于：Al Agent 能够处理未知环境信息。
 
 
 欢迎关注我的个人公众号【愿你总能遇到温柔的人】
-![wechat_plat.png](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409041405863.png)
+![wechat_plat.png](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409041405863.png)
 

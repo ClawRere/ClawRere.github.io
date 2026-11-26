@@ -26,12 +26,12 @@ hide:
 
 ## 秘塔
 先说说秘塔，没有广告、AI赋能写作、AI法律翻译、自动生成大纲、思维导图、相关事件和人物、**在数亿篇文献中筛选有用信息，助力学术研究**。这些都是秘塔产品的功能。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181538718.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181538718.png)
 
 该公司的产品包括： 秘塔AI搜索、秘塔写作猫、秘塔翻译、MetaLaw类案分析。其中秘塔AI就是本次事件的主角。
 
 公司官网：https://metasota.ai/#/
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181535475.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181535475.png)
 
 ## 秘塔AI
 
@@ -43,25 +43,25 @@ hide:
 包括文献综述、研究路线等内容，同时提供了**写作猫AI**的功能建议，以及**脑图**、**大纲**内容，还可以生成**PPT**。往下翻了下，在“全网”范围内，还会有各种相关的热点事件，当前热门的Agent厂商等等。
 
 图：秘塔AI的输出内容
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181608212.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181608212.png)
 图：输出大纲
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181612947.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181612947.png)
 
 
 图：秘塔AI的数据来源
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181607183.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181607183.png)
 
 在点击顶部的"学术"，也是此次事件的主要被状告的功能，可以发现，秘塔AI更新了输出的内容：
 1）整体更加的学术化，删去了一些热点事件，保留与研究更加贴近的内容。
 2）更关注主题相关内容的起源、发展与应用，技术的进展与分析等。
 3）链接**来源**变成了**参考文献**，点进去看了几篇，都是真实可查证的内容（痛失知网数据）。
 图：学术类主题
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181618850.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181618850.png)
 图：学术类延伸阅读与相关事件
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181619913.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181619913.png)
 
 图：学术类参考文献
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181610762.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181610762.png)
 
 可以看到，在学术研究帮助方面，比某些通用AI的效果要好很多，一方面是可以查到论文的真实来源，方便去下载查阅，一方面提供了不少的研究建议，便于后续研究方向确认。
 
@@ -75,7 +75,7 @@ hide:
 > 
 > “如需商务合作，请与我司联系”
 
-![1884c87adca01d0389452f0764d59d8.png](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181528196.png)
+![1884c87adca01d0389452f0764d59d8.png](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181528196.png)
 
 虽然**目前我国《著作权法》列举的13种合理使用情形中，没有包含数据挖掘行为**。
 
@@ -102,7 +102,7 @@ hide:
 作为一个喜欢反思的中国人，当然不可能就到这里结束了，热点新闻只是一个信息，信息只有变成知识才能实现它的价值，沿着这个话题，我又去研究了一下现在很好用的AI论文工具，这几天会整理出来分享给大家。为了避免找不到后续消息，请大家**关注**等待后续，点一下**在看**刷到的几率更高哦。
 
 也欢迎大家关注我的[博客网站](http://ldddd.eu.org/)，或者直接收藏我的[每日简报](https://ldddd.eu.org/tools/dayly/)栏目，里面收录了当前热点的新闻热点、科技新闻等等。后续有空我会把页面美化一下，让大家有更好地阅读体验。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181644575.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181644575.png)
 
 > [!NOTE] 文章推荐  
 > - [我的博客网站：磊大大の小栈](https://ldddd.eu.org/)👈️  

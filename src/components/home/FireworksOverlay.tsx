@@ -246,6 +246,7 @@ export const FireworksOverlay: React.FC = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         rafRef.current = null;
         setTimeout(() => {
+          (window as any).__fireworksActive = false;
           setIsDarkMask(false);
           setIsLaunching(false);
         }, 450);
@@ -257,6 +258,7 @@ export const FireworksOverlay: React.FC = () => {
 
   const launchFireworks = () => {
     if (isLaunching) return;
+    (window as any).__fireworksActive = true;
     setIsLaunching(true);
     setIsDarkMask(true);
 
@@ -302,7 +304,7 @@ export const FireworksOverlay: React.FC = () => {
         onClick={launchFireworks}
         disabled={isLaunching}
         style={{ top: btnPos.top, left: btnPos.left }}
-        className="absolute z-30 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/35 hover:bg-black/60 backdrop-blur-md border border-white/25 text-white text-xs font-mono shadow-xl transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+        className="absolute z-30 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/45 hover:bg-black/70 border border-white/25 text-white text-xs font-mono shadow-xl transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
         title="点击熄灯放 1-3 个随机花型烟花（带音效）"
       >
         <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />

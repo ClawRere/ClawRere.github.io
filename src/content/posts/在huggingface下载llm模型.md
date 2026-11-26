@@ -20,7 +20,7 @@ tags:
 
 ## 一、使用镜像网站
 1. 镜像网站：hf-mirror.com
-![chatglm-6b](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/chtgplm-6b.png)
+![chatglm-6b](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/chtgplm-6b.png)
 
 
 ```python
@@ -120,7 +120,7 @@ print(sentence_embeddings)
 ```
 https://hf-mirror.com/
 ```
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240616121501.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240616121501.png)
 
 2. 输入完整的内容
 ```python

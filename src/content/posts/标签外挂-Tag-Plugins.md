@@ -137,7 +137,7 @@ This is my website, click the button {% btn 'https://butterfly.js.org',Butterfly
 This is my website, click the button {% btn 'https://butterfly.js.org',Butterfly %}
 
 This is my website, click the button {% btn 'https://butterfly.js.org',Butterfly,,outline%}
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610090822.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610090822.png)
 
 ### Block
 
@@ -150,7 +150,7 @@ This is my website, click the button  {% btn 'https://butterfly.js.org',Butterfl
 {% btn 'https://butterfly.js.org',Butterfly,far fa-hand-point-right,block larger %}
 {% btn 'https://butterfly.js.org',Butterfly,far fa-hand-point-right,block center larger %}
 {% btn 'https://butterfly.js.org',Butterfly,far fa-hand-point-right,block right blue larger %}
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610090829.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610090829.png)
 
 ### option
 
@@ -177,7 +177,7 @@ This is my website, click the button  {% btn 'https://butterfly.js.org',Butterfl
 {% btn 'https://butterfly.js.org',Butterfly,far fa-hand-point-right,orange larger %}
 {% btn 'https://butterfly.js.org',Butterfly,far fa-hand-point-right,green larger %}
 </div>
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610090849.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610090849.png)
 
 ```markdown
 <div class="btn-center">
@@ -200,7 +200,7 @@ This is my website, click the button  {% btn 'https://butterfly.js.org',Butterfl
 {% btn 'https://butterfly.js.org',Butterfly,far fa-hand-point-right,outline orange larger %}
 {% btn 'https://butterfly.js.org',Butterfly,far fa-hand-point-right,outline green larger %}
 </div>
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610090857.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610090857.png)
 
 ## mermaid
 
@@ -300,7 +300,7 @@ warning 提示塊標籤
 {% note danger %}
 danger 提示塊標籤
 {% endnote %}
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610090927.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610090927.png)
 
 > modern
 
@@ -590,7 +590,7 @@ danger 提示塊標籤
 {% note green 'fab fa-internet-explorer' simple %}
 前端最討厭的瀏覽器
 {% endnote %}
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610091134.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240610091134.png)
 
 > modern
 

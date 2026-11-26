@@ -50,20 +50,20 @@ PicGo core: https://picgo.github.io/PicGo-Doc/
 
 然后点击`Generate new token`。
 
-![创建新token](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/generate_new_token.png)
+![创建新token](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/generate_new_token.png)
 
 把repo的勾打上即可。然后翻到页面最底部，点击Generate token的绿色按钮生成token。
-![生产token](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20180508210435.png)
+![生产token](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20180508210435.png)
 
 
 **注意：**这个token生成后只会显示一次！你要把这个token复制一下存到其他地方以备以后要用。
-![记住token](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/copy_token.png)
+![记住token](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/copy_token.png)
 
 
 
 ## Step2 Obsidian安装PicGo插件
 设置 → 第三方插件 → 安全模式 → 关闭 → 浏览（社区插件） → 搜索 `image auto upload` →安装
-![image.png](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240602210224.png)
+![image.png](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240602210224.png)
 
 启用插件，按要求配置对应内容。建议使用`picgo core`模式，配置完文件路径即可生效。
 `样例：`![github图床配置](https://pic.molunerfinn.com/picgo/docs/setup_github.png)
@@ -88,19 +88,19 @@ PicGo core: https://picgo.github.io/PicGo-Doc/
 > 访问：https://github.com/settings/tokens
 > 然后点击`Generate new token`。
 > 
-> ![创建新token](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/generate_new_token.png)
+> ![创建新token](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/generate_new_token.png)
 > 
 > 把repo的勾打上即可。然后翻到页面最底部，点击Generate token的绿色按钮生成token。
-> ![生产token](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20180508210435.png)
+> ![生产token](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20180508210435.png)
 > 
 > 
 > **注意：**这个token生成后只会显示一次！你要把这个token复制一下存到其他地方以备以后要用。
-> ![记住token](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/copy_token.png)
+> ![记住token](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/copy_token.png)
 
 ##### 2. picgo与picgocore配置不一致问题
 这个问题也耽误我不少时间，花了半个多小时才找到具体问题。
 在picgo的GUI（图形界面）中点击`打开配置文件`打开的是`data.json`文件，是picgo的配置。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731153057.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731153057.png)
 
 但是你更新了token(见问题1)，只调整了picgo的配置，没有更新picgo-core的配置文件
 > Picgo-Core 配置文件: ~/.picgo/config.json
@@ -128,4 +128,4 @@ PicGo core: https://picgo.github.io/PicGo-Doc/
 
 
 欢迎关注我的个人公众号【愿你总能遇到温柔的人】
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731160239.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240731160239.png)

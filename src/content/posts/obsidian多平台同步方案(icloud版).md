@@ -23,7 +23,7 @@ keywords:
 obsidian（黑曜石）是一个全平台的笔记软件，基础笔记功能免费，如果使用官方的同步功能好像是收费，为了解决自动同步问题。
 ## 一、使用iCloud同步
 1.在[iPhone](https://www.smzdm.com/fenlei/iphone/)或者[iPad](https://www.smzdm.com/fenlei/ipad/)上安装Obsidian，选择Create new vault后，勾选Store in iCloud。
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408072114431.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408072114431.png)
 
 2.在电脑上安装iCould：[icloud下载地址](https://apps.microsoft.com/detail/9pktq5699m62?rtc=1&hl=zh-cn&gl=CN)
 

@@ -121,7 +121,7 @@ python3 -m pip install vosk
 您还必须安装 Vosk 模型：
 以下是可供下载的模型。您必须将它们放在项目的模型文件夹中，例如“your-project-folder/models/your-vosk-model”
 https://alphacephei.com/vosk/models
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240614162129.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/20240614162129.png)
 测试脚本：
 ***注：** 在测试脚本的所在文件夹，新建model子文件夹，然后把上面下载的模型解压到里面如下：*
 ```python

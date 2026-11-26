@@ -50,7 +50,7 @@ hide: false
 ![](https://mmbiz.qpic.cn/sz_mmbiz_gif/7FylpYe368DCwx7zLu1YSTt82t0mQLF7qfWL8zs8FSu0Jc1RNSfPBn1Ffy18u5meCYicWqaZsDOQT2oMibhFJ6ug/640?wx_fmt=gif&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
 ['卫生纸开关'](/effects/t_paper_butoom)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202411021436974.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202411021436974.png)
 
 ['飞机大战'](/effects/flight_game)
 ![](https://mmbiz.qpic.cn/sz_mmbiz_gif/7FylpYe368DU6GLxficRwLj7S8lQ04gibSOjy5S6iaQS2qyJjEl3htfia36Mj3zKVMuWy86neyoibwsvTK8QUo6k0tg/640?wx_fmt=gif&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
@@ -59,268 +59,268 @@ hide: false
 ![](https://mmbiz.qpic.cn/sz_mmbiz_gif/iboghYD5pWrHX7qkZiarCdcmiawHHHmgfT4B7sGTrqib90ExiaKD4ia6DHKWV0bum7hSQQsGHDmRCnjLdJxajVdpDOcQ/640?wx_fmt=gif&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
 ['彩色卡片'](/effects/color_cards)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131435586.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131435586.png)
 
 ['嘻嘻不嘻嘻狗狗版'](/effects/happy_dog_button)
 ![](https://mmbiz.qpic.cn/sz_mmbiz_gif/dDmpM78CC6heD7QLDXIvicvX9w0Nl4OruSibqUkRdCXOqHG9j3f8cFQ61nYoJq1tnAexT7O35rnGPfM8dF9wOEcQ/640?wx_fmt=gif&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
 ['炫彩键盘'](/effects/cool_keyboard)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131431366.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131431366.png)
 
 ['彩色数字时钟'](/effects/colorful_clock)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131429118.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131429118.png)
 
 
 ['阴天与晴天'](/effects/sun_cloud_button)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131428219.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131428219.png)
 
 
 ['灯光追踪'](/effects/light_flow)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131427409.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131427409.png)
 
 
 ['3D警车模型'](/effects/3d_police_car)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131425260.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131425260.png)
 	
 
 ['漏水的水龙头'](/effects/faucet_unlock)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131424620.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202410131424620.png)
 
 ['穿越太空的火箭'](/effects/rocket_flying)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409141421409.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409141421409.png)
 
 ['会滑行的小球'](/effects/slide_ball)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112031329.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112031329.png)
 
 
 ['线性切换'](/effects/liner_buttom)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112030968.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112030968.png)
 
 
 ['战斗机出击'](/effects/helicopter_fighting)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112029514.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409112029514.png)
 
 
 ['路径动画复选框'](/effects/checkbox)
 ![](https://mmbiz.qpic.cn/mmbiz_gif/R3U8DGGYpXHXI1zIU36RpMac8SJvSMtzyD9yqB9Pwvh1BnWSYVRrMeLDLzOVEMUmVVQx6zJLn8YJZSYKNYLaTg/640?wx_fmt=gif&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1)
 
 ['煎锅加载'](/effects/cooking_loading)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061220393.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061220393.png)
 
 
 ['动画表情评分'](/effects/animated_emoticons)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061217459.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061217459.png)
 
 ['点击喜欢'](/effects/click_heart)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061049574.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061049574.png)
 
 
 ['别捅马蜂窝'](/effects/bee_hive)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061047295.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409061047295.png)
 
 
 
 ['彩虹猪加载'](/effect/rambo_pig_loding)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090007988.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090007988.png)
 
 ['动态搜索框'](/effects/search_box_dynamic)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090007983.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090007983.png)
 
 ['水滴效果按钮'](/effects/water_ripple_button)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090014866.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090014866.png)
 
 ['内凹导航栏'](/effects/navigation_bar_recessed)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090014348.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090014348.png)
 
 ['环形图片墙'](/effects/circle_bg) 
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090023266.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090023266.png)
 
 ['罗盘时钟'](/effects/compass_clock)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020940.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020940.png)
 
 ['日夜交替'](/effects/day_night_change)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020217.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020217.png)
 
 ['烟花模拟器'](/effects/fireworks)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020957.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090020957.png)
 
 ['嘻嘻不嘻嘻'](/effects/happy_button)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019278.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019278.png)
 
 ['灯光效果按钮'](/effects/lighting_button)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019535.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019535.png)
 
 ['线性灯光文字'](/effects/lighting_text)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090018031.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090018031.png)
 
 ['爱心柯基❤'](/effects/lovely_dog)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019689.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090019689.png)
 
 ['图片悬停组件'](/effects/pic_floating)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090018182.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408090018182.png)
 
 ['手风琴效果扩展'](/effects/accordion_icon_expands)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171408766.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171408766.png)
 
 ['口香糖吹泡泡'](/effects/blowing_bubbles)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171409051.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171409051.png)
 
 ['蜡烛吹灭动画'](/effects/candle_bg)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171409469.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171409469.png)
 
 ['喵星人与洗衣机的快乐时光'](/effects/cat_loding)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171410423.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171410423.png)
 
 ['小幽灵盯着我的鼠标怎么办'](/effects/ghost_bg)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171414983.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171414983.png)
 
 ['马里奥&坦克大战加载'](/effects/mario_tanke_loding)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171418554.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171418554.png)
 
 ['边缘融合加载组件'](/effects/merge_loding)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171418233.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171418233.png)
 
 ['星际旋转'](/effects/solar_rotation)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171420600.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171420600.png)
 
 ['天气盒子'](/effects/weather_box)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171429730.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171429730.png)
 
 ['通用天气特效'](/effects/weather_normal)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171431087.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171431087.png)
 
 ['简约登录注册表单'](/effects/login_regist_page)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171603505.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408171603505.png)
 
 ['右键菜单案例'](/effects/right_menu_multi)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181438209.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181438209.png)
 
 ['开灯！关灯！'](/effects/light_on_off)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181438685.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181438685.png)
 
 ['动态文本效果'](/effects/text_animation)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181442310.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181442310.png)
 
 ['禁止打开盖子'](/effects/open_lid)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181443027.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181443027.png)
 
 ['霓虹灯背景魔术卡'](/effects/magic_card)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181446212.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408181446212.png)
 
 ['虚拟键盘'](/effects/keybord_vertual)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408191525656.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408191525656.png)
 
 ['四叶草布局特效'](/effects/four_leaf_clover_card)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408191527811.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408191527811.png)
 
 ['3D渐变的轮播图效果'](/effects/3d_photo_wall)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408211147704.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408211147704.png)
 
 ['鼠标粒子特效'](/effects/mouse_effect)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408221048686.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408221048686.png)
 
 ['萤火虫按钮'](/effects/fireflies_button)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251609915.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251609915.png)
 
 ['好看的摆钟'](/effects/pendulum_clock)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251609644.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251609644.png)
 
 ['抓蝴蝶'](/effects/catch_butterfly)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251622475.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251622475.png)
 
 ['会跳舞的花朵'](/effects/dancing-flower)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251739657.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251739657.png)
 
 ['老爷爷拄拐杖'](/effects/old_man_walking_loding)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251740223.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251740223.png)
 
 ['人群流动模拟动画'](/effects/canvas_crowd)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251814461.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251814461.png)
 
 ['碰撞检测穿马路动画游戏'](/effects/impac_checking_game)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251822737.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251822737.png)
 
 ['3D鼠标滑过动画'](/effects/3d_background)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251840965.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251840965.png)
 
 ['漩涡样式的Loading加载动画'](/effects/swirl_loading)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251842455.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251842455.png)
 
 ['图片切换动画'](/effects/image_animation)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251850308.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251850308.png)
 
 ['动画表情'](/effects/face_expression)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251913197.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251913197.png)
 
 ['青蛙表情'](/effects/frog_expression)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251913725.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251913725.png)
 
 ['太阳系行星运行动画'](/effects/solar_animation)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251950468.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251950468.png)
 
 ['模拟自行车行驶'](/effects/bike_running)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251951345.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251951345.png)
 
 ['蓝蝴蝶'](/effects/blue_butterfly)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251953299.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251953299.png)
 
 ['下雨动画'](/effects/rain_movie)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251958805.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408251958805.png)
 
 ['天气动画'](/effects/weather_icon)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252003618.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252003618.png)
 
 ['小蜜蜂'](/effects/bee)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252004620.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252004620.png)
 
 ['简易版仿超级玛丽小游戏'](/effects/simple_mario_game)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252005494.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252005494.png)
 
 ['赛车游戏'](/effects/car_racing_game)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252015601.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408252015601.png)
 
 ['小猫咪挂在绳索上摇摆'](/effects/cat_swinging)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408261913133.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408261913133.png)
 
 ['打字效果'](/effects/typing_text)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408261920039.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408261920039.png)
 
 ['吐泡泡'](/effects/bubbles_background)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281546972.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281546972.png)
 
 
 ['随机设备加载组件'](/effects/random_device_loding)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281509884.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281509884.png)
 
 ['隐式动态侧边栏'](/effects/sidemenu_hide)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281547828.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281547828.png)
 
 ['可以射击的3D直升机'](/effects/3d_helicopter)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281511956.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408281511956.png)
 
 ['奔跑的小仓鼠'](/effects/running_rate)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021214244.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021214244.png)
 
 ['带光按钮'](/effects/button_with_light)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021219735.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021219735.png)
 
 ['霓虹灯'](/effects/neon_lights_button)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021221405.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021221405.png)
 
 ['品字加载'](/effects/pin_word_loding)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021225663.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021225663.png)
 
 ['萤火虫背景'](/effects/fireflies_background)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021400855.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021400855.png)
 
 ['擎天柱'](/effects/optimus_prime)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021528376.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021528376.png)
 
 ['爱翻滚的龙猫'](/effects/totoro)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021528556.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021528556.png)
 
 ['组装电脑加载'](/effects/laptop_loading)
-![](https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021530116.png)
+![](https://cdn.jsdelivr.net/gh/Eddie-Hyu/picx-images-hosting@master/poster/202409021530116.png)
 
 
 欢迎关注我的个人公众号【愿你总能遇到温柔的人】

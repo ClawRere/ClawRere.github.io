@@ -41,13 +41,47 @@ const initialMessages: CommentItem[] = [
   },
 ];
 
-// Realistic Flame + Rising Embers + SVG Heat Turbulence + Anime.js Staggered Flame Tongues
+// Tidewell 9x9 Coastal Pixel Icons for Masked & Morphing State
+const TW_PIXEL_ICONS = [
+  ['........k','......kkb','....kkwkb','..kkwwkb.','kkwwwkbb.','..kkkbb..','....kb...','....k....','.........'],
+  ['...kkk...','..kbwbk..','.kbwbwbk.','kbwbwbwbk','kwbwbwbwk','.kbwbwbk.','..kbbbk..','...kkk...','.........'],
+  ['....k....','....kb...','....kbb..','...wkbbb.','..wwkbbb.','....k....','kkkkkkkkk','.kpppppk.','..kkkkk..'],
+  ['...kkk...','..kbbbk..','...kwk...','...kbk...','...kwk...','...kbk...','..kwwwk..','..kbbbk..','.kkkkkkk.'],
+  ['.........','...kkk..k','..kbbbkkk','.kbwbbbbk','kbbbbbkkk','.kbbbbk.k','..kkkk...','.........','.........'],
+  ['.........','...kkk...','..kbbbk..','.kbwwbbk.','kbw..kbbk','kb....kbk','bbbbbbbbb','kkkkkkkkk','.........'],
+  ['....p....','.p..k..p.','...kpk...','..kpppk..','pkpppppkp','..kpppk..','...kpk...','.p..k..p.','....p....'],
+];
+const TW_PALETTE: Record<string, string> = { k: '#1F2430', b: '#7DA3BB', w: '#FFFFFF', p: '#DDAD95' };
+const TW_STICKER_SHEET =
+  'https://images.higgs.ai/?default=1&output=webp&url=' +
+  encodeURIComponent('https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261118_061547_979f8673-f904-4102-90a0-6458bce33bc8.png') +
+  '&w=700&q=85';
+
+const TidewellPixelRow: React.FC = () => (
+  <div className="flex items-center gap-1.5" aria-hidden="true">
+    {TW_PIXEL_ICONS.map((rows, idx) => (
+      <svg key={idx} viewBox="0 0 9 9" shapeRendering="crispEdges" className="w-5 h-5 shrink-0">
+        {rows.map((row, y) =>
+          row.split('').map((c, x) =>
+            c !== '.' && TW_PALETTE[c] ? (
+              <rect key={`${x}-${y}`} x={x} y={y} width="1.02" height="1.02" fill={TW_PALETTE[c]} />
+            ) : null
+          )
+        )}
+      </svg>
+    ))}
+  </div>
+);
+
+// Realistic Flame + Tidewell Staggered Sparkles, Paper Plane Exit & SVG Turbulence
 const BurnCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const tonguesRef = useRef<HTMLDivElement>(null);
+  const planeRef = useRef<HTMLDivElement>(null);
+  const sparklesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 1. Anime.js v4: Animate SVG feDisplacementMap heat distortion & staggered flame tongues
+    // 1. Anime.js v4: Animate SVG feDisplacementMap heat/ripple distortion & Tidewell elements
     const dispMap = document.querySelector('#burn-heat-filter feDisplacementMap');
     const turbulence = document.querySelector('#burn-heat-filter feTurbulence');
     let heatAnim: ReturnType<typeof animate> | null = null;
@@ -55,7 +89,7 @@ const BurnCanvas: React.FC = () => {
 
     if (dispMap) {
       heatAnim = animate(dispMap, {
-        scale: [0, 18, 32, 12],
+        scale: [0, 18, 34, 12],
         duration: 1650,
         ease: 'inOutQuad',
       });
@@ -78,6 +112,33 @@ const BurnCanvas: React.FC = () => {
         delay: stagger(45, { from: 'center' }),
         duration: 1550,
         ease: 'outCubic',
+      });
+    }
+
+    // Tidewell 4-point sparkles pop with back-out spring
+    if (sparklesRef.current) {
+      const spks = sparklesRef.current.querySelectorAll('.tw-burn-sparkle');
+      animate(spks, {
+        scale: [0, 1.25, 0],
+        rotate: [-14, 24, 55],
+        translateY: [0, -32],
+        opacity: [0, 1, 0],
+        delay: stagger(70, { from: 'center' }),
+        duration: 1350,
+        ease: 'outCubic',
+      });
+    }
+
+    // Tidewell paper plane glides out diagonally as the message burns away
+    if (planeRef.current) {
+      animate(planeRef.current, {
+        translateX: [-20, 180, 380],
+        translateY: [10, -28, -72],
+        rotate: [-8, -16, -24],
+        scale: [0.4, 1.05, 0.5],
+        opacity: [0, 1, 0],
+        duration: 1450,
+        ease: 'inOutCubic',
       });
     }
 
@@ -198,13 +259,34 @@ const BurnCanvas: React.FC = () => {
             className="flame-tongue w-7 h-16 rounded-t-full opacity-0"
             style={{
               background:
-                'radial-gradient(circle at 50% 80%, #fef08a 0%, #f97316 45%, rgba(220,38,38,0) 85%)',
+                'radial-gradient(circle at 50% 80%, #fef08a 0%, #DDAD95 35%, #f97316 55%, rgba(220,38,38,0) 85%)',
               filter: 'blur(3px)',
               transformOrigin: 'bottom center',
             }}
           />
         ))}
       </div>
+      {/* Tidewell 4-point Sparkles */}
+      <div ref={sparklesRef} className="absolute inset-0 flex items-center justify-around pointer-events-none z-35">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <svg key={i} className="tw-burn-sparkle w-5 h-5 opacity-0" viewBox="0 0 20 20">
+            <path
+              d="M10 0c.8 5.6 3.6 8.6 10 10-6.4 1.4-9.2 4.4-10 10-.8-5.6-3.6-8.6-10-10 6.4-1.4 9.2-4.4 10-10z"
+              fill={i % 2 === 0 ? '#F4E3D3' : '#DDAD95'}
+            />
+          </svg>
+        ))}
+      </div>
+      {/* Tidewell Paper Plane Glide-out */}
+      <div
+        ref={planeRef}
+        className="absolute left-8 bottom-4 w-11 h-11 pointer-events-none z-35 opacity-0"
+        style={{
+          backgroundImage: `url('${TW_STICKER_SHEET}')`,
+          backgroundSize: '336.7% 492.6%',
+          backgroundPosition: '84.5% 77%',
+        }}
+      />
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-30" />
     </>
   );
@@ -529,22 +611,37 @@ export const MessageBoard: React.FC = () => {
                 {msg.isBurnAfterReading && !isRevealed && !isBurning ? (
                   <div
                     onClick={() => revealBurnMessage(msg.id)}
-                    className="relative cursor-pointer rounded-xl p-4 bg-black/5 dark:bg-white/5 overflow-hidden group"
+                    className="relative cursor-pointer rounded-xl p-4 bg-[#F1ECEA]/85 dark:bg-white/5 border border-[#1F2430]/10 dark:border-white/10 overflow-hidden group"
                   >
-                    <p className="text-sm leading-relaxed blur-[9px] select-none opacity-60">
+                    <p className="text-sm leading-relaxed blur-[9px] select-none opacity-45">
                       {msg.content}
                     </p>
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
-                      <span className="px-4 py-1.5 rounded-full bg-zinc-900/90 text-white text-xs font-mono flex items-center gap-1.5 shadow-xl border border-white/15 group-hover:scale-105 transition-transform">
-                        <Eye className="w-3.5 h-3.5 text-amber-400" />
-                        点击显示密信（5s 后焚毁）
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[#F1ECEA]/70 dark:bg-zinc-950/60 backdrop-blur-[2px] group-hover:bg-[#F1ECEA]/55 dark:group-hover:bg-zinc-950/50 transition-colors">
+                      <TidewellPixelRow />
+                      <span className="px-4 py-1.5 rounded-full bg-[#1F2430] text-[#F1ECEA] text-xs font-mono flex items-center gap-1.5 shadow-xl border border-white/15 group-hover:scale-105 transition-transform">
+                        <Eye className="w-3.5 h-3.5 text-[#DDAD95]" />
+                        点击揭晓密信（5s 后随焰消逝）
                       </span>
                     </div>
                   </div>
                 ) : (
-                  <p className="text-sm text-charcoal-200 dark:text-cream-200 leading-relaxed">
-                    {msg.content}
-                  </p>
+                  <motion.div
+                    initial={msg.isBurnAfterReading ? { clipPath: 'inset(0 100% 0 0)', opacity: 0.4 } : false}
+                    animate={{ clipPath: 'inset(0 0% 0 0)', opacity: 1 }}
+                    transition={{ duration: 0.65, ease: [0.25, 0.75, 0.2, 1] }}
+                  >
+                    <p className="text-sm text-charcoal-200 dark:text-cream-200 leading-relaxed">
+                      {msg.content}
+                    </p>
+                    {isRevealed && !isBurning && (
+                      <div className="mt-2.5 h-1 w-full rounded-full bg-orange-500/15 overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-[#DDAD95] via-orange-500 to-rose-500 transition-all duration-1000 ease-linear"
+                          style={{ width: `${(countdown / 5) * 100}%` }}
+                        />
+                      </div>
+                    )}
+                  </motion.div>
                 )}
 
                 {msg.contact && (!msg.isBurnAfterReading || isRevealed) && (

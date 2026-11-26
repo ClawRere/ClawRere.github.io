@@ -115,18 +115,19 @@ export const HangingSideBoard: React.FC<HangingSideBoardProps> = ({ title }) => 
             strokeLinecap="round"
             transform="translate(1.5, 2)"
           />
-          {/* Braided elastic hemp rope */}
+          {/* Elastic Theme-Colored Rope */}
           <path
             d={`M ${nailX} ${nailY} Q ${midX} ${midY} ${eyeX} ${eyeY}`}
             fill="none"
-            stroke="#b08968"
-            strokeWidth="2.4"
+            stroke="rgb(var(--theme-accent, 217 119 87))"
+            strokeWidth="2.2"
             strokeLinecap="round"
+            opacity="0.85"
           />
-          {/* Brass Wall Nail */}
-          <circle cx={nailX} cy={nailY + 1.5} r="5.5" fill="rgba(0,0,0,0.28)" />
-          <circle cx={nailX} cy={nailY} r="5" fill="#d97706" stroke="#78350f" strokeWidth="1.2" />
-          <circle cx={nailX - 1.5} cy={nailY - 1.5} r="1.6" fill="#fef3c7" opacity="0.85" />
+          {/* Minimalist Dot Pin with Drop Shadow & Highlight (matches active theme color) */}
+          <circle cx={nailX} cy={nailY + 1.5} r="4.5" fill="rgba(0,0,0,0.22)" />
+          <circle cx={nailX} cy={nailY} r="4" fill="rgb(var(--theme-accent, 217 119 87))" />
+          <circle cx={nailX - 1.2} cy={nailY - 1.2} r="1.4" fill="#ffffff" opacity="0.85" />
         </svg>
 
         {/* Draggable Cardstock Paper Title Tag (卡片纸样式) */}

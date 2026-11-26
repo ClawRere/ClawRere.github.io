@@ -3,6 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { animate, stagger } from 'animejs';
 import { MessageSquare, Send, Sparkles, User, Calendar, Check, Flame, Eye, Heart } from 'lucide-react';
 
+interface ReplyItem {
+  id: number;
+  name: string;
+  content: string;
+  date: string;
+  isAdmin?: boolean;
+}
+
 interface CommentItem {
   id: number;
   name: string;
@@ -12,7 +20,7 @@ interface CommentItem {
   isAdmin?: boolean;
   isBurnAfterReading?: boolean;
   likes?: number;
-  reactions?: Record<string, number>;
+  replies?: ReplyItem[];
   hasAshFromAbove?: boolean;
 }
 
@@ -24,6 +32,15 @@ const initialMessages: CommentItem[] = [
     date: '2026-11-26',
     isBurnAfterReading: true,
     likes: 5,
+    replies: [
+      {
+        id: 101,
+        name: 'Larry (站长)',
+        content: '欢迎测试 5s 阅后即焚密信功能，焚毁后刷新也不会恢复～',
+        date: '2026-11-26',
+        isAdmin: true,
+      },
+    ],
   },
   {
     id: 2,
@@ -31,14 +48,37 @@ const initialMessages: CommentItem[] = [
     content: '磊大大的网站升级后动效太丝滑了！PMOS 产品模型很有启发，期待后续更多 AI 作品上线！',
     date: '2026-11-22',
     likes: 12,
+    replies: [
+      {
+        id: 201,
+        name: 'Larry (站长)',
+        content: '谢谢认可！PMOS 后续还会继续迭代工作流与基线管理能力，欢迎多提建议 ✨',
+        date: '2026-11-23',
+        isAdmin: true,
+      },
+      {
+        id: 202,
+        name: '产品新人阿K',
+        content: '同蹲 PMOS 更新！假设与事实分层那个思路太实用了！',
+        date: '2026-11-24',
+      },
+    ],
   },
   {
     id: 3,
     name: 'Larry (站长)',
-    content: '欢迎来到我的数字花园！有任何关于 AI 工具、PMOS 产品或技术交流的想法，欢迎随时在此留言互动（支持普通留言和 5 秒阅后即焚模式）。',
+    content: '欢迎来到我的数字花园！有任何关于 AI 工具、PMOS 产品或技术交流的想法，欢迎随时在此留言互动（支持嵌套回复与 5 秒阅后即焚）。',
     date: '2026-11-20',
     isAdmin: true,
     likes: 18,
+    replies: [
+      {
+        id: 301,
+        name: '路过的全栈喵',
+        content: '右下角的派派小猫和柯基好可爱！',
+        date: '2026-11-25',
+      },
+    ],
   },
 ];
 
@@ -163,18 +203,24 @@ const BiomeDecoration: React.FC<{ biome: BiomeKind }> = ({ biome }) => {
           <path d="M17 16 H22 Q24 16 24 13 V10" stroke="#16a34a" strokeWidth="3.5" strokeLinecap="round" fill="none" />
         </svg>
 
-        {/* Periodic Slow Spinning Mini Sand Tornado (小龙卷风) */}
-        <div className="tw-sandstorm-gust absolute bottom-1.5 -left-24 w-28 h-24 pointer-events-none flex items-end justify-center">
-          <svg className="w-16 h-20 opacity-85" viewBox="0 0 64 80" fill="none">
-            <ellipse cx="32" cy="14" rx="24" ry="5" fill="#f59e0b" fillOpacity="0.28" className="tw-tornado-spin" />
-            <ellipse cx="30" cy="26" rx="19" ry="4.5" fill="#d97706" fillOpacity="0.32" />
-            <ellipse cx="33" cy="38" rx="14" ry="4" fill="#f59e0b" fillOpacity="0.38" />
-            <ellipse cx="31" cy="50" rx="9" ry="3" fill="#b45309" fillOpacity="0.42" />
-            <ellipse cx="32" cy="61" rx="5" ry="2.2" fill="#d97706" fillOpacity="0.5" />
-            <ellipse cx="32" cy="70" rx="2.5" ry="1.5" fill="#92400e" fillOpacity="0.55" />
-            <circle cx="14" cy="20" r="1.5" fill="#fde68a" />
+        {/* Periodic Slow Full-Width Spinning Mini Sand Tornado + Trailing Dust */}
+        <div className="tw-sandstorm-gust absolute bottom-1 w-36 h-24 pointer-events-none flex items-end justify-center">
+          {/* Trailing swirling sand dust */}
+          <div className="absolute -left-10 bottom-1 w-24 h-10 rounded-full bg-amber-400/20 blur-md" />
+          <span className="absolute -left-8 bottom-3 w-2 h-1 rounded-full bg-amber-300/75" />
+          <span className="absolute -left-4 bottom-7 w-1.5 h-1.5 rounded-full bg-amber-200/80" />
+          <span className="absolute -left-12 bottom-5 w-2.5 h-1 rounded-full bg-orange-300/70" />
+          <span className="absolute right-1 bottom-4 w-1.5 h-1.5 rounded-full bg-amber-300/80" />
+          <svg className="w-16 h-20 opacity-90" viewBox="0 0 64 80" fill="none">
+            <ellipse cx="32" cy="14" rx="24" ry="5" fill="#f59e0b" fillOpacity="0.30" />
+            <ellipse cx="30" cy="26" rx="19" ry="4.5" fill="#d97706" fillOpacity="0.34" />
+            <ellipse cx="33" cy="38" rx="14" ry="4" fill="#f59e0b" fillOpacity="0.40" />
+            <ellipse cx="31" cy="50" rx="9" ry="3" fill="#b45309" fillOpacity="0.45" />
+            <ellipse cx="32" cy="61" rx="5" ry="2.2" fill="#d97706" fillOpacity="0.52" />
+            <ellipse cx="32" cy="70" rx="2.5" ry="1.5" fill="#92400e" fillOpacity="0.60" />
+            <circle cx="14" cy="20" r="1.6" fill="#fde68a" />
             <circle cx="48" cy="32" r="1.8" fill="#fbbf24" />
-            <circle cx="22" cy="44" r="1.3" fill="#fde68a" />
+            <circle cx="22" cy="44" r="1.4" fill="#fde68a" />
           </svg>
         </div>
       </div>
@@ -514,6 +560,9 @@ export const MessageBoard: React.FC = () => {
 
   const [revealedIds, setRevealedIds] = useState<Record<number, number>>({});
   const [burningIds, setBurningIds] = useState<Record<number, boolean>>({});
+  const [replyingToId, setReplyingToId] = useState<number | null>(null);
+  const [replyName, setReplyName] = useState('');
+  const [replyContent, setReplyContent] = useState('');
 
   useEffect(() => {
     const saved = localStorage.getItem('guestbook_messages');
@@ -582,14 +631,25 @@ export const MessageBoard: React.FC = () => {
     localStorage.setItem('guestbook_messages', JSON.stringify(updated));
   };
 
-  const handleReact = (id: number, key: string) => {
-    const updated = messages.map((m) => {
-      if (m.id !== id) return m;
-      const prev = m.reactions || {};
-      return { ...m, reactions: { ...prev, [key]: (prev[key] || 0) + 1 } };
-    });
+  const handleReplySubmit = (e: React.FormEvent, parentId: number) => {
+    e.preventDefault();
+    if (!replyName.trim() || !replyContent.trim()) return;
+    const isAdmin = localStorage.getItem('admin_authenticated') === 'true';
+    const newReply: ReplyItem = {
+      id: Date.now(),
+      name: replyName.trim(),
+      content: replyContent.trim(),
+      date: new Date().toLocaleDateString('zh-CN'),
+      isAdmin,
+    };
+    const updated = messages.map((m) =>
+      m.id === parentId ? { ...m, replies: [...(m.replies || []), newReply] } : m
+    );
     setMessages(updated);
     localStorage.setItem('guestbook_messages', JSON.stringify(updated));
+    setReplyName('');
+    setReplyContent('');
+    setReplyingToId(null);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -750,13 +810,13 @@ export const MessageBoard: React.FC = () => {
           animation: sheepGraze 3.8s ease-in-out infinite;
         }
         @keyframes sandstormSweep {
-          0%, 35% { transform: translateX(0%) scaleX(0.95); opacity: 0; }
-          45% { opacity: 0.9; }
-          88% { transform: translateX(480%) scaleX(1.05); opacity: 0.85; }
-          100% { transform: translateX(520%); opacity: 0; }
+          0%, 15% { left: -16%; opacity: 0; }
+          25% { opacity: 0.95; }
+          85% { opacity: 0.95; }
+          100% { left: 108%; opacity: 0; }
         }
         .tw-sandstorm-gust {
-          animation: sandstormSweep 13s ease-in-out infinite;
+          animation: sandstormSweep 14s linear infinite;
         }
         @keyframes weatherRain {
           0% { transform: translateY(-10px); opacity: 0; }
@@ -887,30 +947,13 @@ export const MessageBoard: React.FC = () => {
                     <span className="flex items-center gap-1 mr-1">
                       <Calendar className="w-3 h-3" /> {msg.date}
                     </span>
-                    {/* Face Expression Reactions (inspired by /effects/face_expression) */}
-                    {[
-                      { key: 'happy', title: '开心', bg: '#ffcc4d', eye: '#664500', mouth: 'M6 12 Q10 16 14 12' },
-                      { key: 'love', title: '超赞', bg: '#ffcc4d', eye: '#e75a70', mouth: 'M6 12 Q10 15.5 14 12' },
-                      { key: 'laugh', title: '笑死', bg: '#ffcc4d', eye: '#664500', mouth: 'M5 11 Q10 17 15 11 Z' },
-                      { key: 'wow', title: '震撼', bg: '#da2f47', eye: '#ffffff', mouth: 'M7 13 Q10 10 13 13' },
-                    ].map((face) => (
-                      <button
-                        key={face.key}
-                        onClick={() => handleReact(msg.id, face.key)}
-                        title={face.title}
-                        className="tw-face-btn inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-                      >
-                        <svg className="w-4 h-4 transition-transform hover:scale-125" viewBox="0 0 20 20">
-                          <circle cx="10" cy="10" r="9" fill={face.bg} />
-                          <circle cx="7" cy="8" r="1.3" fill={face.eye} />
-                          <circle cx="13" cy="8" r="1.3" fill={face.eye} />
-                          <path d={face.mouth} stroke={face.eye === '#ffffff' ? '#ffffff' : '#664500'} strokeWidth="1.4" fill="none" strokeLinecap="round" />
-                        </svg>
-                        {(msg.reactions?.[face.key] || 0) > 0 && (
-                          <span className="text-[10px]">{msg.reactions?.[face.key]}</span>
-                        )}
-                      </button>
-                    ))}
+                    <button
+                      onClick={() => setReplyingToId(replyingToId === msg.id ? null : msg.id)}
+                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full hover:bg-terracotta/10 text-terracotta transition-colors"
+                    >
+                      <MessageSquare className="w-3 h-3" />
+                      <span>回复</span>
+                    </button>
                     <button
                       onClick={() => handleLike(msg.id)}
                       className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full hover:bg-rose-500/10 text-rose-400 transition-colors"
@@ -961,6 +1004,54 @@ export const MessageBoard: React.FC = () => {
                   <div className="mt-2 text-[11px] font-mono text-terracotta/80">
                     🔗 {msg.contact}
                   </div>
+                )}
+
+                {/* Nested Interactive Replies */}
+                {msg.replies && msg.replies.length > 0 && (
+                  <div className="mt-4 pl-4 border-l-2 border-terracotta/25 space-y-2.5">
+                    {msg.replies.map((rep) => (
+                      <div key={rep.id} className="rounded-xl bg-black/4 dark:bg-white/5 px-3.5 py-2.5 text-xs">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-semibold text-charcoal-DEFAULT dark:text-cream-50">{rep.name}</span>
+                            {rep.isAdmin && (
+                              <span className="px-1.5 py-0.5 rounded-full bg-terracotta text-white text-[9px] font-mono">站长</span>
+                            )}
+                          </div>
+                          <span className="text-[10px] font-mono text-charcoal-100 dark:text-cream-400">{rep.date}</span>
+                        </div>
+                        <p className="text-charcoal-200 dark:text-cream-200 leading-relaxed">{rep.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Inline Reply Form */}
+                {replyingToId === msg.id && (
+                  <form onSubmit={(e) => handleReplySubmit(e, msg.id)} className="mt-4 pt-3 border-t border-black/8 dark:border-white/10 flex flex-col sm:flex-row gap-2">
+                    <input
+                      type="text"
+                      value={replyName}
+                      onChange={(e) => setReplyName(e.target.value)}
+                      placeholder="你的昵称 *"
+                      required
+                      className="sm:w-36 px-3 py-1.5 rounded-xl glass text-xs text-charcoal-DEFAULT dark:text-cream-50 focus:outline-none focus:border-terracotta"
+                    />
+                    <input
+                      type="text"
+                      value={replyContent}
+                      onChange={(e) => setReplyContent(e.target.value)}
+                      placeholder={`回复 @${msg.name}...`}
+                      required
+                      className="flex-1 px-3 py-1.5 rounded-xl glass text-xs text-charcoal-DEFAULT dark:text-cream-50 focus:outline-none focus:border-terracotta"
+                    />
+                    <button
+                      type="submit"
+                      className="px-4 py-1.5 rounded-xl bg-terracotta text-white text-xs font-mono font-semibold hover:bg-terracotta/90 transition-colors shrink-0"
+                    >
+                      发送回复
+                    </button>
+                  </form>
                 )}
               </motion.div>
             );

@@ -73,6 +73,159 @@ const TidewellPixelRow: React.FC = () => (
   </div>
 );
 
+type BiomeKind = 'meadow' | 'desert' | 'stone' | 'coast';
+
+// Physical Biome Border Decorations: Meadow (grass + grazing sheep), Desert (sand + sandstorm), Stone, Coast
+const BiomeDecoration: React.FC<{ biome: BiomeKind }> = ({ biome }) => {
+  if (biome === 'meadow') {
+    return (
+      <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-2xl">
+        {/* Lush Grass Strip along bottom edge */}
+        <svg
+          className="absolute bottom-0 inset-x-0 w-full h-9"
+          viewBox="0 0 600 36"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0 36 L0 24 Q12 8 22 24 Q34 6 44 24 Q58 10 68 24 Q82 5 94 24 Q108 12 118 24 Q134 6 146 24 Q162 11 174 24 Q190 7 204 24 Q218 10 232 24 Q248 4 260 24 Q276 12 288 24 Q304 6 318 24 Q334 10 348 24 Q364 5 378 24 Q394 11 408 24 Q424 7 438 24 Q454 10 468 24 Q484 6 498 24 Q514 12 528 24 Q544 7 558 24 Q574 10 588 24 L600 22 L600 36 Z"
+            fill="#22c55e"
+            fillOpacity="0.45"
+          />
+          <path
+            d="M0 36 L0 28 Q16 14 28 28 Q42 12 56 28 Q72 15 86 28 Q104 11 118 28 Q136 16 150 28 Q168 12 184 28 Q202 15 218 28 Q236 11 252 28 Q270 16 286 28 Q304 12 320 28 Q338 15 354 28 Q372 12 388 28 Q406 16 422 28 Q440 11 456 28 Q474 15 490 28 Q508 12 524 28 Q542 16 558 28 Q576 12 600 28 L600 36 Z"
+            fill="#16a34a"
+            fillOpacity="0.7"
+          />
+          {/* Tiny meadow flowers */}
+          <circle cx="72" cy="24" r="2.2" fill="#fef08a" />
+          <circle cx="195" cy="22" r="2" fill="#ffffff" />
+          <circle cx="342" cy="24" r="2.2" fill="#fbcfe8" />
+          <circle cx="478" cy="22" r="2" fill="#fef08a" />
+        </svg>
+
+        {/* Cute Grazing Sheep on bottom-right grass */}
+        <svg
+          className="absolute bottom-2 right-6 w-14 h-10 drop-shadow-sm"
+          viewBox="0 0 64 44"
+        >
+          {/* Legs */}
+          <rect x="20" y="30" width="3.5" height="10" rx="1.5" fill="#3f3f46" />
+          <rect x="27" y="30" width="3.5" height="10" rx="1.5" fill="#3f3f46" />
+          <rect x="39" y="30" width="3.5" height="10" rx="1.5" fill="#3f3f46" />
+          <rect x="45" y="30" width="3.5" height="10" rx="1.5" fill="#3f3f46" />
+          {/* Fluffy wool body */}
+          <circle cx="24" cy="23" r="9" fill="#fafaf9" stroke="#e4e4e7" strokeWidth="1" />
+          <circle cx="33" cy="20" r="10" fill="#ffffff" stroke="#e4e4e7" strokeWidth="1" />
+          <circle cx="43" cy="22" r="9" fill="#fafaf9" stroke="#e4e4e7" strokeWidth="1" />
+          <circle cx="33" cy="27" r="8" fill="#ffffff" />
+          {/* Animated grazing head */}
+          <g className="tw-sheep-head" style={{ transformOrigin: '20px 24px' }}>
+            <ellipse cx="13" cy="25" rx="7.5" ry="6" fill="#27272a" />
+            <ellipse cx="18" cy="21" rx="3" ry="1.8" transform="rotate(-25 18 21)" fill="#3f3f46" />
+            <circle cx="10.5" cy="23.5" r="1.2" fill="#ffffff" />
+            <circle cx="10.2" cy="23.5" r="0.6" fill="#09090b" />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  if (biome === 'desert') {
+    return (
+      <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-2xl">
+        {/* Layered Golden Sand Dunes along bottom */}
+        <svg
+          className="absolute bottom-0 inset-x-0 w-full h-10"
+          viewBox="0 0 600 40"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0 40 L0 26 Q110 10 230 24 Q370 36 490 16 Q550 8 600 20 L600 40 Z"
+            fill="#f59e0b"
+            fillOpacity="0.35"
+          />
+          <path
+            d="M0 40 L0 31 Q140 20 290 31 Q430 40 600 24 L600 40 Z"
+            fill="#d97706"
+            fillOpacity="0.52"
+          />
+          {/* Tiny pebbles */}
+          <circle cx="95" cy="34" r="2" fill="#92400e" fillOpacity="0.55" />
+          <circle cx="310" cy="35" r="1.6" fill="#92400e" fillOpacity="0.5" />
+          <circle cx="485" cy="33" r="2.2" fill="#78350f" fillOpacity="0.5" />
+        </svg>
+
+        {/* Tiny Desert Cactus */}
+        <svg className="absolute bottom-2.5 right-7 w-7 h-9 opacity-80" viewBox="0 0 28 36">
+          <rect x="11" y="8" width="6" height="24" rx="3" fill="#15803d" />
+          <path d="M11 20 H6 Q4 20 4 17 V13" stroke="#15803d" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+          <path d="M17 16 H22 Q24 16 24 13 V10" stroke="#16a34a" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+        </svg>
+
+        {/* Periodic Sweeping Sandstorm Gust */}
+        <div className="tw-sandstorm-gust absolute inset-y-0 -left-1/2 w-1/2 pointer-events-none">
+          <div
+            className="w-full h-full"
+            style={{
+              background:
+                'linear-gradient(90deg, rgba(245,158,11,0) 0%, rgba(251,191,36,0.22) 45%, rgba(217,119,6,0.28) 70%, rgba(245,158,11,0) 100%)',
+            }}
+          />
+          <span className="absolute top-1/4 left-1/3 w-1.5 h-1.5 rounded-full bg-amber-300/80" />
+          <span className="absolute top-1/2 left-1/2 w-2 h-1 rounded-full bg-amber-400/75" />
+          <span className="absolute top-2/3 left-1/4 w-1.5 h-1 rounded-full bg-orange-300/80" />
+          <span className="absolute bottom-6 left-2/3 w-2.5 h-1 rounded-full bg-amber-200/80" />
+        </div>
+      </div>
+    );
+  }
+
+  if (biome === 'stone') {
+    return (
+      <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-2xl">
+        {/* Rugged Stone Masonry along bottom */}
+        <svg
+          className="absolute bottom-0 inset-x-0 w-full h-7"
+          viewBox="0 0 600 28"
+          preserveAspectRatio="none"
+        >
+          <rect x="0" y="16" width="84" height="12" rx="3" fill="#64748b" fillOpacity="0.45" stroke="#94a3b8" strokeOpacity="0.4" />
+          <rect x="86" y="14" width="102" height="14" rx="3" fill="#475569" fillOpacity="0.45" stroke="#94a3b8" strokeOpacity="0.4" />
+          <rect x="190" y="17" width="76" height="11" rx="3" fill="#64748b" fillOpacity="0.42" stroke="#94a3b8" strokeOpacity="0.4" />
+          <rect x="268" y="13" width="114" height="15" rx="3" fill="#475569" fillOpacity="0.48" stroke="#94a3b8" strokeOpacity="0.4" />
+          <rect x="384" y="16" width="96" height="12" rx="3" fill="#64748b" fillOpacity="0.44" stroke="#94a3b8" strokeOpacity="0.4" />
+          <rect x="482" y="14" width="118" height="14" rx="3" fill="#475569" fillOpacity="0.46" stroke="#94a3b8" strokeOpacity="0.4" />
+          {/* Tiny moss tuft */}
+          <ellipse cx="188" cy="15" rx="8" ry="3" fill="#4ade80" fillOpacity="0.55" />
+          <ellipse cx="382" cy="14" rx="9" ry="3" fill="#22c55e" fillOpacity="0.5" />
+        </svg>
+      </div>
+    );
+  }
+
+  return (
+    <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-2xl">
+      {/* Gentle Ocean Foam Waves along bottom */}
+      <svg
+        className="absolute bottom-0 inset-x-0 w-full h-8"
+        viewBox="0 0 600 32"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0 32 L0 20 Q75 10 150 20 T300 20 T450 20 T600 20 L600 32 Z"
+          fill="#38bdf8"
+          fillOpacity="0.32"
+        />
+        <path
+          d="M0 32 L0 24 Q75 16 150 24 T300 24 T450 24 T600 24 L600 32 Z"
+          fill="#0284c7"
+          fillOpacity="0.42"
+        />
+      </svg>
+    </div>
+  );
+};
+
 // Realistic Flame + Tidewell Staggered Sparkles, Paper Plane Exit & SVG Turbulence
 const BurnCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -575,6 +728,27 @@ export const MessageBoard: React.FC = () => {
         </defs>
       </svg>
 
+      {/* Biome Animation Styles */}
+      <style>{`
+        @keyframes sheepGraze {
+          0%, 40%, 100% { transform: rotate(0deg) translateY(0); }
+          55%, 78% { transform: rotate(-28deg) translateY(3px); }
+          66% { transform: rotate(-22deg) translateY(2px); }
+        }
+        .tw-sheep-head {
+          animation: sheepGraze 3.8s ease-in-out infinite;
+        }
+        @keyframes sandstormSweep {
+          0%, 62% { transform: translateX(0%); opacity: 0; }
+          70% { opacity: 0.95; }
+          92% { transform: translateX(320%); opacity: 0.85; }
+          100% { transform: translateX(340%); opacity: 0; }
+        }
+        .tw-sandstorm-gust {
+          animation: sandstormSweep 7.5s ease-in-out infinite;
+        }
+      `}</style>
+
       {/* Cards List */}
       <div className="space-y-5">
         <AnimatePresence>
@@ -582,26 +756,30 @@ export const MessageBoard: React.FC = () => {
             const countdown = revealedIds[msg.id];
             const isRevealed = countdown !== undefined;
             const isBurning = !!burningIds[msg.id];
-            const biomeThemes = [
+            const biomeThemes: Array<{ kind: BiomeKind; label: string; cls: string; badge: string }> = [
               {
+                kind: 'meadow',
                 label: '🌿 草原',
-                cls: 'border-2 border-emerald-500/45 shadow-[inset_0_0_0_2px_rgba(16,185,129,0.16)] bg-gradient-to-br from-emerald-500/10 via-lime-500/5 to-transparent',
-                badge: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border-emerald-500/25',
+                cls: 'border-2 border-emerald-500/45 shadow-[inset_0_0_0_2px_rgba(16,185,129,0.14)] bg-white/85 dark:bg-zinc-900/75',
+                badge: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/25',
               },
               {
+                kind: 'desert',
                 label: '🏜️ 荒漠',
-                cls: 'border-2 border-amber-500/45 shadow-[inset_0_0_0_2px_rgba(245,158,11,0.16)] bg-gradient-to-br from-amber-500/10 via-orange-400/5 to-transparent',
-                badge: 'bg-amber-500/15 text-amber-600 dark:text-amber-300 border-amber-500/25',
+                cls: 'border-2 border-amber-500/45 shadow-[inset_0_0_0_2px_rgba(245,158,11,0.14)] bg-white/85 dark:bg-zinc-900/75',
+                badge: 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/25',
               },
               {
+                kind: 'stone',
                 label: '🪨 石壁',
-                cls: 'border-2 border-slate-400/50 shadow-[inset_0_0_0_2px_rgba(148,163,184,0.22)] bg-gradient-to-br from-slate-500/12 via-zinc-500/5 to-transparent',
-                badge: 'bg-slate-500/15 text-slate-600 dark:text-slate-300 border-slate-400/30',
+                cls: 'border-2 border-slate-400/50 shadow-[inset_0_0_0_2px_rgba(148,163,184,0.20)] bg-white/85 dark:bg-zinc-900/75',
+                badge: 'bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-400/30',
               },
               {
+                kind: 'coast',
                 label: '🌊 海岸',
-                cls: 'border-2 border-sky-400/45 shadow-[inset_0_0_0_2px_rgba(56,189,248,0.16)] bg-gradient-to-br from-sky-500/10 via-cyan-500/5 to-transparent',
-                badge: 'bg-sky-500/15 text-sky-600 dark:text-sky-300 border-sky-400/25',
+                cls: 'border-2 border-sky-400/45 shadow-[inset_0_0_0_2px_rgba(56,189,248,0.14)] bg-white/85 dark:bg-zinc-900/75',
+                badge: 'bg-sky-500/15 text-sky-700 dark:text-sky-300 border-sky-400/25',
               },
             ];
             const biome = biomeThemes[idx % biomeThemes.length];
@@ -619,8 +797,9 @@ export const MessageBoard: React.FC = () => {
                 exit={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' }}
                 transition={{ duration: 0.45 }}
                 style={isBurning ? { filter: 'url(#burn-heat-filter)' } : undefined}
-                className={`relative rounded-2xl glass p-6 sm:p-7 transition-all overflow-hidden ${biome.cls}`}
+                className={`relative rounded-2xl p-6 sm:p-7 pb-11 sm:pb-12 transition-all overflow-hidden ${biome.cls}`}
               >
+                <BiomeDecoration biome={biome.kind} />
                 {isBurning && <BurnCanvas />}
 
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">

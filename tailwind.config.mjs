@@ -15,13 +15,13 @@ export default {
           500: '#CBB49C',
         },
         terracotta: {
-          DEFAULT: '#D97757',
+          DEFAULT: 'rgb(var(--theme-accent, 217 119 87) / <alpha-value>)',
           50: '#FAF0ED',
           100: '#F5E1DB',
           200: '#ECC3B7',
           300: '#E3A593',
-          400: '#D97757',
-          500: '#C65F3F',
+          400: 'rgb(var(--theme-accent, 217 119 87) / <alpha-value>)',
+          500: 'rgb(var(--theme-accent, 198 95 63) / <alpha-value>)',
           600: '#A44B30',
         },
         charcoal: {

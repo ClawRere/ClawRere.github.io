@@ -54,70 +54,59 @@ const categories = Array.from(
       ))}
     </div>
 
-    <!-- Posts masonry-ish grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="posts-grid">
+    <!-- Mondrian Composition Grid (varied squares & rectangles, no oversized hero block) -->
+    <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[210px] grid-flow-dense gap-3.5" id="posts-grid">
       {sortedPosts.map((post, idx) => {
         const cover = getPostCover(post.data.cover, post.data.title, idx, post.body);
         const category = Array.isArray(post.data.categories)
           ? post.data.categories[0]
           : post.data.categories || '笔记';
-        const isLarge = idx === 0;
+        const mod = idx % 7;
+        const spanCls =
+          mod === 0 || mod === 5
+            ? 'col-span-2 row-span-1'
+            : mod === 2
+            ? 'col-span-1 row-span-2'
+            : 'col-span-1 row-span-1';
+        const mondrianBars = ['bg-[#E63946]', 'bg-[#1D3557]', 'bg-[#FFB703]', 'bg-terracotta'];
+        const barColor = mondrianBars[idx % mondrianBars.length];
 
         return (
           <a
             href={`/posts/${post.id}`}
             data-category={category}
-            class={`post-card group relative flex flex-col overflow-hidden rounded-[18px] border border-charcoal-500/10 dark:border-white/10 ring-1 ring-inset ring-white/40 dark:ring-white/10 hover:border-terracotta/30 dark:hover:border-terracotta/30 shadow-[0_10px_28px_rgba(31,36,48,0.10)] hover:shadow-[0_18px_40px_rgba(31,36,48,0.18)] hover:-translate-y-1.5 transition-all duration-500 ease-[cubic-bezier(0.25,0.75,0.2,1)] bg-white/65 dark:bg-zinc-900/55 backdrop-blur-sm ${isLarge ? 'sm:col-span-2 lg:col-span-2' : ''}`}
+            class={`post-card group relative flex flex-col overflow-hidden rounded-xl border-2 border-charcoal-DEFAULT/75 dark:border-white/25 hover:border-terracotta shadow-[4px_4px_0_rgba(31,36,48,0.12)] hover:shadow-[6px_6px_0_rgba(217,119,87,0.35)] hover:-translate-y-1 transition-all duration-300 bg-white/85 dark:bg-zinc-900/80 ${spanCls}`}
           >
+            <!-- Mondrian Color Accent Strip -->
+            <span class={`absolute top-0 left-0 bottom-0 w-1.5 z-20 ${barColor}`} />
+
             <!-- Cover image -->
-            <div class={`relative overflow-hidden ${isLarge ? 'h-56 sm:h-64' : 'h-40'}`}>
+            <div class="relative flex-1 min-h-0 overflow-hidden bg-zinc-900/10">
               <img
                 src={cover}
                 alt={post.data.title}
                 loading="lazy"
-                onerror="this.onerror=null;this.src='/img/starry-sky.jpg';"
+                onerror={`this.onerror=null;this.src='/img/fan/card-${(idx % 7) + 1}.svg';`}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
 
               <!-- Category badge -->
-              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-black/50 backdrop-blur-md text-white/90 border border-white/15">
+              <span class="absolute top-2.5 left-4 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-black/60 text-white border border-white/15">
                 {category}
               </span>
             </div>
 
-            <!-- Content -->
-            <div class="p-5 flex flex-col flex-1">
-              <div class="flex items-center gap-2 text-[11px] font-mono text-charcoal-100 dark:text-cream-400 mb-2.5">
+            <!-- Compact Content Footer -->
+            <div class="p-3 pl-4 bg-white/95 dark:bg-zinc-900/95 border-t-2 border-charcoal-DEFAULT/15 dark:border-white/10 shrink-0">
+              <div class="flex items-center gap-1.5 text-[10px] font-mono text-charcoal-100 dark:text-cream-400 mb-1">
                 <Calendar class="w-3 h-3 text-terracotta" />
                 <span>{new Date(post.data.date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
               </div>
 
-              <h2 class={`font-bold text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors leading-snug line-clamp-2 ${isLarge ? 'text-xl' : 'text-base'}`}>
+              <h2 class="font-bold text-xs sm:text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors leading-snug line-clamp-2">
                 {post.data.title}
               </h2>
-
-              {post.data.description && (
-                <p class="mt-2 text-xs text-charcoal-100 dark:text-cream-400 line-clamp-2 leading-relaxed flex-1">
-                  {post.data.description}
-                </p>
-              )}
-
-              <!-- Tags -->
-              {post.data.tags && post.data.tags.length > 0 && (
-                <div class="flex flex-wrap gap-1 mt-3">
-                  {(Array.isArray(post.data.tags) ? post.data.tags : [post.data.tags]).slice(0, 3).map((tag: string) => (
-                    <span class="px-2 py-0.5 rounded-md bg-terracotta/8 text-terracotta text-[10px] font-mono">
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              <div class="mt-4 pt-3 border-t border-charcoal-500/8 dark:border-white/8 flex items-center justify-between text-xs font-mono text-terracotta">
-                <span class="opacity-0 group-hover:opacity-100 transition-opacity">阅读全文</span>
-                <ArrowUpRight class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </div>
             </div>
           </a>
         );

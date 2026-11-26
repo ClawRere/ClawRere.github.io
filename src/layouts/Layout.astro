@@ -57,6 +57,8 @@ const entertainItems = [
           if (ps) document.documentElement.style.setProperty('--pill-scale', ps);
           var ph = localStorage.getItem('layout_pip_vh');
           if (ph) document.documentElement.style.setProperty('--pip-height', ph + 'vh');
+          var accentRgb = localStorage.getItem('site_theme_accent_rgb');
+          if (accentRgb) document.documentElement.style.setProperty('--theme-accent', accentRgb);
         } catch (e) {}
       };
       window.__applySitePrefs();
@@ -115,6 +117,45 @@ const entertainItems = [
 
         <!-- Right actions -->
         <div class="flex items-center gap-2 shrink-0">
+          <!-- Theme Accent Color Switcher (Claude / Gemini / Codex / DeepSeek / Custom) -->
+          <div class="relative group/palette">
+            <button
+              type="button"
+              class="p-2 rounded-full text-charcoal-100 dark:text-cream-300 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+              title="切换网站主题色（Claude / Gemini / Codex / DeepSeek）"
+            >
+              <span class="block w-3.5 h-3.5 rounded-full bg-terracotta ring-2 ring-white/80 dark:ring-zinc-800 shadow-sm" />
+            </button>
+            <div class="absolute top-full right-0 mt-1.5 w-44 p-2 rounded-2xl bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/15 shadow-2xl opacity-0 invisible group-hover/palette:opacity-100 group-hover/palette:visible transition-all duration-200 z-50 space-y-1">
+              <div class="px-2 py-1 text-[10px] font-mono uppercase tracking-wider text-charcoal-100 dark:text-cream-400">主题风格配色</div>
+              {[
+                { name: 'Claude 暖陶土', rgb: '217 119 87', hex: '#D97757' },
+                { name: 'Gemini 幻彩蓝', rgb: '66 133 244', hex: '#4285F4' },
+                { name: 'Codex 极客绿', rgb: '16 163 127', hex: '#10A37F' },
+                { name: 'DeepSeek 智蓝', rgb: '37 99 235', hex: '#2563EB' },
+                { name: '紫罗兰幻境', rgb: '139 92 246', hex: '#8B5CF6' },
+              ].map((preset) => (
+                <button
+                  type="button"
+                  onclick={`document.documentElement.style.setProperty('--theme-accent','${preset.rgb}');localStorage.setItem('site_theme_accent_rgb','${preset.rgb}');`}
+                  class="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs text-charcoal-200 dark:text-cream-200 hover:bg-black/5 dark:hover:bg-white/8 transition-colors text-left"
+                >
+                  <span class="w-3 h-3 rounded-full shrink-0" style={`background:${preset.hex}`} />
+                  <span class="truncate">{preset.name}</span>
+                </button>
+              ))}
+              <label class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg text-xs text-charcoal-200 dark:text-cream-200 hover:bg-black/5 dark:hover:bg-white/8 cursor-pointer border-t border-black/5 dark:border-white/10 mt-1 pt-1.5">
+                <span>自定义颜色</span>
+                <input
+                  type="color"
+                  defaultValue="#D97757"
+                  oninput="var h=this.value;var r=parseInt(h.slice(1,3),16)+' '+parseInt(h.slice(3,5),16)+' '+parseInt(h.slice(5,7),16);document.documentElement.style.setProperty('--theme-accent',r);localStorage.setItem('site_theme_accent_rgb',r);"
+                  class="w-5 h-5 rounded cursor-pointer border-0 bg-transparent p-0"
+                />
+              </label>
+            </div>
+          </div>
+
           <button
             id="theme-toggle-btn"
             onclick="document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');"

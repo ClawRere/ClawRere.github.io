@@ -180,32 +180,6 @@ export const HeroCover: React.FC = () => {
       {/* Random-position "放个烟花" button & canvas overlay */}
       <FireworksOverlay />
 
-      {/* 7 Enlarged Scenic/Cartoon Curved Fan Cards (1/3 clipped below 1st screen, title at TOP) */}
-      <div className="group/fan absolute -bottom-14 sm:-bottom-20 inset-x-0 z-20 px-4 flex items-end justify-center gap-2 sm:gap-3.5 md:gap-4 pointer-events-none">
-        {[
-          { href: '/portfolio', title: '作品集', img: '/img/fan/card-1.svg', cls: 'hidden md:block translate-y-6 -rotate-9' },
-          { href: '/effects', title: '93+ 动效', img: '/img/fan/card-2.svg', cls: 'translate-y-4 -rotate-6' },
-          { href: '/posts', title: '博客归档', img: '/img/fan/card-3.svg', cls: 'translate-y-1.5 -rotate-3' },
-          { href: '/tools', title: '工具箱', img: '/img/fan/card-4.svg', cls: 'translate-y-0 rotate-0' },
-          { href: '/links', title: '友链导航', img: '/img/fan/card-5.svg', cls: 'translate-y-1.5 rotate-3' },
-          { href: '/entertain/music', title: '音乐电台', img: '/img/fan/card-6.svg', cls: 'translate-y-4 rotate-6' },
-          { href: '/messageboard', title: '留言板', img: '/img/fan/card-7.svg', cls: 'hidden md:block translate-y-6 rotate-9' },
-        ].map((card) => (
-          <a
-            key={card.href}
-            href={card.href}
-            className={`pointer-events-auto group/card relative w-28 sm:w-36 md:w-44 lg:w-48 aspect-[3/4] rounded-2xl overflow-hidden border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_14px_30px_rgba(0,0,0,0.35)] transition-all duration-400 ease-[cubic-bezier(0.25,0.75,0.2,1)] ${card.cls} group-hover/fan:opacity-75 hover:!opacity-100 hover:rotate-0 hover:-translate-y-6 hover:scale-105 hover:z-30 hover:ring-2 hover:ring-amber-300`}
-          >
-            <img src={card.img} alt={card.title} className="w-full h-full object-cover" />
-            <div className="absolute inset-x-0 top-0 py-2 px-2 bg-gradient-to-b from-black/65 via-black/25 to-transparent text-center">
-              <span className="text-xs sm:text-sm font-bold text-white tracking-wider drop-shadow">
-                {card.title}
-              </span>
-            </div>
-          </a>
-        ))}
-      </div>
-
       {/* Scroll Down Arrow */}
       <motion.a
         href="#hub-section"

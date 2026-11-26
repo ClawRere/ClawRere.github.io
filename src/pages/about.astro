@@ -188,49 +188,47 @@ const metrics = [
       </div>
     </div>
 
-    <!-- Lovely Corgi + Left/Right Paipai Kittens Showcase -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-      <a
-        href="https://paipai.ldddd.eu.org/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="md:col-span-3 group flex flex-col items-center p-4 rounded-2xl border border-white/25 dark:border-white/10 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-lg hover:-translate-y-1.5 transition-all"
-      >
-        <img src="/img/paipai.webp" alt="小猫派派" class="w-20 h-20 rounded-full object-cover border-2 border-amber-300 shadow-md group-hover:rotate-6 transition-transform" />
-        <span class="mt-2 text-xs font-bold text-zinc-900 dark:text-white">🐱 左护法 · 派派</span>
-        <span class="text-[10px] font-mono text-amber-500">点击访问派派小站 ↗</span>
-      </a>
-
-      <div class="md:col-span-6 h-48 rounded-2xl overflow-hidden border border-white/25 dark:border-white/10 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-lg">
-        <iframe
-          src="/effects/lovely_dog/index.html"
-          title="可爱柯基动画"
-          loading="lazy"
-          class="w-full h-full border-0"
-        />
-      </div>
-
-      <a
-        href="https://paipai.ldddd.eu.org/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="md:col-span-3 group flex flex-col items-center p-4 rounded-2xl border border-white/25 dark:border-white/10 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-lg hover:-translate-y-1.5 transition-all"
-      >
-        <img src="/img/paipai.webp" alt="小猫派派" class="w-20 h-20 rounded-full object-cover border-2 border-amber-300 shadow-md -scale-x-100 group-hover:-rotate-6 transition-transform" />
-        <span class="mt-2 text-xs font-bold text-zinc-900 dark:text-white">🐱 右护法 · 派派</span>
-        <span class="text-[10px] font-mono text-amber-500">paipai.ldddd.eu.org</span>
-      </a>
+    <!-- Fixed Bottom-Right Paipai Cat (Left) + Lovely Corgi (Right), Transparent Background -->
+    <div class="fixed bottom-3 right-3 z-30 flex items-end gap-0 pointer-events-none select-none" aria-hidden="true">
+      <iframe
+        src="/effects/lovely_cat/index.html"
+        title="派派小猫"
+        class="w-28 h-24 sm:w-32 sm:h-28 border-0 bg-transparent pointer-events-none"
+      />
+      <iframe
+        src="/effects/lovely_dog/widget.html"
+        title="可爱柯基"
+        class="w-28 h-24 sm:w-32 sm:h-28 -ml-4 border-0 bg-transparent pointer-events-none"
+      />
     </div>
 
-    <!-- Personal Bento Cards with 3D Perspective Tilt & Frosted Glass -->
+    <!-- Personal Bento Cards: Profile & AI Stack tilt toward cursor -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 [perspective:1000px] pt-4">
-      <div class="p-5 rounded-2xl border border-white/25 dark:border-white/12 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-xl space-y-2 transition-transform duration-500 hover:[transform:rotateY(6deg)_rotateX(4deg)_translateY(-6px)]">
+      <div class="tilt-card p-5 rounded-2xl border border-white/25 dark:border-white/12 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-xl space-y-2 transition-transform duration-200 ease-out will-change-transform">
         <div class="text-xs font-mono text-amber-500 uppercase tracking-wider">个人档案</div>
         <div class="space-y-2 text-sm pt-1">
           <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">生于</span><span class="font-semibold text-sky-500">1997 年</span></div>
           <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">坐标</span><span class="font-semibold text-zinc-900 dark:text-white">中国 · 武汉市</span></div>
-          <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">本科</span><span class="font-semibold text-amber-500">中南财经政法大学</span></div>
-          <div class="flex justify-between"><span class="text-zinc-500 dark:text-zinc-400">硕士</span><span class="font-semibold text-amber-500">华中科技大学</span></div>
+          <div class="flex justify-between items-center gap-2">
+            <span class="text-zinc-500 dark:text-zinc-400 shrink-0">本科</span>
+            <span class="font-semibold text-amber-500 inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" aria-label="ZUEL">
+                <circle cx="12" cy="12" r="10" fill="#0F4C81" />
+                <path d="M7 9h10l-7 6h7" stroke="#FDE68A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              中南财经政法大学
+            </span>
+          </div>
+          <div class="flex justify-between items-center gap-2">
+            <span class="text-zinc-500 dark:text-zinc-400 shrink-0">硕士</span>
+            <span class="font-semibold text-amber-500 inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" aria-label="HUST">
+                <circle cx="12" cy="12" r="10" fill="#B91C1C" />
+                <path d="M8 7v10M16 7v10M8 12h8" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+              </svg>
+              华中科技大学
+            </span>
+          </div>
         </div>
       </div>
 
@@ -250,8 +248,8 @@ const metrics = [
         </div>
       </div>
 
-      <!-- AI Software Icons Matrix -->
-      <div class="p-5 rounded-2xl border border-white/25 dark:border-white/12 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-xl space-y-3 transition-transform duration-500 hover:[transform:rotateY(6deg)_rotateX(-4deg)_translateY(-6px)]">
+      <!-- AI Software Icons Matrix (tilts toward cursor) -->
+      <div class="tilt-card p-5 rounded-2xl border border-white/25 dark:border-white/12 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-xl space-y-3 transition-transform duration-200 ease-out will-change-transform">
         <div class="text-xs font-mono text-emerald-500 uppercase tracking-wider">常用 AI 共创工具栈</div>
         <div class="grid grid-cols-3 gap-2 pt-0.5">
           {[
@@ -335,12 +333,8 @@ const metrics = [
       </div>
     </div>
 
-    <!-- Interactive Canvas Crowd at Bottom (from /effects/canvas_crowd) -->
-    <div class="rounded-3xl overflow-hidden border border-white/15 bg-zinc-950/90 shadow-2xl">
-      <div class="px-5 py-2.5 border-b border-white/10 flex items-center justify-between text-xs font-mono text-white/65">
-        <span>🚶‍♂️ 喧嚣与同行 · Canvas Crowd</span>
-        <span>感谢每一位来访的数字旅人</span>
-      </div>
+    <!-- Full-Bleed Borderless Canvas Crowd at Bottom (from /effects/canvas_crowd) -->
+    <div class="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden">
       <iframe
         src="/effects/canvas_crowd/index.html"
         title="Canvas 人群动画"
@@ -353,6 +347,25 @@ const metrics = [
 
   <script is:inline>
     (function () {
+      // Mouse-direction 3D tilt for Profile & AI Stack cards
+      const initTilt = () => {
+        document.querySelectorAll('.tilt-card').forEach((card) => {
+          if (card.dataset.tiltBound) return;
+          card.dataset.tiltBound = '1';
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const dx = (e.clientX - rect.left) / rect.width - 0.5;
+            const dy = (e.clientY - rect.top) / rect.height - 0.5;
+            card.style.transform = `perspective(900px) rotateX(${(-dy * 14).toFixed(2)}deg) rotateY(${(dx * 14).toFixed(2)}deg) translateY(-4px)`;
+          });
+          card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+          });
+        });
+      };
+      initTilt();
+      document.addEventListener('astro:page-load', initTilt);
+
       try {
         var raw = localStorage.getItem('about_config');
         if (!raw) return;

@@ -457,7 +457,7 @@ export const MessageBoard: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-3xl mx-auto py-4">
+    <div className="space-y-8 max-w-5xl mx-auto py-4">
       <div className="p-6 rounded-3xl glass border border-charcoal-500/10 dark:border-white/10">
         <div className="flex items-center gap-2 mb-1.5 text-xs font-mono uppercase tracking-wider text-terracotta font-semibold">
           <MessageSquare className="w-4 h-4" /> Community Guestbook
@@ -576,12 +576,35 @@ export const MessageBoard: React.FC = () => {
       </svg>
 
       {/* Cards List */}
-      <div className="space-y-4">
+      <div className="space-y-5">
         <AnimatePresence>
-          {messages.map((msg) => {
+          {messages.map((msg, idx) => {
             const countdown = revealedIds[msg.id];
             const isRevealed = countdown !== undefined;
             const isBurning = !!burningIds[msg.id];
+            const biomeThemes = [
+              {
+                label: '🌿 草原',
+                cls: 'border-2 border-emerald-500/45 shadow-[inset_0_0_0_2px_rgba(16,185,129,0.16)] bg-gradient-to-br from-emerald-500/10 via-lime-500/5 to-transparent',
+                badge: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border-emerald-500/25',
+              },
+              {
+                label: '🏜️ 荒漠',
+                cls: 'border-2 border-amber-500/45 shadow-[inset_0_0_0_2px_rgba(245,158,11,0.16)] bg-gradient-to-br from-amber-500/10 via-orange-400/5 to-transparent',
+                badge: 'bg-amber-500/15 text-amber-600 dark:text-amber-300 border-amber-500/25',
+              },
+              {
+                label: '🪨 石壁',
+                cls: 'border-2 border-slate-400/50 shadow-[inset_0_0_0_2px_rgba(148,163,184,0.22)] bg-gradient-to-br from-slate-500/12 via-zinc-500/5 to-transparent',
+                badge: 'bg-slate-500/15 text-slate-600 dark:text-slate-300 border-slate-400/30',
+              },
+              {
+                label: '🌊 海岸',
+                cls: 'border-2 border-sky-400/45 shadow-[inset_0_0_0_2px_rgba(56,189,248,0.16)] bg-gradient-to-br from-sky-500/10 via-cyan-500/5 to-transparent',
+                badge: 'bg-sky-500/15 text-sky-600 dark:text-sky-300 border-sky-400/25',
+              },
+            ];
+            const biome = biomeThemes[idx % biomeThemes.length];
 
             return (
               <motion.div
@@ -596,11 +619,7 @@ export const MessageBoard: React.FC = () => {
                 exit={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' }}
                 transition={{ duration: 0.45 }}
                 style={isBurning ? { filter: 'url(#burn-heat-filter)' } : undefined}
-                className={`relative rounded-2xl glass border p-5 transition-all overflow-hidden ${
-                  msg.isBurnAfterReading
-                    ? 'border-orange-500/35 bg-gradient-to-br from-orange-500/5 to-red-500/5'
-                    : 'border-charcoal-500/10 dark:border-white/10'
-                }`}
+                className={`relative rounded-2xl glass p-6 sm:p-7 transition-all overflow-hidden ${biome.cls}`}
               >
                 {isBurning && <BurnCanvas />}
 
@@ -610,6 +629,9 @@ export const MessageBoard: React.FC = () => {
                       <User className="w-3.5 h-3.5" />
                     </div>
                     <span className="font-semibold text-sm text-charcoal-DEFAULT dark:text-cream-50">{msg.name}</span>
+                    <span className={`px-2 py-0.5 rounded-full border text-[10px] font-mono ${biome.badge}`}>
+                      {biome.label}
+                    </span>
                     {msg.isAdmin && (
                       <span className="px-2 py-0.5 rounded-full bg-terracotta text-white text-[10px] font-mono">站长</span>
                     )}

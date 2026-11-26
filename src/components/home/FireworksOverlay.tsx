@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, X } from 'lucide-react';
 
 type ShellStyle = 'chrysanthemum' | 'ring' | 'willow' | 'strobe' | 'pistil';
 
@@ -34,7 +34,7 @@ interface Spark {
 const COLORS = ['#FF5E7E', '#FFD166', '#06D6A0', '#4EA8DE', '#C77DFF', '#FF9F1C', '#F8FAFC', '#FF3366'];
 const SHELL_STYLES: ShellStyle[] = ['chrysanthemum', 'ring', 'willow', 'strobe', 'pistil'];
 
-const playSound = (src: string, volume = 0.45) => {
+const playSound = (src: string, volume = 0.35) => {
   try {
     const audio = new Audio(src);
     audio.volume = volume;
@@ -47,124 +47,143 @@ export const FireworksOverlay: React.FC = () => {
   const rocketsRef = useRef<Rocket[]>([]);
   const sparksRef = useRef<Spark[]>([]);
   const rafRef = useRef<number | null>(null);
+  const timeoutsRef = useRef<number[]>([]);
+  const closeTimeoutRef = useRef<number | null>(null);
 
   const [isDarkMask, setIsDarkMask] = useState(false);
-  const [isLaunching, setIsLaunching] = useState(false);
   const [btnPos, setBtnPos] = useState<{ top: string; left: string }>({ top: '76%', left: '14%' });
 
   useEffect(() => {
     const top = Math.round(18 + Math.random() * 62);
     const left = Math.round(10 + Math.random() * 72);
     setBtnPos({ top: `${top}%`, left: `${left}%` });
+    return () => stopFireworks();
   }, []);
+
+  const stopFireworks = () => {
+    timeoutsRef.current.forEach((id) => window.clearTimeout(id));
+    timeoutsRef.current = [];
+    if (closeTimeoutRef.current) {
+      window.clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+    rocketsRef.current = [];
+    sparksRef.current = [];
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      ctx?.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    setIsDarkMask(false);
+  };
 
   const explodeRocket = (r: Rocket) => {
     const burstSound =
       Math.random() > 0.5
         ? '/effects/fireworks/fire_voice/burst1.mp3'
         : '/effects/fireworks/fire_voice/burst2.mp3';
-    playSound(burstSound, 0.5);
+    playSound(burstSound, 0.42);
     if (r.shellStyle === 'strobe' || r.shellStyle === 'chrysanthemum') {
-      setTimeout(() => playSound('/effects/fireworks/fire_voice/crackle-sm-1.mp3', 0.35), 240);
+      const tid = window.setTimeout(() => playSound('/effects/fireworks/fire_voice/crackle-sm-1.mp3', 0.28), 160);
+      timeoutsRef.current.push(tid);
     }
 
     const { x: rx, y: ry, color: baseColor, secondaryColor, shellStyle } = r;
 
     if (shellStyle === 'ring') {
-      // Hollow crisp ring + tiny center core
-      const count = 72;
-      const ringSpeed = 4.8 + Math.random() * 1.4;
+      const count = 56;
+      const ringSpeed = 7.2 + Math.random() * 2.0;
       for (let i = 0; i < count; i++) {
         const angle = (Math.PI * 2 * i) / count;
         sparksRef.current.push({
           x: rx, y: ry, prevX: rx, prevY: ry,
           vx: Math.cos(angle) * ringSpeed,
           vy: Math.sin(angle) * ringSpeed,
-          alpha: 1, color: baseColor, size: 2.4, decay: 0.014,
-          gravity: 0.04, drag: 0.98, flicker: false,
+          alpha: 1, color: baseColor, size: 2.5, decay: 0.024,
+          gravity: 0.11, drag: 0.955, flicker: false,
         });
       }
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 18; i++) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 2.2;
+        const speed = 1.2 + Math.random() * 2.8;
         sparksRef.current.push({
           x: rx, y: ry, prevX: rx, prevY: ry,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
-          alpha: 1, color: secondaryColor, size: 1.8, decay: 0.018,
-          gravity: 0.05, drag: 0.97, flicker: true,
+          alpha: 1, color: secondaryColor, size: 2.0, decay: 0.028,
+          gravity: 0.12, drag: 0.95, flicker: true,
         });
       }
     } else if (shellStyle === 'willow') {
-      // Golden slow-falling weeping willow trails
-      const count = 85;
+      const count = 64;
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = 1.4 + Math.random() * 4.5;
+        const speed = 2.4 + Math.random() * 6.4;
         sparksRef.current.push({
           x: rx, y: ry, prevX: rx, prevY: ry,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
-          alpha: 1, color: '#FFD166', size: 1.8, decay: 0.0075,
-          gravity: 0.095, drag: 0.965, flicker: true,
+          alpha: 1, color: '#FFD166', size: 2.0, decay: 0.017,
+          gravity: 0.16, drag: 0.95, flicker: true,
         });
       }
     } else if (shellStyle === 'pistil') {
-      // Double concentric layers (outer + inner contrasting core)
-      for (let i = 0; i < 80; i++) {
-        const angle = (Math.PI * 2 * i) / 80;
-        const speed = 5.2 + Math.random() * 1.2;
+      for (let i = 0; i < 60; i++) {
+        const angle = (Math.PI * 2 * i) / 60;
+        const speed = 7.4 + Math.random() * 1.6;
         sparksRef.current.push({
           x: rx, y: ry, prevX: rx, prevY: ry,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
-          alpha: 1, color: baseColor, size: 2.2, decay: 0.012,
-          gravity: 0.06, drag: 0.975, flicker: false,
+          alpha: 1, color: baseColor, size: 2.3, decay: 0.023,
+          gravity: 0.12, drag: 0.955, flicker: false,
         });
       }
-      for (let i = 0; i < 45; i++) {
-        const angle = (Math.PI * 2 * i) / 45;
-        const speed = 2.4 + Math.random() * 0.8;
+      for (let i = 0; i < 32; i++) {
+        const angle = (Math.PI * 2 * i) / 32;
+        const speed = 3.6 + Math.random() * 1.1;
         sparksRef.current.push({
           x: rx, y: ry, prevX: rx, prevY: ry,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
-          alpha: 1, color: secondaryColor, size: 2.0, decay: 0.015,
-          gravity: 0.05, drag: 0.97, flicker: true,
+          alpha: 1, color: secondaryColor, size: 2.0, decay: 0.028,
+          gravity: 0.11, drag: 0.95, flicker: true,
         });
       }
     } else if (shellStyle === 'strobe') {
-      // High-energy glittering strobe stars
-      const count = 110;
+      const count = 72;
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = 1.5 + Math.random() * 6.5;
+        const speed = 2.5 + Math.random() * 8.2;
         sparksRef.current.push({
           x: rx, y: ry, prevX: rx, prevY: ry,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           alpha: 1,
           color: Math.random() > 0.5 ? '#FFFFFF' : baseColor,
-          size: Math.random() * 2.4 + 1.4,
-          decay: 0.011 + Math.random() * 0.01,
-          gravity: 0.06, drag: 0.97, flicker: true,
+          size: Math.random() * 2.4 + 1.5,
+          decay: 0.021 + Math.random() * 0.012,
+          gravity: 0.12, drag: 0.95, flicker: true,
         });
       }
     } else {
-      // Classic chrysanthemum
-      const count = 95;
+      const count = 68;
       for (let i = 0; i < count; i++) {
         const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.14;
-        const speed = 2.0 + Math.random() * 5.8;
+        const speed = 3.0 + Math.random() * 7.5;
         sparksRef.current.push({
           x: rx, y: ry, prevX: rx, prevY: ry,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           alpha: 1,
           color: Math.random() > 0.25 ? baseColor : secondaryColor,
-          size: Math.random() * 2 + 1.4,
-          decay: 0.011 + Math.random() * 0.009,
-          gravity: 0.075, drag: 0.975, flicker: false,
+          size: Math.random() * 2.1 + 1.5,
+          decay: 0.022 + Math.random() * 0.01,
+          gravity: 0.13, drag: 0.955, flicker: false,
         });
       }
     }
@@ -182,7 +201,7 @@ export const FireworksOverlay: React.FC = () => {
 
     const tick = () => {
       ctx.globalCompositeOperation = 'destination-out';
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.24)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.30)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = 'lighter';
       ctx.lineCap = 'round';
@@ -191,11 +210,11 @@ export const FireworksOverlay: React.FC = () => {
       for (let i = rockets.length - 1; i >= 0; i--) {
         const r = rockets[i];
         r.trail.push({ x: r.x, y: r.y });
-        if (r.trail.length > 7) r.trail.shift();
+        if (r.trail.length > 6) r.trail.shift();
 
         r.x += r.vx;
         r.y += r.vy;
-        r.vy += 0.065;
+        r.vy += 0.16;
 
         ctx.beginPath();
         if (r.trail.length > 1) {
@@ -203,10 +222,10 @@ export const FireworksOverlay: React.FC = () => {
           for (const pt of r.trail) ctx.lineTo(pt.x, pt.y);
         }
         ctx.strokeStyle = r.color;
-        ctx.lineWidth = 2.5;
+        ctx.lineWidth = 2.6;
         ctx.stroke();
 
-        if (r.y <= r.targetY || r.vy >= -0.5) {
+        if (r.y <= r.targetY || r.vy >= -0.8) {
           explodeRocket(r);
           rockets.splice(i, 1);
         }
@@ -245,69 +264,89 @@ export const FireworksOverlay: React.FC = () => {
       } else {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         rafRef.current = null;
-        setTimeout(() => {
-          (window as any).__fireworksActive = false;
+        if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);
+        closeTimeoutRef.current = window.setTimeout(() => {
           setIsDarkMask(false);
-          setIsLaunching(false);
-        }, 450);
+        }, 500);
       }
     };
 
     rafRef.current = requestAnimationFrame(tick);
   };
 
-  const launchFireworks = () => {
-    if (isLaunching) return;
-    (window as any).__fireworksActive = true;
-    setIsLaunching(true);
-    setIsDarkMask(true);
-
+  const spawnRocket = (targetX?: number, targetY?: number) => {
+    if (closeTimeoutRef.current) {
+      window.clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
     const w = window.innerWidth;
     const h = window.innerHeight;
+    const liftNum = 1 + Math.floor(Math.random() * 3);
+    playSound(`/effects/fireworks/fire_voice/lift${liftNum}.mp3`, 0.34);
+
+    const startX = targetX !== undefined ? targetX + (Math.random() - 0.5) * 40 : w * (0.2 + Math.random() * 0.6);
+    const goalY = targetY !== undefined ? Math.min(h * 0.65, Math.max(h * 0.12, targetY)) : h * (0.16 + Math.random() * 0.25);
+
+    rocketsRef.current.push({
+      x: startX,
+      y: h * 0.96,
+      vx: targetX !== undefined ? (targetX - startX) * 0.02 : (Math.random() - 0.5) * 2.2,
+      vy: -(14.5 + Math.random() * 3.5),
+      targetY: goalY,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      secondaryColor: COLORS[Math.floor(Math.random() * COLORS.length)],
+      shellStyle: SHELL_STYLES[Math.floor(Math.random() * SHELL_STYLES.length)],
+      trail: [],
+    });
+
+    startLoop();
+  };
+
+  const launchFireworks = () => {
+    setIsDarkMask(true);
     const count = 1 + Math.floor(Math.random() * 3);
 
     for (let i = 0; i < count; i++) {
-      setTimeout(() => {
-        const liftNum = (i % 3) + 1;
-        playSound(`/effects/fireworks/fire_voice/lift${liftNum}.mp3`, 0.4);
-
-        const c1 = COLORS[Math.floor(Math.random() * COLORS.length)];
-        const c2 = COLORS[Math.floor(Math.random() * COLORS.length)];
-        const style = SHELL_STYLES[Math.floor(Math.random() * SHELL_STYLES.length)];
-
-        rocketsRef.current.push({
-          x: w * (0.22 + Math.random() * 0.56),
-          y: h * 0.96,
-          vx: (Math.random() - 0.5) * 1.8,
-          vy: -(9.5 + Math.random() * 3.5),
-          targetY: h * (0.18 + Math.random() * 0.25),
-          color: c1,
-          secondaryColor: c2,
-          shellStyle: style,
-          trail: [],
-        });
-
-        startLoop();
-      }, 550 + i * 520);
+      const tid = window.setTimeout(() => {
+        spawnRocket();
+      }, 220 + i * 320);
+      timeoutsRef.current.push(tid);
     }
   };
 
   return (
     <>
+      {/* Clickable dark mask: clicking anywhere launches another firework! */}
       <div
-        className={`fixed inset-0 bg-black/85 pointer-events-none z-40 transition-opacity duration-700 ${
-          isDarkMask ? 'opacity-100' : 'opacity-0'
+        onClick={(e) => {
+          if (isDarkMask) spawnRocket(e.clientX, e.clientY);
+        }}
+        className={`fixed inset-0 bg-black/85 z-40 transition-opacity duration-500 ${
+          isDarkMask ? 'opacity-100 pointer-events-auto cursor-crosshair' : 'opacity-0 pointer-events-none'
         }`}
+        title={isDarkMask ? '点击夜空任意位置继续放烟花' : undefined}
       />
+
+      {/* Early Close Button when fireworks mask is active */}
+      {isDarkMask && (
+        <button
+          onClick={stopFireworks}
+          className="fixed top-20 right-6 z-50 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/25 text-white text-xs font-mono shadow-lg transition-colors"
+        >
+          <X className="w-3.5 h-3.5" />
+          <span>关闭烟花</span>
+        </button>
+      )}
+
       <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-50" />
+
       <button
         onClick={launchFireworks}
-        disabled={isLaunching}
         style={{ top: btnPos.top, left: btnPos.left }}
-        className="absolute z-30 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/45 hover:bg-black/70 border border-white/25 text-white text-xs font-mono shadow-xl transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
-        title="点击熄灯放 1-3 个随机花型烟花（带音效）"
+        className="absolute z-30 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/45 hover:bg-black/70 border border-white/25 text-white text-xs font-mono shadow-xl transition-transform hover:scale-105 active:scale-95"
+        title="点击熄灯放烟花（点击夜空可连放）"
       >
-        <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+        <Sparkles className="w-3.5 h-3.5 text-amber-300" />
         <span>🎆 放个烟花</span>
       </button>
     </>

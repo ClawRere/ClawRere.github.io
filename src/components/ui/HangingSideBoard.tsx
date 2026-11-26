@@ -129,7 +129,7 @@ export const HangingSideBoard: React.FC<HangingSideBoardProps> = ({ title }) => 
           <circle cx={nailX - 1.5} cy={nailY - 1.5} r="1.6" fill="#fef3c7" opacity="0.85" />
         </svg>
 
-        {/* Draggable Wooden Title Board */}
+        {/* Draggable Cardstock Paper Title Tag (卡片纸样式) */}
         <div
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
@@ -140,24 +140,24 @@ export const HangingSideBoard: React.FC<HangingSideBoardProps> = ({ title }) => 
             transformOrigin: 'top center',
             touchAction: 'none',
           }}
-          title="拖拽拉扯木牌体验弹性绳索"
-          className={`pointer-events-auto absolute left-[6px] top-[44px] px-2.5 py-3.5 rounded-xl border border-[#7f5539]/70 bg-gradient-to-b from-[#ddb892] via-[#c89b6e] to-[#b07d52] shadow-[0_10px_24px_rgba(31,36,48,0.28),inset_0_1px_0_rgba(255,255,255,0.45)] flex flex-col items-center gap-2 transition-shadow ${
-            isDragging ? 'cursor-grabbing shadow-[0_18px_36px_rgba(31,36,48,0.38)]' : 'cursor-grab hover:shadow-[0_14px_28px_rgba(31,36,48,0.34)]'
+          title="拖拽拉扯卡片体验弹性绳索"
+          className={`pointer-events-auto absolute left-[6px] top-[44px] px-3 py-4 rounded-xl border border-[#e5dfd6] dark:border-white/15 bg-[#faf7f2] dark:bg-[#23252e] shadow-[0_10px_28px_rgba(31,36,48,0.16),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] flex flex-col items-center gap-2.5 transition-shadow ${
+            isDragging ? 'cursor-grabbing shadow-[0_18px_38px_rgba(31,36,48,0.24)]' : 'cursor-grab hover:shadow-[0_14px_32px_rgba(31,36,48,0.22)]'
           }`}
         >
-          {/* Brass Eyelet */}
-          <span className="w-2.5 h-2.5 rounded-full bg-[#3f2a1d] ring-2 ring-[#f59e0b]/80 shadow-inner" />
+          {/* Paper Punch Eyelet */}
+          <span className="w-2.5 h-2.5 rounded-full bg-cream-100 dark:bg-obsidian ring-2 ring-[#d4a373]/80 shadow-inner" />
 
-          {/* Engraved Vertical Wood Title */}
+          {/* Crisp Ink Vertical Typography */}
           <div
             style={{ writingMode: 'vertical-rl' }}
-            className="font-serif text-sm font-extrabold tracking-[0.26em] text-[#2b1a10] drop-shadow-[0_1px_0_rgba(255,255,255,0.35)] py-1"
+            className="font-serif text-sm font-bold tracking-[0.26em] text-[#1F2430] dark:text-[#F1ECEA] py-1"
           >
             {title}
           </div>
 
-          {/* Bottom Wood Grain Accent */}
-          <span className="w-3 h-0.5 rounded-full bg-[#7f5539]/45" />
+          {/* Minimalist Bottom Accent Dot */}
+          <span className="w-1.5 h-1.5 rounded-full bg-terracotta/75" />
         </div>
       </div>
     </aside>

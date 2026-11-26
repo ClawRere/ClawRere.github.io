@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { animate, stagger } from 'animejs';
 import { MessageSquare, Send, Sparkles, User, Calendar, Check, Flame, Eye, Heart } from 'lucide-react';
 
 interface CommentItem {
@@ -40,11 +41,47 @@ const initialMessages: CommentItem[] = [
   },
 ];
 
-// Realistic Canvas Flame + Rising Embers + Gravity Ash Flakes
+// Realistic Flame + Rising Embers + SVG Heat Turbulence + Anime.js Staggered Flame Tongues
 const BurnCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const tonguesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // 1. Anime.js v4: Animate SVG feDisplacementMap heat distortion & staggered flame tongues
+    const dispMap = document.querySelector('#burn-heat-filter feDisplacementMap');
+    const turbulence = document.querySelector('#burn-heat-filter feTurbulence');
+    let heatAnim: ReturnType<typeof animate> | null = null;
+    let freqAnim: ReturnType<typeof animate> | null = null;
+
+    if (dispMap) {
+      heatAnim = animate(dispMap, {
+        scale: [0, 18, 32, 12],
+        duration: 1650,
+        ease: 'inOutQuad',
+      });
+    }
+    if (turbulence) {
+      freqAnim = animate(turbulence, {
+        baseFrequency: ['0.02 0.06', '0.05 0.14', '0.03 0.09'],
+        duration: 1650,
+        ease: 'linear',
+      });
+    }
+
+    if (tonguesRef.current) {
+      const tongues = tonguesRef.current.querySelectorAll('.flame-tongue');
+      animate(tongues, {
+        scaleY: [0.3, 1.35, 0.75, 1.5, 0],
+        scaleX: [0.85, 1.15, 0.9, 1.1, 0.6],
+        translateY: [24, -18, -42, -75],
+        opacity: [0, 0.95, 0.85, 0],
+        delay: stagger(45, { from: 'center' }),
+        duration: 1550,
+        ease: 'outCubic',
+      });
+    }
+
+    // 2. HTML5 Canvas: Physical rising fire particles, glowing sparks & charred ash
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -52,7 +89,7 @@ const BurnCanvas: React.FC = () => {
 
     const w = (canvas.width = canvas.offsetWidth || 600);
     const h = (canvas.height = canvas.offsetHeight || 160);
-    let startTime = performance.now();
+    const startTime = performance.now();
     let raf: number;
 
     interface Ember {
@@ -76,30 +113,31 @@ const BurnCanvas: React.FC = () => {
 
       ctx.clearRect(0, 0, w, h);
 
-      // Charred dark area below the burn front
+      // Charred dark area + glowing orange-red combustion front
       if (burnLineY < h) {
-        const charGrad = ctx.createLinearGradient(0, burnLineY - 12, 0, h);
-        charGrad.addColorStop(0, 'rgba(255, 110, 20, 0.85)');
-        charGrad.addColorStop(0.18, 'rgba(38, 22, 18, 0.92)');
-        charGrad.addColorStop(1, 'rgba(18, 18, 20, 0.98)');
+        const charGrad = ctx.createLinearGradient(0, burnLineY - 14, 0, h);
+        charGrad.addColorStop(0, 'rgba(255, 140, 30, 0.92)');
+        charGrad.addColorStop(0.14, 'rgba(239, 68, 68, 0.75)');
+        charGrad.addColorStop(0.32, 'rgba(28, 18, 16, 0.94)');
+        charGrad.addColorStop(1, 'rgba(12, 12, 14, 0.98)');
         ctx.fillStyle = charGrad;
         ctx.fillRect(0, Math.max(0, burnLineY), w, h);
       }
 
       // Spawn glowing flame embers & dark ash flakes along the burning edge
-      for (let i = 0; i < 10; i++) {
-        const isAsh = Math.random() > 0.58;
+      for (let i = 0; i < 12; i++) {
+        const isAsh = Math.random() > 0.56;
         particles.push({
           x: Math.random() * w,
-          y: Math.max(0, Math.min(h, burnLineY + (Math.random() - 0.5) * 16)),
-          vx: (Math.random() - 0.5) * 1.6,
-          vy: isAsh ? 0.6 + Math.random() * 1.8 : -(1.5 + Math.random() * 3.4),
-          r: isAsh ? 1.8 + Math.random() * 2.5 : 1.5 + Math.random() * 3.2,
+          y: Math.max(0, Math.min(h, burnLineY + (Math.random() - 0.5) * 18)),
+          vx: (Math.random() - 0.5) * 1.8,
+          vy: isAsh ? 0.7 + Math.random() * 1.9 : -(1.8 + Math.random() * 3.8),
+          r: isAsh ? 1.8 + Math.random() * 2.6 : 1.6 + Math.random() * 3.4,
           life: 0,
-          maxLife: 25 + Math.random() * 35,
+          maxLife: 24 + Math.random() * 34,
           isAsh,
           rot: Math.random() * Math.PI * 2,
-          rotV: (Math.random() - 0.5) * 0.2,
+          rotV: (Math.random() - 0.5) * 0.24,
         });
       }
 
@@ -110,7 +148,7 @@ const BurnCanvas: React.FC = () => {
           particles.splice(i, 1);
           continue;
         }
-        p.x += p.vx + Math.sin(p.life * 0.2) * 0.4;
+        p.x += p.vx + Math.sin(p.life * 0.22) * 0.45;
         p.y += p.vy;
         p.rot += p.rotV;
         const alpha = 1 - p.life / p.maxLife;
@@ -120,16 +158,16 @@ const BurnCanvas: React.FC = () => {
         ctx.rotate(p.rot);
         ctx.globalAlpha = alpha;
         if (p.isAsh) {
-          ctx.fillStyle = '#71717a';
+          ctx.fillStyle = '#52525b';
           ctx.fillRect(-p.r, -p.r * 0.6, p.r * 2, p.r * 1.2);
         } else {
-          const g = ctx.createRadialGradient(0, 0, 0, 0, 0, p.r * 2.2);
-          g.addColorStop(0, '#fff7ed');
-          g.addColorStop(0.4, '#fb923c');
+          const g = ctx.createRadialGradient(0, 0, 0, 0, 0, p.r * 2.4);
+          g.addColorStop(0, '#fffbeb');
+          g.addColorStop(0.35, '#fb923c');
           g.addColorStop(1, 'rgba(239, 68, 68, 0)');
           ctx.fillStyle = g;
           ctx.beginPath();
-          ctx.arc(0, 0, p.r * 2.2, 0, Math.PI * 2);
+          ctx.arc(0, 0, p.r * 2.4, 0, Math.PI * 2);
           ctx.fill();
         }
         ctx.restore();
@@ -141,18 +179,44 @@ const BurnCanvas: React.FC = () => {
     };
 
     raf = requestAnimationFrame(render);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      heatAnim?.pause();
+      freqAnim?.pause();
+    };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-30" />;
+  return (
+    <>
+      <div
+        ref={tonguesRef}
+        className="absolute inset-x-0 bottom-0 h-24 flex items-end justify-around pointer-events-none z-25 overflow-hidden"
+      >
+        {Array.from({ length: 14 }).map((_, i) => (
+          <div
+            key={i}
+            className="flame-tongue w-7 h-16 rounded-t-full opacity-0"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 80%, #fef08a 0%, #f97316 45%, rgba(220,38,38,0) 85%)',
+              filter: 'blur(3px)',
+              transformOrigin: 'bottom center',
+            }}
+          />
+        ))}
+      </div>
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-30" />
+    </>
+  );
 };
 
-// Organic Physical Ash Pile settled on the top edge of the next card
+// Organic Physical Ash Pile settled on the top edge of the next card (animated via Anime.js stagger)
 const AshPile: React.FC = () => {
+  const pileRef = useRef<HTMLDivElement>(null);
   const flakes = React.useMemo(
     () =>
       Array.from({ length: 42 }, (_, i) => ({
-        left: `${(i / 42) * 100 + (Math.sin(i * 3.1) * 1.5)}%`,
+        left: `${(i / 42) * 100 + Math.sin(i * 3.1) * 1.5}%`,
         top: `${(i % 4) * 2.2}px`,
         w: 3 + (i % 5) * 1.4,
         h: 2 + (i % 3) * 1.1,
@@ -163,8 +227,21 @@ const AshPile: React.FC = () => {
     []
   );
 
+  useEffect(() => {
+    if (!pileRef.current) return;
+    const nodes = pileRef.current.querySelectorAll('.ash-flake');
+    animate(nodes, {
+      translateY: [-14, 0],
+      opacity: [0, 0.85],
+      delay: stagger(16, { from: 'center' }),
+      duration: 650,
+      ease: 'outBounce',
+    });
+  }, []);
+
   return (
     <div
+      ref={pileRef}
       className="absolute top-0 inset-x-0 h-4 pointer-events-none z-20 overflow-hidden"
       title="上一条阅后即焚卡片化成的物理灰烬"
     >
@@ -180,7 +257,7 @@ const AshPile: React.FC = () => {
             transform: `rotate(${f.rot}deg)`,
             opacity: f.opacity,
           }}
-          className={`absolute rounded-[1px] ${
+          className={`ash-flake absolute rounded-[1px] ${
             f.ember
               ? 'bg-orange-400 shadow-[0_0_6px_rgba(251,146,60,0.9)] animate-pulse'
               : 'bg-zinc-400 dark:bg-zinc-500'
@@ -378,6 +455,16 @@ export const MessageBoard: React.FC = () => {
         </div>
       </form>
 
+      {/* Hidden SVG Heat Turbulence Filter for Realistic Fire Distortion */}
+      <svg className="w-0 h-0 absolute pointer-events-none" aria-hidden="true">
+        <defs>
+          <filter id="burn-heat-filter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.02 0.06" numOctaves={3} result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale={0} xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
+
       {/* Cards List */}
       <div className="space-y-4">
         <AnimatePresence>
@@ -393,11 +480,12 @@ export const MessageBoard: React.FC = () => {
                 initial={{ opacity: 0, y: 16 }}
                 animate={
                   isBurning
-                    ? { opacity: 0.7, scale: 0.98 }
+                    ? { opacity: 0.72, scale: 0.985 }
                     : { opacity: 1, y: 0, scale: 1 }
                 }
                 exit={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' }}
                 transition={{ duration: 0.45 }}
+                style={isBurning ? { filter: 'url(#burn-heat-filter)' } : undefined}
                 className={`relative rounded-2xl glass border p-5 transition-all overflow-hidden ${
                   msg.isBurnAfterReading
                     ? 'border-orange-500/35 bg-gradient-to-br from-orange-500/5 to-red-500/5'

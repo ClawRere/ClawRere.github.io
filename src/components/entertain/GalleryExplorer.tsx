@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Copy, Check, Image as ImageIcon } from 'lucide-react';
 import galleryData from '@/data/gallery.json';
+import { DeviceLoader } from '@/components/ui/DeviceLoader';
 
 interface GalleryImg {
   alt: string;
@@ -20,6 +21,7 @@ export const GalleryExplorer: React.FC = () => {
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
   const [coverSetUrl, setCoverSetUrl] = useState<string | null>(null);
   const [failedUrls, setFailedUrls] = useState<Record<string, boolean>>({});
+  const [loadedUrls, setLoadedUrls] = useState<Record<string, boolean>>({});
 
   const currentAlbum = albums.find((a) => a.id === activeAlbumId) || albums[0];
   const visibleImages = (currentAlbum?.images || []).filter((img) => !failedUrls[img.url]);
@@ -72,12 +74,22 @@ export const GalleryExplorer: React.FC = () => {
             key={`${currentAlbum.id}-${img.url}-${idx}`}
             className="group relative rounded-2xl overflow-hidden border border-charcoal-500/10 dark:border-white/10 bg-zinc-900/20 shadow-lg hover:shadow-2xl transition-all"
           >
-            <div className="aspect-[16/10] w-full overflow-hidden bg-zinc-900">
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-900/90 flex items-center justify-center">
+              {!loadedUrls[img.url] && (
+                <div className="absolute inset-0 flex items-center justify-center text-cream-200/70 pointer-events-none">
+                  <DeviceLoader />
+                </div>
+              )}
               <img
                 src={img.url}
                 alt={img.alt}
                 loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                className={`relative z-10 w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ${
+                  loadedUrls[img.url] ? 'opacity-100' : 'opacity-0'
+                }`}
+                onLoad={() => {
+                  setLoadedUrls((prev) => ({ ...prev, [img.url]: true }));
+                }}
                 onError={() => {
                   setFailedUrls((prev) => ({ ...prev, [img.url]: true }));
                 }}

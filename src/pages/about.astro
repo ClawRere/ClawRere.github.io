@@ -10,29 +10,29 @@ const skills = [
       { name: "5W1H 深度拆解", desc: "穿透业务伪需求，从根本上定义 AI Agent 的系统边界与效用函数" },
       { name: "假设 vs 事实分层追踪", desc: "在 PRD 阶段隔离未知风险，建立自动化基线核验闭环" },
       { name: "动态一致性基线状态机", desc: "控制生成物版本（V0.2/vX.Y/rN），保证复杂任务多轮迭代不跑偏" },
-      { name: "AI 交互心智模型构建", desc: "设计非侵入式渐进增强体验，降低大模型幻觉对端侧用户的影响" },
+      { name: "AI Evals 评测集与幻觉治理", desc: "构建 Badcase 回归测试与 Rubric 评分标准，保障生成稳定性" },
     ],
   },
   {
-    category: "设计工程 & 交互品味",
+    category: "AI 交互设计 & 生成式 UI",
     color: "text-purple-400",
     glow: "from-purple-400 via-fuchsia-500 to-pink-500",
     items: [
       { name: "Apple 流体动效与空间感", desc: "追求 120fps 极佳手感，弹簧物理动量与微交互细节" },
-      { name: "Claude 式人文温润质感", desc: "克制的排版韵律，柔和暗色渐变，阅读呼吸感与沉浸感" },
-      { name: "Axure / Visio / PS / Canvas", desc: "高保真交互原型、100+ 独立动效研究与轻量化渲染" },
-      { name: "Design System & Token 化", desc: "跨端设计资产复用，原子化样式保证长期协同一致性" },
+      { name: "Claude 式人文温润质感", desc: "克制的排版韵律，柔和渐变，阅读呼吸感与沉浸感" },
+      { name: "多模态交互与生成式 UI", desc: "探索文生图、语音流式交互与动态自适应组件编排" },
+      { name: "Axure / Visio / PS / Canvas", desc: "高保真交互原型、动效研究与轻量化渲染" },
     ],
   },
   {
-    category: "工程落地 & 数据分析工具栈",
+    category: "AI 研发工程 & 数据分析栈",
     color: "text-cyan-400",
     glow: "from-cyan-400 via-blue-500 to-indigo-500",
     items: [
-      { name: "LLM / RAG / Multi-Agent", desc: "熟悉 Agentic Workflow 链路工程与评测体系" },
+      { name: "Agentic Workflow / MCP / RAG", desc: "熟悉 Multi-Agent 编排、MCP Server 接入与知识库检索增强" },
+      { name: "Prompt & Context 工程", desc: "系统级提示词架构、记忆压缩与工具调用约束设计" },
       { name: "Python / FineBI / Tableau / Matlab", desc: "数据采集清洗、自动化报告与多维分析驾驶舱搭建" },
-      { name: "Vue / React / Astro / Node / JS", desc: "全栈原型快速构建，Cursor 结对编程与高效共创" },
-      { name: "Git / Docker / Linux", desc: "版本协同管理与自动化构建部署流程" },
+      { name: "Vue / React / Astro / Node / Git", desc: "全栈原型快速构建，Claude / Codex / Cursor 结对共创" },
     ],
   },
 ];
@@ -67,10 +67,10 @@ const interests = [
     href: "https://paipai.ldddd.eu.org/",
   },
   {
-    tag: "爱好游戏 · 原神",
-    title: "提瓦特大陆的奇幻冒险",
-    sub: "UID: 125766904 · 喜欢世界观探索与元素反应机制",
-    img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=900&auto=format&fit=crop",
+    tag: "爱好游戏 · 英雄联盟",
+    title: "召唤师峡谷的热血对局",
+    sub: "喜欢团队配合与战术博弈 · 永远的青春回忆",
+    img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=900&auto=format&fit=crop",
   },
   {
     tag: "爱好番剧 · 夏目友人帐",
@@ -188,45 +188,42 @@ const metrics = [
       </div>
     </div>
 
-    <!-- Pixel Character Walking Loop Strip (inspired by pixelfx / pixelgame.io) -->
-    <div class="relative h-16 rounded-2xl border border-white/20 dark:border-white/10 bg-white/50 dark:bg-zinc-900/55 backdrop-blur-md overflow-hidden shadow-inner flex items-end px-4">
-      <div class="absolute inset-x-0 bottom-0 h-2.5 bg-gradient-to-r from-emerald-500/40 via-teal-500/40 to-sky-500/40" />
-      <div class="pixel-walker-track relative w-full h-12">
-        <div class="pixel-walker inline-flex items-end gap-1.5">
-          <!-- 12x12 Crisp Pixel Adventurer (alternates 2 walk frames via CSS) -->
-          <svg class="w-10 h-10 pixel-walk-f1" viewBox="0 0 12 12" shape-rendering="crispEdges">
-            <rect x="4" y="1" width="4" height="1" fill="#1F2430"/>
-            <rect x="3" y="2" width="6" height="2" fill="#2D3748"/>
-            <rect x="3" y="4" width="6" height="3" fill="#FDE68A"/>
-            <rect x="4" y="5" width="1" height="1" fill="#1F2430"/>
-            <rect x="7" y="5" width="1" height="1" fill="#1F2430"/>
-            <rect x="3" y="7" width="6" height="3" fill="#EE7959"/>
-            <rect x="2" y="7" width="1" height="2" fill="#FDE68A"/>
-            <rect x="9" y="8" width="1" height="2" fill="#FDE68A"/>
-            <rect x="3" y="10" width="2" height="2" fill="#1F2430"/>
-            <rect x="7" y="10" width="2" height="1" fill="#1F2430"/>
-          </svg>
-          <svg class="w-10 h-10 pixel-walk-f2 hidden" viewBox="0 0 12 12" shape-rendering="crispEdges">
-            <rect x="4" y="1" width="4" height="1" fill="#1F2430"/>
-            <rect x="3" y="2" width="6" height="2" fill="#2D3748"/>
-            <rect x="3" y="4" width="6" height="3" fill="#FDE68A"/>
-            <rect x="4" y="5" width="1" height="1" fill="#1F2430"/>
-            <rect x="7" y="5" width="1" height="1" fill="#1F2430"/>
-            <rect x="3" y="7" width="6" height="3" fill="#EE7959"/>
-            <rect x="2" y="8" width="1" height="2" fill="#FDE68A"/>
-            <rect x="9" y="7" width="1" height="2" fill="#FDE68A"/>
-            <rect x="4" y="10" width="2" height="1" fill="#1F2430"/>
-            <rect x="6" y="10" width="2" height="2" fill="#1F2430"/>
-          </svg>
-          <span class="mb-6 px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-600 dark:text-amber-300 text-[10px] font-mono border border-amber-400/30">
-            Pixel Walker · 持续探索中
-          </span>
-        </div>
+    <!-- Lovely Corgi + Left/Right Paipai Kittens Showcase -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+      <a
+        href="https://paipai.ldddd.eu.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="md:col-span-3 group flex flex-col items-center p-4 rounded-2xl border border-white/25 dark:border-white/10 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-lg hover:-translate-y-1.5 transition-all"
+      >
+        <img src="/img/paipai.webp" alt="小猫派派" class="w-20 h-20 rounded-full object-cover border-2 border-amber-300 shadow-md group-hover:rotate-6 transition-transform" />
+        <span class="mt-2 text-xs font-bold text-zinc-900 dark:text-white">🐱 左护法 · 派派</span>
+        <span class="text-[10px] font-mono text-amber-500">点击访问派派小站 ↗</span>
+      </a>
+
+      <div class="md:col-span-6 h-48 rounded-2xl overflow-hidden border border-white/25 dark:border-white/10 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-lg">
+        <iframe
+          src="/effects/lovely_dog/index.html"
+          title="可爱柯基动画"
+          loading="lazy"
+          class="w-full h-full border-0"
+        />
       </div>
+
+      <a
+        href="https://paipai.ldddd.eu.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="md:col-span-3 group flex flex-col items-center p-4 rounded-2xl border border-white/25 dark:border-white/10 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-lg hover:-translate-y-1.5 transition-all"
+      >
+        <img src="/img/paipai.webp" alt="小猫派派" class="w-20 h-20 rounded-full object-cover border-2 border-amber-300 shadow-md -scale-x-100 group-hover:-rotate-6 transition-transform" />
+        <span class="mt-2 text-xs font-bold text-zinc-900 dark:text-white">🐱 右护法 · 派派</span>
+        <span class="text-[10px] font-mono text-amber-500">paipai.ldddd.eu.org</span>
+      </a>
     </div>
 
     <!-- Personal Bento Cards with 3D Perspective Tilt & Frosted Glass -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 [perspective:1000px]">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 [perspective:1000px] pt-4">
       <div class="p-5 rounded-2xl border border-white/25 dark:border-white/12 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-xl space-y-2 transition-transform duration-500 hover:[transform:rotateY(6deg)_rotateX(4deg)_translateY(-6px)]">
         <div class="text-xs font-mono text-amber-500 uppercase tracking-wider">个人档案</div>
         <div class="space-y-2 text-sm pt-1">
@@ -237,12 +234,12 @@ const metrics = [
         </div>
       </div>
 
-      <!-- ENTP Card with Uploaded Cartoon Character (3D Tilt + Frosted Glass) -->
-      <div class="p-5 rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/12 via-white/65 to-transparent dark:from-purple-900/25 dark:via-zinc-900/60 backdrop-blur-md shadow-xl flex items-center gap-4 transition-transform duration-500 hover:[transform:rotateY(-6deg)_rotateX(4deg)_translateY(-6px)]">
+      <!-- ENTP Card: Large Borderless Character overflowing card height with hover wobble -->
+      <div class="relative p-5 rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/12 via-white/65 to-transparent dark:from-purple-900/25 dark:via-zinc-900/60 backdrop-blur-md shadow-xl flex items-center gap-3">
         <img
           src="/img/entp-character.jpg"
           alt="ENTP 辩论家卡通形象"
-          class="w-24 h-28 rounded-xl object-cover shadow-md border border-purple-400/30 shrink-0 hover:scale-105 transition-transform"
+          class="w-32 h-40 -my-7 -ml-2 object-contain shrink-0 transition-transform duration-300 hover:rotate-3 hover:scale-105 cursor-pointer drop-shadow-xl"
         />
         <div class="space-y-1.5">
           <div class="text-xs font-mono text-purple-400 uppercase tracking-wider">性格与座右铭</div>
@@ -253,12 +250,23 @@ const metrics = [
         </div>
       </div>
 
-      <div class="p-5 rounded-2xl border border-white/25 dark:border-white/12 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-xl space-y-2 transition-transform duration-500 hover:[transform:rotateY(6deg)_rotateX(-4deg)_translateY(-6px)]">
-        <div class="text-xs font-mono text-emerald-500 uppercase tracking-wider">幽默心路历程 😝</div>
-        <div class="space-y-2 text-xs text-zinc-600 dark:text-zinc-300 pt-1">
-          <div>✅ 擅长 PS/Pr/Ae/Ai 等软件安装与卸载 🎃</div>
-          <div>✅ 精通 HTML/Vue/React/Python 单词拼写 🎲</div>
-          <div>✅ 熟悉 Win/Linux/Mac/iOS 开关机 👻</div>
+      <!-- AI Software Icons Matrix -->
+      <div class="p-5 rounded-2xl border border-white/25 dark:border-white/12 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-xl space-y-3 transition-transform duration-500 hover:[transform:rotateY(6deg)_rotateX(-4deg)_translateY(-6px)]">
+        <div class="text-xs font-mono text-emerald-500 uppercase tracking-wider">常用 AI 共创工具栈</div>
+        <div class="grid grid-cols-3 gap-2 pt-0.5">
+          {[
+            { name: 'Claude', bg: 'bg-[#D97757]/15 text-[#D97757] border-[#D97757]/30', icon: '✦' },
+            { name: 'Codex', bg: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border-emerald-500/30', icon: '⌘' },
+            { name: 'Cursor', bg: 'bg-sky-500/15 text-sky-600 dark:text-sky-300 border-sky-500/30', icon: '◩' },
+            { name: 'Gemini', bg: 'bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border-indigo-500/30', icon: '✧' },
+            { name: 'Midjourney', bg: 'bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30', icon: '◈' },
+            { name: 'Dify/MCP', bg: 'bg-amber-500/15 text-amber-600 dark:text-amber-300 border-amber-500/30', icon: '⚡' },
+          ].map(ai => (
+            <div class={`flex flex-col items-center justify-center py-2 px-1 rounded-xl border text-center hover:scale-105 transition-transform ${ai.bg}`}>
+              <span class="text-base leading-none">{ai.icon}</span>
+              <span class="text-[10px] font-mono font-bold mt-1">{ai.name}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -325,6 +333,20 @@ const metrics = [
           互动留言板
         </a>
       </div>
+    </div>
+
+    <!-- Interactive Canvas Crowd at Bottom (from /effects/canvas_crowd) -->
+    <div class="rounded-3xl overflow-hidden border border-white/15 bg-zinc-950/90 shadow-2xl">
+      <div class="px-5 py-2.5 border-b border-white/10 flex items-center justify-between text-xs font-mono text-white/65">
+        <span>🚶‍♂️ 喧嚣与同行 · Canvas Crowd</span>
+        <span>感谢每一位来访的数字旅人</span>
+      </div>
+      <iframe
+        src="/effects/canvas_crowd/index.html"
+        title="Canvas 人群动画"
+        loading="lazy"
+        class="w-full h-64 border-0 block"
+      />
     </div>
 
   </div>

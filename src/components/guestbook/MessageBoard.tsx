@@ -12,6 +12,7 @@ interface CommentItem {
   isAdmin?: boolean;
   isBurnAfterReading?: boolean;
   likes?: number;
+  reactions?: Record<string, number>;
   hasAshFromAbove?: boolean;
 }
 
@@ -581,6 +582,16 @@ export const MessageBoard: React.FC = () => {
     localStorage.setItem('guestbook_messages', JSON.stringify(updated));
   };
 
+  const handleReact = (id: number, key: string) => {
+    const updated = messages.map((m) => {
+      if (m.id !== id) return m;
+      const prev = m.reactions || {};
+      return { ...m, reactions: { ...prev, [key]: (prev[key] || 0) + 1 } };
+    });
+    setMessages(updated);
+    localStorage.setItem('guestbook_messages', JSON.stringify(updated));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !content.trim()) return;
@@ -747,6 +758,31 @@ export const MessageBoard: React.FC = () => {
         .tw-sandstorm-gust {
           animation: sandstormSweep 13s ease-in-out infinite;
         }
+        @keyframes weatherRain {
+          0% { transform: translateY(-10px); opacity: 0; }
+          30% { opacity: 0.75; }
+          100% { transform: translateY(75px); opacity: 0; }
+        }
+        .tw-raindrop {
+          animation: weatherRain 1.4s linear infinite;
+        }
+        @keyframes weatherSnow {
+          0% { transform: translateY(-8px) translateX(0); opacity: 0; }
+          30% { opacity: 0.85; }
+          100% { transform: translateY(72px) translateX(10px); opacity: 0; }
+        }
+        .tw-snowflake {
+          animation: weatherSnow 3.2s ease-in-out infinite;
+        }
+        @keyframes facePop {
+          0% { transform: scale(1); }
+          40% { transform: scale(1.38) rotate(-8deg); }
+          70% { transform: scale(0.92) rotate(6deg); }
+          100% { transform: scale(1) rotate(0deg); }
+        }
+        .tw-face-btn:active svg {
+          animation: facePop 0.35s ease-out;
+        }
       `}</style>
 
       {/* Cards List */}
@@ -800,6 +836,34 @@ export const MessageBoard: React.FC = () => {
                 className={`relative rounded-2xl p-6 sm:p-7 pb-11 sm:pb-12 transition-all overflow-hidden ${biome.cls}`}
               >
                 <BiomeDecoration biome={biome.kind} />
+                {/* Weather Box Top-Right Ambient Weather Overlay */}
+                <div className="pointer-events-none absolute top-0 right-16 w-28 h-20 overflow-hidden opacity-75 z-10" aria-hidden="true">
+                  {biome.kind === 'meadow' && (
+                    <svg className="w-12 h-12 ml-auto mr-2 mt-1 animate-spin [animation-duration:18s]" viewBox="0 0 36 36">
+                      <circle cx="18" cy="18" r="7" fill="#fbbf24" />
+                      <g stroke="#f59e0b" strokeWidth="2" strokeLinecap="round">
+                        <line x1="18" y1="3" x2="18" y2="7" /><line x1="18" y1="29" x2="18" y2="33" />
+                        <line x1="3" y1="18" x2="7" y2="18" /><line x1="29" y1="18" x2="33" y2="18" />
+                        <line x1="7" y1="7" x2="10" y2="10" /><line x1="26" y1="26" x2="29" y2="29" />
+                        <line x1="29" y1="7" x2="26" y2="10" /><line x1="10" y1="26" x2="7" y2="29" />
+                      </g>
+                    </svg>
+                  )}
+                  {biome.kind === 'coast' && (
+                    <div className="relative w-full h-full">
+                      {[12, 34, 56, 78].map((left, rIdx) => (
+                        <span key={rIdx} style={{ left: `${left}%`, animationDelay: `${rIdx * 0.35}s` }} className="tw-raindrop absolute top-0 w-0.5 h-3 rounded-full bg-sky-400/75" />
+                      ))}
+                    </div>
+                  )}
+                  {biome.kind === 'stone' && (
+                    <div className="relative w-full h-full">
+                      {[15, 42, 68, 86].map((left, sIdx) => (
+                        <span key={sIdx} style={{ left: `${left}%`, animationDelay: `${sIdx * 0.7}s` }} className="tw-snowflake absolute top-0 w-1.5 h-1.5 rounded-full bg-white/85 shadow" />
+                      ))}
+                    </div>
+                  )}
+                </div>
                 {isBurning && <BurnCanvas />}
 
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
@@ -819,10 +883,34 @@ export const MessageBoard: React.FC = () => {
                     )}
                   </div>
 
-                  <div className="flex items-center gap-3 text-[11px] font-mono text-charcoal-100 dark:text-cream-400">
-                    <span className="flex items-center gap-1">
+                  <div className="flex items-center gap-2 text-[11px] font-mono text-charcoal-100 dark:text-cream-400">
+                    <span className="flex items-center gap-1 mr-1">
                       <Calendar className="w-3 h-3" /> {msg.date}
                     </span>
+                    {/* Face Expression Reactions (inspired by /effects/face_expression) */}
+                    {[
+                      { key: 'happy', title: '开心', bg: '#ffcc4d', eye: '#664500', mouth: 'M6 12 Q10 16 14 12' },
+                      { key: 'love', title: '超赞', bg: '#ffcc4d', eye: '#e75a70', mouth: 'M6 12 Q10 15.5 14 12' },
+                      { key: 'laugh', title: '笑死', bg: '#ffcc4d', eye: '#664500', mouth: 'M5 11 Q10 17 15 11 Z' },
+                      { key: 'wow', title: '震撼', bg: '#da2f47', eye: '#ffffff', mouth: 'M7 13 Q10 10 13 13' },
+                    ].map((face) => (
+                      <button
+                        key={face.key}
+                        onClick={() => handleReact(msg.id, face.key)}
+                        title={face.title}
+                        className="tw-face-btn inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                      >
+                        <svg className="w-4 h-4 transition-transform hover:scale-125" viewBox="0 0 20 20">
+                          <circle cx="10" cy="10" r="9" fill={face.bg} />
+                          <circle cx="7" cy="8" r="1.3" fill={face.eye} />
+                          <circle cx="13" cy="8" r="1.3" fill={face.eye} />
+                          <path d={face.mouth} stroke={face.eye === '#ffffff' ? '#ffffff' : '#664500'} strokeWidth="1.4" fill="none" strokeLinecap="round" />
+                        </svg>
+                        {(msg.reactions?.[face.key] || 0) > 0 && (
+                          <span className="text-[10px]">{msg.reactions?.[face.key]}</span>
+                        )}
+                      </button>
+                    ))}
                     <button
                       onClick={() => handleLike(msg.id)}
                       className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full hover:bg-rose-500/10 text-rose-400 transition-colors"

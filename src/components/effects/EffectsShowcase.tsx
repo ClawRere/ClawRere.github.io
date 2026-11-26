@@ -198,7 +198,7 @@ export const EffectsShowcase: React.FC = () => {
               Creative Code & Visual FX Vault
             </div>
             <p className="text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 max-w-xl leading-relaxed">
-              收录 <strong>{allEffects.length} 个</strong> 原生动效。支持在线存储新的前端动效 URL 或 HTML/CSS 代码片段，随时一键预览与复制复用。
+              收藏整理了 <strong>{allEffects.length} 个</strong> 优秀前端动效素材，方便后续产品与项目开发随时参考复用；也支持在线收藏新的动效 URL 或 HTML/CSS 片段。
             </p>
             <div className="flex flex-wrap items-center gap-2.5">
               <button

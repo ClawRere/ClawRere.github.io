@@ -96,3 +96,134 @@
 .animate-sound-2 { animation: soundWave 0.9s ease-in-out infinite 0.2s; }
 .animate-sound-3 { animation: soundWave 1.4s ease-in-out infinite 0.4s; }
 .animate-sound-4 { animation: soundWave 0.7s ease-in-out infinite 0.1s; }
+
+/* Fireflies Night Button Effect (from /effects/fireflies_button) */
+.ff-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: #fde047;
+  box-shadow: 0 0 8px #fef08a, 0 0 14px #facc15;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.dark .ff-dot,
+.firefly-btn:hover .ff-dot {
+  opacity: 0.9;
+}
+@keyframes ffOrbit1 {
+  0%, 100% { transform: translate(-12px, -10px) scale(0.8); }
+  50% { transform: translate(12px, 8px) scale(1.15); }
+}
+@keyframes ffOrbit2 {
+  0%, 100% { transform: translate(13px, -9px) scale(1); }
+  50% { transform: translate(-11px, 11px) scale(0.7); }
+}
+@keyframes ffOrbit3 {
+  0%, 100% { transform: translate(-14px, 9px) scale(0.75); }
+  50% { transform: translate(10px, -12px) scale(1.1); }
+}
+@keyframes ffOrbit4 {
+  0%, 100% { transform: translate(10px, 12px) scale(1.1); }
+  50% { transform: translate(-12px, -8px) scale(0.65); }
+}
+.ff-dot-1 { animation: ffOrbit1 2.8s ease-in-out infinite; }
+.ff-dot-2 { animation: ffOrbit2 3.3s ease-in-out infinite 0.4s; }
+.ff-dot-3 { animation: ffOrbit3 2.5s ease-in-out infinite 0.8s; }
+.ff-dot-4 { animation: ffOrbit4 3.6s ease-in-out infinite 0.2s; }
+
+/* Random Device Loading Animation (from /effects/random_device_loding) */
+.device-loader {
+  --hue: 223;
+  --fg: currentColor;
+  position: relative;
+  width: 4em;
+  height: 4em;
+  font-size: 10px;
+}
+.device__a, .device__a-1, .device__a-2, .device__b, .device__c, .device__d, .device__e, .device__f, .device__g {
+  animation: device-a 3s cubic-bezier(0.65,0,0.35,1) infinite;
+  position: absolute;
+}
+.device__a, .device__d, .device__e {
+  background-color: rgba(148, 163, 184, 0.35);
+  box-shadow: 0 0 0 0.25em inset currentColor;
+}
+.device__a { border-radius: 0.375em; top: 0; width: 4em; height: 2.5em; z-index: 1; }
+.device__a-1, .device__a-2 { visibility: hidden; }
+.device__a-1 { animation-name: device-a-1; top: 2.25em; left: 1.5em; width: 1em; height: 0.25em; }
+.device__a-2 { animation-name: device-a-2; top: 0.625em; right: 0; width: 0.25em; height: 0.75em; }
+.device__a-1, .device__a-2, .device__b, .device__c, .device__f, .device__g {
+  background-color: currentColor;
+  border-radius: 0.125em;
+}
+.device__b { animation-name: device-b; top: 2.25em; left: 1.875em; width: 0.25em; height: 1em; }
+.device__c { animation-name: device-c; top: 3em; left: 1em; width: 2em; height: 0.25em; }
+.device__d, .device__e { left: 1.25em; width: 1.5em; height: 0.875em; visibility: hidden; }
+.device__d { animation-name: device-d; border-radius: 0.375em 0.375em 0 0; top: 0.75em; }
+.device__e { animation-name: device-e; border-radius: 0 0 0.375em 0.375em; top: 1.625em; }
+.device__f, .device__g { filter: blur(0.25em); bottom: 0; height: 0.25em; }
+.device__f { animation-name: device-f; opacity: 0.4; left: 1em; width: 2em; }
+.device__g { animation-name: device-g; opacity: 0; left: 0; width: 4em; }
+@keyframes device-a {
+  from, to { left: 0; width: 4em; height: 2.5em; transform: translateY(0); }
+  12.5% { left: 0; width: 4em; height: 2.5em; transform: translateY(1.5em); }
+  25% { left: 0; width: 4em; height: 2.5em; transform: translateY(0.375em); }
+  37.5% { left: 0; width: 4em; height: 2.5em; transform: translateY(1.5em); }
+  50% { left: 1em; width: 2em; height: 3em; transform: translateY(0.125em); }
+  62.5% { left: 1em; width: 2em; height: 3em; transform: translateY(1em); }
+  75% { left: 1em; width: 2em; height: 2em; transform: translateY(0.625em); }
+  87.5% { left: 1em; width: 2em; height: 2em; transform: translateY(1.375em); }
+}
+@keyframes device-a-1 {
+  from { left: 1.5em; width: 1em; transform: translateY(0); visibility: hidden; }
+  12.5% { left: 1.5em; width: 1em; transform: translateY(0); visibility: visible; }
+  25%, 37.5% { left: 1.5em; width: 1em; transform: translateY(-0.5em); visibility: visible; }
+  50%, 62.5% { left: 0.875em; width: 0.25em; transform: translateY(0); visibility: visible; }
+  75%, to { left: 0.875em; width: 0.25em; transform: translateY(-0.5em); visibility: hidden; }
+}
+@keyframes device-a-2 {
+  from { transform: translate(0, 0.375em); visibility: hidden; }
+  62.5% { transform: translate(0, 0.375em); visibility: visible; }
+  75%, 87.5% { transform: translate(0.375em, 0); visibility: visible; }
+  to { transform: translate(0, 0.25em); visibility: visible; }
+}
+@keyframes device-b {
+  from, to { transform: translateY(0); visibility: visible; }
+  10%, 12.5% { transform: translateY(0.75em); visibility: visible; }
+  25%, 87.5% { transform: translateY(0.75em); visibility: hidden; }
+}
+@keyframes device-c {
+  from, to { transform: translateY(0); visibility: visible; width: 2em; }
+  10%, 12.5% { transform: translateY(0.75em); visibility: visible; width: 2em; }
+  25% { transform: translateY(0.75em); visibility: hidden; width: 2em; }
+  87.5% { left: 1.5em; transform: translateY(0.75em); visibility: hidden; width: 1em; }
+}
+@keyframes device-d {
+  from { transform: translateY(0.25em); visibility: hidden; }
+  62.5% { transform: translateY(0.25em); visibility: visible; }
+  75% { transform: translateY(-0.75em); }
+  87.5% { transform: translateY(0); }
+  to { transform: translateY(-0.75em); }
+}
+@keyframes device-e {
+  from { transform: translateY(1.5em); visibility: hidden; }
+  62.5% { transform: translateY(1.5em); visibility: visible; }
+  75% { transform: translateY(0.75em); }
+  87.5% { transform: translateY(1.5em); }
+  to { transform: translateY(0); }
+}
+@keyframes device-f {
+  from { opacity: 0.5; }
+  25%, to { opacity: 0; }
+}
+@keyframes device-g {
+  from, 12.5% { opacity: 0; }
+  25%, 87.5% { opacity: 0.4; }
+  to { opacity: 0.4; }
+}

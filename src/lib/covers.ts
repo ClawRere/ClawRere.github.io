@@ -1,53 +1,24 @@
-// Curated collection of crisp local cartoon/scenic SVG covers for technical & creative posts
+// 10 custom cartoon/editorial SVG covers tailored for Mondrian blog cards
 const defaultCovers = [
-  '/img/fan/card-1.svg',
-  '/img/fan/card-2.svg',
-  '/img/fan/card-3.svg',
-  '/img/fan/card-4.svg',
-  '/img/fan/card-5.svg',
-  '/img/fan/card-6.svg',
-  '/img/fan/card-7.svg',
+  '/img/blog/cover-1.svg',
+  '/img/blog/cover-2.svg',
+  '/img/blog/cover-3.svg',
+  '/img/blog/cover-4.svg',
+  '/img/blog/cover-5.svg',
+  '/img/blog/cover-6.svg',
+  '/img/blog/cover-7.svg',
+  '/img/blog/cover-8.svg',
+  '/img/blog/cover-9.svg',
+  '/img/blog/cover-10.svg',
 ];
 
-export function extractFirstImage(body?: string | null): string | null {
-  if (!body) return null;
-  // Match Markdown ![alt](url) or HTML <img src="url">
-  const mdRegex = /!\[[^\]]*\]\((https?:\/\/[^)\s]+)\)/g;
-  let match: RegExpExecArray | null;
-  while ((match = mdRegex.exec(body)) !== null) {
-    const url = match[1];
-    if (url && !url.includes('mmbiz.qpic.cn') && !url.includes('friend_404')) {
-      return url.replace(/^http:\/\//, 'https://');
+export function getPostCover(_explicitCover?: string, title = '', index = 0, _body?: string): string {
+  if (title) {
+    let hash = 0;
+    for (let i = 0; i < title.length; i++) {
+      hash = (hash * 31 + title.charCodeAt(i)) >>> 0;
     }
+    return defaultCovers[(hash + index) % defaultCovers.length];
   }
-  const htmlRegex = /<img[^>]+src=["'](https?:\/\/[^"']+)["']/gi;
-  while ((match = htmlRegex.exec(body)) !== null) {
-    const url = match[1];
-    if (url && !url.includes('mmbiz.qpic.cn') && !url.includes('friend_404')) {
-      return url.replace(/^http:\/\//, 'https://');
-    }
-  }
-  return null;
-}
-
-export function getPostCover(
-  cover?: string | null,
-  title: string = '',
-  index: number = 0,
-  body?: string | null
-): string {
-  if (cover && cover.trim().length > 0 && !cover.includes('mmbiz.qpic.cn')) {
-    return cover;
-  }
-  const firstInBody = extractFirstImage(body);
-  if (firstInBody) {
-    return firstInBody;
-  }
-  let hash = 0;
-  for (let i = 0; i < title.length; i++) {
-    hash = (hash << 5) - hash + title.charCodeAt(i);
-    hash |= 0;
-  }
-  const selected = Math.abs(hash + index) % defaultCovers.length;
-  return defaultCovers[selected];
+  return defaultCovers[index % defaultCovers.length];
 }

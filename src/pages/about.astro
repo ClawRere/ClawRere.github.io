@@ -212,32 +212,26 @@ const metrics = [
           <div class="flex justify-between items-center gap-2">
             <span class="text-zinc-500 dark:text-zinc-400 shrink-0">本科</span>
             <span class="font-semibold text-amber-500 inline-flex items-center gap-1.5">
-              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" aria-label="ZUEL">
-                <circle cx="12" cy="12" r="10" fill="#0F4C81" />
-                <path d="M7 9h10l-7 6h7" stroke="#FDE68A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
+              <img src="/img/logo-zuel.png" alt="中南财经政法大学" class="w-5 h-5 rounded-full object-contain bg-white p-0.5 shrink-0" />
               中南财经政法大学
             </span>
           </div>
           <div class="flex justify-between items-center gap-2">
             <span class="text-zinc-500 dark:text-zinc-400 shrink-0">硕士</span>
             <span class="font-semibold text-amber-500 inline-flex items-center gap-1.5">
-              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" aria-label="HUST">
-                <circle cx="12" cy="12" r="10" fill="#B91C1C" />
-                <path d="M8 7v10M16 7v10M8 12h8" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
-              </svg>
+              <img src="/img/logo-hust.png" alt="华中科技大学" class="w-5 h-5 rounded-full object-contain bg-white p-0.5 shrink-0" />
               华中科技大学
             </span>
           </div>
         </div>
       </div>
 
-      <!-- ENTP Card: Large Borderless Character overflowing card height with hover wobble -->
-      <div class="relative p-5 rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/12 via-white/65 to-transparent dark:from-purple-900/25 dark:via-zinc-900/60 backdrop-blur-md shadow-xl flex items-center gap-3">
+      <!-- ENTP Card: Large Transparent Cutout Character overflowing card height, zero background -->
+      <div class="relative p-5 rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/12 via-white/65 to-transparent dark:from-purple-900/25 dark:via-zinc-900/60 backdrop-blur-md shadow-xl flex items-center gap-2">
         <img
-          src="/img/entp-character.jpg"
+          src="/img/entp-character.png"
           alt="ENTP 辩论家卡通形象"
-          class="w-32 h-40 -my-7 -ml-2 object-contain shrink-0 transition-transform duration-300 hover:rotate-3 hover:scale-105 cursor-pointer drop-shadow-xl"
+          class="w-32 h-44 -my-10 -ml-3 object-contain shrink-0 transition-transform duration-300 hover:rotate-3 hover:scale-105 cursor-pointer drop-shadow-2xl"
         />
         <div class="space-y-1.5">
           <div class="text-xs font-mono text-purple-400 uppercase tracking-wider">性格与座右铭</div>
@@ -248,23 +242,72 @@ const metrics = [
         </div>
       </div>
 
-      <!-- AI Software Icons Matrix (tilts toward cursor) -->
+      <!-- AI Software Brand Icons Matrix (tilts toward cursor) -->
       <div class="tilt-card p-5 rounded-2xl border border-white/25 dark:border-white/12 bg-white/60 dark:bg-zinc-900/55 backdrop-blur-md shadow-xl space-y-3 transition-transform duration-200 ease-out will-change-transform">
         <div class="text-xs font-mono text-emerald-500 uppercase tracking-wider">常用 AI 共创工具栈</div>
-        <div class="grid grid-cols-3 gap-2 pt-0.5">
-          {[
-            { name: 'Claude', bg: 'bg-[#D97757]/15 text-[#D97757] border-[#D97757]/30', icon: '✦' },
-            { name: 'Codex', bg: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border-emerald-500/30', icon: '⌘' },
-            { name: 'Cursor', bg: 'bg-sky-500/15 text-sky-600 dark:text-sky-300 border-sky-500/30', icon: '◩' },
-            { name: 'Gemini', bg: 'bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border-indigo-500/30', icon: '✧' },
-            { name: 'Midjourney', bg: 'bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30', icon: '◈' },
-            { name: 'Dify/MCP', bg: 'bg-amber-500/15 text-amber-600 dark:text-amber-300 border-amber-500/30', icon: '⚡' },
-          ].map(ai => (
-            <div class={`flex flex-col items-center justify-center py-2 px-1 rounded-xl border text-center hover:scale-105 transition-transform ${ai.bg}`}>
-              <span class="text-base leading-none">{ai.icon}</span>
-              <span class="text-[10px] font-mono font-bold mt-1">{ai.name}</span>
-            </div>
-          ))}
+        <div class="grid grid-cols-4 gap-2 pt-0.5">
+          <!-- Claude -->
+          <div class="flex flex-col items-center justify-center py-2 px-1 rounded-xl border border-[#D97757]/25 bg-white/70 dark:bg-zinc-800/70 hover:scale-105 transition-transform" title="Claude">
+            <svg class="w-5 h-5 text-[#D97757]" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2v20M4.9 4.9l14.2 14.2M2 12h20M4.9 19.1L19.1 4.9M8.2 2.8l7.6 18.4M2.8 8.2l18.4 7.6M2.8 15.8l18.4-7.6M8.2 21.2l7.6-18.4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+            <span class="text-[9px] font-mono font-bold mt-1">Claude</span>
+          </div>
+          <!-- OpenAI / Codex -->
+          <div class="flex flex-col items-center justify-center py-2 px-1 rounded-xl border border-emerald-500/25 bg-white/70 dark:bg-zinc-800/70 hover:scale-105 transition-transform" title="OpenAI / Codex">
+            <svg class="w-5 h-5 text-zinc-900 dark:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 3a5 5 0 0 1 4.3 2.5M21 12a5 5 0 0 1-2.5 4.3M12 21a5 5 0 0 1-4.3-2.5M3 12a5 5 0 0 1 2.5-4.3M7.5 4.5a5 5 0 0 1 5 0M19.5 7.5a5 5 0 0 1 0 5M16.5 19.5a5 5 0 0 1-5 0M4.5 16.5a5 5 0 0 1 0-5"/>
+            </svg>
+            <span class="text-[9px] font-mono font-bold mt-1">Codex</span>
+          </div>
+          <!-- Gemini -->
+          <div class="flex flex-col items-center justify-center py-2 px-1 rounded-xl border border-blue-500/25 bg-white/70 dark:bg-zinc-800/70 hover:scale-105 transition-transform" title="Gemini">
+            <svg class="w-5 h-5" viewBox="0 0 24 24">
+              <defs><linearGradient id="gemG" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#4285F4"/><stop offset="1" stop-color="#A855F7"/></linearGradient></defs>
+              <path d="M12 2C12.8 8.2 15.8 11.2 22 12c-6.2.8-9.2 3.8-10 10-.8-6.2-3.8-9.2-10-10 6.2-.8 9.2-3.8 10-10z" fill="url(#gemG)"/>
+            </svg>
+            <span class="text-[9px] font-mono font-bold mt-1">Gemini</span>
+          </div>
+          <!-- DeepSeek -->
+          <div class="flex flex-col items-center justify-center py-2 px-1 rounded-xl border border-blue-600/25 bg-white/70 dark:bg-zinc-800/70 hover:scale-105 transition-transform" title="DeepSeek">
+            <svg class="w-5 h-5 text-[#2563EB]" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4 13c0-4.4 3.6-8 8-8 3.2 0 5.9 1.9 7.2 4.6.6-.4 1.5-.8 2.3-.6-.4 1.2-1 2.2-1.8 2.9 0 .4.1.7.1 1.1 0 4.4-3.6 8-8 8S4 17.4 4 13zm4.5-1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+            </svg>
+            <span class="text-[9px] font-mono font-bold mt-1">DeepSeek</span>
+          </div>
+          <!-- Grok -->
+          <div class="flex flex-col items-center justify-center py-2 px-1 rounded-xl border border-zinc-500/25 bg-white/70 dark:bg-zinc-800/70 hover:scale-105 transition-transform" title="Grok">
+            <svg class="w-5 h-5 text-zinc-900 dark:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="7"/>
+              <path d="M5 19L19 5" stroke-linecap="round"/>
+            </svg>
+            <span class="text-[9px] font-mono font-bold mt-1">Grok</span>
+          </div>
+          <!-- Perplexity -->
+          <div class="flex flex-col items-center justify-center py-2 px-1 rounded-xl border border-teal-500/25 bg-white/70 dark:bg-zinc-800/70 hover:scale-105 transition-transform" title="Perplexity">
+            <svg class="w-5 h-5 text-zinc-900 dark:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2v20M4 7l8 5 8-5M4 17l8-5 8 5M6 4v16M18 4v16"/>
+            </svg>
+            <span class="text-[9px] font-mono font-bold mt-1">Perplexity</span>
+          </div>
+          <!-- Kimi -->
+          <div class="flex flex-col items-center justify-center py-2 px-1 rounded-xl border border-zinc-500/25 bg-white/70 dark:bg-zinc-800/70 hover:scale-105 transition-transform" title="Kimi">
+            <svg class="w-5 h-5 text-zinc-900 dark:text-white" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="4" y="4" width="3.5" height="16" rx="1"/>
+              <path d="M9 12l6-7h4l-6 7 6 7h-4l-6-7z"/>
+              <circle cx="19" cy="5.5" r="2" fill="#3B82F6"/>
+            </svg>
+            <span class="text-[9px] font-mono font-bold mt-1">Kimi</span>
+          </div>
+          <!-- Cursor -->
+          <div class="flex flex-col items-center justify-center py-2 px-1 rounded-xl border border-sky-500/25 bg-white/70 dark:bg-zinc-800/70 hover:scale-105 transition-transform" title="Cursor">
+            <svg class="w-5 h-5 text-sky-500" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="12,2 21,7 21,17 12,22 3,17 3,7" fill-opacity="0.2" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="12,6 18,12 12,18 9,12"/>
+            </svg>
+            <span class="text-[9px] font-mono font-bold mt-1">Cursor</span>
+          </div>
         </div>
       </div>
     </div>
@@ -277,8 +320,8 @@ const metrics = [
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         {skills.map(s => (
           <div class="glow-card relative rounded-2xl p-[1.5px] overflow-hidden group hover:-translate-y-1 transition-transform">
-            {/* Animated flowing conic gradient border */}
-            <div class={`absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0_240deg,currentColor_300deg,transparent_360deg)] animate-[spin_4s_linear_infinite] opacity-60 group-hover:opacity-100 ${s.color}`} />
+            {/* Animated flowing conic gradient border — visible ONLY on hover */}
+            <div class={`absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0_240deg,currentColor_300deg,transparent_360deg)] animate-[spin_4s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${s.color}`} />
             <div class="relative h-full rounded-[15px] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl p-5 space-y-4">
               <h3 class={`font-bold text-sm ${s.color}`}>{s.category}</h3>
               <div class="space-y-3">

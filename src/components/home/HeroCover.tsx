@@ -134,14 +134,13 @@ export const HeroCover: React.FC = () => {
       style={resolvedStyle}
       className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center overflow-hidden mb-14 transition-all duration-500"
     >
-      {/* Center Minimal Title + Lightweight Tidewell Wipe-in & Pixel Accent (shifted up for enlarged bottom fan cards) */}
-      <div className="relative z-20 text-center px-6 max-w-3xl mx-auto -mt-36 sm:-mt-44">
-        {/* Lightweight Tidewell 4-point sparkle + coastal pixel badges */}
+      {/* Center Badges + Typewriter (removed "磊大大" title and shifted up so bottom 7 cards expose >2/3 on 1st screen) */}
+      <div className="relative z-20 text-center px-6 max-w-3xl mx-auto -mt-48 sm:-mt-56">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.25, 0.75, 0.2, 1] }}
-          className="mb-4 flex items-center justify-center gap-2"
+          className="mb-3 flex items-center justify-center gap-2"
         >
           <span className="px-3 py-1 rounded-full bg-[#F1ECEA]/90 text-[#1F2430] text-[11px] font-mono font-semibold shadow-lg -rotate-2">
             AI · PMOS
@@ -154,21 +153,12 @@ export const HeroCover: React.FC = () => {
           </span>
         </motion.div>
 
-        <motion.h1
-          initial={{ clipPath: 'inset(0 100% 0 0)', opacity: 0.3, y: 12 }}
-          animate={{ clipPath: 'inset(0 0% 0 0)', opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, ease: [0.25, 0.75, 0.2, 1] }}
-          className="text-5xl sm:text-7xl md:text-8xl font-extrabold text-white tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.45)] select-none"
-        >
-          磊大大
-        </motion.h1>
-
         {/* Typewriter subtitle */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-6 inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-black/25 backdrop-blur-md border border-white/20 shadow-xl"
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mt-2 inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-black/30 backdrop-blur-md border border-white/20 shadow-xl"
         >
           <span className="text-sm sm:text-base md:text-lg font-mono text-white tracking-wide drop-shadow-sm">
             {activePhrase.slice(0, charIndex)}

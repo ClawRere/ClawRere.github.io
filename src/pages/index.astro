@@ -90,11 +90,11 @@ const latestPosts = allPosts
               card.classList.remove('is-settled');
               const rot0 = Number(card.dataset.rot || 0);
               const arcY0 = Number(card.dataset.arcy || 0);
-              // Pull cards upward into the bottom of 1st screen (with ~1/3 below viewport) when scrollY = 0
-              const liftY = isMobile ? -70 : -118;
+              // Lift enlarged cards high enough so >2/3 of each card is visible on the 1st screen
+              const liftY = isMobile ? -155 : -245;
               const curY = (liftY + arcY0) * (1 - ease);
               const curRot = rot0 * (1 - ease);
-              const curScale = 1.12 - 0.12 * ease;
+              const curScale = 1.22 - 0.22 * ease;
               card.style.transform = `translate3d(0, ${curY.toFixed(1)}px, 0) rotate(${curRot.toFixed(2)}deg) scale(${curScale.toFixed(3)})`;
             });
           };

@@ -86,7 +86,7 @@ const categories = Array.from(
                 src={cover}
                 alt={post.data.title}
                 loading="lazy"
-                onerror={`this.onerror=null;this.src='/img/fan/card-${(idx % 7) + 1}.svg';`}
+                onerror={`this.onerror=null;this.src='/img/blog/cover-${(idx % 10) + 1}.svg';`}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />

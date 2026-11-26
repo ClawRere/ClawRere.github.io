@@ -20,6 +20,8 @@
         width: 56vmin;
         height: 44vmin;
         margin-top: 10vmin;
+        /* Flip horizontally so Cat on Left faces RIGHT toward Corgi on Right */
+        transform: scaleX(-1);
       }
       .heart {
         position: absolute;
@@ -195,6 +197,21 @@
         0%, 92%, 100% { transform: scaleY(1); }
         96% { transform: scaleY(0.1); }
       }
+      /* Golden Tabby Dark-Brown/Black Stripes */
+      .stripe {
+        position: absolute;
+        background: #3f2a1d;
+        border-radius: 99px;
+        z-index: 6;
+      }
+      .stripe-f1 { top: 10%; left: 42%; width: 7%; height: 22%; transform: rotate(-10deg); }
+      .stripe-f2 { top: 8%; left: 50%; width: 7%; height: 24%; }
+      .stripe-f3 { top: 10%; left: 58%; width: 7%; height: 22%; transform: rotate(10deg); }
+      .stripe-b1 { top: 10%; left: 46%; width: 8%; height: 42%; transform: rotate(-6deg); z-index: 4; }
+      .stripe-b2 { top: 10%; left: 60%; width: 8%; height: 46%; transform: rotate(-4deg); z-index: 4; }
+      .stripe-b3 { top: 14%; left: 74%; width: 7%; height: 38%; transform: rotate(-8deg); z-index: 4; }
+      .stripe-t1 { top: 22%; left: 15%; width: 70%; height: 14%; }
+      .stripe-t2 { top: 48%; left: 15%; width: 70%; height: 14%; }
     </style>
   </head>
   <body>
@@ -205,6 +222,9 @@
       <div class="cat-head">
         <div class="ear ear--left"></div>
         <div class="ear ear--right"></div>
+        <div class="stripe stripe-f1"></div>
+        <div class="stripe stripe-f2"></div>
+        <div class="stripe stripe-f3"></div>
         <div class="cat-eye cat-eye--left"></div>
         <div class="cat-eye cat-eye--right"></div>
         <div class="cat-muzzle">
@@ -214,13 +234,19 @@
       </div>
       <div class="cat-body">
         <div class="cat-chest"></div>
+        <div class="stripe stripe-b1"></div>
+        <div class="stripe stripe-b2"></div>
+        <div class="stripe stripe-b3"></div>
         <div class="cat-legs">
           <div class="leg-1"></div>
           <div class="leg-2"></div>
           <div class="leg-3"></div>
           <div class="leg-4"></div>
         </div>
-        <div class="cat-tail"></div>
+        <div class="cat-tail">
+          <div class="stripe stripe-t1"></div>
+          <div class="stripe stripe-t2"></div>
+        </div>
       </div>
     </div>
   </body>

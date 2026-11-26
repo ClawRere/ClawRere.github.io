@@ -4,6 +4,7 @@ description: "参与高校 AI 助教功能规划与产品升级，建立标准�
 category: "Education & SaaS"
 date: 2026-10-15
 featured: false
+hidden: true
 cover: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop"
 coCreation:
   humanShare: 70

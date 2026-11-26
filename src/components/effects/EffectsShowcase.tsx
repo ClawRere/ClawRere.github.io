@@ -39,6 +39,54 @@ const CATEGORY_STYLES: Record<string, { gradient: string; Icon: React.ComponentT
   '实用组件': { gradient: 'from-fuchsia-500/25 via-purple-500/15 to-pink-500/20', Icon: Component },
 };
 
+const LiveEffectFrame: React.FC<{ effect: EffectItem }> = ({ effect }) => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
+      },
+      { rootMargin: '180px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={containerRef} className="w-full h-full">
+      {isVisible ? (
+        effect.htmlCode ? (
+          <iframe
+            srcDoc={effect.htmlCode}
+            title={effect.title}
+            className="w-full h-full border-0 bg-zinc-950 pointer-events-none"
+            sandbox="allow-scripts"
+          />
+        ) : (
+          <iframe
+            src={effect.path}
+            title={effect.title}
+            className="w-full h-full border-0 bg-zinc-950 pointer-events-none"
+            loading="lazy"
+          />
+        )
+      ) : (
+        <div className="w-full h-full flex items-center justify-center text-xs font-mono opacity-40">
+          滚动加载实时视效...
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const EffectsShowcase: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('全部');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -237,32 +285,7 @@ export const EffectsShowcase: React.FC = () => {
               className="group flex flex-col rounded-2xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 dark:hover:border-terracotta/40 hover:shadow-2xl transition-all duration-300"
             >
               <div className={`h-52 w-full relative overflow-hidden bg-gradient-to-br ${styleCfg.gradient} flex items-center justify-center`}>
-                {isLive ? (
-                  effect.htmlCode ? (
-                    <iframe
-                      srcDoc={effect.htmlCode}
-                      title={effect.title}
-                      className="w-full h-full border-0 bg-zinc-950"
-                      sandbox="allow-scripts"
-                    />
-                  ) : (
-                    <iframe
-                      src={effect.path}
-                      title={effect.title}
-                      className="w-full h-full border-0 bg-zinc-950"
-                      loading="lazy"
-                    />
-                  )
-                ) : (
-                  <div className="flex flex-col items-center justify-center gap-3 p-6 text-center">
-                    <div className="w-14 h-14 rounded-2xl bg-white/15 dark:bg-black/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-terracotta group-hover:scale-110 transition-transform shadow-lg">
-                      <Icon className="w-7 h-7" />
-                    </div>
-                    <div className="text-xs font-mono text-charcoal-200 dark:text-cream-200 opacity-80 truncate max-w-[220px]">
-                      {effect.htmlCode ? 'HTML/CSS 片段' : effect.path}
-                    </div>
-                  </div>
-                )}
+                <LiveEffectFrame effect={effect} />
 
                 <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md text-[10px] font-mono font-medium text-charcoal-DEFAULT dark:text-cream-100 shadow-sm pointer-events-none">
                   {effect.isCustom ? `⭐ ${effect.category}` : effect.category}
@@ -270,22 +293,11 @@ export const EffectsShowcase: React.FC = () => {
 
                 <div className="absolute bottom-3 right-3 flex items-center gap-2 z-10">
                   <button
-                    onClick={() => toggleInlinePreview(uniqueKey)}
-                    className={`px-2.5 py-1.5 rounded-xl text-[11px] font-mono flex items-center gap-1 shadow-md transition-all ${
-                      isLive
-                        ? 'bg-zinc-900/90 text-white border border-white/20'
-                        : 'bg-white/90 dark:bg-black/80 text-charcoal-DEFAULT dark:text-cream-100 hover:bg-terracotta hover:text-white'
-                    }`}
-                  >
-                    <Eye className="w-3 h-3" />
-                    {isLive ? '关闭' : '直接看'}
-                  </button>
-                  <button
                     onClick={() => setActiveModalEffect(effect)}
-                    className="px-2.5 py-1.5 rounded-xl bg-terracotta text-white text-[11px] font-mono flex items-center gap-1 shadow-md hover:scale-105 transition-transform"
+                    className="px-3 py-1.5 rounded-xl bg-terracotta text-white text-[11px] font-mono flex items-center gap-1 shadow-md hover:scale-105 transition-transform"
                   >
                     <Play className="w-3 h-3 fill-current" />
-                    放大
+                    放大试玩
                   </button>
                 </div>
               </div>

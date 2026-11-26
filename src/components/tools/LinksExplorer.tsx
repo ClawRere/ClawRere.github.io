@@ -82,7 +82,7 @@ export const LinksExplorer: React.FC = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string>('友情链接');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [layoutMode, setLayoutMode] = useState<LayoutMode>('card');
+  const [layoutMode, setLayoutMode] = useState<LayoutMode>('split');
   const [previewLink, setPreviewLink] = useState<LinkItem | null>(defaultPreview);
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
 
@@ -183,22 +183,22 @@ export const LinksExplorer: React.FC = () => {
           )}
         </div>
 
-        {/* Centered category pills */}
-        <div className="flex flex-wrap items-center justify-center gap-1.5">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all border ${
-                selectedCategory === cat
-                  ? 'bg-terracotta text-white border-terracotta shadow-sm'
-                  : 'border-charcoal-500/15 dark:border-white/10 text-charcoal-200 dark:text-cream-300 hover:border-terracotta/40 hover:text-terracotta'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+      {/* Centered Single-line Full-width Category Pills */}
+      <div className="w-full flex items-center justify-center flex-nowrap overflow-x-auto scrollbar-none gap-1.5 px-2">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setSelectedCategory(cat)}
+            className={`shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-[11px] font-medium transition-all border ${
+              selectedCategory === cat
+                ? 'bg-terracotta text-white border-terracotta shadow-sm'
+                : 'border-charcoal-500/15 dark:border-white/10 text-charcoal-200 dark:text-cream-300 hover:border-terracotta/40 hover:text-terracotta'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
       </div>
 
       {/* Main Content */}

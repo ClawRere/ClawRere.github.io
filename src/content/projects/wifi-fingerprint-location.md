@@ -3,7 +3,7 @@ title: "WIFI 指纹定位与到访识别｜算法产品设计与评测体系"
 description: "针对配送员是否真实到达现场的判断难题，设计融合配送轨迹、WIFI 指纹网络定位与业务规则的识别方案，建立准确率与识别率评测基线（历史记录定位准确率 95%、识别率 90%+）。"
 category: "Algorithm & Data"
 date: 2026-10-20
-featured: true
+featured: false
 cover: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop"
 coCreation:
   humanShare: 80

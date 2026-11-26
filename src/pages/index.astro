@@ -12,9 +12,8 @@ const featuredProjects = allProjects
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 4);
 
-const eduMiniProjects = allProjects.filter(
-  p => p.id === 'ccnu-xiaoya-ai' || p.id === 'wuhan-air-classroom'
-);
+const isEmbeddableDemo = (url?: string | null) =>
+  !!url && !url.includes('mp.weixin.qq.com');
 
 const allPosts = await getCollection('posts');
 const latestPosts = allPosts
@@ -68,13 +67,30 @@ const latestPosts = allPosts
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {featuredProjects.map(project => (
-            <div class="group flex flex-col rounded-3xl border border-charcoal-500/10 dark:border-white/8 overflow-hidden hover:border-terracotta/30 hover:shadow-2xl transition-all duration-300 bg-white/50 dark:bg-zinc-900/50">
-              <a href={`/portfolio/${project.id}`} class="h-52 w-full relative overflow-hidden block">
-                <img src={project.data.cover} alt={project.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" loading="lazy" />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md text-[11px] font-mono text-white/90 border border-white/15">{project.data.category}</span>
-              </a>
+          {featuredProjects.map(project => {
+            const canEmbed = isEmbeddableDemo(project.data.demoUrl);
+            return (
+            <div class="group flex flex-col rounded-3xl border border-charcoal-500/10 dark:border-white/8 overflow-hidden hover:border-terracotta/30 hover:shadow-2xl transition-all duration-300 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md">
+              <div class="h-56 w-full relative overflow-hidden bg-zinc-950">
+                {canEmbed ? (
+                  <>
+                    <iframe
+                      src={project.data.demoUrl}
+                      title={project.data.title}
+                      loading="lazy"
+                      class="w-full h-full border-0 bg-white dark:bg-zinc-950"
+                      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                    />
+                    <span class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-emerald-500/90 text-white text-[10px] font-mono font-semibold shadow pointer-events-none">● DEMO</span>
+                  </>
+                ) : (
+                  <a href={`/portfolio/${project.id}`} class="block w-full h-full">
+                    <img src={project.data.cover} alt={project.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" loading="lazy" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  </a>
+                )}
+                <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/55 backdrop-blur-md text-[11px] font-mono text-white/90 border border-white/15 pointer-events-none">{project.data.category}</span>
+              </div>
               <div class="p-6 flex-1 flex flex-col justify-between">
                 <div>
                   <h3 class="font-serif text-xl font-bold text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors leading-snug">
@@ -90,29 +106,9 @@ const latestPosts = allPosts
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
-
-        {/* 2 Education AI Mini Cards */}
-        {eduMiniProjects.length > 0 && (
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
-            {eduMiniProjects.map(project => (
-              <a href={`/portfolio/${project.id}`} class="group p-5 rounded-2xl border border-charcoal-500/10 dark:border-white/8 hover:border-terracotta/30 bg-white/40 dark:bg-zinc-900/40 hover:shadow-lg transition-all flex items-start gap-4">
-                <div class="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
-                  <GraduationCap class="w-5 h-5" />
-                </div>
-                <div class="flex-1 min-w-0">
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="text-[10px] font-mono text-terracotta uppercase tracking-wider">教育专题补充</span>
-                    <ArrowUpRight class="w-3.5 h-3.5 text-charcoal-100 dark:text-cream-400 group-hover:text-terracotta transition-colors" />
-                  </div>
-                  <h4 class="font-bold text-sm text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors mt-0.5 truncate">{project.data.title}</h4>
-                  <p class="text-xs text-charcoal-100 dark:text-cream-400 line-clamp-2 mt-1 leading-relaxed">{project.data.description}</p>
-                </div>
-              </a>
-            ))}
-          </div>
-        )}
       </section>
     )}
 

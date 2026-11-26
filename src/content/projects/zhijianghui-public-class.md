@@ -3,7 +3,7 @@ title: "之江汇寒暑假公益课堂｜省级教育产品与活动交付 (2019
 description: "省级教育项目实战：统筹活动策划、产品功能设计、名师与学校邀约及第三方赞助资源整合，推动公益课程内容与线上参与路径闭环落地。"
 category: "Education & SaaS"
 date: 2026-10-28
-featured: true
+featured: false
 cover: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1200&auto=format&fit=crop"
 coCreation:
   humanShare: 95

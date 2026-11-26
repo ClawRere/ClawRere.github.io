@@ -2,7 +2,7 @@
 title: "易理九宫｜卦象规则与卡牌策略网页游戏原型"
 description: "将抽象卦象与天象规则拆解为「选牌—移动—落点结算—对手行动」的回合制棋盘策略原型。"
 category: "GenAI Interactive"
-date: 2026-10-01
+date: 2026-11-21
 featured: false
 cover: "https://images.unsplash.com/photo-1611996575749-79a3a250f948?q=80&w=1200&auto=format&fit=crop"
 githubUrl: "https://github.com/ClawRere/yili-jiugong"

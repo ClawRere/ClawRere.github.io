@@ -2,7 +2,7 @@
 title: "Obsidian + 大模型个人第二大脑知识库管线"
 description: "将 99+ 篇双链笔记转化为可检索的局部向量索引，实现本地优先（Local-First）的个人智能问答与灵感关联。"
 category: "GenAI Interactive"
-date: 2026-02-15
+date: 2026-11-20
 featured: false
 cover: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop"
 coCreation:

@@ -2,7 +2,7 @@
 title: "93+ 原生 Web 动效与交互沙盒矩阵"
 description: "收录 3D 视觉、趣味交互、粒子特效与物理小游戏的独立动效实验室。支持单卡独立沙盒即时试玩与代码解耦复用。"
 category: "Visual Effects"
-date: 2026-02-28
+date: 2026-11-22
 featured: false
 cover: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200&auto=format&fit=crop"
 coCreation:

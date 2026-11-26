@@ -1,7 +1,7 @@
 [
   {
     "id": "wallpaper",
-    "name": "壁纸 & 文章封面",
+    "name": "壁纸封面 & 黑神话",
     "desc": "SimpleDesktops 极简桌面壁纸收藏",
     "images": [
       {
@@ -179,14 +179,7 @@
       {
         "alt": "              ",
         "url": "https://static.simpledesktops.com/uploads/desktops/2013/02/01/Solar.png"
-      }
-    ]
-  },
-  {
-    "id": "blackwukong",
-    "name": "黑神话：悟空",
-    "desc": "黑神话悟空高清壁纸与海报",
-    "images": [
+      },
       {
         "alt": "黑神话：悟空",
         "url": "https://jsd.cdn.zzko.cn/gh/Eddie-Hyu/picx-images-hosting@master/poster/202408211059306.png"

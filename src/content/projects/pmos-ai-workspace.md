@@ -4,7 +4,7 @@ description: "面向产品经理的个人产品实践与可操作演示：以项
 category: "AI Product Systems"
 date: 2026-11-26
 featured: true
-cover: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop"
+cover: "/img/covers/pmos-cover.svg"
 demoUrl: "https://pmos-portfolio-demo.pages.dev/"
 coCreation:
   humanShare: 45

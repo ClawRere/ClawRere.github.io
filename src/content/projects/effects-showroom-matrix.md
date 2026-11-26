@@ -4,7 +4,7 @@ description: "收录 3D 视觉、趣味交互、粒子特效与物理小游戏�
 category: "Visual Effects"
 date: 2026-11-22
 featured: false
-cover: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200&auto=format&fit=crop"
+cover: "/img/covers/effects-cover.svg"
 coCreation:
   humanShare: 35
   aiShare: 65

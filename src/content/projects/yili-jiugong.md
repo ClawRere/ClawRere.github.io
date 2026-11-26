@@ -4,7 +4,7 @@ description: "将抽象卦象与天象规则拆解为「选牌—移动—落点
 category: "GenAI Interactive"
 date: 2026-11-21
 featured: false
-cover: "https://images.unsplash.com/photo-1611996575749-79a3a250f948?q=80&w=1200&auto=format&fit=crop"
+cover: "/img/covers/yili-cover.svg"
 githubUrl: "https://github.com/ClawRere/yili-jiugong"
 coCreation:
   humanShare: 60

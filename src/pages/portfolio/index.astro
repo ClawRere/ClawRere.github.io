@@ -26,31 +26,21 @@ const isEmbeddableDemo = (url?: string | null) =>
 
         return (
           <div class={`group flex flex-col rounded-[20px] border border-charcoal-500/10 dark:border-white/10 ring-1 ring-inset ring-white/40 dark:ring-white/10 overflow-hidden hover:border-terracotta/30 shadow-[0_12px_32px_rgba(31,36,48,0.12)] hover:shadow-[0_22px_48px_rgba(31,36,48,0.22)] hover:-translate-y-1.5 transition-all duration-500 ease-[cubic-bezier(0.25,0.75,0.2,1)] bg-white/70 dark:bg-zinc-900/65 backdrop-blur-md ${isLarge ? 'md:col-span-2' : ''}`}>
-            {/* Cover: Direct Live Demo Iframe if available, otherwise Cover Image */}
+            {/* Cover: Custom Cover Image (lightweight & crisp) */}
             <div class={`relative overflow-hidden bg-zinc-950 ${isLarge ? 'h-80 sm:h-96' : 'h-60'}`}>
-              {canEmbed ? (
-                <>
-                  <iframe
-                    src={project.data.demoUrl}
-                    title={project.data.title}
-                    loading="lazy"
-                    class="w-full h-full border-0 bg-white dark:bg-zinc-950"
-                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                  />
-                  <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-emerald-500/90 text-white text-[10px] font-mono font-semibold shadow pointer-events-none">
-                    ● LIVE DEMO
-                  </span>
-                </>
-              ) : (
-                <a href={`/portfolio/${project.id}`} class="block w-full h-full">
-                  <img
-                    src={project.data.cover}
-                    alt={project.data.title}
-                    loading="lazy"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                </a>
+              <a href={`/portfolio/${project.id}`} class="block w-full h-full">
+                <img
+                  src={project.data.cover}
+                  alt={project.data.title}
+                  loading="lazy"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+              </a>
+              {canEmbed && (
+                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-emerald-500/90 text-white text-[10px] font-mono font-semibold shadow pointer-events-none">
+                  ● LIVE DEMO
+                </span>
               )}
               <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-xs font-mono text-white/95 border border-white/15 pointer-events-none">
                 {project.data.category}

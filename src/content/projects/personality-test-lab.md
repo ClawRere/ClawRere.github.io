@@ -4,7 +4,7 @@ description: "覆盖 MBTI、大五人格、九型人格与依恋类型等多元�
 category: "GenAI Interactive"
 date: 2026-11-24
 featured: true
-cover: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
+cover: "/img/covers/personality-cover.svg"
 demoUrl: "https://personality.ldddd.eu.org/"
 githubUrl: "https://github.com/ClawRere/personality-test-lab"
 coCreation:

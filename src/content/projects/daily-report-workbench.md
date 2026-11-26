@@ -4,7 +4,7 @@ description: "以「日期—项目—事项」三层结构沉淀日常碎片化
 category: "AI Product Systems"
 date: 2026-11-25
 featured: true
-cover: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=1200&auto=format&fit=crop"
+cover: "/img/covers/daily-report-cover.svg"
 githubUrl: "https://github.com/ClawRere/daily-report-workbench"
 coCreation:
   humanShare: 50

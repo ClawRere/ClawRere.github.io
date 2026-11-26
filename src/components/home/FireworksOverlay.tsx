@@ -174,7 +174,7 @@ export const FireworksOverlay: React.FC = () => {
     if (rafRef.current !== null) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { desynchronized: true });
     if (!ctx) return;
 
     canvas.width = window.innerWidth;
@@ -182,19 +182,20 @@ export const FireworksOverlay: React.FC = () => {
 
     const tick = () => {
       ctx.globalCompositeOperation = 'destination-out';
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.22)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.24)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = 'lighter';
+      ctx.lineCap = 'round';
 
       const rockets = rocketsRef.current;
       for (let i = rockets.length - 1; i >= 0; i--) {
         const r = rockets[i];
         r.trail.push({ x: r.x, y: r.y });
-        if (r.trail.length > 8) r.trail.shift();
+        if (r.trail.length > 7) r.trail.shift();
 
         r.x += r.vx;
         r.y += r.vy;
-        r.vy += 0.06;
+        r.vy += 0.065;
 
         ctx.beginPath();
         if (r.trail.length > 1) {
@@ -229,17 +230,15 @@ export const FireworksOverlay: React.FC = () => {
         }
 
         const drawAlpha = s.flicker ? s.alpha * (0.45 + Math.random() * 0.55) : s.alpha;
-        ctx.save();
         ctx.globalAlpha = Math.max(0, drawAlpha);
         ctx.strokeStyle = s.color;
         ctx.lineWidth = s.size;
-        ctx.lineCap = 'round';
         ctx.beginPath();
         ctx.moveTo(s.prevX, s.prevY);
         ctx.lineTo(s.x, s.y);
         ctx.stroke();
-        ctx.restore();
       }
+      ctx.globalAlpha = 1;
 
       if (rockets.length > 0 || sparks.length > 0) {
         rafRef.current = requestAnimationFrame(tick);

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="720" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#070B19"/>
+      <stop offset="1" stop-color="#111C3A"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="300" y1="150" x2="900" y2="570" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="0.5" stop-color="#A855F7"/>
+      <stop offset="1" stop-color="#F472B6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <g transform="translate(760 390)">
+    <ellipse rx="310" ry="110" transform="rotate(-18)" stroke="url(#ring)" stroke-width="3" stroke-opacity="0.7"/>
+    <ellipse rx="230" ry="82" transform="rotate(22)" stroke="#38BDF8" stroke-width="2" stroke-opacity="0.55" stroke-dasharray="10 8"/>
+    <ellipse rx="150" ry="54" transform="rotate(-8)" stroke="#F472B6" stroke-width="2" stroke-opacity="0.75"/>
+    <circle r="48" fill="url(#ring)"/>
+    <circle cx="-180" cy="-95" r="12" fill="#38BDF8"/>
+    <circle cx="240" cy="-42" r="16" fill="#A855F7"/>
+    <circle cx="110" cy="115" r="10" fill="#FDE047"/>
+  </g>
+  <rect x="84" y="240" width="320" height="160" rx="22" fill="#0F172A" fill-opacity="0.88" stroke="#38BDF8" stroke-opacity="0.45"/>
+  <text x="116" y="310" fill="#38BDF8" font-family="system-ui" font-size="52" font-weight="900">93+</text>
+  <text x="116" y="352" fill="#E2E8F0" font-family="monospace" font-size="16">CSS · CANVAS · THREE.JS</text>
+  <rect x="84" y="425" width="320" height="140" rx="22" fill="#0F172A" fill-opacity="0.88" stroke="#A855F7" stroke-opacity="0.45"/>
+  <rect x="116" y="465" width="180" height="12" rx="6" fill="#A855F7"/>
+  <rect x="116" y="495" width="240" height="12" rx="6" fill="#F8FAFC" fill-opacity="0.7"/>
+  <rect x="116" y="525" width="140" height="12" rx="6" fill="#38BDF8" fill-opacity="0.6"/>
+  <text x="84" y="114" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="46" font-weight="800">93+ Web Motion Matrix</text>
+  <text x="86" y="152" fill="#7DD3FC" font-family="monospace" font-size="18">INTERACTIVE SANDBOX · SOLAR ORBIT · FIREWORKS · SHADERS</text>
+</svg>

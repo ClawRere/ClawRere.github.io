@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="720" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B0F17"/>
+      <stop offset="1" stop-color="#161B28"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(280 200) rotate(35) scale(420 260)">
+      <stop stop-color="#EE7959" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#EE7959" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(940 520) rotate(-25) scale(400 280)">
+      <stop stop-color="#38BDF8" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <rect width="1200" height="720" fill="url(#glow1)"/>
+  <rect width="1200" height="720" fill="url(#glow2)"/>
+  <g opacity="0.14" stroke="#94A3B8" stroke-width="1">
+    <path d="M0 120H1200M0 240H1200M0 360H1200M0 480H1200M0 600H1200"/>
+    <path d="M200 0V720M400 0V720M600 0V720M800 0V720M1000 0V720"/>
+  </g>
+  <!-- Pipeline Connections -->
+  <path d="M220 350 C310 350, 310 250, 410 250" stroke="#EE7959" stroke-width="3" stroke-dasharray="6 6" opacity="0.8"/>
+  <path d="M590 250 C670 250, 670 390, 760 390" stroke="#38BDF8" stroke-width="3" opacity="0.85"/>
+  <path d="M940 390 C1000 390, 1000 260, 1060 260" stroke="#10B981" stroke-width="3" opacity="0.85"/>
+  <!-- Glass Cards -->
+  <g>
+    <rect x="70" y="275" width="180" height="150" rx="20" fill="#1E293B" fill-opacity="0.85" stroke="#EE7959" stroke-opacity="0.55" stroke-width="1.5"/>
+    <rect x="92" y="302" width="64" height="10" rx="5" fill="#EE7959"/>
+    <rect x="92" y="328" width="132" height="10" rx="5" fill="#F8FAFC" fill-opacity="0.8"/>
+    <rect x="92" y="348" width="108" height="10" rx="5" fill="#94A3B8" fill-opacity="0.5"/>
+    <rect x="92" y="382" width="76" height="22" rx="11" fill="#EE7959" fill-opacity="0.22"/>
+  </g>
+  <g>
+    <rect x="390" y="165" width="220" height="170" rx="22" fill="#1E293B" fill-opacity="0.9" stroke="#F59E0B" stroke-opacity="0.55" stroke-width="1.5"/>
+    <circle cx="426" cy="200" r="12" fill="#F59E0B" fill-opacity="0.25" stroke="#F59E0B" stroke-width="2"/>
+    <rect x="450" y="194" width="120" height="12" rx="6" fill="#F8FAFC" fill-opacity="0.9"/>
+    <rect x="414" y="232" width="170" height="10" rx="5" fill="#94A3B8" fill-opacity="0.45"/>
+    <rect x="414" y="254" width="150" height="10" rx="5" fill="#94A3B8" fill-opacity="0.35"/>
+    <rect x="414" y="286" width="90" height="26" rx="13" fill="#F59E0B" fill-opacity="0.2"/>
+  </g>
+  <g>
+    <rect x="740" y="300" width="220" height="180" rx="22" fill="#1E293B" fill-opacity="0.9" stroke="#38BDF8" stroke-opacity="0.6" stroke-width="1.5"/>
+    <rect x="766" y="326" width="84" height="10" rx="5" fill="#38BDF8"/>
+    <rect x="766" y="352" width="168" height="12" rx="6" fill="#F8FAFC" fill-opacity="0.88"/>
+    <rect x="766" y="376" width="140" height="10" rx="5" fill="#94A3B8" fill-opacity="0.45"/>
+    <rect x="766" y="408" width="168" height="44" rx="12" fill="#0F172A" stroke="#38BDF8" stroke-opacity="0.3"/>
+  </g>
+  <g>
+    <rect x="980" y="150" width="160" height="130" rx="20" fill="#1E293B" fill-opacity="0.88" stroke="#10B981" stroke-opacity="0.6" stroke-width="1.5"/>
+    <circle cx="1012" cy="186" r="10" fill="#10B981"/>
+    <rect x="1032" y="180" width="82" height="12" rx="6" fill="#F8FAFC" fill-opacity="0.9"/>
+    <rect x="1002" y="216" width="116" height="10" rx="5" fill="#94A3B8" fill-opacity="0.45"/>
+    <rect x="1002" y="238" width="86" height="10" rx="5" fill="#10B981" fill-opacity="0.5"/>
+  </g>
+  <!-- Title Badge -->
+  <text x="72" y="108" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="48" font-weight="800" letter-spacing="-1">PMOS · AI Product Workspace</text>
+  <text x="74" y="146" fill="#94A3B8" font-family="monospace" font-size="18">5W1H · HYPOTHESIS VS FACT · DYNAMIC BASELINE V0.2</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" fill="none">
+  <rect width="1200" height="720" fill="#18181B"/>
+  <rect x="84" y="200" width="320" height="420" rx="24" fill="#EE7959"/>
+  <circle cx="244" cy="360" r="88" fill="#FEF3C7"/>
+  <path d="M84 520 Q244 420 404 520 L404 620 L84 620 Z" fill="#1F2430"/>
+  <rect x="440" y="200" width="320" height="420" rx="24" fill="#7DA3BB"/>
+  <rect x="490" y="260" width="220" height="220" rx="20" fill="#F1ECEA" fill-opacity="0.9"/>
+  <polygon points="600,290 680,450 520,450" fill="#DDAD95"/>
+  <rect x="796" y="200" width="320" height="420" rx="24" fill="#B0AEC6"/>
+  <circle cx="956" cy="380" r="100" fill="#1F2430"/>
+  <circle cx="956" cy="380" r="52" fill="#F4E3D3"/>
+  <text x="84" y="110" fill="#FAFAFA" font-family="system-ui, sans-serif" font-size="46" font-weight="800">Stylized Photo Translation</text>
+  <text x="86" y="148" fill="#A1A1AA" font-family="monospace" font-size="18">MULTI-STYLE VISUAL GENERATION · STORYBOARD SPLIT</text>
+</svg>

@@ -4,7 +4,7 @@ description: "探索让同一张生活照片在保留核心主体与神态特征
 category: "Visual Effects"
 date: 2026-11-23
 featured: true
-cover: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1200&auto=format&fit=crop"
+cover: "/img/covers/split-photo-cover.svg"
 demoUrl: "https://mp.weixin.qq.com/s/Iu6ktvTjV4Tpx8-MGu8E3Q"
 githubUrl: "https://github.com/ClawRere/split-photo-abstract-poster"
 coCreation:

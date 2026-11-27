@@ -80,10 +80,34 @@ const initialMessages: CommentItem[] = [
       {
         id: 301,
         name: '路过的全栈喵',
-        content: '右下角的派派小猫和柯基好可爱！',
+        content: '右下角的柯基好可爱！',
         date: '2026-11-25',
       },
     ],
+  },
+  {
+    id: 4,
+    name: '山海行者',
+    content: '山脉卡片的雪峰层峦叠嶂，搭配右侧天气动效很有氛围感！',
+    date: '2026-11-24',
+    likes: 7,
+    biome: 'mountain',
+  },
+  {
+    id: 5,
+    name: '麦田守望者',
+    content: '玉米地主题暖暖的很有秋日气息，每张卡片还能独立切换晴雨雪风雷～',
+    date: '2026-11-23',
+    likes: 9,
+    biome: 'cornfield',
+  },
+  {
+    id: 6,
+    name: '观澜设计师',
+    content: '海岸主题的浪花和友链里的美叶灵感都很赞，已加入常用书签！',
+    date: '2026-11-21',
+    likes: 14,
+    biome: 'coast',
   },
 ];
 
@@ -315,229 +339,228 @@ const BiomeDecoration: React.FC<{ biome: BiomeKind }> = ({ biome }) => {
   );
 };
 
-// Realistic Flame + Tidewell Staggered Sparkles, Paper Plane Exit & SVG Turbulence
+// /effects/image_animation-inspired Triangle-Mesh Cubic-Bezier Shatter & Flight
 const BurnCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const tonguesRef = useRef<HTMLDivElement>(null);
-  const planeRef = useRef<HTMLDivElement>(null);
-  const sparklesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 1. Anime.js v4: Animate SVG feDisplacementMap heat/ripple distortion & Tidewell elements
-    const dispMap = document.querySelector('#burn-heat-filter feDisplacementMap');
-    const turbulence = document.querySelector('#burn-heat-filter feTurbulence');
-    let heatAnim: ReturnType<typeof animate> | null = null;
-    let freqAnim: ReturnType<typeof animate> | null = null;
-
-    if (dispMap) {
-      heatAnim = animate(dispMap, {
-        scale: [0, 18, 34, 12],
-        duration: 1650,
-        ease: 'inOutQuad',
-      });
-    }
-    if (turbulence) {
-      freqAnim = animate(turbulence, {
-        baseFrequency: ['0.02 0.06', '0.05 0.14', '0.03 0.09'],
-        duration: 1650,
-        ease: 'linear',
-      });
-    }
-
-    if (tonguesRef.current) {
-      const tongues = tonguesRef.current.querySelectorAll('.flame-tongue');
-      animate(tongues, {
-        scaleY: [0.3, 1.35, 0.75, 1.5, 0],
-        scaleX: [0.85, 1.15, 0.9, 1.1, 0.6],
-        translateY: [24, -18, -42, -75],
-        opacity: [0, 0.95, 0.85, 0],
-        delay: stagger(45, { from: 'center' }),
-        duration: 1550,
-        ease: 'outCubic',
-      });
-    }
-
-    // Tidewell 4-point sparkles pop with back-out spring
-    if (sparklesRef.current) {
-      const spks = sparklesRef.current.querySelectorAll('.tw-burn-sparkle');
-      animate(spks, {
-        scale: [0, 1.25, 0],
-        rotate: [-14, 24, 55],
-        translateY: [0, -32],
-        opacity: [0, 1, 0],
-        delay: stagger(70, { from: 'center' }),
-        duration: 1350,
-        ease: 'outCubic',
-      });
-    }
-
-    // Tidewell paper plane glides out diagonally as the message burns away
-    if (planeRef.current) {
-      animate(planeRef.current, {
-        translateX: [-20, 180, 380],
-        translateY: [10, -28, -72],
-        rotate: [-8, -16, -24],
-        scale: [0.4, 1.05, 0.5],
-        opacity: [0, 1, 0],
-        duration: 1450,
-        ease: 'inOutCubic',
-      });
-    }
-
-    // 2. HTML5 Canvas: Physical rising fire particles, glowing sparks & charred ash
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const w = (canvas.width = canvas.offsetWidth || 600);
-    const h = (canvas.height = canvas.offsetHeight || 160);
-    const startTime = performance.now();
-    let raf: number;
+    const w = (canvas.width = canvas.offsetWidth || 640);
+    const h = (canvas.height = canvas.offsetHeight || 220);
+    const cols = 16;
+    const rows = 8;
+    const cw = w / cols;
+    const ch = h / rows;
 
-    interface Ember {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      r: number;
-      life: number;
-      maxLife: number;
-      isAsh: boolean;
-      rot: number;
-      rotV: number;
+    interface TriShard {
+      pts: [number, number, number, number, number, number];
+      cx: number; cy: number; delay: number; dur: number; tx: number; ty: number; rot: number; color: string;
     }
 
-    const particles: Ember[] = [];
+    const palette = ['#f5f0e8', '#e8dfd3', '#D97757', '#f59e0b', '#cbd5e1', '#94a3b8'];
+    const shards: TriShard[] = [];
 
-    const render = (now: number) => {
-      const elapsed = Math.min(1, (now - startTime) / 1600);
-      const burnLineY = h * (1 - elapsed * 1.15);
-
-      ctx.clearRect(0, 0, w, h);
-
-      // Charred dark area + glowing orange-red combustion front
-      if (burnLineY < h) {
-        const charGrad = ctx.createLinearGradient(0, burnLineY - 14, 0, h);
-        charGrad.addColorStop(0, 'rgba(255, 140, 30, 0.92)');
-        charGrad.addColorStop(0.14, 'rgba(239, 68, 68, 0.75)');
-        charGrad.addColorStop(0.32, 'rgba(28, 18, 16, 0.94)');
-        charGrad.addColorStop(1, 'rgba(12, 12, 14, 0.98)');
-        ctx.fillStyle = charGrad;
-        ctx.fillRect(0, Math.max(0, burnLineY), w, h);
-      }
-
-      // Spawn triangular shatter shards (inspired by /effects/image_animation) + glowing embers
-      for (let i = 0; i < 22; i++) {
-        const isAsh = Math.random() > 0.52;
-        particles.push({
-          x: Math.random() * w,
-          y: Math.max(0, Math.min(h, burnLineY + (Math.random() - 0.5) * 24)),
-          vx: (Math.random() - 0.5) * 3.2,
-          vy: isAsh ? -(0.8 + Math.random() * 2.2) : -(2.4 + Math.random() * 5.0),
-          r: isAsh ? 3.2 + Math.random() * 4.2 : 1.8 + Math.random() * 3.8,
-          life: 0,
-          maxLife: 26 + Math.random() * 38,
-          isAsh,
-          rot: Math.random() * Math.PI * 2,
-          rotV: (Math.random() - 0.5) * 0.3,
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x0 = c * cw, y0 = r * ch, x1 = x0 + cw, y1 = y0 + ch;
+        const tris: Array<[number, number, number, number, number, number]> = [
+          [x0, y0, x1, y0, x0, y1],
+          [x1, y0, x1, y1, x0, y1],
+        ];
+        tris.forEach((pts, ti) => {
+          const cx = (pts[0] + pts[2] + pts[4]) / 3;
+          const cy = (pts[1] + pts[3] + pts[5]) / 3;
+          const wave = (c / cols) * 0.55 + ((rows - r) / rows) * 0.25;
+          shards.push({
+            pts, cx, cy,
+            delay: wave * 0.55 + Math.random() * 0.14,
+            dur: 0.65 + Math.random() * 0.35,
+            tx: (Math.random() - 0.35) * 180 + (c / cols) * 90,
+            ty: -(70 + Math.random() * 140),
+            rot: (Math.random() - 0.5) * Math.PI * 2.4,
+            color: palette[(r + c + ti) % palette.length],
+          });
         });
       }
+    }
 
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.life++;
-        if (p.life > p.maxLife) {
-          particles.splice(i, 1);
-          continue;
-        }
-        p.x += p.vx + Math.sin(p.life * 0.22) * 0.45;
-        p.y += p.vy;
-        p.rot += p.rotV;
-        const alpha = 1 - p.life / p.maxLife;
+    const startTime = performance.now();
+    let raf = 0;
+    const cubicEase = (t: number) => 1 - Math.pow(1 - t, 3);
 
+    const render = (now: number) => {
+      const totalSec = (now - startTime) / 1000;
+      ctx.clearRect(0, 0, w, h);
+      let anyActive = false;
+      for (const s of shards) {
+        const local = Math.max(0, Math.min(1, (totalSec - s.delay) / s.dur));
+        if (local < 1) anyActive = true;
+        const e = cubicEase(local);
+        const alpha = local <= 0 ? 0.92 : Math.max(0, 1 - local * 1.15);
+        if (alpha <= 0.01) continue;
+        const dx = s.tx * e, dy = s.ty * e + 30 * e * e;
+        const scale = Math.max(0.15, 1 - 0.72 * e);
         ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rot);
+        ctx.translate(s.cx + dx, s.cy + dy);
+        ctx.rotate(s.rot * e);
+        ctx.scale(scale, scale);
         ctx.globalAlpha = alpha;
-        if (p.isAsh) {
-          // Triangular flying shard with warm ember edge
-          ctx.fillStyle = p.life < 12 ? '#ea580c' : '#3f3f46';
-          ctx.beginPath();
-          ctx.moveTo(0, -p.r);
-          ctx.lineTo(p.r * 0.9, p.r * 0.8);
-          ctx.lineTo(-p.r * 0.9, p.r * 0.6);
-          ctx.closePath();
-          ctx.fill();
-        } else {
-          const g = ctx.createRadialGradient(0, 0, 0, 0, 0, p.r * 2.4);
-          g.addColorStop(0, '#fffbeb');
-          g.addColorStop(0.35, '#fb923c');
-          g.addColorStop(1, 'rgba(239, 68, 68, 0)');
-          ctx.fillStyle = g;
-          ctx.beginPath();
-          ctx.arc(0, 0, p.r * 2.4, 0, Math.PI * 2);
-          ctx.fill();
-        }
+        ctx.fillStyle = s.color;
+        ctx.beginPath();
+        ctx.moveTo(s.pts[0] - s.cx, s.pts[1] - s.cy);
+        ctx.lineTo(s.pts[2] - s.cx, s.pts[3] - s.cy);
+        ctx.lineTo(s.pts[4] - s.cx, s.pts[5] - s.cy);
+        ctx.closePath();
+        ctx.fill();
         ctx.restore();
       }
-
-      if (elapsed < 1 || particles.length > 0) {
-        raf = requestAnimationFrame(render);
-      }
+      if (anyActive || totalSec < 1.55) raf = requestAnimationFrame(render);
     };
-
     raf = requestAnimationFrame(render);
-    return () => {
-      cancelAnimationFrame(raf);
-      heatAnim?.pause();
-      freqAnim?.pause();
-    };
+    return () => cancelAnimationFrame(raf);
   }, []);
 
-  return (
-    <>
-      <div
-        ref={tonguesRef}
-        className="absolute inset-x-0 bottom-0 h-24 flex items-end justify-around pointer-events-none z-25 overflow-hidden"
-      >
-        {Array.from({ length: 14 }).map((_, i) => (
-          <div
-            key={i}
-            className="flame-tongue w-7 h-16 rounded-t-full opacity-0"
-            style={{
-              background:
-                'radial-gradient(circle at 50% 80%, #fef08a 0%, #DDAD95 35%, #f97316 55%, rgba(220,38,38,0) 85%)',
-              filter: 'blur(3px)',
-              transformOrigin: 'bottom center',
-            }}
-          />
-        ))}
-      </div>
-      {/* Tidewell 4-point Sparkles */}
-      <div ref={sparklesRef} className="absolute inset-0 flex items-center justify-around pointer-events-none z-35">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <svg key={i} className="tw-burn-sparkle w-5 h-5 opacity-0" viewBox="0 0 20 20">
-            <path
-              d="M10 0c.8 5.6 3.6 8.6 10 10-6.4 1.4-9.2 4.4-10 10-.8-5.6-3.6-8.6-10-10 6.4-1.4 9.2-4.4 10-10z"
-              fill={i % 2 === 0 ? '#F4E3D3' : '#DDAD95'}
-            />
-          </svg>
-        ))}
-      </div>
-      {/* Tidewell Paper Plane Glide-out */}
-      <div
-        ref={planeRef}
-        className="absolute left-8 bottom-4 w-11 h-11 pointer-events-none z-35 opacity-0"
-        style={{
-          backgroundImage: `url('${TW_STICKER_SHEET}')`,
-          backgroundSize: '336.7% 492.6%',
-          backgroundPosition: '84.5% 77%',
-        }}
-      />
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-30" />
-    </>
-  );
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-40" />;
+};
+
+// /effects/weather_box-faithful Canvas Engine for Right 1/3 of Card
+const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const w = (canvas.width = canvas.offsetWidth || 220);
+    const h = (canvas.height = canvas.offsetHeight || 200);
+    let raf = 0, tick = 0, accumLevel = 0, lightningFlash = 0, scorchAlpha = 0, nextLightningTick = 90;
+
+    const drops = Array.from({ length: 24 }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: -(0.6 + Math.random() * 1.1), vy: 4.5 + Math.random() * 4.5,
+      len: 8 + Math.random() * 11, size: 0.8 + Math.random() * 1.1, alpha: 0.35 + Math.random() * 0.5,
+    }));
+    const splashes: Array<{ x: number; y: number; vx: number; vy: number; r: number; life: number }> = [];
+    const flakes = Array.from({ length: 26 }, () => ({
+      x: Math.random() * w, y: Math.random() * h, r: 1.3 + Math.random() * 2.8,
+      vy: 0.65 + Math.random() * 1.4, phase: Math.random() * Math.PI * 2, alpha: 0.45 + Math.random() * 0.5,
+    }));
+    const leaves = Array.from({ length: 7 }, () => ({
+      x: Math.random() * w, y: Math.random() * h, vx: -(1.8 + Math.random() * 2.4),
+      vy: (Math.random() - 0.35) * 1.1, rot: Math.random() * Math.PI * 2, rv: (Math.random() - 0.5) * 0.14,
+      s: 0.6 + Math.random() * 0.6, color: Math.random() > 0.45 ? '#f59e0b' : '#ea580c',
+    }));
+
+    let boltPts: Array<[number, number]> = [];
+    const buildBolt = () => {
+      const pts: Array<[number, number]> = [[w * 0.58, 22]];
+      let cx = w * 0.58, cy = 22;
+      while (cy < h - 4) {
+        cy += 16 + Math.random() * 18;
+        cx += (Math.random() - 0.5) * 26;
+        pts.push([Math.max(12, Math.min(w - 12, cx)), Math.min(h, cy)]);
+      }
+      boltPts = pts;
+    };
+
+    const render = () => {
+      tick++;
+      ctx.clearRect(0, 0, w, h);
+      if (weather === 'sunny') {
+        const sx = w * 0.72, sy = 30;
+        ctx.save(); ctx.translate(sx, sy); ctx.rotate(tick * 0.006);
+        for (let i = 0; i < 9; i++) {
+          ctx.rotate((Math.PI * 2) / 9);
+          const g = ctx.createLinearGradient(0, 0, 0, 95);
+          g.addColorStop(0, 'rgba(255, 222, 23, 0.38)');
+          g.addColorStop(1, 'rgba(255, 242, 0, 0)');
+          ctx.fillStyle = g;
+          ctx.beginPath(); ctx.moveTo(-4, 14); ctx.lineTo(4, 14); ctx.lineTo(14, 95); ctx.lineTo(-14, 95); ctx.closePath(); ctx.fill();
+        }
+        ctx.restore();
+        ctx.fillStyle = '#F7ED47'; ctx.beginPath(); ctx.arc(sx, sy, 14, 0, Math.PI * 2); ctx.fill();
+      } else if (weather === 'rainy') {
+        accumLevel = Math.min(1, accumLevel + 0.0018);
+        for (const d of drops) {
+          d.x += d.vx; d.y += d.vy;
+          if (d.y >= h - 3) {
+            for (let k = 0; k < 2; k++) splashes.push({ x: d.x, y: h - 2, vx: (Math.random() - 0.5) * 2.2, vy: -(1.4 + Math.random() * 2.2), r: 1.1 + Math.random() * 1.2, life: 1 });
+            d.x = Math.random() * (w + 24); d.y = -10;
+          }
+          ctx.strokeStyle = `rgba(56, 189, 248, ${d.alpha})`; ctx.lineWidth = d.size;
+          ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x - d.vx * 1.5, d.y - d.len); ctx.stroke();
+        }
+        for (let i = splashes.length - 1; i >= 0; i--) {
+          const sp = splashes[i]; sp.x += sp.vx; sp.y += sp.vy; sp.vy += 0.18; sp.life -= 0.06;
+          if (sp.life <= 0) { splashes.splice(i, 1); continue; }
+          ctx.fillStyle = `rgba(125, 211, 252, ${sp.life})`; ctx.beginPath(); ctx.arc(sp.x, sp.y, sp.r, 0, Math.PI * 2); ctx.fill();
+        }
+        const pw = (0.28 + accumLevel * 0.68) * w, ph = 4 + accumLevel * 12;
+        const pg = ctx.createLinearGradient(0, h - ph, 0, h);
+        pg.addColorStop(0, 'rgba(125, 211, 252, 0.55)'); pg.addColorStop(1, 'rgba(14, 165, 233, 0.85)');
+        ctx.fillStyle = pg; ctx.beginPath(); ctx.ellipse(w * 0.55, h, pw * 0.55, ph, 0, Math.PI, Math.PI * 2); ctx.fill();
+      } else if (weather === 'snowy') {
+        accumLevel = Math.min(1, accumLevel + 0.0014);
+        for (const f of flakes) {
+          f.y += f.vy; f.x += Math.sin(tick * 0.025 + f.phase) * 0.65;
+          if (f.y >= h - 3) {
+            splashes.push({ x: f.x, y: h - 2, vx: (Math.random() - 0.5) * 1.4, vy: -(0.6 + Math.random() * 1.2), r: 1 + Math.random() * 1.2, life: 1 });
+            f.x = Math.random() * w; f.y = -6;
+          }
+          ctx.fillStyle = `rgba(255, 255, 255, ${f.alpha})`; ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2); ctx.fill();
+        }
+        for (let i = splashes.length - 1; i >= 0; i--) {
+          const sp = splashes[i]; sp.x += sp.vx; sp.y += sp.vy; sp.vy += 0.08; sp.life -= 0.05;
+          if (sp.life <= 0) { splashes.splice(i, 1); continue; }
+          ctx.fillStyle = `rgba(255, 255, 255, ${sp.life})`; ctx.beginPath(); ctx.arc(sp.x, sp.y, sp.r, 0, Math.PI * 2); ctx.fill();
+        }
+        const sw = (0.26 + accumLevel * 0.72) * w, sh = 4 + accumLevel * 14;
+        const sg = ctx.createLinearGradient(0, h - sh, 0, h);
+        sg.addColorStop(0, 'rgba(255, 255, 255, 0.96)'); sg.addColorStop(1, 'rgba(226, 232, 240, 0.92)');
+        ctx.fillStyle = sg; ctx.beginPath(); ctx.ellipse(w * 0.54, h, sw * 0.56, sh, 0, Math.PI, Math.PI * 2); ctx.fill();
+      } else if (weather === 'wind') {
+        for (let i = 0; i < 3; i++) {
+          const gy = ((tick * 1.5 + i * 55) % (h - 20)) + 10, gx = w - ((tick * 4 + i * 70) % (w + 60));
+          ctx.strokeStyle = 'rgba(45, 212, 191, 0.45)'; ctx.lineWidth = 1.4;
+          ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx + 34, gy - 3); ctx.stroke();
+        }
+        for (const l of leaves) {
+          l.x += l.vx; l.y += l.vy + Math.sin(tick * 0.05 + l.x * 0.04) * 0.6; l.rot += l.rv;
+          if (l.x < -15) { l.x = w + 12; l.y = Math.random() * (h - 20); }
+          ctx.save(); ctx.translate(l.x, l.y); ctx.rotate(l.rot); ctx.scale(l.s, l.s);
+          ctx.fillStyle = l.color; ctx.beginPath(); ctx.ellipse(0, 0, 7, 3.2, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+        }
+      } else if (weather === 'thunder') {
+        if (tick >= nextLightningTick) { buildBolt(); lightningFlash = 1; scorchAlpha = 0.85; nextLightningTick = tick + 150 + Math.floor(Math.random() * 140); }
+        if (lightningFlash > 0.02) {
+          ctx.strokeStyle = `rgba(253, 224, 71, ${lightningFlash})`; ctx.lineWidth = 2.6;
+          ctx.shadowColor = '#fde047'; ctx.shadowBlur = 12; ctx.beginPath();
+          boltPts.forEach(([bx, by], idx) => (idx === 0 ? ctx.moveTo(bx, by) : ctx.lineTo(bx, by)));
+          ctx.stroke(); ctx.shadowBlur = 0; lightningFlash *= 0.84;
+        }
+        if (scorchAlpha > 0.01) {
+          const sx = boltPts[boltPts.length - 1]?.[0] || w * 0.58;
+          const sg = ctx.createRadialGradient(sx, h, 2, sx, h, 28);
+          sg.addColorStop(0, `rgba(12, 12, 14, ${scorchAlpha})`);
+          sg.addColorStop(0.55, `rgba(28, 25, 23, ${scorchAlpha * 0.55})`);
+          sg.addColorStop(1, 'rgba(0, 0, 0, 0)');
+          ctx.fillStyle = sg; ctx.beginPath(); ctx.ellipse(sx, h, 28, 12, 0, Math.PI, Math.PI * 2); ctx.fill();
+          scorchAlpha *= 0.985;
+        }
+      }
+      raf = requestAnimationFrame(render);
+    };
+    raf = requestAnimationFrame(render);
+    return () => cancelAnimationFrame(raf);
+  }, [weather]);
+
+  return <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 w-full h-full" />;
 };
 
 // Organic Physical Ash Pile settled on the top edge of the next card (animated via Anime.js stagger)
@@ -629,8 +652,10 @@ export const MessageBoard: React.FC = () => {
       try {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
-          // Ensure every message keeps a fixed biome (even if empty after admin deletion)
-          const withBiomes = parsed.map((m: CommentItem, i: number) => ({
+          // If only old 3 default messages were saved, upgrade to 6-biome defaults
+          const isOldDefaultSet = parsed.length === 3 && parsed.every((m: CommentItem) => m.id <= 3);
+          const source = isOldDefaultSet ? initialMessages : parsed;
+          const withBiomes = source.map((m: CommentItem, i: number) => ({
             ...m,
             biome: m.biome || ALL_BIOMES[i % ALL_BIOMES.length],
           }));
@@ -1009,175 +1034,78 @@ export const MessageBoard: React.FC = () => {
             };
 
             return (
+              <div key={msg.id} className="relative group/msgrow">
+                {/* Weather Icon Switcher OUTSIDE card in right blank area (hover row to reveal) */}
+                <div className="hidden md:flex flex-col gap-1.5 absolute -right-11 top-3 opacity-0 group-hover/msgrow:opacity-100 transition-opacity duration-200 z-30">
+                  {([
+                    ['sunny', '晴'],
+                    ['rainy', '雨'],
+                    ['snowy', '雪'],
+                    ['wind', '风'],
+                    ['thunder', '雷'],
+                  ] as const).map(([wKey, title]) => (
+                    <button
+                      key={wKey}
+                      type="button"
+                      onClick={() => setCardWeather(wKey)}
+                      title={`切换天气：${title}`}
+                      className={`w-7 h-7 rounded-full flex items-center justify-center backdrop-blur-md border transition-all ${
+                        weather === wKey
+                          ? 'bg-slate-900/90 border-amber-400/70 text-white shadow-md scale-110'
+                          : 'bg-slate-900/55 border-white/15 text-white/80 hover:bg-slate-900/85 hover:scale-105'
+                      }`}
+                    >
+                      {wKey === 'sunny' && (
+                        <svg className="w-4 h-4 text-amber-400 animate-[spin_10s_linear_infinite]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <circle cx="12" cy="12" r="3.5" fill="currentColor" stroke="none" />
+                          <path strokeLinecap="round" d="M12 2.5v2M12 19.5v2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M2.5 12h2M19.5 12h2M5.2 18.8l1.4-1.4M17.4 6.6l1.4-1.4" />
+                        </svg>
+                      )}
+                      {wKey === 'rainy' && (
+                        <svg className="w-4 h-4 text-sky-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M7 14a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 14H7z" fill="currentColor" fillOpacity="0.25" />
+                          <path strokeLinecap="round" d="M9 17l-1 3M13 17l-1 3M17 17l-1 3" />
+                        </svg>
+                      )}
+                      {wKey === 'snowy' && (
+                        <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M7 14a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 14H7z" fill="currentColor" fillOpacity="0.25" />
+                          <circle cx="9" cy="18.5" r="1" fill="currentColor" stroke="none" />
+                          <circle cx="13" cy="20" r="1" fill="currentColor" stroke="none" />
+                          <circle cx="16.5" cy="18.5" r="1" fill="currentColor" stroke="none" />
+                        </svg>
+                      )}
+                      {wKey === 'wind' && (
+                        <svg className="w-4 h-4 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                          <path d="M4 9h11a2.5 2.5 0 1 0-2.5-2.5M3 13h14a2.5 2.5 0 1 1-2.5 2.5M6 17h6" />
+                        </svg>
+                      )}
+                      {wKey === 'thunder' && (
+                        <svg className="w-4 h-4 text-yellow-300" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M7 13a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 13H7z" fillOpacity="0.3" />
+                          <polygon points="13,11 9,17 12,17 10.5,22 16,15 13,15" />
+                        </svg>
+                      )}
+                    </button>
+                  ))}
+                </div>
+
               <motion.div
-                key={msg.id}
                 layout
                 initial={{ opacity: 0, y: 16 }}
                 animate={
                   isBurning
-                    ? { opacity: 0.72, scale: 0.985 }
+                    ? { opacity: 0.25, scale: 0.96 }
                     : { opacity: 1, y: 0, scale: 1 }
                 }
                 exit={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' }}
                 transition={{ duration: 0.45 }}
-                style={isBurning ? { filter: 'url(#burn-heat-filter)' } : undefined}
                 className={`relative rounded-2xl p-6 sm:p-7 pb-12 sm:pb-14 transition-all overflow-hidden ${biomeStyles[biomeKind]}`}
               >
                 <BiomeDecoration biome={biomeKind} />
-                {/* Right 1/3 Weather Effect Overlay (from /effects/weather_box & /effects/weather_icon) + Hover-only Switcher */}
-                <div className="group/wzone absolute inset-y-0 right-0 w-1/3 z-20 pointer-events-auto">
-                  {/* Weather Effects Layer covering right 1/3 of card */}
-                  <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-                    {weather === 'sunny' && (
-                      <div className="relative w-full h-full">
-                        <div
-                          className="absolute -top-10 -right-10 w-44 h-44 rounded-full animate-[spin_22s_linear_infinite] opacity-65"
-                          style={{
-                            background:
-                              'conic-gradient(from 0deg, rgba(255,222,23,0.45) 0deg 18deg, transparent 18deg 45deg, rgba(255,222,23,0.4) 45deg 63deg, transparent 63deg 90deg, rgba(255,222,23,0.45) 90deg 108deg, transparent 108deg 135deg, rgba(255,222,23,0.4) 135deg 153deg, transparent 153deg 180deg, rgba(255,222,23,0.45) 180deg 198deg, transparent 198deg 225deg, rgba(255,222,23,0.4) 225deg 243deg, transparent 243deg 270deg, rgba(255,222,23,0.45) 270deg 288deg, transparent 288deg 315deg, rgba(255,222,23,0.4) 315deg 333deg, transparent 333deg 360deg)',
-                            maskImage: 'radial-gradient(circle, #000 18%, transparent 72%)',
-                            WebkitMaskImage: 'radial-gradient(circle, #000 18%, transparent 72%)',
-                          }}
-                        />
-                        <svg className="w-11 h-11 ml-auto mr-3 mt-2 animate-[spin_12s_linear_infinite]" viewBox="0 0 36 36">
-                          <circle cx="18" cy="18" r="6.5" fill="#fbbf24" />
-                          <g stroke="#f59e0b" strokeWidth="2.2" strokeLinecap="round">
-                            <line x1="18" y1="3" x2="18" y2="7" /><line x1="18" y1="29" x2="18" y2="33" />
-                            <line x1="3" y1="18" x2="7" y2="18" /><line x1="29" y1="18" x2="33" y2="18" />
-                            <line x1="7" y1="7" x2="10" y2="10" /><line x1="26" y1="26" x2="29" y2="29" />
-                            <line x1="29" y1="7" x2="26" y2="10" /><line x1="10" y1="26" x2="7" y2="29" />
-                          </g>
-                        </svg>
-                      </div>
-                    )}
-                    {weather === 'rainy' && (
-                      <div className="relative w-full h-full">
-                        <svg className="w-14 h-8 ml-auto mr-3 mt-1 opacity-85" viewBox="0 0 64 36">
-                          <circle cx="24" cy="20" r="9" fill="#94a3b8" />
-                          <circle cx="36" cy="16" r="11" fill="#cbd5e1" />
-                          <circle cx="48" cy="20" r="8" fill="#94a3b8" />
-                        </svg>
-                        {[15, 30, 46, 62, 76, 88].map((left, rIdx) => (
-                          <span key={rIdx} style={{ left: `${left}%`, animationDelay: `${rIdx * 0.24}s` }} className="tw-raindrop absolute top-7 w-0.5 h-3.5 rounded-full bg-sky-400/90 rotate-[14deg]" />
-                        ))}
-                        <div className="tw-rain-puddle absolute right-2 bottom-0 w-[86%] rounded-t-full bg-gradient-to-t from-sky-500/80 via-sky-300/60 to-transparent backdrop-blur-[1px] border-t border-sky-200/70" />
-                      </div>
-                    )}
-                    {weather === 'snowy' && (
-                      <div className="relative w-full h-full">
-                        <svg className="w-14 h-8 ml-auto mr-3 mt-1 opacity-85" viewBox="0 0 64 36">
-                          <circle cx="24" cy="20" r="9" fill="#cbd5e1" />
-                          <circle cx="36" cy="16" r="11" fill="#e2e8f0" />
-                          <circle cx="48" cy="20" r="8" fill="#cbd5e1" />
-                        </svg>
-                        {[14, 30, 46, 62, 76, 89].map((left, sIdx) => (
-                          <span key={sIdx} style={{ left: `${left}%`, animationDelay: `${sIdx * 0.48}s` }} className="tw-snowflake absolute top-7 w-2 h-2 rounded-full bg-white/95 shadow" />
-                        ))}
-                        <div className="tw-snow-pile absolute right-2 bottom-0 w-[86%] rounded-t-full bg-gradient-to-t from-white via-slate-100/95 to-transparent shadow-[0_-3px_10px_rgba(255,255,255,0.85)]" />
-                      </div>
-                    )}
-                    {weather === 'wind' && (
-                      <div className="relative w-full h-full">
-                        {[18, 36, 54, 72].map((top, wIdx) => (
-                          <span
-                            key={wIdx}
-                            style={{ top: `${top}%`, animationDelay: `${wIdx * 0.42}s` }}
-                            className="tw-wind-streak absolute right-4 w-20 h-0.5 rounded-full bg-gradient-to-r from-transparent via-teal-400/75 to-transparent"
-                          />
-                        ))}
-                        {[18, 44, 68].map((top, lIdx) => (
-                          <svg
-                            key={lIdx}
-                            style={{ top: `${top}%`, animationDelay: `${lIdx * 0.9}s` }}
-                            className="tw-wind-leaf absolute right-10 w-4 h-4 text-amber-500/90"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                          >
-                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66l.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z" />
-                          </svg>
-                        ))}
-                      </div>
-                    )}
-                    {weather === 'thunder' && (
-                      <div className="relative w-full h-full">
-                        <svg className="w-16 h-9 ml-auto mr-2 mt-0.5 opacity-90" viewBox="0 0 64 36">
-                          <circle cx="24" cy="20" r="10" fill="#64748b" />
-                          <circle cx="36" cy="16" r="12" fill="#475569" />
-                          <circle cx="48" cy="20" r="9" fill="#64748b" />
-                        </svg>
-                        <svg
-                          className="tw-lightning-bolt absolute top-6 right-6 w-10 h-[calc(100%-1.5rem)] text-yellow-300 drop-shadow-[0_0_10px_rgba(253,224,71,0.95)]"
-                          viewBox="0 0 28 120"
-                          preserveAspectRatio="none"
-                          fill="currentColor"
-                        >
-                          <polygon points="16,0 6,42 14,42 7,78 15,78 9,120 23,68 15,68 22,34 14,34" />
-                        </svg>
-                        <div
-                          style={{
-                            background:
-                              'radial-gradient(ellipse at bottom, rgba(12,12,14,0.92) 0%, rgba(28,25,23,0.65) 55%, transparent 80%)',
-                          }}
-                          className="tw-thunder-char absolute right-4 bottom-0 w-16 h-5 rounded-t-full"
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Animated Weather Icon Switcher (from /effects/weather_icon — revealed on hover over right area) */}
-                  <div className="relative z-30 flex items-center justify-end gap-1 p-2.5 opacity-0 group-hover/wzone:opacity-100 transition-opacity duration-200">
-                    {([
-                      ['sunny', '晴'],
-                      ['rainy', '雨'],
-                      ['snowy', '雪'],
-                      ['wind', '风'],
-                      ['thunder', '雷'],
-                    ] as const).map(([wKey, title]) => (
-                      <button
-                        key={wKey}
-                        type="button"
-                        onClick={() => setCardWeather(wKey)}
-                        title={`切换天气：${title}`}
-                        className={`w-7 h-7 rounded-full flex items-center justify-center backdrop-blur-md border transition-all ${
-                          weather === wKey
-                            ? 'bg-slate-900/90 border-amber-400/70 text-white shadow-md scale-110'
-                            : 'bg-slate-900/55 border-white/15 text-white/80 hover:bg-slate-900/85 hover:scale-105'
-                        }`}
-                      >
-                        {wKey === 'sunny' && (
-                          <svg className="w-4 h-4 text-amber-400 animate-[spin_10s_linear_infinite]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                            <circle cx="12" cy="12" r="3.5" fill="currentColor" stroke="none" />
-                            <path strokeLinecap="round" d="M12 2.5v2M12 19.5v2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M2.5 12h2M19.5 12h2M5.2 18.8l1.4-1.4M17.4 6.6l1.4-1.4" />
-                          </svg>
-                        )}
-                        {wKey === 'rainy' && (
-                          <svg className="w-4 h-4 text-sky-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M7 14a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 14H7z" fill="currentColor" fillOpacity="0.25" />
-                            <path strokeLinecap="round" d="M9 17l-1 3M13 17l-1 3M17 17l-1 3" />
-                          </svg>
-                        )}
-                        {wKey === 'snowy' && (
-                          <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M7 14a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 14H7z" fill="currentColor" fillOpacity="0.25" />
-                            <circle cx="9" cy="18.5" r="1" fill="currentColor" stroke="none" />
-                            <circle cx="13" cy="20" r="1" fill="currentColor" stroke="none" />
-                            <circle cx="16.5" cy="18.5" r="1" fill="currentColor" stroke="none" />
-                          </svg>
-                        )}
-                        {wKey === 'wind' && (
-                          <svg className="w-4 h-4 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                            <path d="M4 9h11a2.5 2.5 0 1 0-2.5-2.5M3 13h14a2.5 2.5 0 1 1-2.5 2.5M6 17h6" />
-                          </svg>
-                        )}
-                        {wKey === 'thunder' && (
-                          <svg className="w-4 h-4 text-yellow-300" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7 13a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 13H7z" fillOpacity="0.3" />
-                            <polygon points="13,11 9,17 12,17 10.5,22 16,15 13,15" />
-                          </svg>
-                        )}
-                      </button>
-                    ))}
-                  </div>
+                {/* Right 1/3 Weather Effect Overlay (faithful /effects/weather_box Canvas engine) */}
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 z-20 overflow-hidden" aria-hidden="true">
+                  <WeatherBoxCanvas weather={weather} />
                 </div>
                 {isBurning && <BurnCanvas />}
 
@@ -1327,6 +1255,7 @@ export const MessageBoard: React.FC = () => {
                   </form>
                 )}
               </motion.div>
+              </div>
             );
           })}
         </AnimatePresence>

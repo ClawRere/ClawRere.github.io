@@ -94,7 +94,8 @@ const entertainItems = [
           }
         }
 
-        if (isHome && !pastHero) {
+        var isDark = document.documentElement.classList.contains('dark');
+        if (isHome && (!pastHero || isDark)) {
           hdr.classList.add('at-home-top');
         } else {
           hdr.classList.remove('at-home-top');
@@ -114,6 +115,93 @@ const entertainItems = [
       }, { passive: true });
       window.__updateHeaderBg();
       window.__updateWatermarkParallax();
+
+      // Watermark hover particle-dissolve effect
+      window.__initWatermarkParticles = function () {
+        var wm = document.querySelector('[data-parallax-watermark]');
+        if (!wm || wm.dataset.wmBound) return;
+        wm.dataset.wmBound = '1';
+        var span = wm.querySelector('.wm-text');
+        var canvas = wm.querySelector('.wm-canvas');
+        if (!span || !canvas) return;
+        var ctx = canvas.getContext('2d');
+        var raf = 0, hovering = false, particles = [];
+
+        function buildParticles() {
+          var w = (canvas.width = wm.offsetWidth || 800);
+          var h = (canvas.height = wm.offsetHeight || 120);
+          ctx.clearRect(0, 0, w, h);
+          var text = wm.dataset.wmText || span.textContent || '';
+          var fontSize = Math.min(120, Math.max(44, Math.floor(w * 0.11)));
+          ctx.font = '900 ' + fontSize + 'px system-ui, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          var grad = ctx.createLinearGradient(w * 0.25, 0, w * 0.75, 0);
+          grad.addColorStop(0, 'rgba(251, 113, 133, 0.65)');
+          grad.addColorStop(0.5, 'rgba(253, 186, 116, 0.65)');
+          grad.addColorStop(1, 'rgba(244, 114, 182, 0.65)');
+          ctx.fillStyle = grad;
+          ctx.fillText(text, w / 2, h / 2 + 4);
+
+          var imgData = ctx.getImageData(0, 0, w, h).data;
+          particles = [];
+          var step = 5;
+          for (var y = 0; y < h; y += step) {
+            for (var x = 0; x < w; x += step) {
+              var idx = (y * w + x) * 4;
+              if (imgData[idx + 3] > 20) {
+                particles.push({
+                  ox: x, oy: y, x: x, y: y,
+                  vx: (Math.random() - 0.5) * 3.8,
+                  vy: (Math.random() - 0.5) * 3.8 - 0.6,
+                  color: 'rgba(' + imgData[idx] + ',' + imgData[idx + 1] + ',' + imgData[idx + 2] + ',0.78)'
+                });
+              }
+            }
+          }
+          ctx.clearRect(0, 0, w, h);
+        }
+
+        function tick() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          var settled = true;
+          for (var i = 0; i < particles.length; i++) {
+            var p = particles[i];
+            if (hovering) {
+              p.x += p.vx; p.y += p.vy;
+              p.vx *= 0.985; p.vy *= 0.985;
+              settled = false;
+            } else {
+              p.x += (p.ox - p.x) * 0.16;
+              p.y += (p.oy - p.y) * 0.16;
+              if (Math.abs(p.ox - p.x) > 0.4 || Math.abs(p.oy - p.y) > 0.4) settled = false;
+            }
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, 3, 3);
+          }
+          if (hovering || !settled) {
+            raf = requestAnimationFrame(tick);
+          } else {
+            canvas.style.opacity = '0';
+            span.style.opacity = '1';
+            raf = 0;
+          }
+        }
+
+        wm.addEventListener('mouseenter', function () {
+          hovering = true;
+          buildParticles();
+          span.style.opacity = '0';
+          canvas.style.opacity = '1';
+          if (!raf) raf = requestAnimationFrame(tick);
+        });
+        wm.addEventListener('mouseleave', function () {
+          hovering = false;
+          if (!raf) raf = requestAnimationFrame(tick);
+        });
+      };
+      window.__initWatermarkParticles();
+      document.addEventListener('astro:after-swap', window.__initWatermarkParticles);
     </script>
     <ClientRouter />
   </head>
@@ -297,14 +385,15 @@ const entertainItems = [
       {currentPath !== '/' && resolvedWatermark && !currentPath.startsWith('/entertain/fireworks') && !currentPath.startsWith('/entertain/rain') && (
         <div
           data-parallax-watermark
-          aria-hidden="true"
-          class={`pointer-events-none select-none text-center pt-2 relative z-0 overflow-hidden ${
+          data-wm-text={resolvedWatermark}
+          class={`pointer-events-auto cursor-default select-none text-center pt-2 relative z-0 overflow-hidden ${
             currentPath.startsWith('/entertain/music') ? '-mb-16 sm:-mb-24' : '-mb-8 sm:-mb-12'
           }`}
         >
-          <span class="block text-[13vw] sm:text-[6.5rem] lg:text-[8.5rem] font-black leading-none tracking-[0.12em] bg-gradient-to-r from-rose-400/45 via-orange-300/45 to-pink-400/45 dark:from-rose-300/35 dark:via-orange-200/35 dark:to-pink-300/35 bg-clip-text text-transparent truncate px-2">
+          <span class="wm-text block text-[13vw] sm:text-[6.5rem] lg:text-[8.5rem] font-black leading-none tracking-[0.12em] bg-gradient-to-r from-rose-400/45 via-orange-300/45 to-pink-400/45 dark:from-rose-300/35 dark:via-orange-200/35 dark:to-pink-300/35 bg-clip-text text-transparent truncate px-2 transition-opacity duration-200">
             {resolvedWatermark}
           </span>
+          <canvas class="wm-canvas pointer-events-none absolute inset-0 w-full h-full opacity-0 transition-opacity duration-200" />
         </div>
       )}
       <div class="relative z-10">

@@ -65,7 +65,15 @@ const categories = Array.from(
           : post.data.tags
           ? [post.data.tags]
           : [];
-        const cover = `/img/blog/cover-${(idx % 10) + 1}.svg`;
+        const effectsGrads = [
+          'from-violet-600/25 via-indigo-500/15 to-cyan-500/20',
+          'from-rose-500/25 via-amber-500/15 to-orange-500/20',
+          'from-sky-500/25 via-blue-500/15 to-indigo-500/20',
+          'from-emerald-500/25 via-teal-500/15 to-cyan-500/20',
+          'from-amber-500/25 via-orange-500/15 to-red-500/20',
+          'from-fuchsia-500/25 via-purple-500/15 to-pink-500/20',
+        ];
+        const cardGrad = effectsGrads[idx % effectsGrads.length];
 
         return (
           <a
@@ -73,16 +81,13 @@ const categories = Array.from(
             data-category={category}
             class="post-card scroll-reveal-card group relative flex flex-col sm:flex-row overflow-hidden rounded-2xl glass border border-charcoal-500/12 dark:border-white/12 hover:border-terracotta/45 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
           >
-            {/* Left Illustrated Cover Image (no vertical color bar) */}
-            <div class="relative w-full sm:w-44 md:w-48 h-40 sm:h-auto shrink-0 overflow-hidden bg-zinc-900/10">
-              <img
-                src={cover}
-                alt={post.data.title}
-                loading="lazy"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
-              <span class="absolute top-2.5 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-black/55 backdrop-blur-sm text-white border border-white/15">
+            {/* Left Effects-Style Frosted Gradient Cover */}
+            <div class={`relative w-full sm:w-44 md:w-48 h-36 sm:h-auto shrink-0 overflow-hidden bg-gradient-to-br ${cardGrad} flex items-center justify-center p-4`}>
+              <span class="text-xs font-mono font-bold tracking-wider text-charcoal-DEFAULT/75 dark:text-cream-100/85 text-center line-clamp-1">
                 {category}
+              </span>
+              <span class="absolute top-2.5 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-black/45 backdrop-blur-sm text-white border border-white/15">
+                #{String(idx + 1).padStart(2, '0')}
               </span>
             </div>
 

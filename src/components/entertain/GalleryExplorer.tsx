@@ -74,7 +74,7 @@ export const GalleryExplorer: React.FC = () => {
             key={`${currentAlbum.id}-${img.url}-${idx}`}
             className="group relative rounded-2xl overflow-hidden border border-charcoal-500/10 dark:border-white/10 bg-zinc-900/20 shadow-lg hover:shadow-2xl transition-all"
           >
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-900/90 flex items-center justify-center">
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-violet-600/25 via-indigo-500/15 to-cyan-500/20 flex items-center justify-center">
               {!loadedUrls[img.url] && (
                 <div className="absolute inset-0 flex items-center justify-center text-cream-200/70 pointer-events-none">
                   <DeviceLoader />

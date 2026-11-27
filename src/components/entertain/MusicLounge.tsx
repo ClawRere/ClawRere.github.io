@@ -1,27 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import { Disc, ExternalLink, ListMusic, Radio, Sparkles, Search, Play, AlertCircle } from 'lucide-react';
+import { Disc, ExternalLink, ListMusic, Radio, Sparkles, Play, Volume2 } from 'lucide-react';
 import { NETEASE_PLAYLISTS } from '@/lib/musicStore';
 
-const DEFAULT_API_BASE = 'https://neteaseapi.iyu6.com';
-
-interface ApiTrack {
-  id: number;
+interface CuratedSong {
+  id: string;
   name: string;
   artist: string;
-  url?: string;
+  tag: string;
 }
+
+const CURATED_SONGS: CuratedSong[] = [
+  { id: '2600493765', name: '默认精选曲目', artist: '网易云单曲', tag: '默认推荐' },
+  { id: '149297', name: 'I Still Want Your Love', artist: '专注轻音乐', tag: '轻音乐' },
+  { id: '149294', name: 'River Flows in You', artist: 'Yiruma', tag: '钢琴' },
+  { id: '441552', name: 'Summer', artist: '久石让', tag: '经典' },
+  { id: '186016', name: '晴天', artist: '周杰伦', tag: '热歌榜' },
+  { id: '185811', name: '稻香', artist: '周杰伦', tag: '热歌榜' },
+  { id: '1330348068', name: '起风了', artist: '买辣椒也用券', tag: '热歌榜' },
+  { id: '185668', name: '夜曲', artist: '周杰伦', tag: '经典榜' },
+];
 
 export const MusicLounge: React.FC = () => {
   const [playlistId, setPlaylistId] = useState(NETEASE_PLAYLISTS[0].id);
-  const [apiBase, setApiBase] = useState(DEFAULT_API_BASE);
-  const [searchKw, setSearchKw] = useState('');
-  const [apiTracks, setApiTracks] = useState<ApiTrack[]>([]);
-  const [activeAudioUrl, setActiveAudioUrl] = useState('');
-  const [activeTrackName, setActiveTrackName] = useState('');
-  const [apiStatus, setApiStatus] = useState('');
-  const [isLoadingApi, setIsLoadingApi] = useState(false);
+  const [activeSong, setActiveSong] = useState<CuratedSong>(CURATED_SONGS[0]);
+  const [audioUrl, setAudioUrl] = useState('');
+  const [statusMsg, setStatusMsg] = useState('正在解析音源...');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const resolveSongUrl = async (song: CuratedSong, autoPlay = true) => {
+    setActiveSong(song);
+    setIsLoading(true);
+    setStatusMsg('正在匹配可用音源...');
+    try {
+      const res = await fetch(`https://neteaseapi.iyu6.com/match?id=${song.id}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      const matchedUrl =
+        json?.url || json?.data?.url || (Array.isArray(json?.data) ? json.data[0]?.url : '');
+      if (matchedUrl && typeof matchedUrl === 'string') {
+        setAudioUrl(matchedUrl);
+        setStatusMsg(autoPlay ? `已匹配直链：${song.name}` : `已就绪：${song.name}`);
+        return;
+      }
+      throw new Error('未返回直链');
+    } catch {
+      // Fallback to standard NetEase outer audio stream if remote match is restricted
+      setAudioUrl(`https://music.163.com/song/media/outer/url?id=${song.id}.mp3`);
+      setStatusMsg(`已切换备用直链：${song.name}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
+    resolveSongUrl(CURATED_SONGS[0], false);
     const saved = localStorage.getItem('larry_netease_playlist_id');
     if (saved && NETEASE_PLAYLISTS.some((p) => p.id === saved)) {
       setPlaylistId(saved);
@@ -40,48 +72,6 @@ export const MusicLounge: React.FC = () => {
     setPlaylistId(id);
     localStorage.setItem('larry_netease_playlist_id', id);
     window.dispatchEvent(new CustomEvent('larry-playlist-change', { detail: id }));
-  };
-
-  const handleSearchApi = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!searchKw.trim()) return;
-    setIsLoadingApi(true);
-    setApiStatus('');
-    try {
-      const base = apiBase.replace(/\/+$/, '');
-      const res = await fetch(`${base}/search?keywords=${encodeURIComponent(searchKw.trim())}&limit=8`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
-      const songs = json?.result?.songs || [];
-      setApiTracks(
-        songs.map((s: any) => ({
-          id: s.id,
-          name: s.name,
-          artist: (s.artists || s.ar || []).map((a: any) => a.name).join(' / ') || '未知歌手',
-        }))
-      );
-      if (!songs.length) setApiStatus('未搜索到相关曲目');
-    } catch (err: any) {
-      setApiStatus(`接口请求受限（${err?.message || '跨域/403'}），可继续使用下方官方外链播放器或更换自建 API 地址`);
-    } finally {
-      setIsLoadingApi(false);
-    }
-  };
-
-  const handlePlayTrack = async (track: ApiTrack) => {
-    setApiStatus('');
-    try {
-      const base = apiBase.replace(/\/+$/, '');
-      const res = await fetch(`${base}/song/url?id=${track.id}`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
-      const url = json?.data?.[0]?.url;
-      if (!url) throw new Error('暂无可用播放直链');
-      setActiveAudioUrl(url);
-      setActiveTrackName(`${track.name} - ${track.artist}`);
-    } catch (err: any) {
-      setApiStatus(`获取音源失败（${err?.message || '受限'}）`);
-    }
   };
 
   return (
@@ -141,76 +131,51 @@ export const MusicLounge: React.FC = () => {
         </div>
       </div>
 
-      {/* NetEase API (neteaseapi.iyu6.com) Search & Unblock Module */}
+      {/* Clean Match-API Song Switcher & Player (no raw URLs or IDs exposed) */}
       <div className="rounded-3xl p-5 sm:p-6 glass border border-charcoal-500/12 dark:border-white/12 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h3 className="text-sm font-bold text-charcoal-DEFAULT dark:text-cream-50">🎧 网易云 API 搜索与解灰直链</h3>
-            <p className="text-[11px] font-mono text-charcoal-100 dark:text-cream-400">
-              默认接入 {DEFAULT_API_BASE}（支持自定义兼容 NeteaseCloudMusicApi 节点）
-            </p>
+          <div className="flex items-center gap-2">
+            <Volume2 className="w-4 h-4 text-rose-500" />
+            <h3 className="text-sm font-bold text-charcoal-DEFAULT dark:text-cream-50">网易云单曲 & 榜单直链播放器</h3>
           </div>
-          <input
-            type="url"
-            value={apiBase}
-            onChange={(e) => setApiBase(e.target.value)}
-            placeholder="API 地址"
-            className="px-3 py-1.5 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono w-64"
-          />
+          <span className="text-xs font-mono text-rose-500">
+            {isLoading ? '正在解析...' : statusMsg}
+          </span>
         </div>
 
-        <form onSubmit={handleSearchApi} className="flex gap-2">
-          <div className="relative flex-1">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-charcoal-100 dark:text-cream-400" />
-            <input
-              type="text"
-              value={searchKw}
-              onChange={(e) => setSearchKw(e.target.value)}
-              placeholder="输入歌名或歌手搜索（通过 NetEase API 解析）..."
-              className="w-full pl-9 pr-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/70 dark:bg-black/30 text-xs"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={isLoadingApi}
-            className="px-4 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-mono font-semibold transition-colors disabled:opacity-50"
-          >
-            {isLoadingApi ? '搜索中...' : 'API 搜索'}
-          </button>
-        </form>
-
-        {apiStatus && (
-          <div className="flex items-center gap-2 text-xs text-amber-600 dark:text-amber-300 bg-amber-500/10 border border-amber-500/20 rounded-xl px-3 py-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
-            <span>{apiStatus}</span>
+        {audioUrl && (
+          <div className="p-3 rounded-2xl bg-black/5 dark:bg-white/5 flex flex-col sm:flex-row sm:items-center gap-3">
+            <div className="min-w-0 sm:w-48 shrink-0">
+              <div className="text-xs font-bold truncate text-charcoal-DEFAULT dark:text-cream-50">{activeSong.name}</div>
+              <div className="text-[11px] opacity-65 truncate">{activeSong.artist}</div>
+            </div>
+            <audio src={audioUrl} controls className="w-full h-9" />
           </div>
         )}
 
-        {activeAudioUrl && (
-          <div className="p-3 rounded-2xl bg-black/5 dark:bg-white/5 space-y-2">
-            <div className="text-xs font-semibold text-rose-500">正在播放：{activeTrackName}</div>
-            <audio src={activeAudioUrl} controls autoPlay className="w-full h-9" />
-          </div>
-        )}
-
-        {apiTracks.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {apiTracks.map((t) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+          {CURATED_SONGS.map((song) => {
+            const isActive = activeSong.id === song.id;
+            return (
               <button
-                key={t.id}
+                key={song.id}
                 type="button"
-                onClick={() => handlePlayTrack(t)}
-                className="flex items-center justify-between gap-2 px-3 py-2 rounded-xl border border-charcoal-500/10 dark:border-white/10 hover:border-rose-500/40 bg-white/60 dark:bg-white/5 text-left transition-colors"
+                onClick={() => resolveSongUrl(song, true)}
+                className={`flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-2xl border text-left transition-all ${
+                  isActive
+                    ? 'border-rose-500/60 bg-rose-500/10 shadow-sm'
+                    : 'border-charcoal-500/10 dark:border-white/10 hover:border-rose-500/35 bg-white/60 dark:bg-white/5'
+                }`}
               >
                 <div className="min-w-0">
-                  <div className="text-xs font-semibold truncate">{t.name}</div>
-                  <div className="text-[11px] opacity-65 truncate">{t.artist}</div>
+                  <div className="text-xs font-semibold truncate">{song.name}</div>
+                  <div className="text-[10px] opacity-65 truncate">{song.artist} · {song.tag}</div>
                 </div>
-                <Play className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                <Play className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-rose-500 fill-current' : 'opacity-60'}`} />
               </button>
-            ))}
-          </div>
-        )}
+            );
+          })}
+        </div>
       </div>
 
       {/* Styled Official NetEase Outchain Container */}

@@ -83,10 +83,16 @@ const entertainItems = [
         var pastHero = window.scrollY > heroThreshold;
 
         if (scrolled) {
-          hdr.classList.add('bg-cream-50/96', 'dark:bg-[#1c1f2b]/96', 'backdrop-blur-md', 'shadow-sm');
+          if (isHome) {
+            hdr.classList.add('bg-slate-900/85', 'backdrop-blur-md', 'shadow-sm');
+            hdr.classList.remove('bg-cream-50/96', 'dark:bg-[#1c1f2b]/96');
+          } else {
+            hdr.classList.add('bg-cream-50/96', 'dark:bg-[#1c1f2b]/96', 'backdrop-blur-md', 'shadow-sm');
+            hdr.classList.remove('bg-slate-900/85');
+          }
           hdr.classList.remove('bg-transparent', 'bg-gradient-to-b', 'from-black/25', 'to-transparent');
         } else {
-          hdr.classList.remove('bg-cream-50/96', 'dark:bg-[#1c1f2b]/96', 'backdrop-blur-md', 'shadow-sm');
+          hdr.classList.remove('bg-cream-50/96', 'dark:bg-[#1c1f2b]/96', 'bg-slate-900/85', 'backdrop-blur-md', 'shadow-sm');
           if (isHome) {
             hdr.classList.add('bg-gradient-to-b', 'from-black/25', 'to-transparent');
           } else {
@@ -94,8 +100,7 @@ const entertainItems = [
           }
         }
 
-        var isDark = document.documentElement.classList.contains('dark');
-        if (isHome && (!pastHero || isDark)) {
+        if (isHome) {
           hdr.classList.add('at-home-top');
         } else {
           hdr.classList.remove('at-home-top');
@@ -132,8 +137,8 @@ const entertainItems = [
           var h = (canvas.height = wm.offsetHeight || 120);
           ctx.clearRect(0, 0, w, h);
           var text = wm.dataset.wmText || span.textContent || '';
-          var fontSize = Math.min(120, Math.max(44, Math.floor(w * 0.11)));
-          ctx.font = '900 ' + fontSize + 'px system-ui, sans-serif';
+          var cs = window.getComputedStyle(span);
+          ctx.font = (cs.fontWeight || '900') + ' ' + (cs.fontSize || '88px') + ' ' + (cs.fontFamily || 'system-ui, sans-serif');
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           var grad = ctx.createLinearGradient(w * 0.25, 0, w * 0.75, 0);
@@ -141,20 +146,24 @@ const entertainItems = [
           grad.addColorStop(0.5, 'rgba(253, 186, 116, 0.65)');
           grad.addColorStop(1, 'rgba(244, 114, 182, 0.65)');
           ctx.fillStyle = grad;
-          ctx.fillText(text, w / 2, h / 2 + 4);
+          var spanRect = span.getBoundingClientRect();
+          var wmRect = wm.getBoundingClientRect();
+          var centerY = (spanRect.top - wmRect.top) + spanRect.height / 2;
+          ctx.fillText(text, w / 2, centerY);
 
           var imgData = ctx.getImageData(0, 0, w, h).data;
           particles = [];
-          var step = 5;
+          var step = 4;
           for (var y = 0; y < h; y += step) {
             for (var x = 0; x < w; x += step) {
               var idx = (y * w + x) * 4;
               if (imgData[idx + 3] > 20) {
                 particles.push({
                   ox: x, oy: y, x: x, y: y,
-                  vx: (Math.random() - 0.5) * 3.8,
-                  vy: (Math.random() - 0.5) * 3.8 - 0.6,
-                  color: 'rgba(' + imgData[idx] + ',' + imgData[idx + 1] + ',' + imgData[idx + 2] + ',0.78)'
+                  vx: (Math.random() - 0.5) * 4.5,
+                  vy: (Math.random() - 0.5) * 4.5 - 0.8,
+                  alpha: 1,
+                  rgb: imgData[idx] + ',' + imgData[idx + 1] + ',' + imgData[idx + 2]
                 });
               }
             }
@@ -169,21 +178,27 @@ const entertainItems = [
             var p = particles[i];
             if (hovering) {
               p.x += p.vx; p.y += p.vy;
-              p.vx *= 0.985; p.vy *= 0.985;
-              settled = false;
+              p.vx *= 0.99; p.vy *= 0.99;
+              p.alpha = Math.max(0, p.alpha - 0.022);
+              if (p.alpha > 0.01) settled = false;
             } else {
               p.x += (p.ox - p.x) * 0.16;
               p.y += (p.oy - p.y) * 0.16;
-              if (Math.abs(p.ox - p.x) > 0.4 || Math.abs(p.oy - p.y) > 0.4) settled = false;
+              p.alpha += (1 - p.alpha) * 0.14;
+              if (Math.abs(p.ox - p.x) > 0.4 || Math.abs(p.oy - p.y) > 0.4 || p.alpha < 0.98) settled = false;
             }
-            ctx.fillStyle = p.color;
-            ctx.fillRect(p.x, p.y, 3, 3);
+            if (p.alpha > 0.01) {
+              ctx.fillStyle = 'rgba(' + p.rgb + ',' + (p.alpha * 0.78).toFixed(3) + ')';
+              ctx.fillRect(p.x, p.y, 3, 3);
+            }
           }
-          if (hovering || !settled) {
+          if (!settled) {
             raf = requestAnimationFrame(tick);
           } else {
-            canvas.style.opacity = '0';
-            span.style.opacity = '1';
+            if (!hovering) {
+              canvas.style.opacity = '0';
+              span.style.opacity = '1';
+            }
             raf = 0;
           }
         }

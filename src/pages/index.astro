@@ -28,27 +28,27 @@ const latestPosts = allPosts
   <!-- Page body content inside wider container -->
   <div id="hub-section" class="max-w-[1480px] mx-auto px-3 sm:px-6 pt-10 pb-20 space-y-20">
 
-    <!-- Unified 7 Cards: Effects-Style Frosted Gradients -->
+    <!-- Unified 7 Cards: Solid Vibrant Unique Gradients (no frosted glass, no duplicate gradients) -->
     <section id="second-screen-cards" class="scroll-reveal-card relative z-30 pt-2 pb-6">
       <div class="group/fan grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4 items-center">
         {[
-          { href: '/portfolio', title: '作品集', sub: 'Selected Works', grad: 'from-rose-500/25 via-amber-500/15 to-orange-500/20' },
-          { href: '/effects', title: '90+ 动效', sub: 'Visual FX', grad: 'from-violet-600/25 via-indigo-500/15 to-cyan-500/20' },
-          { href: '/posts', title: '博客归档', sub: 'Tech Notes', grad: 'from-emerald-500/25 via-teal-500/15 to-cyan-500/20' },
-          { href: '/tools', title: '工具箱', sub: 'Toolbox', grad: 'from-sky-500/25 via-blue-500/15 to-indigo-500/20' },
-          { href: '/links', title: '友链导航', sub: 'Bookmarks', grad: 'from-amber-500/25 via-orange-500/15 to-red-500/20' },
-          { href: '/entertain/music', title: '音乐电台', sub: 'Music Lounge', grad: 'from-fuchsia-500/25 via-purple-500/15 to-pink-500/20' },
-          { href: '/messageboard', title: '留言板', sub: 'Guestbook', grad: 'from-violet-600/25 via-fuchsia-500/15 to-rose-500/20' },
+          { href: '/portfolio', title: '作品集', sub: 'Selected Works', grad: 'from-rose-500 via-orange-400 to-amber-400' },
+          { href: '/effects', title: '90+ 动效', sub: 'Visual FX', grad: 'from-violet-600 via-indigo-500 to-blue-500' },
+          { href: '/posts', title: '博客归档', sub: 'Tech Notes', grad: 'from-emerald-500 via-teal-500 to-cyan-500' },
+          { href: '/tools', title: '工具箱', sub: 'Toolbox', grad: 'from-sky-500 via-blue-600 to-indigo-600' },
+          { href: '/links', title: '友链导航', sub: 'Bookmarks', grad: 'from-amber-500 via-orange-500 to-red-500' },
+          { href: '/entertain/music', title: '音乐电台', sub: 'Music Lounge', grad: 'from-fuchsia-500 via-pink-500 to-rose-500' },
+          { href: '/messageboard', title: '留言板', sub: 'Guestbook', grad: 'from-lime-500 via-emerald-500 to-teal-600' },
         ].map((card) => (
           <a
             href={card.href}
             class="group/card relative block aspect-[3/4] rounded-2xl transition-all duration-300 group-hover/fan:opacity-75 hover:!opacity-100 hover:z-40"
           >
-            <div class={`w-full h-full rounded-2xl overflow-hidden bg-gradient-to-br ${card.grad} backdrop-blur-md shadow-[0_14px_30px_rgba(31,36,48,0.12)] transition-all duration-300 ease-out group-hover/card:-translate-y-3 group-hover/card:scale-[1.03] group-hover/card:shadow-[0_24px_48px_rgba(31,36,48,0.22)] flex flex-col items-center justify-center p-4 text-center`}>
-              <span class="text-sm sm:text-base font-bold tracking-wider text-charcoal-DEFAULT dark:text-cream-50 group-hover/card:text-terracotta transition-colors">
+            <div class={`w-full h-full rounded-2xl overflow-hidden bg-gradient-to-br ${card.grad} shadow-[0_14px_30px_rgba(31,36,48,0.16)] transition-all duration-300 ease-out group-hover/card:-translate-y-3 group-hover/card:scale-[1.03] group-hover/card:shadow-[0_24px_48px_rgba(31,36,48,0.28)] flex flex-col items-center justify-center p-4 text-center`}>
+              <span class="text-sm sm:text-base font-bold tracking-wider text-white drop-shadow-sm">
                 {card.title}
               </span>
-              <span class="text-[10px] font-mono uppercase tracking-widest opacity-55 mt-1.5">
+              <span class="text-[10px] font-mono uppercase tracking-widest text-white/80 mt-1.5">
                 {card.sub}
               </span>
             </div>

@@ -439,7 +439,20 @@ const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
 
     const w = (canvas.width = canvas.offsetWidth || 220);
     const h = (canvas.height = canvas.offsetHeight || 200);
-    let raf = 0, tick = 0, accumLevel = 0, lightningFlash = 0, scorchAlpha = 0, nextLightningTick = 90;
+    let raf = 0, tick = 0, accumLevel = 0, drainX = 0, draining = false, lightningFlash = 0, scorchAlpha = 0, nextLightningTick = 90;
+
+    const drawCloud = (cx: number, cy: number, color: string, scale = 1) => {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.scale(scale, scale);
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(-18, 6, 11, 0, Math.PI * 2);
+      ctx.arc(0, 0, 15, 0, Math.PI * 2);
+      ctx.arc(19, 6, 12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    };
 
     const drops = Array.from({ length: 24 }, () => ({
       x: Math.random() * w, y: Math.random() * h,
@@ -454,7 +467,7 @@ const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
     const leaves = Array.from({ length: 7 }, () => ({
       x: Math.random() * w, y: Math.random() * h, vx: -(1.8 + Math.random() * 2.4),
       vy: (Math.random() - 0.35) * 1.1, rot: Math.random() * Math.PI * 2, rv: (Math.random() - 0.5) * 0.14,
-      s: 0.6 + Math.random() * 0.6, color: Math.random() > 0.45 ? '#f59e0b' : '#ea580c',
+      s: 0.6 + Math.random() * 0.6, alpha: 0.85, color: Math.random() > 0.45 ? '#f59e0b' : '#ea580c',
     }));
 
     let boltPts: Array<[number, number]> = [];
@@ -486,12 +499,20 @@ const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
         ctx.restore();
         ctx.fillStyle = '#F7ED47'; ctx.beginPath(); ctx.arc(sx, sy, 14, 0, Math.PI * 2); ctx.fill();
       } else if (weather === 'rainy') {
-        accumLevel = Math.min(1, accumLevel + 0.0018);
+        drawCloud(w * 0.6, 18, 'rgba(148, 163, 184, 0.72)', 1.05);
+        if (!draining) {
+          accumLevel = Math.min(1, accumLevel + 0.0018);
+          if (accumLevel >= 1) draining = true;
+        } else {
+          drainX += 0.65;
+          accumLevel = Math.max(0, accumLevel - 0.0035);
+          if (accumLevel <= 0.05) { draining = false; drainX = 0; }
+        }
         for (const d of drops) {
           d.x += d.vx; d.y += d.vy;
           if (d.y >= h - 3) {
             for (let k = 0; k < 2; k++) splashes.push({ x: d.x, y: h - 2, vx: (Math.random() - 0.5) * 2.2, vy: -(1.4 + Math.random() * 2.2), r: 1.1 + Math.random() * 1.2, life: 1 });
-            d.x = Math.random() * (w + 24); d.y = -10;
+            d.x = Math.random() * (w + 24); d.y = 14;
           }
           ctx.strokeStyle = `rgba(56, 189, 248, ${d.alpha})`; ctx.lineWidth = d.size;
           ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x - d.vx * 1.5, d.y - d.len); ctx.stroke();
@@ -504,14 +525,16 @@ const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
         const pw = (0.28 + accumLevel * 0.68) * w, ph = 4 + accumLevel * 12;
         const pg = ctx.createLinearGradient(0, h - ph, 0, h);
         pg.addColorStop(0, 'rgba(125, 211, 252, 0.55)'); pg.addColorStop(1, 'rgba(14, 165, 233, 0.85)');
-        ctx.fillStyle = pg; ctx.beginPath(); ctx.ellipse(w * 0.55, h, pw * 0.55, ph, 0, Math.PI, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = pg; ctx.beginPath(); ctx.ellipse(w * 0.55 + drainX, h, pw * 0.55, ph, 0, Math.PI, Math.PI * 2); ctx.fill();
       } else if (weather === 'snowy') {
+        drawCloud(w * 0.6, 18, 'rgba(203, 213, 225, 0.78)', 1.05);
+        // Snow pile builds up and stays accumulated (does NOT disappear)
         accumLevel = Math.min(1, accumLevel + 0.0014);
         for (const f of flakes) {
           f.y += f.vy; f.x += Math.sin(tick * 0.025 + f.phase) * 0.65;
           if (f.y >= h - 3) {
             splashes.push({ x: f.x, y: h - 2, vx: (Math.random() - 0.5) * 1.4, vy: -(0.6 + Math.random() * 1.2), r: 1 + Math.random() * 1.2, life: 1 });
-            f.x = Math.random() * w; f.y = -6;
+            f.x = Math.random() * w; f.y = 14;
           }
           ctx.fillStyle = `rgba(255, 255, 255, ${f.alpha})`; ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2); ctx.fill();
         }
@@ -532,11 +555,19 @@ const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
         }
         for (const l of leaves) {
           l.x += l.vx; l.y += l.vy + Math.sin(tick * 0.05 + l.x * 0.04) * 0.6; l.rot += l.rv;
-          if (l.x < -15) { l.x = w + 12; l.y = Math.random() * (h - 20); }
+          // Leaves gradually fade out naturally as they drift across
+          if (l.x < w * 0.35) l.alpha = Math.max(0, l.alpha - 0.018);
+          else l.alpha = Math.min(0.9, l.alpha + 0.03);
+          if (l.x < -15 || l.alpha <= 0.02) { l.x = w + 10; l.y = Math.random() * (h - 20); l.alpha = 0.05; }
           ctx.save(); ctx.translate(l.x, l.y); ctx.rotate(l.rot); ctx.scale(l.s, l.s);
+          ctx.globalAlpha = l.alpha;
           ctx.fillStyle = l.color; ctx.beginPath(); ctx.ellipse(0, 0, 7, 3.2, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
         }
       } else if (weather === 'thunder') {
+        // Dark storm clouds at top (brighten briefly during lightning flash)
+        const cloudCol = lightningFlash > 0.25 ? 'rgba(148, 163, 184, 0.92)' : 'rgba(51, 65, 85, 0.9)';
+        drawCloud(w * 0.45, 16, 'rgba(71, 85, 105, 0.78)', 0.9);
+        drawCloud(w * 0.62, 18, cloudCol, 1.18);
         if (tick >= nextLightningTick) { buildBolt(); lightningFlash = 1; scorchAlpha = 0.85; nextLightningTick = tick + 150 + Math.floor(Math.random() * 140); }
         if (lightningFlash > 0.02) {
           ctx.strokeStyle = `rgba(253, 224, 71, ${lightningFlash})`; ctx.lineWidth = 2.6;
@@ -1062,28 +1093,30 @@ export const MessageBoard: React.FC = () => {
                         </svg>
                       )}
                       {wKey === 'rainy' && (
-                        <svg className="w-4 h-4 text-sky-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <svg className="w-4 h-4 text-sky-300 overflow-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <path d="M7 14a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 14H7z" fill="currentColor" fillOpacity="0.25" />
-                          <path strokeLinecap="round" d="M9 17l-1 3M13 17l-1 3M17 17l-1 3" />
+                          <path className="animate-pulse" strokeLinecap="round" d="M9 17l-1 3" />
+                          <path className="animate-bounce" strokeLinecap="round" d="M13 17l-1 3" />
+                          <path className="animate-pulse" strokeLinecap="round" d="M17 17l-1 3" />
                         </svg>
                       )}
                       {wKey === 'snowy' && (
-                        <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <svg className="w-4 h-4 text-white overflow-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <path d="M7 14a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 14H7z" fill="currentColor" fillOpacity="0.25" />
-                          <circle cx="9" cy="18.5" r="1" fill="currentColor" stroke="none" />
-                          <circle cx="13" cy="20" r="1" fill="currentColor" stroke="none" />
-                          <circle cx="16.5" cy="18.5" r="1" fill="currentColor" stroke="none" />
+                          <circle className="animate-ping" cx="9" cy="18.5" r="1" fill="currentColor" stroke="none" />
+                          <circle className="animate-bounce" cx="13" cy="20" r="1.1" fill="currentColor" stroke="none" />
+                          <circle className="animate-pulse" cx="16.5" cy="18.5" r="1" fill="currentColor" stroke="none" />
                         </svg>
                       )}
                       {wKey === 'wind' && (
-                        <svg className="w-4 h-4 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                        <svg className="w-4 h-4 text-teal-300 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                           <path d="M4 9h11a2.5 2.5 0 1 0-2.5-2.5M3 13h14a2.5 2.5 0 1 1-2.5 2.5M6 17h6" />
                         </svg>
                       )}
                       {wKey === 'thunder' && (
                         <svg className="w-4 h-4 text-yellow-300" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M7 13a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 13H7z" fillOpacity="0.3" />
-                          <polygon points="13,11 9,17 12,17 10.5,22 16,15 13,15" />
+                          <path d="M7 13a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 13H7z" fillOpacity="0.35" />
+                          <polygon className="animate-pulse" points="13,11 9,17 12,17 10.5,22 16,15 13,15" />
                         </svg>
                       )}
                     </button>

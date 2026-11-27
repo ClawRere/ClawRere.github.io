@@ -6,6 +6,7 @@ import { MessageSquare, Send, Sparkles, User, Calendar, Check, Flame, Eye, Heart
 interface ReplyItem {
   id: number;
   name: string;
+  avatar?: string;
   content: string;
   date: string;
   isAdmin?: boolean;
@@ -14,6 +15,7 @@ interface ReplyItem {
 interface CommentItem {
   id: number;
   name: string;
+  avatar?: string;
   contact?: string;
   content: string;
   date: string;
@@ -107,6 +109,63 @@ const initialMessages: CommentItem[] = [
     content: '海岸主题的浪花和友链里的美叶灵感都很赞，已加入常用书签！',
     date: '2026-11-21',
     likes: 14,
+    biome: 'coast',
+  },
+  {
+    id: 7,
+    name: '林深见鹿',
+    content: '刚从博客归档逛过来，用大模型提示词工程那篇整理帮大忙了，排版很舒服。',
+    date: '2026-11-20',
+    likes: 8,
+    biome: 'meadow',
+  },
+  {
+    id: 8,
+    name: 'Coding_阿哲',
+    content: '前端动效库居然收藏了这么多原生 CSS/Canvas 效果，学习了不少微交互思路！',
+    date: '2026-11-19',
+    likes: 11,
+    biome: 'desert',
+  },
+  {
+    id: 9,
+    name: '苏打水不加冰',
+    content: '雨声院和音乐馆搭配写代码太治愈了，顺便问下友链申请需要什么条件呀？',
+    date: '2026-11-18',
+    likes: 6,
+    biome: 'stone',
+    replies: [
+      {
+        id: 901,
+        name: 'Larry (站长)',
+        content: '只要是认真维护的个人博客或独立作品站都欢迎，直接在这里留下站点名称和链接就行～',
+        date: '2026-11-18',
+        isAdmin: true,
+      },
+    ],
+  },
+  {
+    id: 10,
+    name: '半夏微凉',
+    content: '关于页的 ENTP 形象和柯基狗狗很有记忆点，看得出来花了很多心思打磨细节。',
+    date: '2026-11-16',
+    likes: 15,
+    biome: 'mountain',
+  },
+  {
+    id: 11,
+    name: 'Product_Mia',
+    content: 'PMOS 把需求对话、证据分层和版本基线串起来的想法很棒，期待开源或体验版！',
+    date: '2026-11-15',
+    likes: 10,
+    biome: 'cornfield',
+  },
+  {
+    id: 12,
+    name: '夜航船',
+    content: '偶然点进来的小站，首页切换壁纸和放烟花的小彩蛋让人会心一笑，祝越做越好！',
+    date: '2026-11-14',
+    likes: 19,
     biome: 'coast',
   },
 ];
@@ -441,15 +500,15 @@ const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
     const h = (canvas.height = canvas.offsetHeight || 200);
     let raf = 0, tick = 0, accumLevel = 0, drainX = 0, draining = false, lightningFlash = 0, scorchAlpha = 0, nextLightningTick = 90;
 
-    const drawCloud = (cx: number, cy: number, color: string, scale = 1) => {
+    const drawCloud = (cx: number, cy: number, color: string, scale = 0.85) => {
       ctx.save();
       ctx.translate(cx, cy);
       ctx.scale(scale, scale);
       ctx.fillStyle = color;
       ctx.beginPath();
-      ctx.arc(-18, 6, 11, 0, Math.PI * 2);
-      ctx.arc(0, 0, 15, 0, Math.PI * 2);
-      ctx.arc(19, 6, 12, 0, Math.PI * 2);
+      ctx.arc(-16, 5, 9, 0, Math.PI * 2);
+      ctx.arc(0, 0, 12, 0, Math.PI * 2);
+      ctx.arc(17, 5, 10, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
     };
@@ -465,9 +524,12 @@ const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
       vy: 0.65 + Math.random() * 1.4, phase: Math.random() * Math.PI * 2, alpha: 0.45 + Math.random() * 0.5,
     }));
     const leaves = Array.from({ length: 7 }, () => ({
-      x: Math.random() * w, y: Math.random() * h, vx: -(1.8 + Math.random() * 2.4),
+      x: Math.random() * w, y: Math.random() * h, vx: -(1.6 + Math.random() * 2.5),
       vy: (Math.random() - 0.35) * 1.1, rot: Math.random() * Math.PI * 2, rv: (Math.random() - 0.5) * 0.14,
-      s: 0.6 + Math.random() * 0.6, alpha: 0.85, color: Math.random() > 0.45 ? '#f59e0b' : '#ea580c',
+      s: 0.6 + Math.random() * 0.6, alpha: 0.85,
+      fadeAt: (-0.25 + Math.random() * 0.65) * w,
+      fadeRate: 0.008 + Math.random() * 0.018,
+      color: Math.random() > 0.45 ? '#f59e0b' : '#ea580c',
     }));
 
     let boltPts: Array<[number, number]> = [];
@@ -499,7 +561,7 @@ const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
         ctx.restore();
         ctx.fillStyle = '#F7ED47'; ctx.beginPath(); ctx.arc(sx, sy, 14, 0, Math.PI * 2); ctx.fill();
       } else if (weather === 'rainy') {
-        drawCloud(w * 0.6, 18, 'rgba(148, 163, 184, 0.72)', 1.05);
+        drawCloud(w * 0.6, 12, 'rgba(148, 163, 184, 0.36)', 0.85);
         if (!draining) {
           accumLevel = Math.min(1, accumLevel + 0.0018);
           if (accumLevel >= 1) draining = true;
@@ -527,7 +589,7 @@ const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
         pg.addColorStop(0, 'rgba(125, 211, 252, 0.55)'); pg.addColorStop(1, 'rgba(14, 165, 233, 0.85)');
         ctx.fillStyle = pg; ctx.beginPath(); ctx.ellipse(w * 0.55 + drainX, h, pw * 0.55, ph, 0, Math.PI, Math.PI * 2); ctx.fill();
       } else if (weather === 'snowy') {
-        drawCloud(w * 0.6, 18, 'rgba(203, 213, 225, 0.78)', 1.05);
+        drawCloud(w * 0.6, 12, 'rgba(203, 213, 225, 0.42)', 0.85);
         // Snow pile builds up and stays accumulated (does NOT disappear)
         accumLevel = Math.min(1, accumLevel + 0.0014);
         for (const f of flakes) {
@@ -555,19 +617,22 @@ const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
         }
         for (const l of leaves) {
           l.x += l.vx; l.y += l.vy + Math.sin(tick * 0.05 + l.x * 0.04) * 0.6; l.rot += l.rv;
-          // Leaves gradually fade out naturally as they drift across
-          if (l.x < w * 0.35) l.alpha = Math.max(0, l.alpha - 0.018);
+          // Leaves fade out at staggered individual thresholds (allowing crossing past 1/3 boundary)
+          if (l.x < l.fadeAt) l.alpha = Math.max(0, l.alpha - l.fadeRate);
           else l.alpha = Math.min(0.9, l.alpha + 0.03);
-          if (l.x < -15 || l.alpha <= 0.02) { l.x = w + 10; l.y = Math.random() * (h - 20); l.alpha = 0.05; }
+          if (l.x < -45 || l.alpha <= 0.02) {
+            l.x = w + 10; l.y = Math.random() * (h - 20); l.alpha = 0.05;
+            l.fadeAt = (-0.25 + Math.random() * 0.65) * w;
+          }
           ctx.save(); ctx.translate(l.x, l.y); ctx.rotate(l.rot); ctx.scale(l.s, l.s);
           ctx.globalAlpha = l.alpha;
           ctx.fillStyle = l.color; ctx.beginPath(); ctx.ellipse(0, 0, 7, 3.2, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
         }
       } else if (weather === 'thunder') {
-        // Dark storm clouds at top (brighten briefly during lightning flash)
-        const cloudCol = lightningFlash > 0.25 ? 'rgba(148, 163, 184, 0.92)' : 'rgba(51, 65, 85, 0.9)';
-        drawCloud(w * 0.45, 16, 'rgba(71, 85, 105, 0.78)', 0.9);
-        drawCloud(w * 0.62, 18, cloudCol, 1.18);
+        // Soft semi-transparent storm clouds at top (never obscuring buttons)
+        const cloudCol = lightningFlash > 0.25 ? 'rgba(148, 163, 184, 0.58)' : 'rgba(100, 116, 139, 0.42)';
+        drawCloud(w * 0.46, 11, 'rgba(148, 163, 184, 0.34)', 0.78);
+        drawCloud(w * 0.64, 13, cloudCol, 0.92);
         if (tick >= nextLightningTick) { buildBolt(); lightningFlash = 1; scorchAlpha = 0.85; nextLightningTick = tick + 150 + Math.floor(Math.random() * 140); }
         if (lightningFlash > 0.02) {
           ctx.strokeStyle = `rgba(253, 224, 71, ${lightningFlash})`; ctx.lineWidth = 2.6;
@@ -655,6 +720,7 @@ const AshPile: React.FC = () => {
 export const MessageBoard: React.FC = () => {
   const [messages, setMessages] = useState<CommentItem[]>(initialMessages);
   const [name, setName] = useState('');
+  const [avatar, setAvatar] = useState('');
   const [contact, setContact] = useState('');
   const [content, setContent] = useState('');
   const [isBurnMode, setIsBurnMode] = useState(false);
@@ -663,9 +729,13 @@ export const MessageBoard: React.FC = () => {
   const [revealedStartTimes, setRevealedStartTimes] = useState<Record<number, number>>({});
   const [nowTick, setNowTick] = useState<number>(Date.now());
   const [burningIds, setBurningIds] = useState<Record<number, boolean>>({});
+  const [bounceIds, setBounceIds] = useState<Record<number, boolean>>({});
+  const [likedPulseIds, setLikedPulseIds] = useState<Record<number, boolean>>({});
+  const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
   const [cardWeathers, setCardWeathers] = useState<Record<number, WeatherKind>>({});
   const [replyingToId, setReplyingToId] = useState<number | null>(null);
   const [replyName, setReplyName] = useState('');
+  const [replyAvatar, setReplyAvatar] = useState('');
   const [replyContent, setReplyContent] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -683,8 +753,8 @@ export const MessageBoard: React.FC = () => {
       try {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
-          // If only old 3 default messages were saved, upgrade to 6-biome defaults
-          const isOldDefaultSet = parsed.length === 3 && parsed.every((m: CommentItem) => m.id <= 3);
+          // If only old default messages (<= 6) were saved, upgrade to 12-message set
+          const isOldDefaultSet = parsed.length <= 6 && parsed.every((m: CommentItem) => m.id <= 6);
           const source = isOldDefaultSet ? initialMessages : parsed;
           const withBiomes = source.map((m: CommentItem, i: number) => ({
             ...m,
@@ -736,8 +806,20 @@ export const MessageBoard: React.FC = () => {
 
     setTimeout(() => {
       setMessages((curr) => {
+        const idx = curr.findIndex((m) => m.id === id);
+        const nextCard = idx >= 0 ? curr[idx + 1] : undefined;
         const updated = curr.filter((m) => m.id !== id);
         localStorage.setItem('guestbook_messages', JSON.stringify(updated));
+        if (nextCard) {
+          setBounceIds((prev) => ({ ...prev, [nextCard.id]: true }));
+          setTimeout(() => {
+            setBounceIds((prev) => {
+              const copy = { ...prev };
+              delete copy[nextCard.id];
+              return copy;
+            });
+          }, 600);
+        }
         return updated;
       });
       setBurningIds((prev) => {
@@ -745,7 +827,7 @@ export const MessageBoard: React.FC = () => {
         delete copy[id];
         return copy;
       });
-    }, 1650);
+    }, 1450);
   };
 
   const revealBurnMessage = (id: number) => {
@@ -756,6 +838,14 @@ export const MessageBoard: React.FC = () => {
   };
 
   const handleLike = (id: number) => {
+    setLikedPulseIds((prev) => ({ ...prev, [id]: true }));
+    setTimeout(() => {
+      setLikedPulseIds((prev) => {
+        const next = { ...prev };
+        delete next[id];
+        return next;
+      });
+    }, 950);
     const updated = messages.map((m) => (m.id === id ? { ...m, likes: (m.likes || 0) + 1 } : m));
     setMessages(updated);
     localStorage.setItem('guestbook_messages', JSON.stringify(updated));
@@ -764,13 +854,14 @@ export const MessageBoard: React.FC = () => {
   const handleReplySubmit = (e: React.FormEvent, parentId: number) => {
     e.preventDefault();
     if (!replyName.trim() || !replyContent.trim()) return;
-    const isAdmin = localStorage.getItem('admin_authenticated') === 'true';
+    const isAdminUser = localStorage.getItem('admin_authenticated') === 'true';
     const newReply: ReplyItem = {
       id: Date.now(),
       name: replyName.trim(),
+      avatar: replyAvatar.trim() || undefined,
       content: replyContent.trim(),
       date: new Date().toLocaleDateString('zh-CN'),
-      isAdmin,
+      isAdmin: isAdminUser,
     };
     const updated = messages.map((m) =>
       m.id === parentId ? { ...m, replies: [...(m.replies || []), newReply] } : m
@@ -778,6 +869,7 @@ export const MessageBoard: React.FC = () => {
     setMessages(updated);
     localStorage.setItem('guestbook_messages', JSON.stringify(updated));
     setReplyName('');
+    setReplyAvatar('');
     setReplyContent('');
     setReplyingToId(null);
   };
@@ -786,15 +878,16 @@ export const MessageBoard: React.FC = () => {
     e.preventDefault();
     if (!name.trim() || !content.trim()) return;
 
-    const isAdmin = localStorage.getItem('admin_authenticated') === 'true';
+    const isAdminUser = localStorage.getItem('admin_authenticated') === 'true';
 
     const newMsg: CommentItem = {
       id: Date.now(),
       name: name.trim(),
+      avatar: avatar.trim() || undefined,
       contact: contact.trim(),
       content: content.trim(),
       date: new Date().toLocaleDateString('zh-CN'),
-      isAdmin,
+      isAdmin: isAdminUser,
       isBurnAfterReading: isBurnMode,
       likes: 0,
       biome: ALL_BIOMES[Math.floor(Math.random() * ALL_BIOMES.length)],
@@ -805,6 +898,7 @@ export const MessageBoard: React.FC = () => {
     localStorage.setItem('guestbook_messages', JSON.stringify(updated));
 
     setName('');
+    setAvatar('');
     setContact('');
     setContent('');
     setToast(isBurnMode ? '🔥 5s 阅后即焚加密留言已发布！' : '✨ 留言发布成功！');
@@ -876,13 +970,20 @@ export const MessageBoard: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="您的昵称 *"
             required
+            className="w-full px-3.5 py-2.5 rounded-xl glass text-xs sm:text-sm text-charcoal-DEFAULT dark:text-cream-50 focus:outline-none focus:border-terracotta/50"
+          />
+          <input
+            type="url"
+            value={avatar}
+            onChange={(e) => setAvatar(e.target.value)}
+            placeholder="头像链接 https://... (可选)"
             className="w-full px-3.5 py-2.5 rounded-xl glass text-xs sm:text-sm text-charcoal-DEFAULT dark:text-cream-50 focus:outline-none focus:border-terracotta/50"
           />
           <input
@@ -1027,6 +1128,59 @@ export const MessageBoard: React.FC = () => {
         .tw-face-btn:active svg {
           animation: facePop 0.35s ease-out;
         }
+        /* /effects/heart_like bubble + 14 HSL sparkles animation */
+        .tw-heart-wrap {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .tw-heart-wrap:before,
+        .tw-heart-wrap:after {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          border-radius: 50%;
+          content: '';
+          pointer-events: none;
+        }
+        .tw-heart-wrap:before {
+          margin: -1.1rem;
+          width: 2.2rem;
+          height: 2.2rem;
+          border: solid 1.1rem #e2264d;
+          transform: scale(0);
+          box-sizing: border-box;
+        }
+        .tw-heart-wrap:after {
+          margin: -0.1rem;
+          width: 0.2rem;
+          height: 0.2rem;
+          opacity: 0;
+        }
+        .tw-heart-wrap.is-burst {
+          animation: twHeartPop 0.85s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+        }
+        .tw-heart-wrap.is-burst:before {
+          animation: twHeartBubble 0.85s ease-out;
+        }
+        .tw-heart-wrap.is-burst:after {
+          animation: twHeartSparkles 0.85s ease-out;
+        }
+        @keyframes twHeartPop {
+          0% { transform: scale(0.4); }
+          50% { transform: scale(1.35); }
+          100% { transform: scale(1); }
+        }
+        @keyframes twHeartBubble {
+          15% { transform: scale(1); border-color: #cc8ef5; border-width: 1.1rem; }
+          35%, 100% { transform: scale(1); border-color: #cc8ef5; border-width: 0; }
+        }
+        @keyframes twHeartSparkles {
+          0%, 15% { opacity: 0; box-shadow: 0.16rem -1.3rem 0 -0.1rem hsl(0,100%,75%), -0.16rem -1.5rem 0 -0.1rem hsl(51,100%,75%), 1.2rem -0.7rem 0 -0.1rem hsl(103,100%,75%), 1.3rem 0.45rem 0 -0.1rem hsl(154,100%,75%), 0.45rem 1.3rem 0 -0.1rem hsl(206,100%,75%), -0.75rem 1.15rem 0 -0.1rem hsl(257,100%,75%), -1.35rem 0.15rem 0 -0.1rem hsl(309,100%,75%), -1rem -1rem 0 -0.1rem hsl(350,100%,75%); }
+          35% { opacity: 1; box-shadow: 0.16rem -1.05rem 0 0 hsl(0,100%,75%), -0.16rem -1.2rem 0 0 hsl(51,100%,75%), 1rem -0.55rem 0 0 hsl(103,100%,75%), 1.05rem 0.4rem 0 0 hsl(154,100%,75%), 0.35rem 1.05rem 0 0 hsl(206,100%,75%), -0.6rem 0.92rem 0 0 hsl(257,100%,75%), -1.12rem 0.08rem 0 0 hsl(309,100%,75%), -0.82rem -0.85rem 0 0 hsl(350,100%,75%); }
+          100% { opacity: 0; }
+        }
       `}</style>
 
       <div className="flex items-center justify-between px-1">
@@ -1124,16 +1278,17 @@ export const MessageBoard: React.FC = () => {
                 </div>
 
               <motion.div
-                layout
                 initial={{ opacity: 0, y: 16 }}
                 animate={
                   isBurning
                     ? { opacity: 0.25, scale: 0.96 }
+                    : bounceIds[msg.id]
+                    ? { y: [18, -7, 3, 0], opacity: 1, scale: 1 }
                     : { opacity: 1, y: 0, scale: 1 }
                 }
                 exit={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' }}
-                transition={{ duration: 0.45 }}
-                className={`relative rounded-2xl p-6 sm:p-7 pb-12 sm:pb-14 transition-all overflow-hidden ${biomeStyles[biomeKind]}`}
+                transition={{ duration: 0.38, ease: 'easeOut' }}
+                className={`relative rounded-2xl p-6 sm:p-7 pb-12 sm:pb-14 transition-colors overflow-hidden ${biomeStyles[biomeKind]}`}
               >
                 <BiomeDecoration biome={biomeKind} />
                 {/* Right 1/3 Weather Effect Overlay (faithful /effects/weather_box Canvas engine) */}
@@ -1144,8 +1299,12 @@ export const MessageBoard: React.FC = () => {
 
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-terracotta/15 text-terracotta flex items-center justify-center text-xs font-bold">
-                      <User className="w-3.5 h-3.5" />
+                    <div className="w-7 h-7 rounded-full bg-terracotta/15 text-terracotta flex items-center justify-center text-xs font-bold overflow-hidden shrink-0">
+                      {msg.avatar ? (
+                        <img src={msg.avatar} alt={msg.name} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                      ) : (
+                        <User className="w-3.5 h-3.5" />
+                      )}
                     </div>
                     <span className="font-semibold text-sm text-charcoal-DEFAULT dark:text-cream-50">{msg.name}</span>
                     {msg.isAdmin && (
@@ -1172,28 +1331,48 @@ export const MessageBoard: React.FC = () => {
                     </button>
                     <button
                       onClick={() => handleLike(msg.id)}
-                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full hover:bg-rose-500/10 text-rose-400 transition-colors"
+                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full hover:bg-rose-500/10 text-rose-500 transition-colors"
                     >
-                      <Heart className="w-3 h-3 fill-current" />
+                      <span className={`tw-heart-wrap ${likedPulseIds[msg.id] ? 'is-burst text-[#e2264d]' : ''}`}>
+                        <Heart className="w-3.5 h-3.5 fill-current" />
+                      </span>
                       <span>{msg.likes || 0}</span>
                     </button>
                     {isAdmin && (
-                      <button
-                        onClick={() => {
-                          setMessages((prev) => {
-                            const updated = prev.filter((m) => m.id !== msg.id);
-                            localStorage.setItem('guestbook_messages', JSON.stringify(updated));
-                            return updated;
-                          });
-                          setToast('🗑️ 管理员已删除该条留言');
-                          setTimeout(() => setToast(''), 2500);
-                        }}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full hover:bg-red-500/15 text-red-500 transition-colors"
-                        title="仅管理员可见：删除此条留言"
-                      >
-                        <Trash2 className="w-3 h-3" />
-                        <span>删除</span>
-                      </button>
+                      confirmDeleteId === msg.id ? (
+                        <span className="inline-flex items-center gap-1">
+                          <button
+                            onClick={() => {
+                              setMessages((prev) => {
+                                const updated = prev.filter((m) => m.id !== msg.id);
+                                localStorage.setItem('guestbook_messages', JSON.stringify(updated));
+                                return updated;
+                              });
+                              setConfirmDeleteId(null);
+                              setToast('🗑️ 管理员已确认删除该条留言');
+                              setTimeout(() => setToast(''), 2500);
+                            }}
+                            className="px-2 py-0.5 rounded-full bg-red-500 text-white text-[10px] hover:bg-red-600 transition-colors"
+                          >
+                            确认删除
+                          </button>
+                          <button
+                            onClick={() => setConfirmDeleteId(null)}
+                            className="px-2 py-0.5 rounded-full bg-black/10 dark:bg-white/10 text-[10px] hover:opacity-80"
+                          >
+                            取消
+                          </button>
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => setConfirmDeleteId(msg.id)}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full hover:bg-red-500/15 text-red-500 transition-colors"
+                          title="仅管理员可见：删除此条留言"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                          <span>删除</span>
+                        </button>
+                      )
                     )}
                   </div>
                 </div>
@@ -1269,6 +1448,13 @@ export const MessageBoard: React.FC = () => {
                       onChange={(e) => setReplyName(e.target.value)}
                       placeholder="你的昵称 *"
                       required
+                      className="sm:w-32 px-3 py-1.5 rounded-xl glass text-xs text-charcoal-DEFAULT dark:text-cream-50 focus:outline-none focus:border-terracotta"
+                    />
+                    <input
+                      type="url"
+                      value={replyAvatar}
+                      onChange={(e) => setReplyAvatar(e.target.value)}
+                      placeholder="头像链接 (可选)"
                       className="sm:w-36 px-3 py-1.5 rounded-xl glass text-xs text-charcoal-DEFAULT dark:text-cream-50 focus:outline-none focus:border-terracotta"
                     />
                     <input

@@ -39,49 +39,43 @@ const CATEGORY_STYLES: Record<string, { gradient: string; Icon: React.ComponentT
   '实用组件': { gradient: 'from-fuchsia-500/25 via-purple-500/15 to-pink-500/20', Icon: Component },
 };
 
-const LiveEffectFrame: React.FC<{ effect: EffectItem }> = ({ effect }) => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = React.useState(false);
+const LiveEffectFrame: React.FC<{ effect: EffectItem; isHovered: boolean; styleCfg: { gradient: string; Icon: React.ComponentType<{ className?: string }> } }> = ({
+  effect,
+  isHovered,
+  styleCfg,
+}) => {
+  const Icon = styleCfg.Icon;
 
-  React.useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          setIsVisible(true);
-        } else {
-          setIsVisible(false);
-        }
-      },
-      { rootMargin: '180px' }
+  if (!isHovered) {
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center gap-2.5 p-4 text-center select-none">
+        <div className="w-12 h-12 rounded-2xl bg-white/30 dark:bg-black/25 backdrop-blur-sm flex items-center justify-center shadow-sm">
+          <Icon className="w-6 h-6 text-charcoal-DEFAULT/80 dark:text-cream-100/90" />
+        </div>
+        <span className="text-xs font-mono text-charcoal-DEFAULT/70 dark:text-cream-200/80">
+          悬停预览完整动效
+        </span>
+      </div>
     );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  }
 
   return (
-    <div ref={containerRef} className="w-full h-full">
-      {isVisible ? (
-        effect.htmlCode ? (
-          <iframe
-            srcDoc={effect.htmlCode}
-            title={effect.title}
-            className="w-full h-full border-0 bg-zinc-950 pointer-events-none"
-            sandbox="allow-scripts"
-          />
-        ) : (
-          <iframe
-            src={effect.path}
-            title={effect.title}
-            className="w-full h-full border-0 bg-zinc-950 pointer-events-none"
-            loading="lazy"
-          />
-        )
+    <div className="w-full h-full overflow-hidden relative bg-zinc-950">
+      {effect.htmlCode ? (
+        <iframe
+          srcDoc={effect.htmlCode}
+          title={effect.title}
+          scrolling="no"
+          className="w-[200%] h-[200%] scale-50 origin-top-left border-0 bg-zinc-950 pointer-events-none overflow-hidden"
+          sandbox="allow-scripts"
+        />
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-xs font-mono opacity-40">
-          滚动加载实时视效...
-        </div>
+        <iframe
+          src={effect.path}
+          title={effect.title}
+          scrolling="no"
+          className="w-[200%] h-[200%] scale-50 origin-top-left border-0 bg-zinc-950 pointer-events-none overflow-hidden"
+        />
       )}
     </div>
   );
@@ -91,6 +85,7 @@ export const EffectsShowcase: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('全部');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeModalEffect, setActiveModalEffect] = useState<EffectItem | null>(null);
+  const [hoveredKey, setHoveredKey] = useState<string | null>(null);
   const [inlinePreviewPaths, setInlinePreviewPaths] = useState<Record<string, boolean>>({});
   const [customEffects, setCustomEffects] = useState<EffectItem[]>([]);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -299,10 +294,12 @@ export const EffectsShowcase: React.FC = () => {
           return (
             <div
               key={uniqueKey}
+              onMouseEnter={() => setHoveredKey(uniqueKey)}
+              onMouseLeave={() => setHoveredKey((prev) => (prev === uniqueKey ? null : prev))}
               className="group flex flex-col rounded-2xl glass overflow-hidden border border-charcoal-500/10 dark:border-white/10 hover:border-terracotta/40 dark:hover:border-terracotta/40 hover:shadow-2xl transition-all duration-300"
             >
               <div className={`h-52 w-full relative overflow-hidden bg-gradient-to-br ${styleCfg.gradient} flex items-center justify-center`}>
-                <LiveEffectFrame effect={effect} />
+                <LiveEffectFrame effect={effect} isHovered={hoveredKey === uniqueKey} styleCfg={styleCfg} />
 
                 <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md text-[10px] font-mono font-medium text-charcoal-DEFAULT dark:text-cream-100 shadow-sm pointer-events-none">
                   {effect.isCustom ? `⭐ ${effect.category}` : effect.category}

@@ -166,7 +166,7 @@ const metrics = [
               href={item.href}
               target={item.href ? '_blank' : undefined}
               rel={item.href ? 'noopener noreferrer' : undefined}
-              class="group relative h-60 rounded-2xl overflow-hidden border border-zinc-200 dark:border-white/10 shadow-lg cursor-pointer block"
+              class="tilt-card group relative h-60 rounded-2xl overflow-hidden border border-zinc-200 dark:border-white/10 shadow-lg cursor-pointer block transition-transform duration-200 ease-out will-change-transform"
             >
               <img
                 src={item.img}
@@ -226,12 +226,12 @@ const metrics = [
         </div>
       </div>
 
-      <!-- ENTP Card: Large Transparent Cutout Character overflowing card height, zero background -->
-      <div class="relative p-5 rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/12 via-white/65 to-transparent dark:from-purple-900/25 dark:via-zinc-900/60 backdrop-blur-md shadow-xl flex items-center gap-2">
+      <!-- ENTP Card: Large Transparent Cutout Character overflowing card borders -->
+      <div class="tilt-card relative overflow-visible p-5 rounded-2xl border border-purple-400/30 bg-gradient-to-br from-purple-500/12 via-white/65 to-transparent dark:from-purple-900/25 dark:via-zinc-900/60 backdrop-blur-md shadow-xl flex items-center gap-2 transition-transform duration-200 ease-out will-change-transform">
         <img
           src="/img/entp-character.png"
           alt="ENTP 辩论家卡通形象"
-          class="w-32 h-44 -my-10 -ml-3 object-contain shrink-0 transition-transform duration-300 hover:rotate-3 hover:scale-105 cursor-pointer drop-shadow-2xl"
+          class="w-40 h-56 sm:w-44 sm:h-60 -my-14 -ml-5 scale-110 object-contain shrink-0 transition-transform duration-300 hover:rotate-3 hover:scale-125 cursor-pointer drop-shadow-2xl relative z-10"
         />
         <div class="space-y-1.5">
           <div class="text-xs font-mono text-purple-400 uppercase tracking-wider">性格与座右铭</div>
@@ -319,9 +319,9 @@ const metrics = [
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         {skills.map(s => (
-          <div class="glow-card relative rounded-2xl p-[3px] overflow-hidden group hover:-translate-y-1.5 transition-all duration-300 group-hover:shadow-2xl">
-            {/* Vivid flowing conic gradient marquee border — visible ONLY on hover */}
-            <div class={`absolute inset-[-120%] bg-[conic-gradient(from_0deg,transparent_0_150deg,currentColor_240deg,#ffffff_290deg,currentColor_330deg,transparent_360deg)] animate-[spin_2.2s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${s.color}`} />
+          <div class="tilt-card glow-card relative rounded-2xl p-[3px] overflow-hidden group hover:shadow-2xl transition-all duration-200 ease-out will-change-transform">
+            {/* Single-color flowing conic gradient marquee border — visible ONLY on hover */}
+            <div class={`absolute inset-[-120%] bg-[conic-gradient(from_0deg,transparent_0_200deg,currentColor_290deg,transparent_360deg)] animate-[spin_2.2s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${s.color}`} />
             <div class="relative h-full rounded-[13px] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl p-5 space-y-4">
               <h3 class={`font-bold text-sm ${s.color}`}>{s.category}</h3>
               <div class="space-y-3">
@@ -361,7 +361,7 @@ const metrics = [
     </div>
 
     <!-- Contact CTA -->
-    <div class="rounded-3xl border border-zinc-200 dark:border-white/10 bg-gradient-to-r from-amber-500/8 via-purple-500/8 to-blue-500/8 p-8 text-center space-y-4">
+    <div class="tilt-card rounded-3xl border border-zinc-200 dark:border-white/10 bg-gradient-to-r from-amber-500/8 via-purple-500/8 to-blue-500/8 p-8 text-center space-y-4 transition-transform duration-200 ease-out will-change-transform">
       <h3 class="text-xl font-bold text-zinc-900 dark:text-white">想聊产品、AI 协作，或者交换友链？</h3>
       <p class="text-zinc-600 dark:text-zinc-400 text-sm max-w-xl mx-auto">
         无论是探讨 Agent 架构、产品设计方案，还是交流前沿视效灵感，都欢迎随时联系。

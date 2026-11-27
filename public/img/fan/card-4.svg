@@ -1,8 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" fill="none">
-  <rect width="300" height="400" fill="#2A2F45"/>
-  <circle cx="95" cy="95" r="32" fill="#F4E3D3"/>
-  <polygon points="0,300 105,180 210,300" fill="#4C6165"/>
-  <polygon points="115,300 220,160 320,300" fill="#7DA3BB"/>
-  <polygon points="0,335 80,260 175,335" fill="#1F2430"/>
-  <rect y="330" width="300" height="70" fill="#1F2430"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 480">
+  <defs>
+    <linearGradient id="bg4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="55%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="360" height="480" fill="url(#bg4)"/>
+  <!-- Toolbox / Gear + Sliders -->
+  <circle cx="242" cy="182" r="54" fill="none" stroke="#38bdf8" stroke-width="14" stroke-dasharray="22 14" opacity="0.85"/>
+  <circle cx="242" cy="182" r="22" fill="#0f172a" stroke="#38bdf8" stroke-width="6"/>
+  <!-- Terminal / Slider Panel -->
+  <rect x="52" y="222" width="256" height="148" rx="22" fill="#f8fafc" opacity="0.96"/>
+  <rect x="78" y="256" width="204" height="10" rx="5" fill="#e2e8f0"/>
+  <rect x="78" y="256" width="136" height="10" rx="5" fill="#0ea5e9"/>
+  <circle cx="214" cy="261" r="11" fill="#0284c7"/>
+  <rect x="78" y="294" width="204" height="10" rx="5" fill="#e2e8f0"/>
+  <rect x="78" y="294" width="84" height="10" rx="5" fill="#f59e0b"/>
+  <circle cx="162" cy="299" r="11" fill="#d97706"/>
+  <rect x="78" y="332" width="204" height="10" rx="5" fill="#e2e8f0"/>
+  <rect x="78" y="332" width="166" height="10" rx="5" fill="#10b981"/>
+  <circle cx="244" cy="337" r="11" fill="#059669"/>
 </svg>

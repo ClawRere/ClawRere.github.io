@@ -189,17 +189,21 @@ export const EffectsShowcase: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* 1. Header Banner + Right-Side Black-Masked Planet Animation */}
-      <div className="p-6 sm:p-8 rounded-3xl glass border border-charcoal-500/10 dark:border-white/10 relative overflow-hidden bg-gradient-to-br from-cream-100/60 via-amber-50/20 to-terracotta-50/20 dark:from-obsidian-card dark:to-obsidian">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-          <div className="lg:col-span-7 space-y-4">
-            <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-terracotta">
+      {/* 1. Seamless Deep-Black Cosmic Header with Floating Planet (no explanation card) */}
+      <div className="relative rounded-3xl overflow-hidden bg-[#050608] text-white px-6 py-5 sm:px-8 sm:py-6 shadow-2xl">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(circle at 76% 50%, rgba(56,189,248,0.12) 0%, rgba(15,23,42,0.45) 45%, #050608 78%)',
+          }}
+        />
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+          <div className="lg:col-span-6 space-y-3">
+            <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-amber-400">
               <Sparkles className="w-3.5 h-3.5" />
-              Creative Code & Visual FX Vault
+              Creative Code & Visual FX Vault · {allEffects.length} Effects
             </div>
-            <p className="text-xs sm:text-sm text-charcoal-100 dark:text-cream-300 max-w-xl leading-relaxed">
-              收藏整理了 <strong>{allEffects.length} 个</strong> 优秀前端动效素材，方便后续产品与项目开发随时参考复用；也支持在线收藏新的动效 URL 或 HTML/CSS 片段。
-            </p>
             <div className="flex flex-wrap items-center gap-2.5">
               <button
                 onClick={() => setShowAddModal(true)}
@@ -211,7 +215,7 @@ export const EffectsShowcase: React.FC = () => {
               {customEffects.length > 0 && (
                 <button
                   onClick={exportCustomEffects}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl glass border border-charcoal-500/15 dark:border-white/15 text-xs font-mono hover:border-terracotta"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 text-xs font-mono"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>导出 ({customEffects.length})</span>
@@ -220,8 +224,8 @@ export const EffectsShowcase: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Side: Borderless, Background-Free Floating Solar System Animation */}
-          <div className="lg:col-span-5 h-64 sm:h-72 relative overflow-visible flex items-center justify-center">
+          {/* Right Side: Black-Background Solar System Animation Blending Seamlessly */}
+          <div className="lg:col-span-6 h-56 sm:h-64 relative overflow-hidden flex items-center justify-center">
             <iframe
               src="/effects/solar_animation/widget.html"
               title="太阳系行星运行动画"

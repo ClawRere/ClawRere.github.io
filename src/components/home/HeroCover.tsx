@@ -148,11 +148,11 @@ export const HeroCover: React.FC = () => {
     : { background: `var(--hero-bg, ${defaultBgCss})` };
 
   const maskFade =
-    'linear-gradient(to bottom, #000 0%, #000 78%, rgba(0,0,0,0.84) 88%, rgba(0,0,0,0.38) 95%, transparent 100%)';
+    'linear-gradient(to bottom, #000 0%, #000 58%, rgba(0,0,0,0.92) 68%, rgba(0,0,0,0.76) 77%, rgba(0,0,0,0.52) 85%, rgba(0,0,0,0.26) 93%, transparent 100%)';
 
   return (
-    <div className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center mb-6">
-      {/* Pure-color Parallax Background Layer with Alpha-Mask Bottom Dissolve (no color overlay) */}
+    <div className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center mb-0">
+      {/* Pure-color Parallax Background Layer with Multi-Stop Alpha-Mask Bottom Dissolve */}
       <div
         aria-hidden="true"
         style={{
@@ -161,7 +161,7 @@ export const HeroCover: React.FC = () => {
           maskImage: maskFade,
           WebkitMaskImage: maskFade,
         }}
-        className="pointer-events-none absolute inset-x-0 -top-4 -bottom-24 z-0 will-change-transform transition-[background-image,background-color] duration-500"
+        className="pointer-events-none absolute inset-x-0 -top-4 -bottom-32 z-0 will-change-transform transition-[background-image,background-color] duration-500"
       />
       {/* Center Badges + Typewriter (removed "磊大大" title and shifted up so bottom 7 cards expose >2/3 on 1st screen) */}
       <div className="relative z-20 text-center px-6 max-w-3xl mx-auto -mt-48 sm:-mt-56">

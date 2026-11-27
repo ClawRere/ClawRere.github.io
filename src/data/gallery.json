@@ -320,5 +320,56 @@
         "url": "https://i.loli.net/2019/12/25/oj1wAnGSKtFvXIJ.jpg"
       }
     ]
+  },
+  {
+    "id": "site-illustrations",
+    "name": "站内插画与封面",
+    "desc": "首页卡片插画与博客极简纯色封面集合",
+    "images": [
+      {
+        "alt": "首页 · 作品集卡片",
+        "url": "/img/fan/card-1.svg"
+      },
+      {
+        "alt": "首页 · 动效实验室卡片",
+        "url": "/img/fan/card-2.svg"
+      },
+      {
+        "alt": "首页 · 博客归档卡片",
+        "url": "/img/fan/card-3.svg"
+      },
+      {
+        "alt": "首页 · 工具箱卡片",
+        "url": "/img/fan/card-4.svg"
+      },
+      {
+        "alt": "首页 · 友链导航卡片",
+        "url": "/img/fan/card-5.svg"
+      },
+      {
+        "alt": "首页 · 音乐电台卡片",
+        "url": "/img/fan/card-6.svg"
+      },
+      {
+        "alt": "首页 · 留言板卡片",
+        "url": "/img/fan/card-7.svg"
+      },
+      {
+        "alt": "博客封面 · 蒙德里安红",
+        "url": "/img/blog/mondrian-red.svg"
+      },
+      {
+        "alt": "博客封面 · 蒙德里安蓝",
+        "url": "/img/blog/mondrian-blue.svg"
+      },
+      {
+        "alt": "博客封面 · 蒙德里安黄",
+        "url": "/img/blog/mondrian-yellow.svg"
+      },
+      {
+        "alt": "博客封面 · 蒙德里安珊瑚",
+        "url": "/img/blog/mondrian-coral.svg"
+      }
+    ]
   }
 ]

@@ -427,20 +427,20 @@ const BurnCanvas: React.FC = () => {
         ctx.fillRect(0, Math.max(0, burnLineY), w, h);
       }
 
-      // Spawn dense glowing flame embers, golden sparks & dark ash flakes
-      for (let i = 0; i < 20; i++) {
-        const isAsh = Math.random() > 0.68;
+      // Spawn triangular shatter shards (inspired by /effects/image_animation) + glowing embers
+      for (let i = 0; i < 22; i++) {
+        const isAsh = Math.random() > 0.52;
         particles.push({
           x: Math.random() * w,
-          y: Math.max(0, Math.min(h, burnLineY + (Math.random() - 0.5) * 22)),
-          vx: (Math.random() - 0.5) * 2.6,
-          vy: isAsh ? 0.6 + Math.random() * 1.9 : -(2.2 + Math.random() * 4.8),
-          r: isAsh ? 1.8 + Math.random() * 2.5 : 1.6 + Math.random() * 3.8,
+          y: Math.max(0, Math.min(h, burnLineY + (Math.random() - 0.5) * 24)),
+          vx: (Math.random() - 0.5) * 3.2,
+          vy: isAsh ? -(0.8 + Math.random() * 2.2) : -(2.4 + Math.random() * 5.0),
+          r: isAsh ? 3.2 + Math.random() * 4.2 : 1.8 + Math.random() * 3.8,
           life: 0,
-          maxLife: 24 + Math.random() * 36,
+          maxLife: 26 + Math.random() * 38,
           isAsh,
           rot: Math.random() * Math.PI * 2,
-          rotV: (Math.random() - 0.5) * 0.26,
+          rotV: (Math.random() - 0.5) * 0.3,
         });
       }
 
@@ -461,8 +461,14 @@ const BurnCanvas: React.FC = () => {
         ctx.rotate(p.rot);
         ctx.globalAlpha = alpha;
         if (p.isAsh) {
-          ctx.fillStyle = '#52525b';
-          ctx.fillRect(-p.r, -p.r * 0.6, p.r * 2, p.r * 1.2);
+          // Triangular flying shard with warm ember edge
+          ctx.fillStyle = p.life < 12 ? '#ea580c' : '#3f3f46';
+          ctx.beginPath();
+          ctx.moveTo(0, -p.r);
+          ctx.lineTo(p.r * 0.9, p.r * 0.8);
+          ctx.lineTo(-p.r * 0.9, p.r * 0.6);
+          ctx.closePath();
+          ctx.fill();
         } else {
           const g = ctx.createRadialGradient(0, 0, 0, 0, 0, p.r * 2.4);
           g.addColorStop(0, '#fffbeb');

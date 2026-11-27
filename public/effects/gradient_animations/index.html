@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS 动态渐变动画合集</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      padding: 20px;
+      background: #141413;
+      font-family: system-ui, sans-serif;
+      color: #fff;
+    }
+    .box {
+      border-radius: 20px;
+      padding: 24px;
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+    .box h3 { font-size: 16px; margin-bottom: 4px; text-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+    .box p { font-size: 12px; opacity: 0.9; }
+    .linear {
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradient-shift 12s ease infinite;
+    }
+    .multi {
+      background: linear-gradient(45deg, #ff6b6b 0%, #4ecdc4 25%, #45b7d1 50%, #96ceb4 75%, #ffeaa7 100%);
+      background-size: 300% 300%;
+      animation: gradient-dance 16s ease infinite;
+    }
+    .radial {
+      background: radial-gradient(circle, #ff7675, #74b9ff, #00b894, #fdcb6e);
+      background-size: 200% 200%;
+      animation: radial-pulse 10s ease-in-out infinite;
+    }
+    .interactive {
+      background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background-size: 400% 400%;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .interactive:hover {
+      animation: gradient-shift 3s ease infinite;
+      transform: scale(1.04);
+    }
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes gradient-dance {
+      0%, 100% { background-position: 0% 0%; }
+      25% { background-position: 100% 0%; }
+      50% { background-position: 100% 100%; }
+      75% { background-position: 0% 100%; }
+    }
+    @keyframes radial-pulse {
+      0%, 100% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="box linear"><h3>线性流动渐变</h3><p>400% background-size 匀速流动</p></div>
+  <div class="box multi"><h3>多方向渐变</h3><p>四角路径循环渐变舞蹈</p></div>
+  <div class="box radial"><h3>径向扩散渐变</h3><p>由中心向外脉冲呼吸</p></div>
+  <div class="box interactive"><h3>交互式悬停渐变</h3><p>悬停加速流光并轻度放大</p></div>
+</body>
+</html>

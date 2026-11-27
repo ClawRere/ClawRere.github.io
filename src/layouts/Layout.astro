@@ -10,6 +10,7 @@ interface Props {
   hideFooter?: boolean;
   fullWidth?: boolean;
   sideTitle?: string;
+  watermarkTitle?: string;
 }
 
 const {
@@ -18,9 +19,12 @@ const {
   hideFooter = false,
   fullWidth = false,
   sideTitle,
+  watermarkTitle,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
+const resolvedWatermark =
+  watermarkTitle || sideTitle || (currentPath !== '/' ? title.split('|')[0].trim() : '');
 
 const entertainItems = [
   { name: '音乐馆', href: '/entertain/music', emoji: '🎵' },
@@ -73,21 +77,29 @@ const entertainItems = [
       window.__updateHeaderBg = function () {
         var hdr = document.getElementById('site-header');
         if (!hdr) return;
-        var isHome = hdr.dataset.home === 'true';
         var scrolled = window.scrollY > 24;
         if (scrolled) {
-          hdr.classList.add('bg-cream-50/92', 'dark:bg-[#1c1f2b]/92', 'backdrop-blur-md', 'border-black/5', 'dark:border-white/8', 'shadow-sm');
-          hdr.classList.remove('at-home-top', 'border-transparent', 'bg-gradient-to-b', 'from-black/45', 'via-black/20', 'to-transparent', 'text-white');
+          hdr.classList.add('bg-cream-50/96', 'dark:bg-[#1c1f2b]/96', 'backdrop-blur-md', 'shadow-sm');
+          hdr.classList.remove('bg-transparent');
         } else {
-          hdr.classList.remove('bg-cream-50/92', 'dark:bg-[#1c1f2b]/92', 'backdrop-blur-md', 'border-black/5', 'dark:border-white/8', 'shadow-sm');
-          hdr.classList.add('border-transparent', 'bg-gradient-to-b');
-          if (isHome) {
-            hdr.classList.add('at-home-top', 'from-black/45', 'via-black/20', 'to-transparent', 'text-white');
-          }
+          hdr.classList.remove('bg-cream-50/96', 'dark:bg-[#1c1f2b]/96', 'backdrop-blur-md', 'shadow-sm');
+          hdr.classList.add('bg-transparent');
         }
       };
-      window.addEventListener('scroll', window.__updateHeaderBg, { passive: true });
+      window.__updateWatermarkParallax = function () {
+        var wm = document.querySelector('[data-parallax-watermark]');
+        if (!wm) return;
+        var y = Math.min(window.scrollY, 320);
+        var opacity = Math.max(0, 1 - y / 220);
+        wm.style.transform = 'translateY(' + Math.round(-y * 0.35) + 'px)';
+        wm.style.opacity = String(opacity);
+      };
+      window.addEventListener('scroll', function () {
+        window.__updateHeaderBg();
+        window.__updateWatermarkParallax();
+      }, { passive: true });
       window.__updateHeaderBg();
+      window.__updateWatermarkParallax();
     </script>
     <ClientRouter />
   </head>
@@ -118,15 +130,10 @@ const entertainItems = [
       />
     </div>
 
-    <!-- TOP NAVIGATION BAR (transparent/gradient at top, solid frosted backdrop on scroll) -->
+    <!-- TOP NAVIGATION BAR (no bottom line, transparent at top, high-opacity frosted glass on scroll) -->
     <header
       id="site-header"
-      data-home={currentPath === '/' ? 'true' : 'false'}
-      class={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 border-b border-transparent ${
-        currentPath === '/'
-          ? 'bg-gradient-to-b from-black/45 via-black/20 to-transparent text-white [&_*]:drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]'
-          : 'bg-gradient-to-b from-cream-50/75 via-cream-50/30 to-transparent dark:from-[#1c1f2b]/75 dark:via-[#1c1f2b]/30 dark:to-transparent'
-      }`}
+      class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-transparent"
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
         
@@ -270,7 +277,20 @@ const entertainItems = [
 
     <!-- Main Content Slot -->
     <main class={`flex-1 w-full relative z-10 ${currentPath === '/' ? '' : 'pt-14'} ${fullWidth ? '' : 'max-w-6xl mx-auto px-4 sm:px-6'}`}>
-      <slot />
+      {currentPath !== '/' && resolvedWatermark && !currentPath.startsWith('/entertain/fireworks') && !currentPath.startsWith('/entertain/rain') && (
+        <div
+          data-parallax-watermark
+          aria-hidden="true"
+          class="pointer-events-none select-none text-center pt-2 -mb-8 sm:-mb-12 relative z-0 overflow-hidden"
+        >
+          <span class="block text-[13vw] sm:text-[6.5rem] lg:text-[8.5rem] font-black leading-none tracking-[0.12em] bg-gradient-to-r from-rose-400/45 via-orange-300/45 to-pink-400/45 dark:from-rose-300/35 dark:via-orange-200/35 dark:to-pink-300/35 bg-clip-text text-transparent truncate px-2">
+            {resolvedWatermark}
+          </span>
+        </div>
+      )}
+      <div class="relative z-10">
+        <slot />
+      </div>
     </main>
 
     <!-- Synced Raga-style NetEase Music Player (persists across View Transitions) -->

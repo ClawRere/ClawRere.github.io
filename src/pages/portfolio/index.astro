@@ -11,23 +11,12 @@ const isEmbeddableDemo = (url?: string | null) =>
   !!url && !url.includes('mp.weixin.qq.com');
 ---
 
-<Layout title="个人作品集合 | 磊大大の小栈" sideTitle="个人作品集合">
+<Layout title="个人作品集合 | 磊大大の小栈" sideTitle="个人作品集合" watermarkTitle="作品集">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 relative">
 
     <div class="mb-4 xl:hidden">
       <p class="text-xs font-mono uppercase tracking-widest text-terracotta mb-1">Portfolio · {validProjects.length} projects</p>
       <h1 class="text-3xl font-extrabold text-charcoal-DEFAULT dark:text-cream-50 tracking-tight">个人作品集合</h1>
-    </div>
-
-    <!-- Faint Pale-Pink/Peach Oversized Watermark Title partially occluded by cards, rises & fades on scroll -->
-    <div
-      id="portfolio-watermark"
-      aria-hidden="true"
-      class="scroll-watermark-rise pointer-events-none select-none text-center -mb-10 sm:-mb-16 relative z-0 overflow-hidden"
-    >
-      <span class="block text-[20vw] sm:text-[9.5rem] lg:text-[11.5rem] font-black leading-none tracking-[0.14em] bg-gradient-to-r from-rose-400/45 via-orange-300/45 to-pink-400/45 dark:from-rose-300/35 dark:via-orange-200/35 dark:to-pink-300/35 bg-clip-text text-transparent">
-        作品集
-      </span>
     </div>
 
     <div class="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

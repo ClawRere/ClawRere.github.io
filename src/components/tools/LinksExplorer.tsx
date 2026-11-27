@@ -226,30 +226,39 @@ export const LinksExplorer: React.FC = () => {
       {layoutMode === 'split' ? (
         /* Split PiP occupies full screen width (83%+ iframe) */
         <div style={{ height: 'var(--pip-height, 82vh)' }} className="flex flex-col lg:flex-row gap-3 min-h-[580px]">
-          <div className="w-full lg:w-56 max-h-44 lg:max-h-full flex-shrink-0 overflow-y-auto space-y-1 pr-1 lg:border-r border-charcoal-500/10 dark:border-white/8">
-            {filteredLinks.map((item, idx) => (
-              <button
-                key={`split-${item.category}-${item.name}-${idx}`}
-                onClick={(e) => handleItemClick(e, item)}
-                className={`w-full flex items-center gap-2.5 p-2 rounded-lg text-left transition-all ${
-                  previewLink?.name === item.name && previewLink?.link === item.link
-                    ? 'bg-terracotta/15 border border-terracotta/30'
-                    : 'hover:bg-black/5 dark:hover:bg-white/5 border border-transparent'
-                }`}
-              >
-                <img
-                  src={resolveAvatar(item.avatar, item.link)}
-                  alt={item.name}
-                  className="w-6 h-6 rounded-md object-cover flex-shrink-0 bg-cream-200 dark:bg-zinc-800"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = DEFAULT_AVATAR_SVG;
-                  }}
-                />
-                <div className="min-w-0 flex-1">
-                  <div className="text-xs font-medium text-charcoal-DEFAULT dark:text-cream-50 truncate">{item.name}</div>
-                </div>
-              </button>
-            ))}
+          <div className="w-full lg:w-56 max-h-44 lg:max-h-full flex-shrink-0 overflow-y-auto space-y-1.5 pr-1.5 lg:border-r border-charcoal-500/10 dark:border-white/8">
+            {filteredLinks.map((item, idx) => {
+              const isSelected = previewLink?.name === item.name && previewLink?.link === item.link;
+              return (
+                <button
+                  key={`split-${item.category}-${item.name}-${idx}`}
+                  onClick={(e) => handleItemClick(e, item)}
+                  className={`relative overflow-hidden w-full flex items-center gap-2.5 px-3.5 py-2 rounded-full text-left transition-all ${
+                    isSelected
+                      ? 'water-capsule-active bg-terracotta/15 border border-terracotta/35 shadow-sm'
+                      : 'hover:bg-black/5 dark:hover:bg-white/5 border border-transparent'
+                  }`}
+                >
+                  {isSelected && (
+                    <span
+                      aria-hidden="true"
+                      className="water-droplet-bead pointer-events-none absolute top-0 left-1/2 w-3 h-3 rounded-full bg-terracotta/45 blur-[0.5px]"
+                    />
+                  )}
+                  <img
+                    src={resolveAvatar(item.avatar, item.link)}
+                    alt={item.name}
+                    className="w-6 h-6 rounded-full object-cover flex-shrink-0 bg-cream-200 dark:bg-zinc-800 relative z-10"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = DEFAULT_AVATAR_SVG;
+                    }}
+                  />
+                  <div className="min-w-0 flex-1 relative z-10">
+                    <div className={`text-xs font-medium truncate ${isSelected ? 'text-terracotta font-semibold' : 'text-charcoal-DEFAULT dark:text-cream-50'}`}>{item.name}</div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
           <div className="flex-1 min-w-0 h-full">

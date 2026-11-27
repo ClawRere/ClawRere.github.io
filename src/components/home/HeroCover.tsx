@@ -64,6 +64,24 @@ export const HeroCover: React.FC = () => {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [parallaxY, setParallaxY] = useState(0);
+
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const y = Math.min(window.scrollY, window.innerHeight || 900);
+        setParallaxY(y * 0.28);
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   useEffect(() => {
     try {
@@ -129,15 +147,21 @@ export const HeroCover: React.FC = () => {
       : { backgroundImage: currentBg.value }
     : { background: `var(--hero-bg, ${defaultBgCss})` };
 
+  const maskFade =
+    'linear-gradient(to bottom, #000 0%, #000 78%, rgba(0,0,0,0.84) 88%, rgba(0,0,0,0.38) 95%, transparent 100%)';
+
   return (
-    <div
-      style={resolvedStyle}
-      className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center overflow-hidden rounded-b-[48px] sm:rounded-b-[96px] mb-14 transition-all duration-500"
-    >
-      {/* Smooth Curved Bottom Gradient Transition into 2nd Screen */}
+    <div className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center mb-6">
+      {/* Pure-color Parallax Background Layer with Alpha-Mask Bottom Dissolve (no color overlay) */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-44 sm:h-56 z-10 bg-gradient-to-b from-transparent via-cream-50/45 to-cream-50 dark:via-obsidian/45 dark:to-obsidian"
         aria-hidden="true"
+        style={{
+          ...resolvedStyle,
+          transform: `translate3d(0, ${parallaxY}px, 0) scale(1.03)`,
+          maskImage: maskFade,
+          WebkitMaskImage: maskFade,
+        }}
+        className="pointer-events-none absolute inset-x-0 -top-4 -bottom-24 z-0 will-change-transform transition-[background-image,background-color] duration-500"
       />
       {/* Center Badges + Typewriter (removed "磊大大" title and shifted up so bottom 7 cards expose >2/3 on 1st screen) */}
       <div className="relative z-20 text-center px-6 max-w-3xl mx-auto -mt-48 sm:-mt-56">

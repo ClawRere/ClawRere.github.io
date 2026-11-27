@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>脉冲烟花爱心点赞</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #121721, #000);
+      font: 1em verdana, sans-serif;
+      color: rgba(255, 255, 255, 0.55);
+    }
+    [id="toggle-heart"] {
+      position: absolute;
+      left: -100vw;
+    }
+    [id="toggle-heart"]:checked + label {
+      color: #e2264d;
+      filter: none;
+      will-change: font-size;
+      animation: heart 1s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+    }
+    [id="toggle-heart"]:checked + label:before,
+    [id="toggle-heart"]:checked + label:after {
+      animation: inherit;
+      animation-timing-function: ease-out;
+    }
+    [id="toggle-heart"]:checked + label:before {
+      will-change: transform, border-width, border-color;
+      animation-name: bubble;
+    }
+    [id="toggle-heart"]:checked + label:after {
+      will-change: opacity, box-shadow;
+      animation-name: sparkles;
+    }
+    [id="toggle-heart"]:focus + label {
+      text-shadow: 0 0 3px white, 0 1px 1px white, 0 -1px 1px white, 1px 0 1px white, -1px 0 1px white;
+    }
+    [for="toggle-heart"] {
+      align-self: center;
+      position: relative;
+      color: #888;
+      font-size: 2.8em;
+      filter: grayscale(1);
+      user-select: none;
+      cursor: pointer;
+    }
+    [for="toggle-heart"]:before,
+    [for="toggle-heart"]:after {
+      position: absolute;
+      z-index: -1;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      content: "";
+    }
+    [for="toggle-heart"]:before {
+      box-sizing: border-box;
+      margin: -2.25rem;
+      border: solid 2.25rem #e2264d;
+      width: 4.5rem;
+      height: 4.5rem;
+      transform: scale(0);
+    }
+    [for="toggle-heart"]:after {
+      margin: -0.1875rem;
+      width: 0.375rem;
+      height: 0.375rem;
+      box-shadow:
+        0.325rem -2.625rem 0 -0.1875rem hsl(0, 100%, 75%),
+        -0.325rem -3rem 0 -0.1875rem hsl(51.4, 100%, 75%),
+        2.444rem -1.425rem 0 -0.1875rem hsl(51.4, 100%, 75%),
+        1.946rem -2.075rem 0 -0.1875rem hsl(102.9, 100%, 75%),
+        2.633rem 0.946rem 0 -0.1875rem hsl(102.9, 100%, 75%),
+        2.85rem 0.295rem 0 -0.1875rem hsl(154.3, 100%, 75%),
+        0.946rem 2.633rem 0 -0.1875rem hsl(154.3, 100%, 75%),
+        1.488rem 2.356rem 0 -0.1875rem hsl(205.7, 100%, 75%),
+        -1.488rem 2.356rem 0 -0.1875rem hsl(205.7, 100%, 75%),
+        -0.946rem 2.633rem 0 -0.1875rem hsl(257.1, 100%, 75%),
+        -2.85rem 0.295rem 0 -0.1875rem hsl(257.1, 100%, 75%),
+        -2.633rem 0.946rem 0 -0.1875rem hsl(308.6, 100%, 75%),
+        -1.946rem -2.075rem 0 -0.1875rem hsl(308.6, 100%, 75%),
+        -2.444rem -1.425rem 0 -0.1875rem hsl(360, 100%, 75%);
+    }
+    @keyframes heart {
+      0%, 17.5% { font-size: 0; }
+    }
+    @keyframes bubble {
+      15% {
+        transform: scale(1);
+        border-color: #cc8ef5;
+        border-width: 2.25rem;
+      }
+      30%, 100% {
+        transform: scale(1);
+        border-color: #cc8ef5;
+        border-width: 0;
+      }
+    }
+    @keyframes sparkles {
+      0%, 20% { opacity: 0; }
+      25% {
+        opacity: 1;
+        box-shadow:
+          0.325rem -2.062rem 0 0 hsl(0, 100%, 75%),
+          -0.325rem -2.437rem 0 0 hsl(51.4, 100%, 75%),
+          2.005rem -1.075rem 0 0 hsl(51.4, 100%, 75%),
+          1.507rem -1.725rem 0 0 hsl(102.9, 100%, 75%),
+          2.084rem 0.821rem 0 0 hsl(102.9, 100%, 75%),
+          2.301rem 0.17rem 0 0 hsl(154.3, 100%, 75%),
+          0.703rem 2.126rem 0 0 hsl(154.3, 100%, 75%),
+          1.245rem 1.849rem 0 0 hsl(205.7, 100%, 75%),
+          -1.245rem 1.849rem 0 0 hsl(205.7, 100%, 75%),
+          -0.703rem 2.126rem 0 0 hsl(257.1, 100%, 75%),
+          -2.301rem 0.17rem 0 0 hsl(257.1, 100%, 75%),
+          -2.084rem 0.821rem 0 0 hsl(308.6, 100%, 75%),
+          -1.507rem -1.725rem 0 0 hsl(308.6, 100%, 75%),
+          -2.005rem -1.075rem 0 0 hsl(360, 100%, 75%);
+      }
+    }
+    .hint { font-size: 12px; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+  <input id="toggle-heart" type="checkbox" />
+  <label for="toggle-heart" aria-label="like">❤</label>
+  <span class="hint">点击爱心触发气泡 + 烟花脉冲</span>
+</body>
+</html>

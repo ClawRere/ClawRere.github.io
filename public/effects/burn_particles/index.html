@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>阅后即焚粒子焚烧</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #18181b;
+      font-family: system-ui, sans-serif;
+      color: #f4f4f5;
+    }
+    .note {
+      position: relative;
+      width: 300px;
+      padding: 20px;
+      border-radius: 18px;
+      background: #27272a;
+      border: 1px solid rgba(251, 146, 60, 0.35);
+      overflow: hidden;
+      transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+    }
+    .note.burning {
+      opacity: 0;
+      transform: translateY(-18px) scale(0.92);
+      filter: blur(5px) brightness(1.4);
+    }
+    .bar {
+      height: 4px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #f97316, #ef4444);
+      transform-origin: left;
+    }
+    button {
+      padding: 7px 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #ea580c;
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div class="note" id="note">
+    <div style="font-weight:700;font-size:15px;">🔥 阅后即焚密信</div>
+    <p style="font-size:13px;color:#a1a1aa;margin-top:6px;">进度条走完后自动触发火星灰烬粒子消散，点击下方按钮可立即重放。</p>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <button id="btn">重新点燃</button>
+  </div>
+  <script>
+    const note = document.getElementById('note');
+    const fill = document.getElementById('fill');
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+    let particles = [], timer = null;
+    function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+    resize(); addEventListener('resize', resize);
+    function spawnEmbers() {
+      const r = note.getBoundingClientRect();
+      for (let i = 0; i < 42; i++) {
+        particles.push({
+          x: r.left + Math.random() * r.width,
+          y: r.top + Math.random() * r.height,
+          vx: (Math.random() - 0.5) * 1.8,
+          vy: -1 - Math.random() * 2.4,
+          size: 2 + Math.random() * 4,
+          life: 1,
+          color: Math.random() > 0.35 ? '#fb923c' : '#71717a'
+        });
+      }
+    }
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles = particles.filter((p) => p.life > 0.02);
+      for (const p of particles) {
+        p.x += p.vx; p.y += p.vy; p.life *= 0.95;
+        ctx.globalAlpha = p.life;
+        ctx.fillStyle = p.color;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(loop);
+    }
+    loop();
+    function start() {
+      clearTimeout(timer);
+      note.classList.remove('burning');
+      fill.style.transition = 'none';
+      fill.style.transform = 'scaleX(1)';
+      requestAnimationFrame(() => {
+        fill.style.transition = 'transform 3.5s linear';
+        fill.style.transform = 'scaleX(0)';
+      });
+      timer = setTimeout(() => {
+        note.classList.add('burning');
+        spawnEmbers();
+        setTimeout(start, 1400);
+      }, 3550);
+    }
+    document.getElementById('btn').onclick = start;
+    start();
+  </script>
+</body>
+</html>

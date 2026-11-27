@@ -1,5 +1,101 @@
 [
   {
+    "title": "3D 悬浮视差卡片",
+    "path": "/effects/parallax_cards",
+    "image": "",
+    "category": "UI交互"
+  },
+  {
+    "title": "脉冲烟花爱心点赞",
+    "path": "/effects/heart_like",
+    "image": "",
+    "category": "UI交互"
+  },
+  {
+    "title": "3D 鼠标倾斜与跑马灯",
+    "path": "/effects/tilt_marquee_card",
+    "image": "",
+    "category": "UI交互"
+  },
+  {
+    "title": "阅后即焚粒子焚烧",
+    "path": "/effects/burn_particles",
+    "image": "",
+    "category": "趣味动效"
+  },
+  {
+    "title": "生态天气留言卡片",
+    "path": "/effects/eco_weather_cards",
+    "image": "",
+    "category": "趣味动效"
+  },
+  {
+    "title": "金虎斑派派猫",
+    "path": "/effects/lovely_cat",
+    "image": "",
+    "category": "趣味动效"
+  },
+  {
+    "title": "拉花卡布奇诺",
+    "path": "/effects/cappuccino",
+    "image": "",
+    "category": "趣味动效"
+  },
+  {
+    "title": "气泡聊天界面",
+    "path": "/effects/chat_ui",
+    "image": "",
+    "category": "UI交互"
+  },
+  {
+    "title": "数字日历组件",
+    "path": "/effects/digital_calendar",
+    "image": "",
+    "category": "实用组件"
+  },
+  {
+    "title": "心动粒子流",
+    "path": "/effects/heartflow",
+    "image": "",
+    "category": "趣味动效"
+  },
+  {
+    "title": "皮卡幽灵",
+    "path": "/effects/pika_ghost",
+    "image": "",
+    "category": "趣味动效"
+  },
+  {
+    "title": "兰博小猪加载",
+    "path": "/effects/rambo_pig_loding",
+    "image": "",
+    "category": "加载动画"
+  },
+  {
+    "title": "摇曳森林树木",
+    "path": "/effects/trees",
+    "image": "",
+    "category": "3D视觉"
+  },
+  {
+    "title": "大叔眨眼追踪",
+    "path": "/effects/uncle_eyes",
+    "image": "",
+    "category": "趣味动效"
+  },
+  {
+    "title": "井字棋小游戏",
+    "path": "/effects/well_word_chess",
+    "image": "",
+    "category": "互动游戏"
+  },
+  {
+    "title": "文字光影投影",
+    "path": "/effects/word_shadow",
+    "image": "",
+    "category": "UI交互"
+  },
+  {
     "title": "海底泡泡多角鱼",
     "path": "/effects/fishes",
     "image": "https://mmbiz.qpic.cn/mmbiz_gif/iaVb9cSjKNDdU8kPStZt1xPhTDxBicicmic3ZPXs1sib0lj1hicdg7ddgJtFX77WUxWlNs9CwP2xf1rWoSMACUFYIicFg/640?wx_fmt=gif&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1",

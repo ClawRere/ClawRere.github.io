@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>生态天气留言卡片</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      background: #f6f2eb;
+      font-family: system-ui, sans-serif;
+      padding: 20px;
+    }
+    .card {
+      position: relative;
+      width: 240px;
+      height: 140px;
+      border-radius: 18px;
+      background: #fff;
+      padding: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+    }
+    .grass { border-bottom: 10px solid #4d7c0f; }
+    .sheep {
+      position: absolute;
+      bottom: 6px;
+      font-size: 22px;
+      animation: graze 9s linear infinite;
+    }
+    @keyframes graze {
+      0% { left: -24px; transform: scaleX(-1); }
+      48% { left: 195px; transform: scaleX(-1); }
+      50% { left: 195px; transform: scaleX(1); }
+      98% { left: -24px; transform: scaleX(1); }
+      100% { left: -24px; transform: scaleX(-1); }
+    }
+    .desert { border-bottom: 10px solid #d97706; background: #fffbeb; }
+    .tornado {
+      position: absolute;
+      bottom: 8px;
+      font-size: 26px;
+      animation: swirl 7s linear infinite;
+    }
+    @keyframes swirl {
+      0% { left: -30px; opacity: 0.4; transform: rotate(-6deg); }
+      50% { opacity: 0.95; transform: rotate(6deg) translateY(-4px); }
+      100% { left: 250px; opacity: 0.4; transform: rotate(-6deg); }
+    }
+    h4 { font-size: 14px; color: #1f2937; margin-bottom: 6px; }
+    p { font-size: 12px; color: #6b7280; }
+  </style>
+</head>
+<body>
+  <div class="card grass">
+    <h4>🌿 草原生态卡片</h4>
+    <p>边缘青草微动，小羊悠闲往返吃草。</p>
+    <div class="sheep">🐑</div>
+  </div>
+  <div class="card desert">
+    <h4>🏜️ 荒漠龙卷风卡片</h4>
+    <p>沙丘之上小龙卷风伴随沙尘缓慢横穿。</p>
+    <div class="tornado">🌪️</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D 鼠标倾斜 & 跑马灯边框</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #141413;
+      font-family: system-ui, -apple-system, sans-serif;
+      color: #fff;
+      perspective: 900px;
+    }
+    .wrap {
+      position: relative;
+      padding: 3px;
+      border-radius: 26px;
+      overflow: hidden;
+      transition: transform 0.16s ease-out;
+      transform-style: preserve-3d;
+    }
+    .ring {
+      position: absolute;
+      inset: -60%;
+      background: conic-gradient(from 0deg, transparent 0deg, #ff7a45 55deg, #f59e0b 110deg, #38bdf8 165deg, transparent 230deg);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .wrap:hover .ring {
+      opacity: 1;
+      animation: spin 2.2s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 300px;
+      padding: 28px;
+      border-radius: 23px;
+      background: rgba(28, 28, 30, 0.92);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    h3 { font-size: 18px; margin-bottom: 8px; }
+    p { font-size: 13px; color: rgba(255, 255, 255, 0.65); line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="card">
+    <div class="ring"></div>
+    <div class="card">
+      <h3>3D 鼠标跟随 + 悬停跑马灯</h3>
+      <p>移动鼠标查看 3D 透视形变，悬停时边缘触发 2.2s 流光跑马灯。</p>
+    </div>
+  </div>
+  <script>
+    const el = document.getElementById('card');
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      el.style.transform = `perspective(900px) rotateX(${(-y * 14).toFixed(2)}deg) rotateY(${(x * 16).toFixed(2)}deg) scale(1.02)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = '';
+    });
+  </script>
+</body>
+</html>

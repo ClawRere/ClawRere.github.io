@@ -211,10 +211,10 @@ export const HeroCover: React.FC = () => {
         <ChevronDown className="w-5 h-5 animate-bounce" />
       </motion.a>
 
-      {/* Subtle Cover Switcher Icon Button */}
+      {/* Subtle Cover Switcher Icon Button (top-right so bottom cards never overlap it) */}
       <button
         onClick={() => setIsOpen(true)}
-        className="absolute bottom-8 right-6 z-30 p-3 rounded-full bg-black/30 hover:bg-black/55 backdrop-blur-md border border-white/25 text-white transition-all shadow-lg hover:scale-105"
+        className="absolute top-6 right-6 z-30 p-3 rounded-full bg-black/30 hover:bg-black/55 backdrop-blur-md border border-white/25 text-white transition-all shadow-lg hover:scale-105"
         title="切换封面壁纸 / 自定义纯色 / 自定义渐变"
       >
         <Palette className="w-4 h-4" />

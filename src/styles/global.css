@@ -125,8 +125,8 @@
   transition: opacity 0.3s ease;
 }
 .dark .ff-dot,
-.firefly-btn:hover .ff-dot {
-  opacity: 0.9;
+.dark .firefly-btn:hover .ff-dot {
+  opacity: 0.95;
 }
 @keyframes ffOrbit1 {
   0%, 100% { transform: translate(-12px, -10px) scale(0.8); }

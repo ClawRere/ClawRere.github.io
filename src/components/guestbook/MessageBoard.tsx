@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { animate, stagger } from 'animejs';
-import { MessageSquare, Send, Sparkles, User, Calendar, Check, Flame, Eye, Heart } from 'lucide-react';
+import { MessageSquare, Send, Sparkles, User, Calendar, Check, Flame, Eye, Heart, Trash2 } from 'lucide-react';
 
 interface ReplyItem {
   id: number;
@@ -613,8 +613,12 @@ export const MessageBoard: React.FC = () => {
   const [replyingToId, setReplyingToId] = useState<number | null>(null);
   const [replyName, setReplyName] = useState('');
   const [replyContent, setReplyContent] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    try {
+      setIsAdmin(localStorage.getItem('admin_authenticated') === 'true');
+    } catch {}
     const saved = localStorage.getItem('guestbook_messages');
     if (saved) {
       try {
@@ -1021,6 +1025,24 @@ export const MessageBoard: React.FC = () => {
                       <Heart className="w-3 h-3 fill-current" />
                       <span>{msg.likes || 0}</span>
                     </button>
+                    {isAdmin && (
+                      <button
+                        onClick={() => {
+                          setMessages((prev) => {
+                            const updated = prev.filter((m) => m.id !== msg.id);
+                            localStorage.setItem('guestbook_messages', JSON.stringify(updated));
+                            return updated;
+                          });
+                          setToast('🗑️ 管理员已删除该条留言');
+                          setTimeout(() => setToast(''), 2500);
+                        }}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full hover:bg-red-500/15 text-red-500 transition-colors"
+                        title="仅管理员可见：删除此条留言"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                        <span>删除</span>
+                      </button>
+                    )}
                   </div>
                 </div>
 

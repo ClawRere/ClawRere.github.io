@@ -178,21 +178,24 @@ const entertainItems = [
             aria-label="切换日间/夜间模式"
           >
             {/* Day Clouds */}
-            <span class="dark:hidden absolute left-1.5 top-1.5 flex items-center pointer-events-none" aria-hidden="true">
+            <span class="dark:hidden absolute right-1.5 top-1.5 flex items-center pointer-events-none" aria-hidden="true">
               <span class="w-3 h-2 rounded-full bg-white/90 block" />
               <span class="w-2.5 h-2.5 -ml-1.5 -mt-1 rounded-full bg-white block" />
             </span>
-            {/* Fireflies orbiting in dark mode / hover */}
-            <span class="ff-dot ff-dot-1" aria-hidden="true"></span>
-            <span class="ff-dot ff-dot-2" aria-hidden="true"></span>
-            <span class="ff-dot ff-dot-3" aria-hidden="true"></span>
-            <span class="ff-dot ff-dot-4" aria-hidden="true"></span>
-            {/* Sliding Sun (Day) / Moon (Night) */}
-            <span class="absolute top-0.5 left-0.5 dark:left-[1.85rem] w-6 h-6 rounded-full flex items-center justify-center transition-all duration-500 bg-amber-300 dark:bg-slate-800 shadow-[0_0_10px_rgba(253,224,71,0.85)] dark:shadow-[0_0_10px_rgba(253,224,71,0.5)]">
-              <svg class="w-3.5 h-3.5 dark:hidden text-amber-700" fill="currentColor" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="5" />
+            {/* Sliding Sun (Day) / Moon + Orbiting Fireflies (Night) */}
+            <span class="absolute top-0.5 left-0.5 dark:left-[1.85rem] w-6 h-6 rounded-full flex items-center justify-center transition-all duration-500 bg-white/95 dark:bg-slate-800 shadow-[0_0_12px_rgba(251,191,36,0.9)] dark:shadow-[0_0_10px_rgba(253,224,71,0.55)]">
+              {/* Fireflies orbiting directly around the Moon in dark mode */}
+              <span class="ff-dot ff-dot-1" aria-hidden="true"></span>
+              <span class="ff-dot ff-dot-2" aria-hidden="true"></span>
+              <span class="ff-dot ff-dot-3" aria-hidden="true"></span>
+              <span class="ff-dot ff-dot-4" aria-hidden="true"></span>
+              {/* Sun with outward radiating rays (no red center dot) */}
+              <svg class="w-4 h-4 dark:hidden text-amber-400 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <circle cx="12" cy="12" r="3.8" fill="currentColor" stroke="none" />
+                <path stroke-linecap="round" d="M12 2.5v2.2M12 19.3v2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
               </svg>
-              <svg class="w-3.5 h-3.5 hidden dark:block text-amber-300" fill="currentColor" viewBox="0 0 24 24">
+              {/* Moon */}
+              <svg class="w-3.5 h-3.5 hidden dark:block text-amber-300 relative z-10" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
               </svg>
             </span>

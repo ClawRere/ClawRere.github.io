@@ -169,9 +169,18 @@ export const ToolboxViewer: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      {/* Top Tab Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap gap-2">
+      {/* Top Tab Bar: Single-line Horizontal Scrollable Slider */}
+      <div className="flex items-center justify-between gap-3">
+        <div
+          onWheel={(e) => {
+            if (Math.abs(e.deltaY) > 0) {
+              e.preventDefault();
+              e.currentTarget.scrollLeft += e.deltaY;
+            }
+          }}
+          className="w-full flex items-center justify-start flex-nowrap overflow-x-auto scrollbar-none gap-2 py-1"
+          title="鼠标滚轮或左右滑动切换工具"
+        >
           {tabs.map((tab) => {
             const isActive = tab.id === activeId;
             return (
@@ -179,7 +188,7 @@ export const ToolboxViewer: React.FC = () => {
                 key={tab.id}
                 onClick={() => setActiveId(tab.id)}
                 style={{ transform: 'scale(var(--pill-scale, 1))' }}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all border ${
+                className={`shrink-0 whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all border ${
                   isActive
                     ? 'bg-terracotta text-white border-terracotta shadow-md'
                     : 'border-charcoal-500/15 dark:border-white/10 bg-white/50 dark:bg-zinc-900/50 text-charcoal-200 dark:text-cream-300 hover:border-terracotta/40 hover:text-terracotta'
@@ -193,14 +202,14 @@ export const ToolboxViewer: React.FC = () => {
           {isAdmin && (
             <button
               onClick={() => setShowAddModal(true)}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-mono hover:bg-emerald-500/25 transition-all"
+              className="shrink-0 whitespace-nowrap flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-mono hover:bg-emerald-500/25 transition-all"
             >
               <Plus className="w-3.5 h-3.5" /> 新增工具
             </button>
           )}
         </div>
 
-        <span className="text-xs font-mono text-charcoal-100 dark:text-cream-400 hidden lg:inline">
+        <span className="text-xs font-mono text-charcoal-100 dark:text-cream-400 hidden lg:inline shrink-0">
           {activeTab.desc}
         </span>
       </div>

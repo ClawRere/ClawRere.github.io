@@ -165,6 +165,18 @@ export const LinksExplorer: React.FC = () => {
   const [layoutMode, setLayoutMode] = useState<LayoutMode>('split');
   const [previewLink, setPreviewLink] = useState<LinkItem | null>(defaultPreview);
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const mobileCapsuleRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onDocDown = (e: PointerEvent) => {
+      if (mobileCapsuleRef.current && !mobileCapsuleRef.current.contains(e.target as Node)) {
+        setMobileDrawerOpen(false);
+      }
+    };
+    document.addEventListener('pointerdown', onDocDown);
+    return () => document.removeEventListener('pointerdown', onDocDown);
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem('links_layout') as LayoutMode | null;
@@ -294,8 +306,68 @@ export const LinksExplorer: React.FC = () => {
       {/* Main Content */}
       {layoutMode === 'split' ? (
         /* Split PiP occupies full screen width (83%+ iframe) */
-        <div style={{ height: 'var(--pip-height, 82vh)' }} className="flex flex-col lg:flex-row gap-3 min-h-[580px]">
-          <div className="w-full lg:w-56 max-h-44 lg:max-h-full flex-shrink-0 overflow-y-auto space-y-1.5 pr-1.5 lg:border-r border-charcoal-500/10 dark:border-white/8">
+        <div style={{ height: 'var(--pip-height, 82vh)' }} className="relative flex flex-col lg:flex-row gap-3 min-h-[580px]">
+          {/* Mobile Floating Hover/Click Capsule Selector (auto-hides on outside click or mouse leave) */}
+          <div
+            ref={mobileCapsuleRef}
+            onMouseLeave={() => setMobileDrawerOpen(false)}
+            className="lg:hidden absolute top-3 left-3 z-30"
+          >
+            <button
+              type="button"
+              onClick={() => setMobileDrawerOpen((v) => !v)}
+              onMouseEnter={() => setMobileDrawerOpen(true)}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/95 dark:bg-zinc-900/95 border border-terracotta/35 shadow-xl backdrop-blur-xl text-xs font-medium text-charcoal-DEFAULT dark:text-cream-50"
+            >
+              {previewLink && (
+                <img
+                  src={resolveAvatar(previewLink.avatar, previewLink.link)}
+                  alt={previewLink.name}
+                  className="w-5 h-5 rounded-full object-cover shrink-0"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = DEFAULT_AVATAR_SVG;
+                  }}
+                />
+              )}
+              <span className="max-w-[120px] truncate">{previewLink?.name || '选择友链'}</span>
+              <List className="w-3.5 h-3.5 text-terracotta shrink-0" />
+            </button>
+
+            {mobileDrawerOpen && (
+              <div className="mt-2 w-60 max-h-72 overflow-y-auto p-1.5 rounded-2xl bg-white/95 dark:bg-zinc-900/95 border border-black/10 dark:border-white/15 shadow-2xl backdrop-blur-xl space-y-1">
+                {filteredLinks.map((item, idx) => {
+                  const isSelected = previewLink?.name === item.name && previewLink?.link === item.link;
+                  return (
+                    <button
+                      key={`mob-split-${item.category}-${item.name}-${idx}`}
+                      onClick={(e) => {
+                        handleItemClick(e, item);
+                        setMobileDrawerOpen(false);
+                      }}
+                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-full text-left transition-all ${
+                        isSelected
+                          ? 'bg-terracotta/15 border border-terracotta/35 text-terracotta font-semibold'
+                          : 'hover:bg-black/5 dark:hover:bg-white/8 text-charcoal-DEFAULT dark:text-cream-50 border border-transparent'
+                      }`}
+                    >
+                      <img
+                        src={resolveAvatar(item.avatar, item.link)}
+                        alt={item.name}
+                        className="w-5 h-5 rounded-full object-cover shrink-0 bg-cream-200 dark:bg-zinc-800"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = DEFAULT_AVATAR_SVG;
+                        }}
+                      />
+                      <span className="text-xs truncate">{item.name}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Left Capsule Sidebar */}
+          <div className="hidden lg:block w-56 max-h-full flex-shrink-0 overflow-y-auto space-y-1.5 pr-1.5 border-r border-charcoal-500/10 dark:border-white/8">
             {filteredLinks.map((item, idx) => {
               const isSelected = previewLink?.name === item.name && previewLink?.link === item.link;
               return (

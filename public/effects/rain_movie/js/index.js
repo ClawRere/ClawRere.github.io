@@ -6,7 +6,9 @@
 // - falling rain particles are drawn as vector lines
 // - splash particles are lazily pre-rendered so gradients aren't computed each frame
 // - all particles make use of object pooling to further boost performance
-const rainSound = new Audio('./rain.mp3')
+const rainSound = new Audio('./rain.mp3');
+rainSound.loop = true;
+rainSound.volume = 0.45;
 
 // initialize
 document.addEventListener("DOMContentLoaded", function() {
@@ -168,11 +170,14 @@ demo.step = function(time, lag) {
 			drops.splice(i, 1);
 		}
 	}
-	rainSound.playbackRate = (2.0 * speed);
-	// rainSound.volume = (1.1 * speed);
+	// Scale volume (capped at 0.80) and sound density/rate with rain amount & speed
+	var densityRatio = Math.max(0.08, Math.min(1, (102 - demo.drop_delay) / 100));
+	var speedFactor = Math.max(0.5, Math.min(1.2, 0.65 + speed * 0.28));
+	var targetVolume = Math.min(0.80, Math.max(0.08, (0.12 + densityRatio * 0.68) * speedFactor));
+	var targetRate = Math.max(0.65, Math.min(1.85, 0.72 + densityRatio * 0.72 + (speed - 1) * 0.25));
+	rainSound.volume = targetVolume;
+	rainSound.playbackRate = targetRate;
 	demo.draw();
-	// 设置播放速度为2倍
-	// audio.playbackRate = (2.0 * drop_max_speed);
 }
 
 demo.draw = function() {
@@ -209,9 +214,9 @@ demo.draw = function() {
 		var real_x = d.x * dpr - d.radius;
 		var real_y = d.y * dpr - d.radius;
 		ctx.drawImage(d.canvas, real_x, real_y);
-	rainSound.play();
-	// 设置音量为最大
-	rainSound.volume = 1.0;
+	}
+	if (drops.length > 0 && rainSound.paused) {
+		rainSound.play().catch(function(){});
 	}
 }
 

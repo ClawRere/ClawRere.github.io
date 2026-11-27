@@ -14,7 +14,7 @@ interface Props {
 }
 
 const {
-  title = '磊大大 Larry | AI 产品经理与共创作品集',
+  title = '磊大大の小栈 | AI 产品经理与共创作品集',
   description = '以产品思维定义人机边界，以工程实践打磨 AI 生产力工具。面向 AI 协同时代的数字花园。',
   hideFooter = false,
   fullWidth = false,
@@ -310,18 +310,18 @@ const entertainItems = [
         </nav>
 
         <!-- Right actions -->
-        <div class="flex items-center gap-2 shrink-0">
-          <!-- Theme Accent Color Switcher (Claude / Gemini / Codex / DeepSeek / Custom) -->
-          <div class="relative group/palette">
-            <button
-              type="button"
-              class="p-2 rounded-full text-charcoal-100 dark:text-cream-300 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+        <div class="flex items-center gap-3 shrink-0">
+          <!-- Theme Accent Color Switcher (click-friendly on mobile & desktop) -->
+          <details id="palette-menu" class="relative">
+            <summary
+              class="list-none cursor-pointer p-2 rounded-full text-charcoal-100 dark:text-cream-300 hover:bg-black/5 dark:hover:bg-white/10 transition-colors flex items-center justify-center"
               title="切换网站主题色（Claude / Gemini / Codex / DeepSeek）"
+              aria-label="切换网站主题色"
             >
-              <span class="block w-3.5 h-3.5 rounded-full bg-terracotta ring-2 ring-white/80 dark:ring-zinc-800 shadow-sm" />
-            </button>
-            <div class="absolute top-full right-0 mt-1.5 w-44 p-2 rounded-2xl bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/15 shadow-2xl opacity-0 invisible group-hover/palette:opacity-100 group-hover/palette:visible transition-all duration-200 z-50 space-y-1">
-              <div class="px-2 py-1 text-[10px] font-mono uppercase tracking-wider text-charcoal-100 dark:text-cream-400">主题风格配色</div>
+              <span class="block w-4 h-4 rounded-full bg-terracotta ring-2 ring-white/85 dark:ring-zinc-800 shadow-sm" />
+            </summary>
+            <div class="palette-panel absolute top-full right-0 mt-2 w-48 p-2 rounded-2xl bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border border-black/10 dark:border-white/15 shadow-2xl z-50 space-y-1 text-charcoal-800 dark:text-cream-100">
+              <div class="px-2 py-1 text-[10px] font-mono uppercase tracking-wider text-charcoal-400 dark:text-cream-400">主题风格配色</div>
               {[
                 { name: 'Claude 暖陶土', rgb: '217 119 87', hex: '#D97757' },
                 { name: 'Gemini 幻彩蓝', rgb: '66 133 244', hex: '#4285F4' },
@@ -331,14 +331,14 @@ const entertainItems = [
               ].map((preset) => (
                 <button
                   type="button"
-                  onclick={`document.documentElement.style.setProperty('--theme-accent','${preset.rgb}');localStorage.setItem('site_theme_accent_rgb','${preset.rgb}');`}
-                  class="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs text-charcoal-200 dark:text-cream-200 hover:bg-black/5 dark:hover:bg-white/8 transition-colors text-left"
+                  onclick={`document.documentElement.style.setProperty('--theme-accent','${preset.rgb}');localStorage.setItem('site_theme_accent_rgb','${preset.rgb}');var pm=document.getElementById('palette-menu');if(pm)pm.removeAttribute('open');`}
+                  class="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-xs text-charcoal-800 dark:text-cream-100 hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-left"
                 >
                   <span class="w-3 h-3 rounded-full shrink-0" style={`background:${preset.hex}`} />
                   <span class="truncate">{preset.name}</span>
                 </button>
               ))}
-              <label class="w-full flex items-center justify-between px-2 py-1.5 rounded-lg text-xs text-charcoal-200 dark:text-cream-200 hover:bg-black/5 dark:hover:bg-white/8 cursor-pointer border-t border-black/5 dark:border-white/10 mt-1 pt-1.5">
+              <label class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs text-charcoal-800 dark:text-cream-100 hover:bg-black/5 dark:hover:bg-white/10 cursor-pointer border-t border-black/8 dark:border-white/10 mt-1 pt-2">
                 <span>自定义颜色</span>
                 <input
                   type="color"
@@ -348,7 +348,7 @@ const entertainItems = [
                 />
               </label>
             </div>
-          </div>
+          </details>
 
           <button
             id="theme-toggle-btn"
@@ -386,11 +386,11 @@ const entertainItems = [
           </a>
 
           <!-- Mobile hamburger -->
-          <details class="md:hidden relative group/mobile">
-            <summary class="list-none cursor-pointer p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-charcoal-200 dark:text-cream-300">
+          <details id="mobile-nav-menu" class="md:hidden relative">
+            <summary class="list-none cursor-pointer p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-charcoal-200 dark:text-cream-300">
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
             </summary>
-            <div class="absolute top-full right-0 mt-2 w-52 py-2 rounded-2xl bg-white dark:bg-zinc-900 border border-black/8 dark:border-white/10 shadow-2xl backdrop-blur-xl z-50">
+            <div class="mobile-nav-panel absolute top-full right-0 mt-2.5 w-56 p-2 rounded-2xl bg-white/95 dark:bg-zinc-900/95 border border-black/10 dark:border-white/15 shadow-2xl backdrop-blur-xl z-50 space-y-0.5 text-charcoal-800 dark:text-cream-100">
               {[
                 { name: '首页', href: '/' },
                 { name: '作品集', href: '/portfolio' },
@@ -404,7 +404,17 @@ const entertainItems = [
                 { name: '关于', href: '/about' },
                 { name: '留言板', href: '/messageboard' },
               ].map(item => (
-                <a href={item.href} class="block px-4 py-2 text-sm text-charcoal-200 dark:text-cream-300 hover:text-terracotta hover:bg-terracotta/5 transition-colors">{item.name}</a>
+                <a
+                  href={item.href}
+                  onclick="var mn=document.getElementById('mobile-nav-menu');if(mn)mn.removeAttribute('open');"
+                  class={`block px-3.5 py-2 rounded-xl text-sm font-medium transition-colors ${
+                    currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href))
+                      ? 'bg-terracotta/12 text-terracotta font-semibold'
+                      : 'text-charcoal-800 dark:text-cream-100 hover:text-terracotta hover:bg-black/5 dark:hover:bg-white/8'
+                  }`}
+                >
+                  {item.name}
+                </a>
               ))}
             </div>
           </details>
@@ -447,7 +457,7 @@ const entertainItems = [
       <footer class="border-t border-charcoal-500/10 dark:border-white/10 py-10 text-center text-xs text-charcoal-100 dark:text-cream-400 relative z-20">
         <div class="max-w-4xl mx-auto px-4 space-y-3">
           <p class="font-serif text-sm">
-            Crafted with <span class="text-terracotta animate-pulse">♥</span> by Larry & AI Co-creators
+            Crafted with <span class="text-terracotta animate-pulse">♥</span> by 磊大大 & AI Co-creators
           </p>
           <p class="font-mono text-[11px] opacity-75">
             PMOS V0.2 · 380+ 演进天数 · 108+ 灵感导航 · 93+ 原生动效
@@ -485,6 +495,16 @@ const entertainItems = [
           if (loader) {
             loader.style.opacity = '0';
             loader.style.pointerEvents = 'none';
+          }
+        });
+        document.addEventListener('click', (e) => {
+          const pm = document.getElementById('palette-menu');
+          if (pm && pm.hasAttribute('open') && !pm.contains(e.target)) {
+            pm.removeAttribute('open');
+          }
+          const mn = document.getElementById('mobile-nav-menu');
+          if (mn && mn.hasAttribute('open') && !mn.contains(e.target)) {
+            mn.removeAttribute('open');
           }
         });
       })();

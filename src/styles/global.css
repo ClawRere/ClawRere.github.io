@@ -91,8 +91,11 @@
   }
 }
 
-#site-header.at-home-top a,
-#site-header.at-home-top summary {
+#site-header.at-home-top > div > a,
+#site-header.at-home-top > div > nav > a,
+#site-header.at-home-top > div > nav > div > a,
+#site-header.at-home-top > div > div > a,
+#site-header.at-home-top > div > div > details > summary {
   color: rgba(255, 255, 255, 0.95) !important;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }

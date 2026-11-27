@@ -474,38 +474,42 @@ export const FireworksOverlay: React.FC<{ inlineTrigger?: boolean }> = ({ inline
         title={isDarkMask ? '点击夜空任意位置继续放烟花' : undefined}
       />
 
-      {/* Early Close Button when fireworks mask is active */}
-      {isDarkMask && (
-        <button
-          onClick={stopFireworks}
-          className="fixed top-20 right-6 z-50 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/25 text-white text-xs font-mono shadow-lg transition-colors"
-        >
-          <X className="w-3.5 h-3.5" />
-          <span>关闭烟花</span>
-        </button>
-      )}
-
       <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-50" />
 
+      {/* Merged Morphing Launch / Close Fireworks Button */}
       <button
-        onClick={launchFireworks}
+        onClick={isDarkMask ? stopFireworks : launchFireworks}
         style={inlineTrigger ? undefined : { top: btnPos.top, left: btnPos.left }}
         className={
           inlineTrigger
-            ? 'group inline-flex items-center h-10 px-3 rounded-full bg-black/35 hover:bg-black/60 backdrop-blur-md border border-white/25 text-white transition-all duration-300 shadow-lg overflow-hidden'
-            : 'absolute z-30 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/45 hover:bg-black/70 border border-white/25 text-white text-xs font-mono shadow-xl transition-transform hover:scale-105 active:scale-95'
+            ? `group relative z-50 inline-flex items-center h-10 px-3 rounded-full backdrop-blur-md border text-white transition-all duration-300 shadow-lg overflow-hidden ${
+                isDarkMask
+                  ? 'bg-rose-500/80 hover:bg-rose-500 border-rose-300/60 scale-105 shadow-rose-500/30'
+                  : 'bg-black/35 hover:bg-black/60 border-white/25'
+              }`
+            : `z-50 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border text-white text-xs font-mono shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 ${
+                isDarkMask
+                  ? 'fixed top-20 right-6 bg-rose-500/85 hover:bg-rose-500 border-rose-300/60'
+                  : 'absolute bg-black/45 hover:bg-black/70 border-white/25'
+              }`
         }
-        title="点击熄灯放烟花（点击夜空可连放）"
+        title={isDarkMask ? '点击关闭烟花' : '点击熄灯放烟花（点击夜空可连放）'}
       >
-        <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
+        <span className={`relative w-4 h-4 shrink-0 flex items-center justify-center transition-transform duration-300 ${isDarkMask ? 'rotate-90' : 'rotate-0'}`}>
+          {isDarkMask ? (
+            <X className="w-4 h-4 text-white" />
+          ) : (
+            <Sparkles className="w-4 h-4 text-amber-300" />
+          )}
+        </span>
         <span
           className={
             inlineTrigger
-              ? 'max-w-0 group-hover:max-w-[90px] group-hover:ml-2 overflow-hidden whitespace-nowrap text-xs font-mono transition-all duration-300'
+              ? `${isDarkMask ? 'max-w-[90px] ml-2' : 'max-w-0 group-hover:max-w-[90px] group-hover:ml-2'} overflow-hidden whitespace-nowrap text-xs font-mono transition-all duration-300`
               : ''
           }
         >
-          {inlineTrigger ? '放个烟花' : '🎆 放个烟花'}
+          {isDarkMask ? '关闭烟花' : inlineTrigger ? '放个烟花' : '🎆 放个烟花'}
         </span>
       </button>
     </>

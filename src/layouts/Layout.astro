@@ -143,7 +143,7 @@ const entertainItems = [
             ctx.letterSpacing = cs.letterSpacing;
           }
           ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
+          ctx.textBaseline = 'alphabetic';
           var accentRaw = window.getComputedStyle(document.documentElement).getPropertyValue('--theme-accent').trim() || '217 119 87';
           var accentRgb = accentRaw.split(/\s+/).join(',');
           var grad = ctx.createLinearGradient(w * 0.25, 0, w * 0.75, 0);
@@ -154,7 +154,11 @@ const entertainItems = [
           var spanRect = span.getBoundingClientRect();
           var wmRect = wm.getBoundingClientRect();
           var centerY = (spanRect.top - wmRect.top) + spanRect.height / 2;
-          ctx.fillText(text, w / 2, centerY);
+          var tm = ctx.measureText(text);
+          var ascent = tm.fontBoundingBoxAscent || tm.actualBoundingBoxAscent || (parseFloat(cs.fontSize) * 0.72);
+          var descent = tm.fontBoundingBoxDescent || tm.actualBoundingBoxDescent || (parseFloat(cs.fontSize) * 0.18);
+          var baselineY = centerY + (ascent - descent) / 2;
+          ctx.fillText(text, w / 2, baselineY);
 
           var imgData = ctx.getImageData(0, 0, w, h).data;
           particles = [];
@@ -254,11 +258,11 @@ const entertainItems = [
       <span class="text-xs font-mono text-charcoal-100 dark:text-cream-400 tracking-widest">LOADING...</span>
     </div>
 
-    <!-- Lightweight Ambient Hero Background (no live full-screen CSS blur, no continuous canvas RAF) -->
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" style="contain: strict;" aria-hidden="true">
+    <!-- Lightweight Ambient Hero Background (disabled in dark mode so images never look muddy/grey) -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden dark:hidden" style="contain: strict;" aria-hidden="true">
       <div
         id="global-blurred-bg"
-        class="w-full h-full opacity-20 dark:opacity-15"
+        class="w-full h-full opacity-20"
         style="background: var(--hero-bg, url('/img/starry-sky.jpg') center/cover no-repeat);"
       />
     </div>
@@ -421,10 +425,13 @@ const entertainItems = [
             currentPath.startsWith('/entertain/music') ? '-mb-16 sm:-mb-24' : '-mb-8 sm:-mb-12'
           }`}
         >
-          <span class="wm-text block text-[13vw] sm:text-[6.5rem] lg:text-[8.5rem] font-black leading-none tracking-[0.12em] bg-gradient-to-r from-terracotta/45 via-rose-300/40 to-amber-300/45 dark:from-terracotta/40 dark:via-rose-300/35 dark:to-amber-200/35 bg-clip-text text-transparent truncate px-2 transition-opacity duration-200">
+          <span
+            class="wm-text block text-[13vw] sm:text-[6.5rem] lg:text-[8.5rem] font-black leading-none tracking-[0.12em] bg-clip-text text-transparent truncate px-2 transition-opacity duration-300"
+            style="background-image: linear-gradient(90deg, rgb(var(--theme-accent, 217 119 87) / 0.55), rgb(var(--theme-accent, 217 119 87) / 0.30) 55%, rgba(251, 191, 36, 0.42));"
+          >
             {resolvedWatermark}
           </span>
-          <canvas class="wm-canvas pointer-events-none absolute inset-0 w-full h-full opacity-0 transition-opacity duration-200" />
+          <canvas class="wm-canvas pointer-events-none absolute inset-0 w-full h-full opacity-0 transition-opacity duration-300" />
         </div>
       )}
       <div class="relative z-10">

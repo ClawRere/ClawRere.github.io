@@ -39,44 +39,74 @@ const CATEGORY_STYLES: Record<string, { gradient: string; Icon: React.ComponentT
   '实用组件': { gradient: 'from-fuchsia-500/25 via-purple-500/15 to-pink-500/20', Icon: Component },
 };
 
-const LiveEffectFrame: React.FC<{ effect: EffectItem; isHovered: boolean; styleCfg: { gradient: string; Icon: React.ComponentType<{ className?: string }> } }> = ({
-  effect,
-  isHovered,
-  styleCfg,
-}) => {
+const LiveEffectFrame: React.FC<{
+  effect: EffectItem;
+  isHovered: boolean;
+  styleCfg: { gradient: string; Icon: React.ComponentType<{ className?: string }> };
+}> = ({ effect, isHovered, styleCfg }) => {
   const Icon = styleCfg.Icon;
+  const [shouldRenderIframe, setShouldRenderIframe] = React.useState(false);
 
-  if (!isHovered) {
-    return (
-      <div className="w-full h-full flex flex-col items-center justify-center gap-2.5 p-4 text-center select-none">
-        <div className="w-12 h-12 rounded-2xl bg-white/30 dark:bg-black/25 backdrop-blur-sm flex items-center justify-center shadow-sm">
-          <Icon className="w-6 h-6 text-charcoal-DEFAULT/80 dark:text-cream-100/90" />
-        </div>
-        <span className="text-xs font-mono text-charcoal-DEFAULT/70 dark:text-cream-200/80">
-          悬停预览完整动效
-        </span>
-      </div>
-    );
-  }
+  React.useEffect(() => {
+    if (isHovered) {
+      setShouldRenderIframe(true);
+      return;
+    }
+    const t = setTimeout(() => setShouldRenderIframe(false), 480);
+    return () => clearTimeout(t);
+  }, [isHovered]);
 
   return (
-    <div className="w-full h-full overflow-hidden relative bg-zinc-950">
-      {effect.htmlCode ? (
-        <iframe
-          srcDoc={effect.htmlCode}
-          title={effect.title}
-          scrolling="no"
-          className="w-[200%] h-[200%] scale-50 origin-top-left border-0 bg-zinc-950 pointer-events-none overflow-hidden"
-          sandbox="allow-scripts"
-        />
-      ) : (
-        <iframe
-          src={effect.path}
-          title={effect.title}
-          scrolling="no"
-          className="w-[200%] h-[200%] scale-50 origin-top-left border-0 bg-zinc-950 pointer-events-none overflow-hidden"
-        />
+    <div className="w-full h-full relative overflow-hidden [perspective:900px]">
+      {/* Underlying Full-Page Scaled Effect Preview */}
+      {shouldRenderIframe && (
+        <div className="absolute inset-0 bg-zinc-950 overflow-hidden">
+          {effect.htmlCode ? (
+            <iframe
+              srcDoc={effect.htmlCode}
+              title={effect.title}
+              scrolling="no"
+              className="w-[200%] h-[200%] scale-50 origin-top-left border-0 bg-zinc-950 pointer-events-none overflow-hidden"
+              sandbox="allow-scripts"
+            />
+          ) : (
+            <iframe
+              src={effect.path}
+              title={effect.title}
+              scrolling="no"
+              className="w-[200%] h-[200%] scale-50 origin-top-left border-0 bg-zinc-950 pointer-events-none overflow-hidden"
+            />
+          )}
+        </div>
       )}
+
+      {/* 3D Double Doors: Open on Hover, Close on Mouse Leave */}
+      <div
+        className={`absolute inset-y-0 left-0 w-1/2 origin-left bg-gradient-to-br ${styleCfg.gradient} backdrop-blur-md border-r border-white/25 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-10 flex items-center justify-end pr-2`}
+        style={{ transform: isHovered ? 'rotateY(-108deg)' : 'rotateY(0deg)' }}
+      >
+        <div className="w-1 h-6 rounded-full bg-white/45" />
+      </div>
+      <div
+        className={`absolute inset-y-0 right-0 w-1/2 origin-right bg-gradient-to-bl ${styleCfg.gradient} backdrop-blur-md border-l border-white/25 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-10 flex items-center justify-start pl-2`}
+        style={{ transform: isHovered ? 'rotateY(108deg)' : 'rotateY(0deg)' }}
+      >
+        <div className="w-1 h-6 rounded-full bg-white/45" />
+      </div>
+
+      {/* Center Door Emblem (fades out as doors swing open) */}
+      <div
+        className={`pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 transition-opacity duration-300 ${
+          isHovered ? 'opacity-0' : 'opacity-100'
+        }`}
+      >
+        <div className="w-11 h-11 rounded-2xl bg-white/35 dark:bg-black/30 backdrop-blur-sm flex items-center justify-center shadow-sm">
+          <Icon className="w-5 h-5 text-charcoal-DEFAULT/80 dark:text-cream-100/90" />
+        </div>
+        <span className="text-[11px] font-mono text-charcoal-DEFAULT/75 dark:text-cream-100/80">
+          悬停推门预览
+        </span>
+      </div>
     </div>
   );
 };

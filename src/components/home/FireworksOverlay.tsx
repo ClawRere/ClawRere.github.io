@@ -1,7 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Sparkles, X } from 'lucide-react';
 
-type ShellStyle = 'chrysanthemum' | 'ring' | 'willow' | 'strobe' | 'pistil';
+type ShellStyle =
+  | 'chrysanthemum'
+  | 'ring'
+  | 'willow'
+  | 'strobe'
+  | 'pistil'
+  | 'heart'
+  | 'star'
+  | 'doubleRing'
+  | 'spiral'
+  | 'crossette';
 
 interface Rocket {
   x: number;
@@ -31,8 +41,19 @@ interface Spark {
   prevY: number;
 }
 
-const COLORS = ['#FF5E7E', '#FFD166', '#06D6A0', '#4EA8DE', '#C77DFF', '#FF9F1C', '#F8FAFC', '#FF3366'];
-const SHELL_STYLES: ShellStyle[] = ['chrysanthemum', 'ring', 'willow', 'strobe', 'pistil'];
+const COLORS = ['#FF5E7E', '#FFD166', '#06D6A0', '#4EA8DE', '#C77DFF', '#FF9F1C', '#F8FAFC', '#FF3366', '#38BDF8', '#A3E635'];
+const SHELL_STYLES: ShellStyle[] = [
+  'chrysanthemum',
+  'ring',
+  'willow',
+  'strobe',
+  'pistil',
+  'heart',
+  'star',
+  'doubleRing',
+  'spiral',
+  'crossette',
+];
 
 const playSound = (src: string, volume = 0.35) => {
   try {
@@ -170,6 +191,69 @@ export const FireworksOverlay: React.FC<{ inlineTrigger?: boolean }> = ({ inline
           gravity: 0.12, drag: 0.95, flicker: true,
         });
       }
+    } else if (shellStyle === 'heart') {
+      const count = 64;
+      for (let i = 0; i < count; i++) {
+        const t = (Math.PI * 2 * i) / count;
+        const hx = 16 * Math.pow(Math.sin(t), 3);
+        const hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        sparksRef.current.push({
+          x: rx, y: ry, prevX: rx, prevY: ry,
+          vx: hx * 0.36, vy: hy * 0.36,
+          alpha: 1, color: '#FF5E7E', size: 2.5, decay: 0.02,
+          gravity: 0.08, drag: 0.955, flicker: true,
+        });
+      }
+    } else if (shellStyle === 'star') {
+      const points = 5;
+      for (let i = 0; i < 65; i++) {
+        const angle = (Math.PI * 2 * i) / 65;
+        const starR = 4.2 + 3.4 * Math.abs(Math.cos((angle * points) / 2));
+        sparksRef.current.push({
+          x: rx, y: ry, prevX: rx, prevY: ry,
+          vx: Math.cos(angle) * starR, vy: Math.sin(angle) * starR,
+          alpha: 1, color: i % 2 === 0 ? '#FFD166' : baseColor, size: 2.4, decay: 0.021,
+          gravity: 0.1, drag: 0.955, flicker: false,
+        });
+      }
+    } else if (shellStyle === 'doubleRing') {
+      [4.5, 8.2].forEach((spd, ringIdx) => {
+        for (let i = 0; i < 44; i++) {
+          const angle = (Math.PI * 2 * i) / 44;
+          sparksRef.current.push({
+            x: rx, y: ry, prevX: rx, prevY: ry,
+            vx: Math.cos(angle) * spd, vy: Math.sin(angle) * spd,
+            alpha: 1, color: ringIdx === 0 ? secondaryColor : baseColor, size: 2.2, decay: 0.022,
+            gravity: 0.1, drag: 0.955, flicker: ringIdx === 0,
+          });
+        }
+      });
+    } else if (shellStyle === 'spiral') {
+      for (let i = 0; i < 72; i++) {
+        const angle = i * 0.34;
+        const speed = 1.8 + (i / 72) * 7.6;
+        sparksRef.current.push({
+          x: rx, y: ry, prevX: rx, prevY: ry,
+          vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+          alpha: 1, color: COLORS[i % COLORS.length], size: 2.2, decay: 0.02,
+          gravity: 0.09, drag: 0.955, flicker: true,
+        });
+      }
+    } else if (shellStyle === 'crossette') {
+      for (let arm = 0; arm < 8; arm++) {
+        const baseA = (Math.PI * 2 * arm) / 8;
+        const col = COLORS[(arm + Math.floor(Math.random() * 4)) % COLORS.length];
+        for (let s = 0; s < 8; s++) {
+          const spread = baseA + (Math.random() - 0.5) * 0.25;
+          const spd = 4.2 + s * 0.7;
+          sparksRef.current.push({
+            x: rx, y: ry, prevX: rx, prevY: ry,
+            vx: Math.cos(spread) * spd, vy: Math.sin(spread) * spd,
+            alpha: 1, color: col, size: 2.4, decay: 0.02,
+            gravity: 0.13, drag: 0.95, flicker: true,
+          });
+        }
+      }
     } else {
       const count = 68;
       for (let i = 0; i < count; i++) {
@@ -261,7 +345,70 @@ export const FireworksOverlay: React.FC<{ inlineTrigger?: boolean }> = ({ inline
 
       if (rockets.length > 0 || sparks.length > 0) {
         rafRef.current = requestAnimationFrame(tick);
-      } else {
+      } else if (shellStyle === 'heart') {
+      const count = 64;
+      for (let i = 0; i < count; i++) {
+        const t = (Math.PI * 2 * i) / count;
+        const hx = 16 * Math.pow(Math.sin(t), 3);
+        const hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        sparksRef.current.push({
+          x: rx, y: ry, prevX: rx, prevY: ry,
+          vx: hx * 0.36, vy: hy * 0.36,
+          alpha: 1, color: '#FF5E7E', size: 2.5, decay: 0.02,
+          gravity: 0.08, drag: 0.955, flicker: true,
+        });
+      }
+    } else if (shellStyle === 'star') {
+      const points = 5;
+      for (let i = 0; i < 65; i++) {
+        const angle = (Math.PI * 2 * i) / 65;
+        const starR = 4.2 + 3.4 * Math.abs(Math.cos((angle * points) / 2));
+        sparksRef.current.push({
+          x: rx, y: ry, prevX: rx, prevY: ry,
+          vx: Math.cos(angle) * starR, vy: Math.sin(angle) * starR,
+          alpha: 1, color: i % 2 === 0 ? '#FFD166' : baseColor, size: 2.4, decay: 0.021,
+          gravity: 0.1, drag: 0.955, flicker: false,
+        });
+      }
+    } else if (shellStyle === 'doubleRing') {
+      [4.5, 8.2].forEach((spd, ringIdx) => {
+        for (let i = 0; i < 44; i++) {
+          const angle = (Math.PI * 2 * i) / 44;
+          sparksRef.current.push({
+            x: rx, y: ry, prevX: rx, prevY: ry,
+            vx: Math.cos(angle) * spd, vy: Math.sin(angle) * spd,
+            alpha: 1, color: ringIdx === 0 ? secondaryColor : baseColor, size: 2.2, decay: 0.022,
+            gravity: 0.1, drag: 0.955, flicker: ringIdx === 0,
+          });
+        }
+      });
+    } else if (shellStyle === 'spiral') {
+      for (let i = 0; i < 72; i++) {
+        const angle = i * 0.34;
+        const speed = 1.8 + (i / 72) * 7.6;
+        sparksRef.current.push({
+          x: rx, y: ry, prevX: rx, prevY: ry,
+          vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+          alpha: 1, color: COLORS[i % COLORS.length], size: 2.2, decay: 0.02,
+          gravity: 0.09, drag: 0.955, flicker: true,
+        });
+      }
+    } else if (shellStyle === 'crossette') {
+      for (let arm = 0; arm < 8; arm++) {
+        const baseA = (Math.PI * 2 * arm) / 8;
+        const col = COLORS[(arm + Math.floor(Math.random() * 4)) % COLORS.length];
+        for (let s = 0; s < 8; s++) {
+          const spread = baseA + (Math.random() - 0.5) * 0.25;
+          const spd = 4.2 + s * 0.7;
+          sparksRef.current.push({
+            x: rx, y: ry, prevX: rx, prevY: ry,
+            vx: Math.cos(spread) * spd, vy: Math.sin(spread) * spd,
+            alpha: 1, color: col, size: 2.4, decay: 0.02,
+            gravity: 0.13, drag: 0.95, flicker: true,
+          });
+        }
+      }
+    } else {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         rafRef.current = null;
         if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);

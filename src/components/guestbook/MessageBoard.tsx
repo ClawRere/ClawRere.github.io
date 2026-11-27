@@ -617,15 +617,17 @@ const WeatherBoxCanvas: React.FC<{ weather: WeatherKind }> = ({ weather }) => {
         }
         for (const l of leaves) {
           l.x += l.vx; l.y += l.vy + Math.sin(tick * 0.05 + l.x * 0.04) * 0.6; l.rot += l.rv;
-          // Leaves fade out at staggered individual thresholds (allowing crossing past 1/3 boundary)
+          // Smoothly fade out to 0 before reaching the left edge so leaves are never clipped abruptly
+          const edgeFade = Math.max(0, Math.min(1, (l.x - 14) / (w * 0.38)));
           if (l.x < l.fadeAt) l.alpha = Math.max(0, l.alpha - l.fadeRate);
           else l.alpha = Math.min(0.9, l.alpha + 0.03);
-          if (l.x < -45 || l.alpha <= 0.02) {
+          const finalAlpha = l.alpha * edgeFade;
+          if (l.x < 10 || finalAlpha <= 0.015) {
             l.x = w + 10; l.y = Math.random() * (h - 20); l.alpha = 0.05;
-            l.fadeAt = (-0.25 + Math.random() * 0.65) * w;
+            l.fadeAt = (0.15 + Math.random() * 0.55) * w;
           }
           ctx.save(); ctx.translate(l.x, l.y); ctx.rotate(l.rot); ctx.scale(l.s, l.s);
-          ctx.globalAlpha = l.alpha;
+          ctx.globalAlpha = finalAlpha;
           ctx.fillStyle = l.color; ctx.beginPath(); ctx.ellipse(0, 0, 7, 3.2, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
         }
       } else if (weather === 'thunder') {

@@ -80,23 +80,19 @@ const { Content } = await render(post);
 
   <script is:inline>
     (() => {
-      const DEFAULT_IMG = '/img/fan/card-1.svg';
-      const attachFallbacks = () => {
+      const hideBrokenImages = () => {
         document.querySelectorAll('.prose img').forEach((img) => {
-          if (img.dataset.fallbackBound) return;
-          img.dataset.fallbackBound = '1';
-          const applyFallback = () => {
-            if (img.src !== DEFAULT_IMG) {
-              img.src = DEFAULT_IMG;
-              img.alt = img.alt || '默认封面图';
-            }
+          if (img.dataset.hideBound) return;
+          img.dataset.hideBound = '1';
+          const hide = () => {
+            img.style.display = 'none';
           };
-          img.addEventListener('error', applyFallback, { once: true });
-          if (img.complete && img.naturalWidth === 0) applyFallback();
+          img.addEventListener('error', hide, { once: true });
+          if (img.complete && img.naturalWidth === 0) hide();
         });
       };
-      attachFallbacks();
-      document.addEventListener('astro:page-load', attachFallbacks);
+      hideBrokenImages();
+      document.addEventListener('astro:page-load', hideBrokenImages);
     })();
   </script>
 </Layout>

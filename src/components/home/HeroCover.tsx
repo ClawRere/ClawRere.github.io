@@ -73,7 +73,7 @@ export const HeroCover: React.FC = () => {
       raf = requestAnimationFrame(() => {
         raf = 0;
         const y = Math.min(window.scrollY, window.innerHeight || 900);
-        setParallaxY(y * 0.28);
+        setParallaxY(y * 0.45);
       });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -163,6 +163,22 @@ export const HeroCover: React.FC = () => {
         }}
         className="pointer-events-none absolute inset-x-0 -top-4 -bottom-32 z-0 will-change-transform transition-[background-image,background-color] duration-500"
       />
+      {/* Center Compact Frosted-Glass Typewriter Pill with Scroll Parallax */}
+      <div
+        style={{
+          transform: `translate3d(0, ${(parallaxY * 0.35).toFixed(1)}px, 0)`,
+          opacity: Math.max(0.15, 1 - parallaxY / 260),
+        }}
+        className="relative z-20 px-4 max-w-2xl mx-auto text-center will-change-transform"
+      >
+        <div className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-white/15 dark:bg-black/30 backdrop-blur-xl border border-white/30 shadow-2xl">
+          <span className="text-xs sm:text-sm md:text-base font-mono text-white tracking-wide drop-shadow-sm">
+            {activePhrase.slice(0, charIndex)}
+          </span>
+          <span className="inline-block w-[2px] h-4 sm:h-5 bg-terracotta ml-1 animate-pulse" />
+        </div>
+      </div>
+
       {/* Top-Right Compact Circular Stack: Theme Switcher + Fireworks (expand text on hover) */}
       <div className="absolute top-6 right-6 z-30 flex flex-col items-end gap-2.5">
         <button

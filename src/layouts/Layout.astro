@@ -65,11 +65,33 @@ const entertainItems = [
         } catch (e) {}
       };
       window.__applySitePrefs();
-      document.addEventListener('astro:after-swap', window.__applySitePrefs);
+      document.addEventListener('astro:after-swap', () => {
+        window.__applySitePrefs();
+        if (window.__updateHeaderBg) window.__updateHeaderBg();
+      });
+
+      window.__updateHeaderBg = function () {
+        var hdr = document.getElementById('site-header');
+        if (!hdr) return;
+        var isHome = hdr.dataset.home === 'true';
+        var scrolled = window.scrollY > 24;
+        if (scrolled) {
+          hdr.classList.add('bg-cream-50/92', 'dark:bg-[#1c1f2b]/92', 'backdrop-blur-md', 'border-black/5', 'dark:border-white/8', 'shadow-sm');
+          hdr.classList.remove('at-home-top', 'border-transparent', 'bg-gradient-to-b', 'from-black/45', 'via-black/20', 'to-transparent', 'text-white');
+        } else {
+          hdr.classList.remove('bg-cream-50/92', 'dark:bg-[#1c1f2b]/92', 'backdrop-blur-md', 'border-black/5', 'dark:border-white/8', 'shadow-sm');
+          hdr.classList.add('border-transparent', 'bg-gradient-to-b');
+          if (isHome) {
+            hdr.classList.add('at-home-top', 'from-black/45', 'via-black/20', 'to-transparent', 'text-white');
+          }
+        }
+      };
+      window.addEventListener('scroll', window.__updateHeaderBg, { passive: true });
+      window.__updateHeaderBg();
     </script>
     <ClientRouter />
   </head>
-  <body class="min-h-screen flex flex-col bg-cream-50 dark:bg-obsidian text-charcoal-DEFAULT dark:text-cream-100 transition-colors duration-300 relative selection:bg-terracotta/20 selection:text-terracotta overflow-x-hidden">
+  <body class="min-h-screen flex flex-col bg-cream-50 dark:bg-[#1c1f2b] text-charcoal-DEFAULT dark:text-cream-100 transition-colors duration-300 relative selection:bg-terracotta/20 selection:text-terracotta overflow-x-hidden">
     <!-- Top accent line -->
     <div class="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-terracotta/60 to-transparent z-50 pointer-events-none" />
 
@@ -96,8 +118,16 @@ const entertainItems = [
       />
     </div>
 
-    <!-- TOP NAVIGATION BAR (solid translucent without heavy backdrop-blur-xl repaints) -->
-    <header class="fixed top-0 left-0 right-0 z-40 border-b border-black/5 dark:border-white/5 bg-cream-50/95 dark:bg-obsidian/95">
+    <!-- TOP NAVIGATION BAR (transparent/gradient at top, solid frosted backdrop on scroll) -->
+    <header
+      id="site-header"
+      data-home={currentPath === '/' ? 'true' : 'false'}
+      class={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 border-b border-transparent ${
+        currentPath === '/'
+          ? 'bg-gradient-to-b from-black/45 via-black/20 to-transparent text-white [&_*]:drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]'
+          : 'bg-gradient-to-b from-cream-50/75 via-cream-50/30 to-transparent dark:from-[#1c1f2b]/75 dark:via-[#1c1f2b]/30 dark:to-transparent'
+      }`}
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
         
         <!-- Logo: clean pure text -->
@@ -238,7 +268,7 @@ const entertainItems = [
     {sideTitle && <HangingSideBoard client:load title={sideTitle} />}
 
     <!-- Main Content Slot -->
-    <main class={`flex-1 w-full pt-14 relative z-10 ${fullWidth ? '' : 'max-w-6xl mx-auto px-4 sm:px-6'}`}>
+    <main class={`flex-1 w-full relative z-10 ${currentPath === '/' ? '' : 'pt-14'} ${fullWidth ? '' : 'max-w-6xl mx-auto px-4 sm:px-6'}`}>
       <slot />
     </main>
 

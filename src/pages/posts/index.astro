@@ -65,15 +65,9 @@ const categories = Array.from(
           : post.data.tags
           ? [post.data.tags]
           : [];
-        const mondrianThemes = [
-          { bar: 'bg-[#E63946]', img: '/img/blog/mondrian-red.svg' },
-          { bar: 'bg-[#1D3557]', img: '/img/blog/mondrian-blue.svg' },
-          { bar: 'bg-[#FFB703]', img: '/img/blog/mondrian-yellow.svg' },
-          { bar: 'bg-terracotta', img: '/img/blog/mondrian-coral.svg' },
-        ];
-        const theme = mondrianThemes[idx % mondrianThemes.length];
-        const barColor = theme.bar;
-        const cover = theme.img;
+        const barColors = ['bg-[#E63946]', 'bg-[#1D3557]', 'bg-[#FFB703]', 'bg-terracotta'];
+        const barColor = barColors[idx % barColors.length];
+        const cover = `/img/blog/cover-${(idx % 10) + 1}.svg`;
 
         return (
           <a
@@ -81,14 +75,13 @@ const categories = Array.from(
             data-category={category}
             class="post-card scroll-reveal-card ring-collapse group relative flex flex-col sm:flex-row overflow-hidden rounded-2xl glass border border-charcoal-500/12 dark:border-white/12 hover:border-terracotta/45 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
           >
-            {/* Left Accent Strip + Cover Image */}
+            {/* Left Accent Strip + Illustrated Cover Image */}
             <span class={`hidden sm:block absolute top-0 left-0 bottom-0 w-1.5 z-20 ${barColor}`} />
             <div class="relative w-full sm:w-44 md:w-48 h-40 sm:h-auto shrink-0 overflow-hidden bg-zinc-900/10">
               <img
                 src={cover}
                 alt={post.data.title}
                 loading="lazy"
-                onerror={`this.onerror=null;this.src='/img/blog/cover-${(idx % 10) + 1}.svg';`}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
               <span class="absolute top-2.5 left-3 sm:left-4 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-black/55 backdrop-blur-sm text-white border border-white/15">
@@ -96,15 +89,17 @@ const categories = Array.from(
               </span>
             </div>
 
-            {/* Right: Title + Summary + Date + Tags */}
+            {/* Right: Title + Optional Summary + Date + Tags */}
             <div class="flex-1 p-4 sm:p-5 flex flex-col justify-between min-w-0 gap-3">
               <div class="space-y-1.5">
                 <h2 class="font-bold text-sm sm:text-base text-charcoal-DEFAULT dark:text-cream-50 group-hover:text-terracotta transition-colors leading-snug line-clamp-2">
                   {post.data.title}
                 </h2>
-                <p class="text-xs text-charcoal-100 dark:text-cream-300/80 line-clamp-2 leading-relaxed">
-                  {post.data.description || '点击查看全文笔记、实践记录与核心总结。'}
-                </p>
+                {post.data.description && (
+                  <p class="text-xs text-charcoal-100 dark:text-cream-300/80 line-clamp-2 leading-relaxed">
+                    {post.data.description}
+                  </p>
+                )}
               </div>
 
               <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-charcoal-500/10 dark:border-white/10">
@@ -154,6 +149,39 @@ const categories = Array.from(
   }
 
   (window as any).filterPosts = filterPosts;
+
+  // Black-hole vortex transition when entering an article
+  const bindPortalTransition = () => {
+    document.querySelectorAll('.post-card').forEach((card) => {
+      const el = card as HTMLAnchorElement;
+      if (el.dataset.portalBound) return;
+      el.dataset.portalBound = '1';
+      el.addEventListener('click', (e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+        e.preventDefault();
+        const href = el.getAttribute('href');
+        if (!href) return;
+
+        el.style.transition = 'transform 0.42s cubic-bezier(0.7, 0, 0.84, 0), opacity 0.42s ease';
+        el.style.transform = 'scale(0.15) rotate(14deg)';
+        el.style.opacity = '0';
+
+        const portal = document.createElement('div');
+        portal.className = 'fixed inset-0 z-[120] pointer-events-none flex items-center justify-center bg-black/0 transition-colors duration-300';
+        portal.innerHTML = '<div class="w-40 h-40 rounded-full bg-[radial-gradient(circle,#000_35%,rgba(217,119,87,0.55)_65%,transparent_80%)] animate-[spin_0.45s_linear_infinite] scale-[8] transition-transform duration-500"></div>';
+        document.body.appendChild(portal);
+        requestAnimationFrame(() => {
+          portal.style.backgroundColor = 'rgba(10,12,18,0.85)';
+        });
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 380);
+      });
+    });
+  };
+  bindPortalTransition();
+  document.addEventListener('astro:page-load', bindPortalTransition);
 </script>
 
 <style>

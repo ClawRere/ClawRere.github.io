@@ -14,11 +14,11 @@
   }
 
   .dark {
-    --bg-primary: #121211;
-    --bg-card: rgba(26, 25, 24, 0.85);
+    --bg-primary: #1c1f2b;
+    --bg-card: rgba(34, 38, 52, 0.86);
     --border-color: rgba(255, 255, 255, 0.12);
     --text-primary: #F7F3EB;
-    --text-muted: #9E9C97;
+    --text-muted: #A3A8B8;
   }
 
   html {
@@ -40,9 +40,9 @@
 
   .dark body {
     background-image:
-      radial-gradient(at 20% 12%, rgba(217, 119, 87, 0.07) 0px, transparent 50%),
-      radial-gradient(at 80% 30%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
-      linear-gradient(180deg, #141413 0%, #181715 50%, #111110 100%);
+      radial-gradient(at 20% 12%, rgba(217, 119, 87, 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 30%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+      linear-gradient(180deg, #1b1e29 0%, #222635 50%, #191c27 100%);
   }
 
   ::selection {
@@ -89,6 +89,12 @@
     animation-timeline: view();
     animation-range: exit 0% exit 75%;
   }
+}
+
+#site-header.at-home-top a,
+#site-header.at-home-top summary {
+  color: rgba(255, 255, 255, 0.94) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
 }
 
 /* Collapsing outline ring micro-interaction */

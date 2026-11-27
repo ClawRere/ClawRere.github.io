@@ -120,7 +120,7 @@ const TidewellPixelRow: React.FC = () => (
 );
 
 type BiomeKind = 'meadow' | 'desert' | 'stone' | 'mountain' | 'cornfield' | 'coast';
-type WeatherKind = 'sunny' | 'rainy' | 'snowy' | 'cloudy';
+type WeatherKind = 'sunny' | 'rainy' | 'snowy' | 'cloudy' | 'thunder';
 
 // Physical Biome Border Decorations: Meadow (grass + grazing sheep), Desert (sand + sandstorm), Stone, Coast
 const BiomeDecoration: React.FC<{ biome: BiomeKind }> = ({ biome }) => {
@@ -904,6 +904,42 @@ export const MessageBoard: React.FC = () => {
         .tw-snowflake {
           animation: weatherSnow 3.2s ease-in-out infinite;
         }
+        @keyframes rainPuddleGrow {
+          0%, 10% { height: 4px; opacity: 0.45; }
+          65% { height: 15px; opacity: 0.85; }
+          90% { height: 15px; opacity: 0.75; }
+          100% { height: 4px; opacity: 0.45; }
+        }
+        .tw-rain-puddle {
+          animation: rainPuddleGrow 12s ease-in-out infinite;
+        }
+        @keyframes snowPileGrow {
+          0%, 10% { height: 4px; opacity: 0.55; }
+          70% { height: 18px; opacity: 0.95; }
+          92% { height: 18px; opacity: 0.85; }
+          100% { height: 4px; opacity: 0.55; }
+        }
+        .tw-snow-pile {
+          animation: snowPileGrow 14s ease-in-out infinite;
+        }
+        @keyframes lightningStrike {
+          0%, 10%, 18%, 100% { opacity: 0; }
+          12% { opacity: 1; }
+          14% { opacity: 0.2; }
+          16% { opacity: 0.95; }
+        }
+        .tw-lightning-bolt {
+          animation: lightningStrike 7s linear infinite;
+        }
+        @keyframes thunderCharRecover {
+          0%, 11% { opacity: 0; }
+          14%, 22% { opacity: 0.62; }
+          78% { opacity: 0.14; }
+          100% { opacity: 0; }
+        }
+        .tw-thunder-char {
+          animation: thunderCharRecover 7s ease-out infinite;
+        }
         @keyframes facePop {
           0% { transform: scale(1); }
           40% { transform: scale(1.38) rotate(-8deg); }
@@ -934,7 +970,7 @@ export const MessageBoard: React.FC = () => {
               cornfield: 'border-2 border-lime-500/45 shadow-[inset_0_0_0_2px_rgba(132,204,22,0.14)] bg-white/85 dark:bg-zinc-900/75',
               coast: 'border-2 border-sky-400/45 shadow-[inset_0_0_0_2px_rgba(56,189,248,0.14)] bg-white/85 dark:bg-zinc-900/75',
             };
-            const weathers: WeatherKind[] = ['sunny', 'rainy', 'snowy', 'cloudy'];
+            const weathers: WeatherKind[] = ['sunny', 'rainy', 'snowy', 'cloudy', 'thunder'];
             const weather = weathers[(msg.id + weatherOffset) % weathers.length];
 
             return (
@@ -987,7 +1023,38 @@ export const MessageBoard: React.FC = () => {
                       <circle cx="48" cy="22" r="9" fill="#cbd5e1" />
                     </svg>
                   )}
+                  {weather === 'thunder' && (
+                    <div className="relative w-full h-full">
+                      <svg className="w-16 h-9 ml-auto mr-1 mt-0.5 opacity-80" viewBox="0 0 64 36">
+                        <circle cx="24" cy="20" r="10" fill="#64748b" />
+                        <circle cx="36" cy="16" r="12" fill="#475569" />
+                        <circle cx="48" cy="20" r="9" fill="#64748b" />
+                      </svg>
+                      <svg className="tw-lightning-bolt w-7 h-12 ml-auto mr-5 -mt-2 text-yellow-300 drop-shadow-[0_0_8px_rgba(253,224,71,0.95)]" viewBox="0 0 24 36" fill="currentColor">
+                        <polygon points="14,0 4,18 11,18 8,36 21,14 13,14" />
+                      </svg>
+                    </div>
+                  )}
                 </div>
+                {/* Accumulating Rain Puddle / Snowdrift / Thunder Char Recovery */}
+                {weather === 'rainy' && (
+                  <div
+                    aria-hidden="true"
+                    className="tw-rain-puddle pointer-events-none absolute inset-x-0 bottom-0 z-10 rounded-b-2xl bg-gradient-to-t from-sky-400/55 via-sky-300/35 to-transparent backdrop-blur-[1px] border-t border-sky-300/40"
+                  />
+                )}
+                {weather === 'snowy' && (
+                  <div
+                    aria-hidden="true"
+                    className="tw-snow-pile pointer-events-none absolute inset-x-0 bottom-0 z-10 rounded-b-2xl bg-gradient-to-t from-white/95 via-slate-100/80 to-transparent shadow-[0_-2px_8px_rgba(255,255,255,0.6)]"
+                  />
+                )}
+                {weather === 'thunder' && (
+                  <div
+                    aria-hidden="true"
+                    className="tw-thunder-char pointer-events-none absolute inset-0 z-20 rounded-2xl bg-gradient-to-b from-zinc-950/90 via-stone-900/80 to-zinc-950/95"
+                  />
+                )}
                 {isBurning && <BurnCanvas />}
 
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">

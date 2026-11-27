@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import { Copy, Check, Image as ImageIcon } from 'lucide-react';
 import galleryData from '@/data/gallery.json';
-import { DeviceLoader } from '@/components/ui/DeviceLoader';
+
+const GALLERY_GRADIENTS = [
+  'from-violet-600/30 via-indigo-500/20 to-cyan-500/25',
+  'from-rose-500/30 via-amber-500/20 to-orange-500/25',
+  'from-emerald-500/30 via-teal-500/20 to-cyan-500/25',
+  'from-fuchsia-500/30 via-purple-500/20 to-pink-500/25',
+  'from-sky-500/30 via-blue-500/20 to-indigo-500/25',
+  'from-amber-500/30 via-orange-500/20 to-red-500/25',
+];
 
 interface GalleryImg {
   alt: string;
@@ -74,12 +82,7 @@ export const GalleryExplorer: React.FC = () => {
             key={`${currentAlbum.id}-${img.url}-${idx}`}
             className="group relative rounded-2xl overflow-hidden border border-charcoal-500/10 dark:border-white/10 bg-zinc-900/20 shadow-lg hover:shadow-2xl transition-all"
           >
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-violet-600/25 via-indigo-500/15 to-cyan-500/20 flex items-center justify-center">
-              {!loadedUrls[img.url] && (
-                <div className="absolute inset-0 flex items-center justify-center text-cream-200/70 pointer-events-none">
-                  <DeviceLoader />
-                </div>
-              )}
+            <div className={`relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br ${GALLERY_GRADIENTS[idx % GALLERY_GRADIENTS.length]}`}>
               <img
                 src={img.url}
                 alt={img.alt}

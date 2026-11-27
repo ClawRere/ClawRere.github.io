@@ -44,7 +44,6 @@ const LiveEffectFrame: React.FC<{
   isHovered: boolean;
   styleCfg: { gradient: string; Icon: React.ComponentType<{ className?: string }> };
 }> = ({ effect, isHovered, styleCfg }) => {
-  const Icon = styleCfg.Icon;
   const [shouldRenderIframe, setShouldRenderIframe] = React.useState(false);
 
   React.useEffect(() => {
@@ -80,33 +79,15 @@ const LiveEffectFrame: React.FC<{
         </div>
       )}
 
-      {/* 3D Double Doors: Open on Hover, Close on Mouse Leave */}
+      {/* 3D Double Doors: Seamless Closed Gradient (no gap, no icon, no text), Open on Hover */}
       <div
-        className={`absolute inset-y-0 left-0 w-1/2 origin-left bg-gradient-to-br ${styleCfg.gradient} backdrop-blur-md border-r border-white/25 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-10 flex items-center justify-end pr-2`}
+        className={`absolute inset-y-0 left-0 w-[50.5%] origin-left bg-gradient-to-br ${styleCfg.gradient} transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-10`}
         style={{ transform: isHovered ? 'rotateY(-108deg)' : 'rotateY(0deg)' }}
-      >
-        <div className="w-1 h-6 rounded-full bg-white/45" />
-      </div>
+      />
       <div
-        className={`absolute inset-y-0 right-0 w-1/2 origin-right bg-gradient-to-bl ${styleCfg.gradient} backdrop-blur-md border-l border-white/25 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-10 flex items-center justify-start pl-2`}
+        className={`absolute inset-y-0 right-0 w-[50.5%] origin-right bg-gradient-to-bl ${styleCfg.gradient} transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-10`}
         style={{ transform: isHovered ? 'rotateY(108deg)' : 'rotateY(0deg)' }}
-      >
-        <div className="w-1 h-6 rounded-full bg-white/45" />
-      </div>
-
-      {/* Center Door Emblem (fades out as doors swing open) */}
-      <div
-        className={`pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 transition-opacity duration-300 ${
-          isHovered ? 'opacity-0' : 'opacity-100'
-        }`}
-      >
-        <div className="w-11 h-11 rounded-2xl bg-white/35 dark:bg-black/30 backdrop-blur-sm flex items-center justify-center shadow-sm">
-          <Icon className="w-5 h-5 text-charcoal-DEFAULT/80 dark:text-cream-100/90" />
-        </div>
-        <span className="text-[11px] font-mono text-charcoal-DEFAULT/75 dark:text-cream-100/80">
-          悬停推门预览
-        </span>
-      </div>
+      />
     </div>
   );
 };

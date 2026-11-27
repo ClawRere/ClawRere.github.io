@@ -398,8 +398,8 @@ const BiomeDecoration: React.FC<{ biome: BiomeKind }> = ({ biome }) => {
   );
 };
 
-// /effects/image_animation-inspired Triangle-Mesh Cubic-Bezier Shatter & Flight
-const BurnCanvas: React.FC = () => {
+// Faithful /effects/image_animation/ 3D Cubic-Bezier Triangle-Mesh Disintegration
+const BurnCanvas: React.FC<{ msg: CommentItem }> = ({ msg }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -408,21 +408,70 @@ const BurnCanvas: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const w = (canvas.width = canvas.offsetWidth || 640);
-    const h = (canvas.height = canvas.offsetHeight || 220);
-    const cols = 16;
-    const rows = 8;
+    const padX = 56;
+    const padY = 64;
+    const w = Math.max(320, (canvas.offsetWidth || 640) - padX * 2);
+    const h = Math.max(160, (canvas.offsetHeight || 220) - padY * 2);
+    canvas.width = w + padX * 2;
+    canvas.height = h + padY * 2;
+
+    // 1. Render offscreen card snapshot so triangles carry the real card texture
+    const snap = document.createElement('canvas');
+    snap.width = w;
+    snap.height = h;
+    const sctx = snap.getContext('2d');
+    if (sctx) {
+      const isDark = document.documentElement.classList.contains('dark');
+      sctx.fillStyle = isDark ? '#18181b' : '#ffffff';
+      sctx.strokeStyle = isDark ? 'rgba(255,255,255,0.16)' : 'rgba(217,119,87,0.35)';
+      sctx.lineWidth = 2;
+      sctx.beginPath();
+      sctx.roundRect(1, 1, w - 2, h - 2, 16);
+      sctx.fill();
+      sctx.stroke();
+
+      // Avatar + Name
+      sctx.fillStyle = 'rgba(217,119,87,0.22)';
+      sctx.beginPath();
+      sctx.arc(36, 36, 14, 0, Math.PI * 2);
+      sctx.fill();
+      sctx.fillStyle = isDark ? '#faf8f5' : '#1f2430';
+      sctx.font = 'bold 14px system-ui, sans-serif';
+      sctx.fillText(msg.name || '访客', 58, 41);
+
+      // Message text lines
+      sctx.fillStyle = isDark ? '#e4e0d8' : '#3d4452';
+      sctx.font = '14px system-ui, sans-serif';
+      const text = msg.content || '';
+      const maxChars = Math.max(18, Math.floor((w - 56) / 14));
+      for (let line = 0; line < 3; line++) {
+        const slice = text.slice(line * maxChars, (line + 1) * maxChars);
+        if (!slice) break;
+        sctx.fillText(slice, 26, 76 + line * 22);
+      }
+    }
+
+    // 2. High-density plane triangulation matching /effects/image_animation/
+    const cols = 42;
+    const rows = 16;
     const cw = w / cols;
     const ch = h / rows;
 
     interface TriShard {
       pts: [number, number, number, number, number, number];
-      cx: number; cy: number; delay: number; dur: number; tx: number; ty: number; rot: number; color: string;
+      cx: number;
+      cy: number;
+      delay: number;
+      dur: number;
+      c0x: number;
+      c0y: number;
+      c0z: number;
+      c1x: number;
+      c1y: number;
+      c1z: number;
     }
 
-    const palette = ['#f5f0e8', '#e8dfd3', '#D97757', '#f59e0b', '#cbd5e1', '#94a3b8'];
     const shards: TriShard[] = [];
-
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const x0 = c * cw, y0 = r * ch, x1 = x0 + cw, y1 = y0 + ch;
@@ -430,60 +479,88 @@ const BurnCanvas: React.FC = () => {
           [x0, y0, x1, y0, x0, y1],
           [x1, y0, x1, y1, x0, y1],
         ];
-        tris.forEach((pts, ti) => {
+        for (const pts of tris) {
           const cx = (pts[0] + pts[2] + pts[4]) / 3;
           const cy = (pts[1] + pts[3] + pts[5]) / 3;
-          const wave = (c / cols) * 0.55 + ((rows - r) / rows) * 0.25;
+          const delayX = (cx / w) * 0.62;
+          const delayY = (1 - Math.abs(cy - h * 0.5) / (h * 0.5)) * 0.14;
+          const dur = 0.65 + Math.random() * 0.35;
+          const delay = delayX + delayY + Math.random() * 0.11 * dur;
+          const signY = cy < h * 0.5 ? -1 : 1;
           shards.push({
-            pts, cx, cy,
-            delay: wave * 0.55 + Math.random() * 0.14,
-            dur: 0.65 + Math.random() * 0.35,
-            tx: (Math.random() - 0.35) * 180 + (c / cols) * 90,
-            ty: -(70 + Math.random() * 140),
-            rot: (Math.random() - 0.5) * Math.PI * 2.4,
-            color: palette[(r + c + ti) % palette.length],
+            pts,
+            cx,
+            cy,
+            delay,
+            dur,
+            c0x: cx + (0.1 + Math.random() * 0.22) * 140,
+            c0y: cy + signY * (0.1 + Math.random() * 0.22) * 110,
+            c0z: (Math.random() - 0.5) * 45,
+            c1x: cx + (0.3 + Math.random() * 0.3) * 140,
+            c1y: cy - signY * (0.3 + Math.random() * 0.3) * 110,
+            c1z: (Math.random() - 0.5) * 45,
           });
-        });
+        }
       }
     }
 
+    const easeInOutCubic = (t: number) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    const cubicBezier = (p0: number, p1: number, p2: number, p3: number, t: number) => {
+      const u = 1 - t;
+      return u * u * u * p0 + 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t * p3;
+    };
+
     const startTime = performance.now();
     let raf = 0;
-    const cubicEase = (t: number) => 1 - Math.pow(1 - t, 3);
 
     const render = (now: number) => {
-      const totalSec = (now - startTime) / 1000;
-      ctx.clearRect(0, 0, w, h);
+      const uTime = (now - startTime) / 1000;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       let anyActive = false;
+
       for (const s of shards) {
-        const local = Math.max(0, Math.min(1, (totalSec - s.delay) / s.dur));
-        if (local < 1) anyActive = true;
-        const e = cubicEase(local);
-        const alpha = local <= 0 ? 0.92 : Math.max(0, 1 - local * 1.15);
-        if (alpha <= 0.01) continue;
-        const dx = s.tx * e, dy = s.ty * e + 30 * e * e;
-        const scale = Math.max(0.15, 1 - 0.72 * e);
+        const tTime = Math.max(0, Math.min(s.dur, uTime - s.delay));
+        const tProgress = easeInOutCubic(tTime / s.dur);
+        if (tTime < s.dur) anyActive = true;
+
+        const scale = 1.0 - tProgress;
+        if (scale <= 0.02) continue;
+
+        const px = cubicBezier(s.cx, s.c0x, s.c1x, s.cx, tProgress);
+        const py = cubicBezier(s.cy, s.c0y, s.c1y, s.cy, tProgress);
+        const pz = cubicBezier(0, s.c0z, s.c1z, 0, tProgress);
+        const persp = 260 / Math.max(80, 260 - pz);
+
         ctx.save();
-        ctx.translate(s.cx + dx, s.cy + dy);
-        ctx.rotate(s.rot * e);
-        ctx.scale(scale, scale);
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = s.color;
+        ctx.translate(px + padX, py + padY);
+        ctx.scale(scale * persp, scale * persp);
         ctx.beginPath();
         ctx.moveTo(s.pts[0] - s.cx, s.pts[1] - s.cy);
         ctx.lineTo(s.pts[2] - s.cx, s.pts[3] - s.cy);
         ctx.lineTo(s.pts[4] - s.cx, s.pts[5] - s.cy);
         ctx.closePath();
-        ctx.fill();
+        ctx.clip();
+        ctx.drawImage(snap, -s.cx, -s.cy);
         ctx.restore();
       }
-      if (anyActive || totalSec < 1.55) raf = requestAnimationFrame(render);
+
+      if (anyActive || uTime < 1.5) {
+        raf = requestAnimationFrame(render);
+      }
     };
+
     raf = requestAnimationFrame(render);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [msg]);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-40" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none absolute -inset-x-14 -inset-y-16 w-[calc(100%+7rem)] h-[calc(100%+8rem)] z-40"
+    />
+  );
 };
 
 // /effects/weather_box-faithful Canvas Engine for Right 1/3 of Card
@@ -1222,6 +1299,7 @@ export const MessageBoard: React.FC = () => {
 
             return (
               <div key={msg.id} className="relative group/msgrow">
+                {isBurning && <BurnCanvas msg={msg} />}
                 {/* Weather Icon Switcher OUTSIDE card in right blank area (hover row to reveal) */}
                 <div className="hidden md:flex flex-col gap-1.5 absolute -right-11 top-3 opacity-0 group-hover/msgrow:opacity-100 transition-opacity duration-200 z-30">
                   {([
@@ -1283,13 +1361,13 @@ export const MessageBoard: React.FC = () => {
                 initial={{ opacity: 0, y: 16 }}
                 animate={
                   isBurning
-                    ? { opacity: 0.25, scale: 0.96 }
+                    ? { opacity: 0, scale: 1 }
                     : bounceIds[msg.id]
                     ? { y: [18, -7, 3, 0], opacity: 1, scale: 1 }
                     : { opacity: 1, y: 0, scale: 1 }
                 }
                 exit={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' }}
-                transition={{ duration: 0.38, ease: 'easeOut' }}
+                transition={{ duration: isBurning ? 0.06 : 0.38, ease: 'easeOut' }}
                 className={`relative rounded-2xl p-6 sm:p-7 pb-12 sm:pb-14 transition-colors overflow-hidden ${biomeStyles[biomeKind]}`}
               >
                 <BiomeDecoration biome={biomeKind} />
@@ -1297,7 +1375,6 @@ export const MessageBoard: React.FC = () => {
                 <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 z-20 overflow-hidden" aria-hidden="true">
                   <WeatherBoxCanvas weather={weather} />
                 </div>
-                {isBurning && <BurnCanvas />}
 
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                   <div className="flex items-center gap-2">

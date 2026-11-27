@@ -91,6 +91,12 @@
   }
 }
 
+#site-header.at-home-top a,
+#site-header.at-home-top summary {
+  color: rgba(255, 255, 255, 0.95) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
 /* Collapsing outline ring micro-interaction */
 .ring-collapse {
   outline: 2px solid transparent;

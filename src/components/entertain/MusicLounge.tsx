@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Disc, ExternalLink, ListMusic, Radio, Sparkles } from 'lucide-react';
+import { Disc, ExternalLink, ListMusic, Radio, Sparkles, Search, Play, AlertCircle } from 'lucide-react';
 import { NETEASE_PLAYLISTS } from '@/lib/musicStore';
+
+const DEFAULT_API_BASE = 'https://neteaseapi.iyu6.com';
+
+interface ApiTrack {
+  id: number;
+  name: string;
+  artist: string;
+  url?: string;
+}
 
 export const MusicLounge: React.FC = () => {
   const [playlistId, setPlaylistId] = useState(NETEASE_PLAYLISTS[0].id);
+  const [apiBase, setApiBase] = useState(DEFAULT_API_BASE);
+  const [searchKw, setSearchKw] = useState('');
+  const [apiTracks, setApiTracks] = useState<ApiTrack[]>([]);
+  const [activeAudioUrl, setActiveAudioUrl] = useState('');
+  const [activeTrackName, setActiveTrackName] = useState('');
+  const [apiStatus, setApiStatus] = useState('');
+  const [isLoadingApi, setIsLoadingApi] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('larry_netease_playlist_id');
@@ -24,6 +40,48 @@ export const MusicLounge: React.FC = () => {
     setPlaylistId(id);
     localStorage.setItem('larry_netease_playlist_id', id);
     window.dispatchEvent(new CustomEvent('larry-playlist-change', { detail: id }));
+  };
+
+  const handleSearchApi = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchKw.trim()) return;
+    setIsLoadingApi(true);
+    setApiStatus('');
+    try {
+      const base = apiBase.replace(/\/+$/, '');
+      const res = await fetch(`${base}/search?keywords=${encodeURIComponent(searchKw.trim())}&limit=8`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      const songs = json?.result?.songs || [];
+      setApiTracks(
+        songs.map((s: any) => ({
+          id: s.id,
+          name: s.name,
+          artist: (s.artists || s.ar || []).map((a: any) => a.name).join(' / ') || '未知歌手',
+        }))
+      );
+      if (!songs.length) setApiStatus('未搜索到相关曲目');
+    } catch (err: any) {
+      setApiStatus(`接口请求受限（${err?.message || '跨域/403'}），可继续使用下方官方外链播放器或更换自建 API 地址`);
+    } finally {
+      setIsLoadingApi(false);
+    }
+  };
+
+  const handlePlayTrack = async (track: ApiTrack) => {
+    setApiStatus('');
+    try {
+      const base = apiBase.replace(/\/+$/, '');
+      const res = await fetch(`${base}/song/url?id=${track.id}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      const url = json?.data?.[0]?.url;
+      if (!url) throw new Error('暂无可用播放直链');
+      setActiveAudioUrl(url);
+      setActiveTrackName(`${track.name} - ${track.artist}`);
+    } catch (err: any) {
+      setApiStatus(`获取音源失败（${err?.message || '受限'}）`);
+    }
   };
 
   return (
@@ -81,6 +139,78 @@ export const MusicLounge: React.FC = () => {
             </button>
           ))}
         </div>
+      </div>
+
+      {/* NetEase API (neteaseapi.iyu6.com) Search & Unblock Module */}
+      <div className="rounded-3xl p-5 sm:p-6 glass border border-charcoal-500/12 dark:border-white/12 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h3 className="text-sm font-bold text-charcoal-DEFAULT dark:text-cream-50">🎧 网易云 API 搜索与解灰直链</h3>
+            <p className="text-[11px] font-mono text-charcoal-100 dark:text-cream-400">
+              默认接入 {DEFAULT_API_BASE}（支持自定义兼容 NeteaseCloudMusicApi 节点）
+            </p>
+          </div>
+          <input
+            type="url"
+            value={apiBase}
+            onChange={(e) => setApiBase(e.target.value)}
+            placeholder="API 地址"
+            className="px-3 py-1.5 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-xs font-mono w-64"
+          />
+        </div>
+
+        <form onSubmit={handleSearchApi} className="flex gap-2">
+          <div className="relative flex-1">
+            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-charcoal-100 dark:text-cream-400" />
+            <input
+              type="text"
+              value={searchKw}
+              onChange={(e) => setSearchKw(e.target.value)}
+              placeholder="输入歌名或歌手搜索（通过 NetEase API 解析）..."
+              className="w-full pl-9 pr-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/70 dark:bg-black/30 text-xs"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={isLoadingApi}
+            className="px-4 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-mono font-semibold transition-colors disabled:opacity-50"
+          >
+            {isLoadingApi ? '搜索中...' : 'API 搜索'}
+          </button>
+        </form>
+
+        {apiStatus && (
+          <div className="flex items-center gap-2 text-xs text-amber-600 dark:text-amber-300 bg-amber-500/10 border border-amber-500/20 rounded-xl px-3 py-2">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{apiStatus}</span>
+          </div>
+        )}
+
+        {activeAudioUrl && (
+          <div className="p-3 rounded-2xl bg-black/5 dark:bg-white/5 space-y-2">
+            <div className="text-xs font-semibold text-rose-500">正在播放：{activeTrackName}</div>
+            <audio src={activeAudioUrl} controls autoPlay className="w-full h-9" />
+          </div>
+        )}
+
+        {apiTracks.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {apiTracks.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => handlePlayTrack(t)}
+                className="flex items-center justify-between gap-2 px-3 py-2 rounded-xl border border-charcoal-500/10 dark:border-white/10 hover:border-rose-500/40 bg-white/60 dark:bg-white/5 text-left transition-colors"
+              >
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold truncate">{t.name}</div>
+                  <div className="text-[11px] opacity-65 truncate">{t.artist}</div>
+                </div>
+                <Play className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Styled Official NetEase Outchain Container */}

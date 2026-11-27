@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>邮箱订阅邮筒旗帜动效</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body {
+      background: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .subscribe-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 380px;
+      padding: 28px;
+      border-radius: 22px;
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.35);
+      text-align: center;
+    }
+    .mailbox-container {
+      width: 136px;
+      height: 136px;
+      margin: 0 auto 16px;
+    }
+    .mailbox-svg { width: 100%; height: 100%; overflow: visible; }
+    .mailbox-flag {
+      transform-origin: 147px 60px;
+      transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .subscribe-card:hover .mailbox-flag,
+    .subscribe-card.submitted .mailbox-flag {
+      transform: rotate(-42deg);
+    }
+    h2 { color: #1e293b; font-size: 1.35rem; margin-bottom: 8px; }
+    p { color: #64748b; font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5; }
+    .input-group { display: flex; flex-direction: column; gap: 10px; }
+    input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.25s;
+    }
+    input:focus { border-color: #3b82f6; }
+    button {
+      width: 100%;
+      padding: 11px 16px;
+      background: #3b82f6;
+      color: #fff;
+      border: 0;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.1s;
+    }
+    button:hover { background: #2563eb; }
+    button:active { transform: scale(0.98); }
+  </style>
+</head>
+<body>
+  <div class="subscribe-card" id="card">
+    <div class="mailbox-container">
+      <svg class="mailbox-svg" viewBox="0 0 200 200">
+        <rect x="92" y="110" width="16" height="70" fill="#cbd5e1" />
+        <path d="M 50 110 L 50 80 A 50 50 0 0 1 150 80 L 150 110 Z" fill="#3b82f6" />
+        <rect x="50" y="100" width="100" height="15" fill="#2563eb" />
+        <rect x="65" y="70" width="70" height="40" rx="5" fill="#1d4ed8" />
+        <circle cx="125" cy="90" r="4" fill="#93c5fd" />
+        <g class="mailbox-flag">
+          <rect x="145" y="60" width="4" height="35" fill="#ef4444" />
+          <path d="M 149 60 L 175 70 L 149 80 Z" fill="#f87171" />
+        </g>
+      </svg>
+    </div>
+    <h2>Stay Updated</h2>
+    <p>悬停或提交邮箱，触发邮筒小旗弹起订阅动画。</p>
+    <form class="input-group" id="subscribeForm">
+      <input type="email" placeholder="Enter your email address" required autocomplete="off" />
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+  <script>
+    const card = document.getElementById('card');
+    const form = document.getElementById('subscribeForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      card.classList.add('submitted');
+      const btn = form.querySelector('button');
+      btn.textContent = 'Subscribed! 🎉';
+      btn.style.background = '#10b981';
+    });
+  </script>
+</body>
+</html>

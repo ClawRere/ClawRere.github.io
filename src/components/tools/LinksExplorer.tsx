@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, ExternalLink, Copy, Check, LayoutGrid, List, Monitor, Plus, X } from 'lucide-react';
+import { Search, ExternalLink, Copy, Check, LayoutGrid, List, Monitor, Plus, X, Pencil } from 'lucide-react';
 import linksData from '@/data/links.json';
 
 export interface LinkItem {
@@ -10,6 +10,8 @@ export interface LinkItem {
   category?: string;
   sortOrder?: number;
   createdAt?: number;
+  _baseKey?: string;
+  _isCustom?: boolean;
 }
 
 interface CategoryGroup {
@@ -41,9 +43,11 @@ function resolveAvatar(avatar: string, link: string): string {
 
 export const LinksExplorer: React.FC = () => {
   const [customLinks, setCustomLinks] = useState<LinkItem[]>([]);
+  const [editedMap, setEditedMap] = useState<Record<string, Partial<LinkItem>>>({});
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newLink, setNewLink] = useState<LinkItem>({ name: '', link: '', avatar: '', descr: '', category: '友情链接', sortOrder: 1 });
+  const [editingItem, setEditingItem] = useState<LinkItem | null>(null);
+  const [newLink, setNewLink] = useState<LinkItem>({ name: '', link: '', avatar: '', descr: '', category: '友情链接', sortOrder: 0 });
 
   useEffect(() => {
     setIsAdmin(localStorage.getItem('admin_authenticated') === 'true');
@@ -54,6 +58,13 @@ export const LinksExplorer: React.FC = () => {
         if (Array.isArray(parsed)) setCustomLinks(parsed);
       } catch {}
     }
+    const savedEdits = localStorage.getItem('edited_links_map');
+    if (savedEdits) {
+      try {
+        const parsed = JSON.parse(savedEdits);
+        if (parsed && typeof parsed === 'object') setEditedMap(parsed);
+      } catch {}
+    }
   }, []);
 
   const handleAddLink = (e: React.FormEvent) => {
@@ -61,24 +72,82 @@ export const LinksExplorer: React.FC = () => {
     if (!newLink.name.trim() || !newLink.link.trim()) return;
     const itemToAdd: LinkItem = {
       ...newLink,
-      sortOrder: Number(newLink.sortOrder) || 1,
+      sortOrder: newLink.sortOrder !== undefined ? Number(newLink.sortOrder) : 0,
       createdAt: Date.now(),
     };
-    const updated = [itemToAdd, ...customLinks];
+    // Newly added links default to bottom (sortOrder: 0 < base sortOrder: 1)
+    const updated = [...customLinks, itemToAdd];
     setCustomLinks(updated);
     localStorage.setItem('custom_links', JSON.stringify(updated));
-    setNewLink({ name: '', link: '', avatar: '', descr: '', category: '友情链接', sortOrder: 1 });
+    setNewLink({ name: '', link: '', avatar: '', descr: '', category: '友情链接', sortOrder: 0 });
     setShowAddModal(false);
   };
 
+  const handleSaveEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingItem) return;
+    if (editingItem._isCustom && editingItem._baseKey) {
+      const idx = Number(editingItem._baseKey);
+      const updated = customLinks.map((c, i) =>
+        i === idx
+          ? {
+              ...c,
+              name: editingItem.name,
+              link: editingItem.link,
+              avatar: editingItem.avatar,
+              descr: editingItem.descr,
+              category: editingItem.category,
+              sortOrder: Number(editingItem.sortOrder ?? 0),
+            }
+          : c
+      );
+      setCustomLinks(updated);
+      localStorage.setItem('custom_links', JSON.stringify(updated));
+    } else if (editingItem._baseKey) {
+      const nextMap = {
+        ...editedMap,
+        [editingItem._baseKey]: {
+          name: editingItem.name,
+          link: editingItem.link,
+          avatar: editingItem.avatar,
+          descr: editingItem.descr,
+          sortOrder: Number(editingItem.sortOrder ?? 1),
+        },
+      };
+      setEditedMap(nextMap);
+      localStorage.setItem('edited_links_map', JSON.stringify(nextMap));
+    }
+    setEditingItem(null);
+  };
+
   const allLinks = useMemo(() => {
-    const base = (linksData as CategoryGroup[]).flatMap((c) => c.links.map((l) => ({ ...l, category: c.name })));
-    return [...customLinks, ...base].sort((a, b) => {
+    const base = (linksData as CategoryGroup[]).flatMap((c) =>
+      c.links.map((l, idx) => {
+        const baseKey = `${c.name}::${l.name}::${l.link}`;
+        const override = editedMap[baseKey] || {};
+        return {
+          ...l,
+          ...override,
+          category: c.name,
+          sortOrder: override.sortOrder !== undefined ? Number(override.sortOrder) : 1,
+          createdAt: -idx,
+          _baseKey: baseKey,
+          _isCustom: false,
+        };
+      })
+    );
+    const custom = customLinks.map((c, idx) => ({
+      ...c,
+      sortOrder: c.sortOrder !== undefined ? Number(c.sortOrder) : 0,
+      _baseKey: String(idx),
+      _isCustom: true,
+    }));
+    return [...base, ...custom].sort((a, b) => {
       const orderDiff = (b.sortOrder ?? 1) - (a.sortOrder ?? 1);
       if (orderDiff !== 0) return orderDiff;
       return (b.createdAt ?? 0) - (a.createdAt ?? 0);
     });
-  }, [customLinks]);
+  }, [customLinks, editedMap]);
 
   const categories = useMemo(() => {
     const baseCats = (linksData as CategoryGroup[]).map((c) => c.name);
@@ -276,6 +345,15 @@ export const LinksExplorer: React.FC = () => {
                     </span>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
+                    {isAdmin && (
+                      <button
+                        onClick={() => setEditingItem(previewLink)}
+                        className="p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/5 text-terracotta transition-colors"
+                        title="管理员编辑此友链"
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                     <button
                       onClick={(e) => handleCopy(e, previewLink.link)}
                       className="p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/5 text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors"
@@ -327,6 +405,19 @@ export const LinksExplorer: React.FC = () => {
                 <span className="text-xs text-charcoal-100 dark:text-cream-400 truncate flex-1">{item.descr}</span>
               </div>
               <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                {isAdmin && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setEditingItem(item);
+                    }}
+                    className="p-1.5 rounded-lg hover:bg-terracotta/10 text-terracotta transition-colors"
+                    title="编辑友链"
+                  >
+                    <Pencil className="w-3.5 h-3.5" />
+                  </button>
+                )}
                 <button
                   onClick={(e) => handleCopy(e, item.link)}
                   className="p-1.5 rounded-lg hover:bg-terracotta/10 text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors"
@@ -361,12 +452,27 @@ export const LinksExplorer: React.FC = () => {
                 <div className="font-semibold text-sm text-charcoal-DEFAULT dark:text-cream-50 truncate group-hover:text-terracotta transition-colors">{item.name}</div>
                 <div className="text-xs text-charcoal-100 dark:text-cream-400 line-clamp-2 mt-0.5 leading-relaxed">{item.descr}</div>
               </div>
-              <button
-                onClick={(e) => handleCopy(e, item.link)}
-                className="absolute top-2 right-2 p-1 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-terracotta/10 text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-all"
-              >
-                {copiedUrl === item.link ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
-              </button>
+              <div className="absolute top-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
+                {isAdmin && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setEditingItem(item);
+                    }}
+                    className="p-1 rounded-lg hover:bg-terracotta/10 text-terracotta"
+                    title="编辑友链"
+                  >
+                    <Pencil className="w-3 h-3" />
+                  </button>
+                )}
+                <button
+                  onClick={(e) => handleCopy(e, item.link)}
+                  className="p-1 rounded-lg hover:bg-terracotta/10 text-charcoal-100 dark:text-cream-400 hover:text-terracotta"
+                >
+                  {copiedUrl === item.link ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                </button>
+              </div>
             </a>
           ))}
         </div>
@@ -385,10 +491,31 @@ export const LinksExplorer: React.FC = () => {
             <input type="text" placeholder="分类 (如：友情链接、AI工具)" value={newLink.category} onChange={e => setNewLink({ ...newLink, category: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
             <input type="text" placeholder="简短描述" value={newLink.descr} onChange={e => setNewLink({ ...newLink, descr: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
             <div className="flex items-center justify-between gap-3 px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30">
-              <label className="text-xs text-charcoal-100 dark:text-cream-300">排序权重（默认 1，越大越靠前）</label>
-              <input type="number" value={newLink.sortOrder ?? 1} onChange={e => setNewLink({ ...newLink, sortOrder: Number(e.target.value) })} className="w-20 px-2 py-1 rounded-lg border border-charcoal-500/15 dark:border-white/15 bg-white dark:bg-zinc-800 text-xs text-center font-mono" />
+              <label className="text-xs text-charcoal-100 dark:text-cream-300">排序权重（默认 0 排最末，越大越靠前）</label>
+              <input type="number" value={newLink.sortOrder ?? 0} onChange={e => setNewLink({ ...newLink, sortOrder: Number(e.target.value) })} className="w-20 px-2 py-1 rounded-lg border border-charcoal-500/15 dark:border-white/15 bg-white dark:bg-zinc-800 text-xs text-center font-mono" />
             </div>
             <button type="submit" className="w-full py-2.5 rounded-xl bg-terracotta text-white text-xs font-mono font-semibold hover:opacity-90">保存并立即添加到导航</button>
+          </form>
+        </div>
+      )}
+
+      {/* Admin Edit Historical/Custom Link Modal */}
+      {editingItem && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm">
+          <form onSubmit={handleSaveEdit} className="w-full max-w-md rounded-3xl bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/15 p-6 shadow-2xl space-y-3.5">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-lg font-bold">✏️ 编辑友链</h3>
+              <button type="button" onClick={() => setEditingItem(null)} className="p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10"><X className="w-4 h-4" /></button>
+            </div>
+            <input type="text" placeholder="站点名称 *" required value={editingItem.name} onChange={e => setEditingItem({ ...editingItem, name: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+            <input type="text" placeholder="网址 https://... *" required value={editingItem.link} onChange={e => setEditingItem({ ...editingItem, link: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+            <input type="text" placeholder="图标 Icon URL" value={editingItem.avatar} onChange={e => setEditingItem({ ...editingItem, avatar: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+            <input type="text" placeholder="描述文案" value={editingItem.descr} onChange={e => setEditingItem({ ...editingItem, descr: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+            <div className="flex items-center justify-between gap-3 px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30">
+              <label className="text-xs text-charcoal-100 dark:text-cream-300">排序权重（越大越靠前）</label>
+              <input type="number" value={editingItem.sortOrder ?? 1} onChange={e => setEditingItem({ ...editingItem, sortOrder: Number(e.target.value) })} className="w-20 px-2 py-1 rounded-lg border border-charcoal-500/15 dark:border-white/15 bg-white dark:bg-zinc-800 text-xs text-center font-mono" />
+            </div>
+            <button type="submit" className="w-full py-2.5 rounded-xl bg-terracotta text-white text-xs font-mono font-semibold hover:opacity-90">保存修改</button>
           </form>
         </div>
       )}

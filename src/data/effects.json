@@ -1,5 +1,11 @@
 [
   {
+    "title": "邮箱订阅邮筒旗帜",
+    "path": "/effects/mailbox_subscribe",
+    "image": "",
+    "category": "UI交互"
+  },
+  {
     "title": "CSS 动态渐变动画合集",
     "path": "/effects/gradient_animations",
     "image": "",

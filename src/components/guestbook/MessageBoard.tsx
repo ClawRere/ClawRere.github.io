@@ -1024,133 +1024,161 @@ export const MessageBoard: React.FC = () => {
                 className={`relative rounded-2xl p-6 sm:p-7 pb-12 sm:pb-14 transition-all overflow-hidden ${biomeStyles[biomeKind]}`}
               >
                 <BiomeDecoration biome={biomeKind} />
-                {/* Per-Card Fixed Weather Effect Overlay (from /effects/weather_icon & /effects/weather_box) */}
-                <div className="pointer-events-none absolute inset-y-0 right-4 w-36 overflow-hidden opacity-85 z-10" aria-hidden="true">
-                  {weather === 'sunny' && (
-                    <svg className="w-12 h-12 ml-auto mr-3 mt-2 animate-[spin_12s_linear_infinite]" viewBox="0 0 36 36">
-                      <circle cx="18" cy="18" r="7" fill="#fbbf24" />
-                      <g stroke="#f59e0b" strokeWidth="2.2" strokeLinecap="round">
-                        <line x1="18" y1="3" x2="18" y2="7" /><line x1="18" y1="29" x2="18" y2="33" />
-                        <line x1="3" y1="18" x2="7" y2="18" /><line x1="29" y1="18" x2="33" y2="18" />
-                        <line x1="7" y1="7" x2="10" y2="10" /><line x1="26" y1="26" x2="29" y2="29" />
-                        <line x1="29" y1="7" x2="26" y2="10" /><line x1="10" y1="26" x2="7" y2="29" />
-                      </g>
-                    </svg>
-                  )}
-                  {weather === 'rainy' && (
-                    <div className="relative w-full h-full">
-                      <svg className="w-14 h-8 ml-auto mr-3 mt-1 opacity-80" viewBox="0 0 64 36">
-                        <circle cx="24" cy="20" r="9" fill="#94a3b8" />
-                        <circle cx="36" cy="16" r="11" fill="#cbd5e1" />
-                        <circle cx="48" cy="20" r="8" fill="#94a3b8" />
-                      </svg>
-                      {[32, 48, 62, 76, 88].map((left, rIdx) => (
-                        <span key={rIdx} style={{ left: `${left}%`, animationDelay: `${rIdx * 0.28}s` }} className="tw-raindrop absolute top-7 w-0.5 h-3.5 rounded-full bg-sky-400/85 rotate-[14deg]" />
-                      ))}
-                    </div>
-                  )}
-                  {weather === 'snowy' && (
-                    <div className="relative w-full h-full">
-                      <svg className="w-14 h-8 ml-auto mr-3 mt-1 opacity-80" viewBox="0 0 64 36">
-                        <circle cx="24" cy="20" r="9" fill="#cbd5e1" />
-                        <circle cx="36" cy="16" r="11" fill="#e2e8f0" />
-                        <circle cx="48" cy="20" r="8" fill="#cbd5e1" />
-                      </svg>
-                      {[34, 48, 64, 78, 90].map((left, sIdx) => (
-                        <span key={sIdx} style={{ left: `${left}%`, animationDelay: `${sIdx * 0.55}s` }} className="tw-snowflake absolute top-7 w-2 h-2 rounded-full bg-white/95 shadow" />
-                      ))}
-                    </div>
-                  )}
-                  {weather === 'wind' && (
-                    <div className="relative w-full h-full">
-                      {[16, 30, 44].map((top, wIdx) => (
-                        <span
-                          key={wIdx}
-                          style={{ top: `${top}%`, animationDelay: `${wIdx * 0.5}s` }}
-                          className="tw-wind-streak absolute right-6 w-14 h-0.5 rounded-full bg-gradient-to-r from-transparent via-teal-400/70 to-transparent"
+                {/* Right 1/3 Weather Effect Overlay (from /effects/weather_box & /effects/weather_icon) + Hover-only Switcher */}
+                <div className="group/wzone absolute inset-y-0 right-0 w-1/3 z-20 pointer-events-auto">
+                  {/* Weather Effects Layer covering right 1/3 of card */}
+                  <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+                    {weather === 'sunny' && (
+                      <div className="relative w-full h-full">
+                        <div
+                          className="absolute -top-10 -right-10 w-44 h-44 rounded-full animate-[spin_22s_linear_infinite] opacity-65"
+                          style={{
+                            background:
+                              'conic-gradient(from 0deg, rgba(255,222,23,0.45) 0deg 18deg, transparent 18deg 45deg, rgba(255,222,23,0.4) 45deg 63deg, transparent 63deg 90deg, rgba(255,222,23,0.45) 90deg 108deg, transparent 108deg 135deg, rgba(255,222,23,0.4) 135deg 153deg, transparent 153deg 180deg, rgba(255,222,23,0.45) 180deg 198deg, transparent 198deg 225deg, rgba(255,222,23,0.4) 225deg 243deg, transparent 243deg 270deg, rgba(255,222,23,0.45) 270deg 288deg, transparent 288deg 315deg, rgba(255,222,23,0.4) 315deg 333deg, transparent 333deg 360deg)',
+                            maskImage: 'radial-gradient(circle, #000 18%, transparent 72%)',
+                            WebkitMaskImage: 'radial-gradient(circle, #000 18%, transparent 72%)',
+                          }}
                         />
-                      ))}
-                      {[18, 38].map((top, lIdx) => (
+                        <svg className="w-11 h-11 ml-auto mr-3 mt-2 animate-[spin_12s_linear_infinite]" viewBox="0 0 36 36">
+                          <circle cx="18" cy="18" r="6.5" fill="#fbbf24" />
+                          <g stroke="#f59e0b" strokeWidth="2.2" strokeLinecap="round">
+                            <line x1="18" y1="3" x2="18" y2="7" /><line x1="18" y1="29" x2="18" y2="33" />
+                            <line x1="3" y1="18" x2="7" y2="18" /><line x1="29" y1="18" x2="33" y2="18" />
+                            <line x1="7" y1="7" x2="10" y2="10" /><line x1="26" y1="26" x2="29" y2="29" />
+                            <line x1="29" y1="7" x2="26" y2="10" /><line x1="10" y1="26" x2="7" y2="29" />
+                          </g>
+                        </svg>
+                      </div>
+                    )}
+                    {weather === 'rainy' && (
+                      <div className="relative w-full h-full">
+                        <svg className="w-14 h-8 ml-auto mr-3 mt-1 opacity-85" viewBox="0 0 64 36">
+                          <circle cx="24" cy="20" r="9" fill="#94a3b8" />
+                          <circle cx="36" cy="16" r="11" fill="#cbd5e1" />
+                          <circle cx="48" cy="20" r="8" fill="#94a3b8" />
+                        </svg>
+                        {[15, 30, 46, 62, 76, 88].map((left, rIdx) => (
+                          <span key={rIdx} style={{ left: `${left}%`, animationDelay: `${rIdx * 0.24}s` }} className="tw-raindrop absolute top-7 w-0.5 h-3.5 rounded-full bg-sky-400/90 rotate-[14deg]" />
+                        ))}
+                        <div className="tw-rain-puddle absolute right-2 bottom-0 w-[86%] rounded-t-full bg-gradient-to-t from-sky-500/80 via-sky-300/60 to-transparent backdrop-blur-[1px] border-t border-sky-200/70" />
+                      </div>
+                    )}
+                    {weather === 'snowy' && (
+                      <div className="relative w-full h-full">
+                        <svg className="w-14 h-8 ml-auto mr-3 mt-1 opacity-85" viewBox="0 0 64 36">
+                          <circle cx="24" cy="20" r="9" fill="#cbd5e1" />
+                          <circle cx="36" cy="16" r="11" fill="#e2e8f0" />
+                          <circle cx="48" cy="20" r="8" fill="#cbd5e1" />
+                        </svg>
+                        {[14, 30, 46, 62, 76, 89].map((left, sIdx) => (
+                          <span key={sIdx} style={{ left: `${left}%`, animationDelay: `${sIdx * 0.48}s` }} className="tw-snowflake absolute top-7 w-2 h-2 rounded-full bg-white/95 shadow" />
+                        ))}
+                        <div className="tw-snow-pile absolute right-2 bottom-0 w-[86%] rounded-t-full bg-gradient-to-t from-white via-slate-100/95 to-transparent shadow-[0_-3px_10px_rgba(255,255,255,0.85)]" />
+                      </div>
+                    )}
+                    {weather === 'wind' && (
+                      <div className="relative w-full h-full">
+                        {[18, 36, 54, 72].map((top, wIdx) => (
+                          <span
+                            key={wIdx}
+                            style={{ top: `${top}%`, animationDelay: `${wIdx * 0.42}s` }}
+                            className="tw-wind-streak absolute right-4 w-20 h-0.5 rounded-full bg-gradient-to-r from-transparent via-teal-400/75 to-transparent"
+                          />
+                        ))}
+                        {[18, 44, 68].map((top, lIdx) => (
+                          <svg
+                            key={lIdx}
+                            style={{ top: `${top}%`, animationDelay: `${lIdx * 0.9}s` }}
+                            className="tw-wind-leaf absolute right-10 w-4 h-4 text-amber-500/90"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                          >
+                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66l.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z" />
+                          </svg>
+                        ))}
+                      </div>
+                    )}
+                    {weather === 'thunder' && (
+                      <div className="relative w-full h-full">
+                        <svg className="w-16 h-9 ml-auto mr-2 mt-0.5 opacity-90" viewBox="0 0 64 36">
+                          <circle cx="24" cy="20" r="10" fill="#64748b" />
+                          <circle cx="36" cy="16" r="12" fill="#475569" />
+                          <circle cx="48" cy="20" r="9" fill="#64748b" />
+                        </svg>
                         <svg
-                          key={lIdx}
-                          style={{ top: `${top}%`, animationDelay: `${lIdx * 1.1}s` }}
-                          className="tw-wind-leaf absolute right-14 w-4 h-4 text-amber-500/85"
-                          viewBox="0 0 24 24"
+                          className="tw-lightning-bolt absolute top-6 right-6 w-10 h-[calc(100%-1.5rem)] text-yellow-300 drop-shadow-[0_0_10px_rgba(253,224,71,0.95)]"
+                          viewBox="0 0 28 120"
+                          preserveAspectRatio="none"
                           fill="currentColor"
                         >
-                          <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66l.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z" />
+                          <polygon points="16,0 6,42 14,42 7,78 15,78 9,120 23,68 15,68 22,34 14,34" />
                         </svg>
-                      ))}
-                    </div>
-                  )}
-                  {weather === 'thunder' && (
-                    <div className="relative w-full h-full">
-                      <svg className="w-16 h-9 ml-auto mr-2 mt-0.5 opacity-85" viewBox="0 0 64 36">
-                        <circle cx="24" cy="20" r="10" fill="#64748b" />
-                        <circle cx="36" cy="16" r="12" fill="#475569" />
-                        <circle cx="48" cy="20" r="9" fill="#64748b" />
-                      </svg>
-                      {/* Tall lightning bolt striking all the way down to the bottom ground */}
-                      <svg
-                        className="tw-lightning-bolt absolute top-6 right-5 w-10 h-[calc(100%-1.5rem)] text-yellow-300 drop-shadow-[0_0_10px_rgba(253,224,71,0.95)]"
-                        viewBox="0 0 28 120"
-                        preserveAspectRatio="none"
-                        fill="currentColor"
+                        <div
+                          style={{
+                            background:
+                              'radial-gradient(ellipse at bottom, rgba(12,12,14,0.92) 0%, rgba(28,25,23,0.65) 55%, transparent 80%)',
+                          }}
+                          className="tw-thunder-char absolute right-4 bottom-0 w-16 h-5 rounded-t-full"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Animated Weather Icon Switcher (from /effects/weather_icon — revealed on hover over right area) */}
+                  <div className="relative z-30 flex items-center justify-end gap-1 p-2.5 opacity-0 group-hover/wzone:opacity-100 transition-opacity duration-200">
+                    {([
+                      ['sunny', '晴'],
+                      ['rainy', '雨'],
+                      ['snowy', '雪'],
+                      ['wind', '风'],
+                      ['thunder', '雷'],
+                    ] as const).map(([wKey, title]) => (
+                      <button
+                        key={wKey}
+                        type="button"
+                        onClick={() => setCardWeather(wKey)}
+                        title={`切换天气：${title}`}
+                        className={`w-7 h-7 rounded-full flex items-center justify-center backdrop-blur-md border transition-all ${
+                          weather === wKey
+                            ? 'bg-slate-900/90 border-amber-400/70 text-white shadow-md scale-110'
+                            : 'bg-slate-900/55 border-white/15 text-white/80 hover:bg-slate-900/85 hover:scale-105'
+                        }`}
                       >
-                        <polygon points="16,0 6,42 14,42 7,78 15,78 9,120 23,68 15,68 22,34 14,34" />
-                      </svg>
-                    </div>
-                  )}
+                        {wKey === 'sunny' && (
+                          <svg className="w-4 h-4 text-amber-400 animate-[spin_10s_linear_infinite]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                            <circle cx="12" cy="12" r="3.5" fill="currentColor" stroke="none" />
+                            <path strokeLinecap="round" d="M12 2.5v2M12 19.5v2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M2.5 12h2M19.5 12h2M5.2 18.8l1.4-1.4M17.4 6.6l1.4-1.4" />
+                          </svg>
+                        )}
+                        {wKey === 'rainy' && (
+                          <svg className="w-4 h-4 text-sky-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M7 14a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 14H7z" fill="currentColor" fillOpacity="0.25" />
+                            <path strokeLinecap="round" d="M9 17l-1 3M13 17l-1 3M17 17l-1 3" />
+                          </svg>
+                        )}
+                        {wKey === 'snowy' && (
+                          <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M7 14a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 14H7z" fill="currentColor" fillOpacity="0.25" />
+                            <circle cx="9" cy="18.5" r="1" fill="currentColor" stroke="none" />
+                            <circle cx="13" cy="20" r="1" fill="currentColor" stroke="none" />
+                            <circle cx="16.5" cy="18.5" r="1" fill="currentColor" stroke="none" />
+                          </svg>
+                        )}
+                        {wKey === 'wind' && (
+                          <svg className="w-4 h-4 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                            <path d="M4 9h11a2.5 2.5 0 1 0-2.5-2.5M3 13h14a2.5 2.5 0 1 1-2.5 2.5M6 17h6" />
+                          </svg>
+                        )}
+                        {wKey === 'thunder' && (
+                          <svg className="w-4 h-4 text-yellow-300" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 13a4 4 0 0 1 0-8 5 5 0 0 1 9.5-1A3.5 3.5 0 0 1 18 13H7z" fillOpacity="0.3" />
+                            <polygon points="13,11 9,17 12,17 10.5,22 16,15 13,15" />
+                          </svg>
+                        )}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-
-                {/* Per-Card Weather Switcher (animated weather_icon mini pills) */}
-                <div className="relative z-30 flex items-center justify-end gap-1 mb-2">
-                  {([
-                    ['sunny', '☀️', '晴'],
-                    ['rainy', '🌧️', '雨'],
-                    ['snowy', '❄️', '雪'],
-                    ['wind', '🍃', '风'],
-                    ['thunder', '⚡', '雷'],
-                  ] as const).map(([wKey, icon, title]) => (
-                    <button
-                      key={wKey}
-                      type="button"
-                      onClick={() => setCardWeather(wKey)}
-                      title={`切换此卡片天气：${title}`}
-                      className={`w-6 h-6 rounded-full text-[11px] flex items-center justify-center transition-all ${
-                        weather === wKey
-                          ? 'bg-terracotta/90 text-white shadow scale-110'
-                          : 'bg-black/5 dark:bg-white/10 opacity-55 hover:opacity-100'
-                      }`}
-                    >
-                      {icon}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Localized Right-Side Rain Puddle / Snowdrift (z-20: covers ABOVE bottom grass/sand) / Small Bottom Scorch */}
-                {weather === 'rainy' && (
-                  <div
-                    aria-hidden="true"
-                    className="tw-rain-puddle pointer-events-none absolute right-6 bottom-0 w-28 sm:w-32 z-20 rounded-t-full bg-gradient-to-t from-sky-500/80 via-sky-300/60 to-transparent backdrop-blur-[1px] border-t border-sky-200/70"
-                  />
-                )}
-                {weather === 'snowy' && (
-                  <div
-                    aria-hidden="true"
-                    className="tw-snow-pile pointer-events-none absolute right-6 bottom-0 w-28 sm:w-32 z-20 rounded-t-full bg-gradient-to-t from-white via-slate-100/95 to-transparent shadow-[0_-3px_10px_rgba(255,255,255,0.8)]"
-                  />
-                )}
-                {weather === 'thunder' && (
-                  <div
-                    aria-hidden="true"
-                    style={{
-                      background:
-                        'radial-gradient(ellipse at bottom, rgba(12,12,14,0.92) 0%, rgba(28,25,23,0.65) 55%, transparent 80%)',
-                    }}
-                    className="tw-thunder-char pointer-events-none absolute right-7 bottom-0 w-16 h-5 z-20 rounded-t-full"
-                  />
-                )}
                 {isBurning && <BurnCanvas />}
 
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">

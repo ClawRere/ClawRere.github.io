@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "name": "友情链接",
     "desc": "最可愛的朋友在這裏",
@@ -8,18 +8,6 @@
         "link": "/",
         "avatar": "/img/profile/头像.jpg",
         "descr": "欢迎来玩~"
-      },
-      {
-        "name": "Hexo",
-        "link": "https://hexo.io/zh-tw/",
-        "avatar": "https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg",
-        "descr": "快速、簡單且強大的網誌框架"
-      },
-      {
-        "name": "Butterfly-github",
-        "link": "https://github.com/jerryc127/hexo-theme-butterfly",
-        "avatar": "/img/avatar.png",
-        "descr": "🦋 A Hexo Theme: Butterfly--github源码"
       },
       {
         "name": "Butterfly",
@@ -44,12 +32,6 @@
         "link": "https://akilar.top/",
         "avatar": "https://img02.anheyu.com/adminuploads/1/2022/09/02/6311fc9de6507.webp",
         "descr": "期待您的光临！"
-      },
-      {
-        "name": "小N同学",
-        "link": "https://www.imcharon.com/",
-        "avatar": "https://public.cdn.nesxc.com/avatar.jpg",
-        "descr": "青石落晚巷 故人未还乡"
       }
     ]
   },
@@ -538,6 +520,12 @@
     "desc": "素材网站合集",
     "links": [
       {
+        "name": "美叶灵感",
+        "link": "https://meiye.art/inspiration",
+        "avatar": "https://www.google.com/s2/favicons?domain=meiye.art&sz=128",
+        "descr": "设计灵感聚合 · 优质 UI / 平面 / 动效参考库"
+      },
+      {
         "name": "404 Illustrations（需要魔法）",
         "link": "https://error404.fun/",
         "avatar": "https://error404.fun/img/apple-icon-180x180.png",
@@ -726,4 +714,3 @@
     ]
   }
 ]
-

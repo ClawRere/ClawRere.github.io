@@ -77,13 +77,27 @@ const entertainItems = [
       window.__updateHeaderBg = function () {
         var hdr = document.getElementById('site-header');
         if (!hdr) return;
+        var isHome = hdr.dataset.home === 'true';
+        var heroThreshold = isHome ? Math.max(360, (window.innerHeight || 760) * 0.72) : 24;
         var scrolled = window.scrollY > 24;
+        var pastHero = window.scrollY > heroThreshold;
+
         if (scrolled) {
           hdr.classList.add('bg-cream-50/96', 'dark:bg-[#1c1f2b]/96', 'backdrop-blur-md', 'shadow-sm');
-          hdr.classList.remove('bg-transparent');
+          hdr.classList.remove('bg-transparent', 'bg-gradient-to-b', 'from-black/25', 'to-transparent');
         } else {
           hdr.classList.remove('bg-cream-50/96', 'dark:bg-[#1c1f2b]/96', 'backdrop-blur-md', 'shadow-sm');
-          hdr.classList.add('bg-transparent');
+          if (isHome) {
+            hdr.classList.add('bg-gradient-to-b', 'from-black/25', 'to-transparent');
+          } else {
+            hdr.classList.add('bg-transparent');
+          }
+        }
+
+        if (isHome && !pastHero) {
+          hdr.classList.add('at-home-top');
+        } else {
+          hdr.classList.remove('at-home-top');
         }
       };
       window.__updateWatermarkParallax = function () {
@@ -130,10 +144,13 @@ const entertainItems = [
       />
     </div>
 
-    <!-- TOP NAVIGATION BAR (no bottom line, transparent at top, high-opacity frosted glass on scroll) -->
+    <!-- TOP NAVIGATION BAR (no bottom line, white text + subtle scrim over home hero, normal text below) -->
     <header
       id="site-header"
-      class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-transparent"
+      data-home={currentPath === '/' ? 'true' : 'false'}
+      class={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+        currentPath === '/' ? 'at-home-top bg-gradient-to-b from-black/25 to-transparent' : 'bg-transparent'
+      }`}
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
         
@@ -281,7 +298,9 @@ const entertainItems = [
         <div
           data-parallax-watermark
           aria-hidden="true"
-          class="pointer-events-none select-none text-center pt-2 -mb-8 sm:-mb-12 relative z-0 overflow-hidden"
+          class={`pointer-events-none select-none text-center pt-2 relative z-0 overflow-hidden ${
+            currentPath.startsWith('/entertain/music') ? '-mb-16 sm:-mb-24' : '-mb-8 sm:-mb-12'
+          }`}
         >
           <span class="block text-[13vw] sm:text-[6.5rem] lg:text-[8.5rem] font-black leading-none tracking-[0.12em] bg-gradient-to-r from-rose-400/45 via-orange-300/45 to-pink-400/45 dark:from-rose-300/35 dark:via-orange-200/35 dark:to-pink-300/35 bg-clip-text text-transparent truncate px-2">
             {resolvedWatermark}

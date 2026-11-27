@@ -22,15 +22,6 @@ const DEFAULT_TOOL_TABS: ToolTab[] = [
     type: 'iframe',
   },
   {
-    id: 'meiye-inspiration',
-    label: '美叶灵感',
-    emoji: '🎨',
-    desc: '设计灵感聚合 · 优质 UI / 平面 / 动效参考库 (Meiye)',
-    src: 'https://meiye.art/inspiration',
-    externalUrl: 'https://meiye.art/inspiration',
-    type: 'iframe',
-  },
-  {
     id: 'daily-news',
     label: '科技头条',
     emoji: '📰',

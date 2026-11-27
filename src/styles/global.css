@@ -206,6 +206,15 @@
 .ff-dot-3 { animation: ffOrbit3 2.5s ease-in-out infinite 0.8s; }
 .ff-dot-4 { animation: ffOrbit4 3.6s ease-in-out infinite 0.2s; }
 
+@keyframes cloudDrift {
+  0% { transform: translateX(-14px); opacity: 0.3; }
+  30%, 70% { opacity: 0.95; }
+  100% { transform: translateX(26px); opacity: 0.25; }
+}
+.animate-cloud-drift {
+  animation: cloudDrift 5.5s ease-in-out infinite alternate;
+}
+
 /* Random Device Loading Animation (from /effects/random_device_loding) */
 .device-loader {
   --hue: 223;

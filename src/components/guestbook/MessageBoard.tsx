@@ -120,7 +120,7 @@ const TidewellPixelRow: React.FC = () => (
 );
 
 type BiomeKind = 'meadow' | 'desert' | 'stone' | 'mountain' | 'cornfield' | 'coast';
-type WeatherKind = 'sunny' | 'rainy' | 'snowy' | 'cloudy' | 'thunder';
+type WeatherKind = 'sunny' | 'rainy' | 'snowy' | 'wind' | 'thunder';
 
 // Physical Biome Border Decorations: Meadow (grass + grazing sheep), Desert (sand + sandstorm), Stone, Coast
 const BiomeDecoration: React.FC<{ biome: BiomeKind }> = ({ biome }) => {
@@ -609,8 +609,7 @@ export const MessageBoard: React.FC = () => {
   const [revealedStartTimes, setRevealedStartTimes] = useState<Record<number, number>>({});
   const [nowTick, setNowTick] = useState<number>(Date.now());
   const [burningIds, setBurningIds] = useState<Record<number, boolean>>({});
-  const [weatherOffset, setWeatherOffset] = useState<number>(() => Math.floor(Math.random() * 4));
-  const [selectedWeather, setSelectedWeather] = useState<WeatherKind | 'auto'>('auto');
+  const [cardWeathers, setCardWeathers] = useState<Record<number, WeatherKind>>({});
   const [replyingToId, setReplyingToId] = useState<number | null>(null);
   const [replyName, setReplyName] = useState('');
   const [replyContent, setReplyContent] = useState('');
@@ -619,6 +618,11 @@ export const MessageBoard: React.FC = () => {
   useEffect(() => {
     try {
       setIsAdmin(localStorage.getItem('admin_authenticated') === 'true');
+      const savedW = localStorage.getItem('guestbook_card_weathers');
+      if (savedW) {
+        const pw = JSON.parse(savedW);
+        if (pw && typeof pw === 'object') setCardWeathers(pw);
+      }
     } catch {}
     const saved = localStorage.getItem('guestbook_messages');
     if (saved) {
@@ -932,10 +936,27 @@ export const MessageBoard: React.FC = () => {
         .tw-lightning-bolt {
           animation: lightningStrike 7s linear infinite;
         }
+        @keyframes windLeafFly {
+          0% { transform: translate(-20px, 8px) rotate(0deg); opacity: 0; }
+          20% { opacity: 0.9; }
+          80% { opacity: 0.9; }
+          100% { transform: translate(110px, -18px) rotate(240deg); opacity: 0; }
+        }
+        .tw-wind-leaf {
+          animation: windLeafFly 2.8s ease-in-out infinite;
+        }
+        @keyframes windStreak {
+          0% { transform: translateX(-30px); opacity: 0; }
+          30%, 70% { opacity: 0.7; }
+          100% { transform: translateX(90px); opacity: 0; }
+        }
+        .tw-wind-streak {
+          animation: windStreak 1.8s linear infinite;
+        }
         @keyframes thunderCharRecover {
           0%, 11% { opacity: 0; }
-          14%, 22% { opacity: 0.62; }
-          78% { opacity: 0.14; }
+          14%, 22% { opacity: 0.85; }
+          78% { opacity: 0.22; }
           100% { opacity: 0; }
         }
         .tw-thunder-char {
@@ -952,34 +973,10 @@ export const MessageBoard: React.FC = () => {
         }
       `}</style>
 
-      {/* Right-Aligned Animated Weather Selector Bar (inspired by /effects/weather_icon) */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-1">
+      <div className="flex items-center justify-between px-1">
         <span className="text-xs font-mono text-charcoal-100 dark:text-cream-400">
-          共 {messages.length} 条留言
+          共 {messages.length} 条留言（每张卡片右侧可独立切换晴/雨/雪/风/雷）
         </span>
-        <div className="flex items-center gap-1.5 p-1 rounded-full glass border border-charcoal-500/10 dark:border-white/10">
-          {([
-            ['auto', '🎲 随机'],
-            ['sunny', '☀️ 晴'],
-            ['rainy', '🌧️ 雨'],
-            ['snowy', '❄️ 雪'],
-            ['cloudy', '☁️ 云'],
-            ['thunder', '⚡ 雷'],
-          ] as const).map(([key, label]) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setSelectedWeather(key)}
-              className={`px-2.5 py-1 rounded-full text-[11px] font-mono transition-all ${
-                selectedWeather === key
-                  ? 'bg-terracotta text-white shadow-sm'
-                  : 'text-charcoal-200 dark:text-cream-300 hover:bg-black/5 dark:hover:bg-white/10'
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Cards List */}
@@ -1001,11 +998,15 @@ export const MessageBoard: React.FC = () => {
               cornfield: 'border-2 border-lime-500/45 shadow-[inset_0_0_0_2px_rgba(132,204,22,0.14)] bg-white/85 dark:bg-zinc-900/75',
               coast: 'border-2 border-sky-400/45 shadow-[inset_0_0_0_2px_rgba(56,189,248,0.14)] bg-white/85 dark:bg-zinc-900/75',
             };
-            const weathers: WeatherKind[] = ['sunny', 'rainy', 'snowy', 'cloudy', 'thunder'];
-            const weather =
-              selectedWeather === 'auto'
-                ? weathers[(msg.id + weatherOffset) % weathers.length]
-                : selectedWeather;
+            const weathers: WeatherKind[] = ['sunny', 'rainy', 'snowy', 'wind', 'thunder'];
+            const weather: WeatherKind = cardWeathers[msg.id] || weathers[msg.id % weathers.length];
+            const setCardWeather = (w: WeatherKind) => {
+              setCardWeathers((prev) => {
+                const next = { ...prev, [msg.id]: w };
+                try { localStorage.setItem('guestbook_card_weathers', JSON.stringify(next)); } catch {}
+                return next;
+              });
+            };
 
             return (
               <motion.div
@@ -1023,12 +1024,12 @@ export const MessageBoard: React.FC = () => {
                 className={`relative rounded-2xl p-6 sm:p-7 pb-12 sm:pb-14 transition-all overflow-hidden ${biomeStyles[biomeKind]}`}
               >
                 <BiomeDecoration biome={biomeKind} />
-                {/* Cycling Random Weather Overlay */}
-                <div className="pointer-events-none absolute top-0 right-16 w-28 h-20 overflow-hidden opacity-75 z-10" aria-hidden="true">
+                {/* Per-Card Fixed Weather Effect Overlay (from /effects/weather_icon & /effects/weather_box) */}
+                <div className="pointer-events-none absolute inset-y-0 right-4 w-36 overflow-hidden opacity-85 z-10" aria-hidden="true">
                   {weather === 'sunny' && (
-                    <svg className="w-12 h-12 ml-auto mr-2 mt-1 animate-spin [animation-duration:18s]" viewBox="0 0 36 36">
+                    <svg className="w-12 h-12 ml-auto mr-3 mt-2 animate-[spin_12s_linear_infinite]" viewBox="0 0 36 36">
                       <circle cx="18" cy="18" r="7" fill="#fbbf24" />
-                      <g stroke="#f59e0b" strokeWidth="2" strokeLinecap="round">
+                      <g stroke="#f59e0b" strokeWidth="2.2" strokeLinecap="round">
                         <line x1="18" y1="3" x2="18" y2="7" /><line x1="18" y1="29" x2="18" y2="33" />
                         <line x1="3" y1="18" x2="7" y2="18" /><line x1="29" y1="18" x2="33" y2="18" />
                         <line x1="7" y1="7" x2="10" y2="10" /><line x1="26" y1="26" x2="29" y2="29" />
@@ -1038,49 +1039,106 @@ export const MessageBoard: React.FC = () => {
                   )}
                   {weather === 'rainy' && (
                     <div className="relative w-full h-full">
-                      {[12, 34, 56, 78].map((left, rIdx) => (
-                        <span key={rIdx} style={{ left: `${left}%`, animationDelay: `${rIdx * 0.35}s` }} className="tw-raindrop absolute top-0 w-0.5 h-3 rounded-full bg-sky-400/75" />
+                      <svg className="w-14 h-8 ml-auto mr-3 mt-1 opacity-80" viewBox="0 0 64 36">
+                        <circle cx="24" cy="20" r="9" fill="#94a3b8" />
+                        <circle cx="36" cy="16" r="11" fill="#cbd5e1" />
+                        <circle cx="48" cy="20" r="8" fill="#94a3b8" />
+                      </svg>
+                      {[32, 48, 62, 76, 88].map((left, rIdx) => (
+                        <span key={rIdx} style={{ left: `${left}%`, animationDelay: `${rIdx * 0.28}s` }} className="tw-raindrop absolute top-7 w-0.5 h-3.5 rounded-full bg-sky-400/85 rotate-[14deg]" />
                       ))}
                     </div>
                   )}
                   {weather === 'snowy' && (
                     <div className="relative w-full h-full">
-                      {[15, 42, 68, 86].map((left, sIdx) => (
-                        <span key={sIdx} style={{ left: `${left}%`, animationDelay: `${sIdx * 0.7}s` }} className="tw-snowflake absolute top-0 w-1.5 h-1.5 rounded-full bg-white/85 shadow" />
+                      <svg className="w-14 h-8 ml-auto mr-3 mt-1 opacity-80" viewBox="0 0 64 36">
+                        <circle cx="24" cy="20" r="9" fill="#cbd5e1" />
+                        <circle cx="36" cy="16" r="11" fill="#e2e8f0" />
+                        <circle cx="48" cy="20" r="8" fill="#cbd5e1" />
+                      </svg>
+                      {[34, 48, 64, 78, 90].map((left, sIdx) => (
+                        <span key={sIdx} style={{ left: `${left}%`, animationDelay: `${sIdx * 0.55}s` }} className="tw-snowflake absolute top-7 w-2 h-2 rounded-full bg-white/95 shadow" />
                       ))}
                     </div>
                   )}
-                  {weather === 'cloudy' && (
-                    <svg className="w-16 h-10 ml-auto mr-1 mt-1 opacity-70 animate-pulse" viewBox="0 0 64 36">
-                      <circle cx="24" cy="22" r="10" fill="#cbd5e1" />
-                      <circle cx="36" cy="18" r="12" fill="#e2e8f0" />
-                      <circle cx="48" cy="22" r="9" fill="#cbd5e1" />
-                    </svg>
+                  {weather === 'wind' && (
+                    <div className="relative w-full h-full">
+                      {[16, 30, 44].map((top, wIdx) => (
+                        <span
+                          key={wIdx}
+                          style={{ top: `${top}%`, animationDelay: `${wIdx * 0.5}s` }}
+                          className="tw-wind-streak absolute right-6 w-14 h-0.5 rounded-full bg-gradient-to-r from-transparent via-teal-400/70 to-transparent"
+                        />
+                      ))}
+                      {[18, 38].map((top, lIdx) => (
+                        <svg
+                          key={lIdx}
+                          style={{ top: `${top}%`, animationDelay: `${lIdx * 1.1}s` }}
+                          className="tw-wind-leaf absolute right-14 w-4 h-4 text-amber-500/85"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66l.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z" />
+                        </svg>
+                      ))}
+                    </div>
                   )}
                   {weather === 'thunder' && (
                     <div className="relative w-full h-full">
-                      <svg className="w-16 h-9 ml-auto mr-1 mt-0.5 opacity-80" viewBox="0 0 64 36">
+                      <svg className="w-16 h-9 ml-auto mr-2 mt-0.5 opacity-85" viewBox="0 0 64 36">
                         <circle cx="24" cy="20" r="10" fill="#64748b" />
                         <circle cx="36" cy="16" r="12" fill="#475569" />
                         <circle cx="48" cy="20" r="9" fill="#64748b" />
                       </svg>
-                      <svg className="tw-lightning-bolt w-7 h-12 ml-auto mr-5 -mt-2 text-yellow-300 drop-shadow-[0_0_8px_rgba(253,224,71,0.95)]" viewBox="0 0 24 36" fill="currentColor">
-                        <polygon points="14,0 4,18 11,18 8,36 21,14 13,14" />
+                      {/* Tall lightning bolt striking all the way down to the bottom ground */}
+                      <svg
+                        className="tw-lightning-bolt absolute top-6 right-5 w-10 h-[calc(100%-1.5rem)] text-yellow-300 drop-shadow-[0_0_10px_rgba(253,224,71,0.95)]"
+                        viewBox="0 0 28 120"
+                        preserveAspectRatio="none"
+                        fill="currentColor"
+                      >
+                        <polygon points="16,0 6,42 14,42 7,78 15,78 9,120 23,68 15,68 22,34 14,34" />
                       </svg>
                     </div>
                   )}
                 </div>
-                {/* Localized Right-Side Rain Puddle / Snowdrift / Thunder Scorch Spot */}
+
+                {/* Per-Card Weather Switcher (animated weather_icon mini pills) */}
+                <div className="relative z-30 flex items-center justify-end gap-1 mb-2">
+                  {([
+                    ['sunny', '☀️', '晴'],
+                    ['rainy', '🌧️', '雨'],
+                    ['snowy', '❄️', '雪'],
+                    ['wind', '🍃', '风'],
+                    ['thunder', '⚡', '雷'],
+                  ] as const).map(([wKey, icon, title]) => (
+                    <button
+                      key={wKey}
+                      type="button"
+                      onClick={() => setCardWeather(wKey)}
+                      title={`切换此卡片天气：${title}`}
+                      className={`w-6 h-6 rounded-full text-[11px] flex items-center justify-center transition-all ${
+                        weather === wKey
+                          ? 'bg-terracotta/90 text-white shadow scale-110'
+                          : 'bg-black/5 dark:bg-white/10 opacity-55 hover:opacity-100'
+                      }`}
+                    >
+                      {icon}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Localized Right-Side Rain Puddle / Snowdrift (z-20: covers ABOVE bottom grass/sand) / Small Bottom Scorch */}
                 {weather === 'rainy' && (
                   <div
                     aria-hidden="true"
-                    className="tw-rain-puddle pointer-events-none absolute right-8 bottom-0 w-32 sm:w-36 z-10 rounded-t-full bg-gradient-to-t from-sky-400/65 via-sky-300/40 to-transparent backdrop-blur-[1px] border-t border-sky-300/45"
+                    className="tw-rain-puddle pointer-events-none absolute right-6 bottom-0 w-28 sm:w-32 z-20 rounded-t-full bg-gradient-to-t from-sky-500/80 via-sky-300/60 to-transparent backdrop-blur-[1px] border-t border-sky-200/70"
                   />
                 )}
                 {weather === 'snowy' && (
                   <div
                     aria-hidden="true"
-                    className="tw-snow-pile pointer-events-none absolute right-8 bottom-0 w-32 sm:w-36 z-10 rounded-t-full bg-gradient-to-t from-white/95 via-slate-100/85 to-transparent shadow-[0_-2px_8px_rgba(255,255,255,0.65)]"
+                    className="tw-snow-pile pointer-events-none absolute right-6 bottom-0 w-28 sm:w-32 z-20 rounded-t-full bg-gradient-to-t from-white via-slate-100/95 to-transparent shadow-[0_-3px_10px_rgba(255,255,255,0.8)]"
                   />
                 )}
                 {weather === 'thunder' && (
@@ -1088,9 +1146,9 @@ export const MessageBoard: React.FC = () => {
                     aria-hidden="true"
                     style={{
                       background:
-                        'radial-gradient(circle, rgba(15,15,18,0.88) 0%, rgba(30,25,22,0.52) 45%, transparent 75%)',
+                        'radial-gradient(ellipse at bottom, rgba(12,12,14,0.92) 0%, rgba(28,25,23,0.65) 55%, transparent 80%)',
                     }}
-                    className="tw-thunder-char pointer-events-none absolute right-6 top-2 w-28 h-28 z-20 rounded-full"
+                    className="tw-thunder-char pointer-events-none absolute right-7 bottom-0 w-16 h-5 z-20 rounded-t-full"
                   />
                 )}
                 {isBurning && <BurnCanvas />}

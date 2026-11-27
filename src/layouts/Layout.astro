@@ -206,26 +206,27 @@ const entertainItems = [
           <button
             id="theme-toggle-btn"
             onclick="document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');"
-            class="firefly-btn group/ff relative w-14 h-7 rounded-full bg-sky-400/90 dark:bg-slate-900 border border-sky-300/60 dark:border-amber-300/30 shadow-inner transition-colors duration-500 overflow-visible shrink-0"
+            class="firefly-btn group/ff relative w-[56px] h-[28px] rounded-full bg-gradient-to-r from-sky-400 to-sky-500 dark:from-slate-800 dark:to-slate-900 border border-sky-300/70 dark:border-amber-300/35 shadow-inner transition-colors duration-500 overflow-visible shrink-0"
             title="切换日间（晴空太阳）/ 夜间模式（月亮萤火虫）"
             aria-label="切换日间/夜间模式"
           >
-            {/* Day Clouds */}
-            <span class="dark:hidden absolute right-1.5 top-1.5 flex items-center pointer-events-none" aria-hidden="true">
-              <span class="w-3 h-2 rounded-full bg-white/90 block" />
-              <span class="w-2.5 h-2.5 -ml-1.5 -mt-1 rounded-full bg-white block" />
+            {/* Inner clipped track for drifting cloud */}
+            <span class="dark:hidden absolute inset-0 rounded-full overflow-hidden pointer-events-none" aria-hidden="true">
+              <svg class="w-6 h-4 text-white/95 absolute right-1 top-1.5 animate-cloud-drift" viewBox="0 0 36 20" fill="currentColor">
+                <path d="M9 17h18a5 5 0 0 0 .6-9.96A7 7 0 0 0 14.2 5.4 5.5 5.5 0 0 0 9 17z" />
+              </svg>
             </span>
-            {/* Sliding Sun (Day) / Moon + Orbiting Fireflies (Night) */}
-            <span class="absolute top-0.5 left-0.5 dark:left-[1.85rem] w-6 h-6 rounded-full flex items-center justify-center transition-all duration-500 bg-white/95 dark:bg-slate-800 shadow-[0_0_12px_rgba(251,191,36,0.9)] dark:shadow-[0_0_10px_rgba(253,224,71,0.55)]">
+            {/* Snug Sliding Knob: Sun with Rotating Rays (Day) / Moon + Orbiting Fireflies (Night) */}
+            <span class="absolute top-[2px] left-[2px] dark:left-[30px] w-[22px] h-[22px] rounded-full flex items-center justify-center transition-all duration-500 bg-white dark:bg-slate-800 shadow-[0_0_10px_rgba(251,191,36,0.9)] dark:shadow-[0_0_10px_rgba(253,224,71,0.55)]">
               {/* Fireflies orbiting directly around the Moon in dark mode */}
               <span class="ff-dot ff-dot-1" aria-hidden="true"></span>
               <span class="ff-dot ff-dot-2" aria-hidden="true"></span>
               <span class="ff-dot ff-dot-3" aria-hidden="true"></span>
               <span class="ff-dot ff-dot-4" aria-hidden="true"></span>
-              {/* Sun with outward radiating rays (no red center dot) */}
-              <svg class="w-4 h-4 dark:hidden text-amber-400 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
-                <circle cx="12" cy="12" r="3.8" fill="currentColor" stroke="none" />
-                <path stroke-linecap="round" d="M12 2.5v2.2M12 19.3v2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+              {/* Rotating Sun with outward radiating rays */}
+              <svg class="w-4 h-4 dark:hidden text-amber-400 relative z-10 animate-[spin_12s_linear_infinite]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <circle cx="12" cy="12" r="3.6" fill="currentColor" stroke="none" />
+                <path stroke-linecap="round" d="M12 2.2v2.4M12 19.4v2.4M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M2.2 12h2.4M19.4 12h2.4M5.1 18.9l1.7-1.7M17.2 6.8l1.7-1.7" />
               </svg>
               {/* Moon */}
               <svg class="w-3.5 h-3.5 hidden dark:block text-amber-300 relative z-10" fill="currentColor" viewBox="0 0 24 24">
@@ -233,8 +234,8 @@ const entertainItems = [
               </svg>
             </span>
           </button>
-          <a href="/messageboard" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors">
-            💌 留言
+          <a href="/messageboard" class="hidden sm:inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-100 dark:text-cream-400 hover:text-terracotta transition-colors">
+            留言
           </a>
 
           <!-- Mobile hamburger -->

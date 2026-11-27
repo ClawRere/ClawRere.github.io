@@ -11,20 +11,31 @@ const isEmbeddableDemo = (url?: string | null) =>
   !!url && !url.includes('mp.weixin.qq.com');
 ---
 
-<Layout title="AI 共创作品集 | 磊大大の小栈" sideTitle="AI 共创作品集">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+<Layout title="个人作品集合 | 磊大大の小栈" sideTitle="个人作品集合">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 relative">
 
-    <div class="mb-6 xl:hidden">
+    <div class="mb-4 xl:hidden">
       <p class="text-xs font-mono uppercase tracking-widest text-terracotta mb-1">Portfolio · {validProjects.length} projects</p>
-      <h1 class="text-3xl font-extrabold text-charcoal-DEFAULT dark:text-cream-50 tracking-tight">AI 共创作品集</h1>
+      <h1 class="text-3xl font-extrabold text-charcoal-DEFAULT dark:text-cream-50 tracking-tight">个人作品集合</h1>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <!-- Faint Oversized Watermark Title partially occluded by cards, rises & fades on scroll -->
+    <div
+      id="portfolio-watermark"
+      aria-hidden="true"
+      class="scroll-watermark-rise pointer-events-none select-none text-center -mb-10 sm:-mb-16 relative z-0 overflow-hidden"
+    >
+      <span class="block text-[20vw] sm:text-[9.5rem] lg:text-[11.5rem] font-black leading-none tracking-[0.14em] text-charcoal-DEFAULT/[0.045] dark:text-white/[0.045]">
+        作品集
+      </span>
+    </div>
+
+    <div class="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {validProjects.map((project) => {
         const canEmbed = isEmbeddableDemo(project.data.demoUrl);
 
         return (
-          <div class="group flex flex-col rounded-[18px] border border-charcoal-500/10 dark:border-white/10 ring-1 ring-inset ring-white/40 dark:ring-white/10 overflow-hidden hover:border-terracotta/30 shadow-[0_10px_28px_rgba(31,36,48,0.10)] hover:shadow-[0_18px_40px_rgba(31,36,48,0.18)] hover:-translate-y-1.5 transition-all duration-500 ease-[cubic-bezier(0.25,0.75,0.2,1)] bg-white/70 dark:bg-zinc-900/65">
+          <div class="scroll-reveal-card ring-collapse group flex flex-col rounded-[18px] border border-charcoal-500/10 dark:border-white/10 ring-1 ring-inset ring-white/40 dark:ring-white/10 overflow-hidden hover:border-terracotta/30 shadow-[0_10px_28px_rgba(31,36,48,0.10)] hover:shadow-[0_18px_40px_rgba(31,36,48,0.18)] hover:-translate-y-1.5 transition-all duration-500 ease-[cubic-bezier(0.25,0.75,0.2,1)] bg-white/70 dark:bg-zinc-900/65">
             {/* Cover: Compact Custom Cover Image */}
             <div class="relative overflow-hidden bg-zinc-950 h-44">
               <a href={`/portfolio/${project.id}`} class="block w-full h-full">

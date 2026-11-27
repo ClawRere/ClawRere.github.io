@@ -43,6 +43,9 @@ const entertainItems = [
     <script is:inline>
       window.__applySitePrefs = function () {
         try {
+          var theme = localStorage.getItem('theme');
+          if (theme === 'dark') document.documentElement.classList.add('dark');
+          else if (theme === 'light') document.documentElement.classList.remove('dark');
           var bg = localStorage.getItem('blogbg');
           if (bg) {
             var p = JSON.parse(bg);

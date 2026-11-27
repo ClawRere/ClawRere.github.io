@@ -49,6 +49,57 @@
     background-color: #D97757;
     color: #ffffff;
   }
+
+  /* Native View Transitions & THYUU-inspired Scroll-Driven Micro-interactions */
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+@keyframes thyuuScrollReveal {
+  from {
+    opacity: 0.25;
+    transform: translateY(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes thyuuWatermarkRise {
+  0% {
+    opacity: 0.9;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-48px) scale(1.04);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .scroll-reveal-card {
+    animation: thyuuScrollReveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 26%;
+  }
+  .scroll-watermark-rise {
+    animation: thyuuWatermarkRise linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 75%;
+  }
+}
+
+/* Collapsing outline ring micro-interaction */
+.ring-collapse {
+  outline: 2px solid transparent;
+  outline-offset: 18px;
+  transition: outline-offset 0.38s cubic-bezier(0.22, 1, 0.36, 1), outline-color 0.3s ease;
+}
+.ring-collapse:hover {
+  outline-color: rgba(217, 119, 87, 0.45);
+  outline-offset: 3px;
 }
 
 /* Glassmorphism utility with rich depth */

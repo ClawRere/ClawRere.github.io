@@ -26,29 +26,25 @@ const latestPosts = allPosts
   <HeroCover client:load />
 
   <!-- Page body content inside wider container -->
-  <div id="hub-section" class="max-w-[1480px] mx-auto px-3 sm:px-6 pt-0 pb-20 space-y-20">
+  <div id="hub-section" class="max-w-[1480px] mx-auto px-3 sm:px-6 pt-10 pb-20 space-y-20">
 
-    <!-- Unified 7 Cards: Larger Size, Matching Illustrations, Partially Below 1st Screen Fold -->
-    <section id="second-screen-cards" class="relative z-30 -mt-12 sm:-mt-16 pb-6">
+    <!-- Unified 7 Cards: Clean 2nd-Screen Grid with Scroll-Driven Reveal & Collapsing Ring Micro-Interaction -->
+    <section id="second-screen-cards" class="scroll-reveal-card relative z-30 pt-2 pb-6">
       <div class="group/fan grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4 items-center">
         {[
-          { href: '/portfolio', title: '作品集', img: '/img/fan/card-1.svg', rot: -15, arcY: 46, spreadX: -44 },
-          { href: '/effects', title: '93+ 动效', img: '/img/fan/card-2.svg', rot: -10, arcY: 22, spreadX: -26 },
-          { href: '/posts', title: '博客归档', img: '/img/fan/card-3.svg', rot: -5, arcY: 7, spreadX: -12 },
-          { href: '/tools', title: '工具箱', img: '/img/fan/card-4.svg', rot: 0, arcY: 0, spreadX: 0 },
-          { href: '/links', title: '友链导航', img: '/img/fan/card-5.svg', rot: 5, arcY: 7, spreadX: 12 },
-          { href: '/entertain/music', title: '音乐电台', img: '/img/fan/card-6.svg', rot: 10, arcY: 22, spreadX: 26 },
-          { href: '/messageboard', title: '留言板', img: '/img/fan/card-7.svg', rot: 15, arcY: 46, spreadX: 44 },
-        ].map((card, i) => (
+          { href: '/portfolio', title: '作品集', img: '/img/fan/card-1.svg' },
+          { href: '/effects', title: '90+ 动效', img: '/img/fan/card-2.svg' },
+          { href: '/posts', title: '博客归档', img: '/img/fan/card-3.svg' },
+          { href: '/tools', title: '工具箱', img: '/img/fan/card-4.svg' },
+          { href: '/links', title: '友链导航', img: '/img/fan/card-5.svg' },
+          { href: '/entertain/music', title: '音乐电台', img: '/img/fan/card-6.svg' },
+          { href: '/messageboard', title: '留言板', img: '/img/fan/card-7.svg' },
+        ].map((card) => (
           <a
             href={card.href}
-            data-rot={card.rot}
-            data-arcy={card.arcY}
-            data-spreadx={card.spreadX}
-            style={`--bob-delay:${i * 0.35}s;`}
-            class="unified-fan-card group/card relative block aspect-[3/4] will-change-transform group-hover/fan:opacity-75 hover:!opacity-100 hover:z-40"
+            class="ring-collapse group/card relative block aspect-[3/4] rounded-2xl transition-all duration-300 group-hover/fan:opacity-75 hover:!opacity-100 hover:z-40"
           >
-            <div class="w-full h-full rounded-2xl overflow-hidden border border-white/60 dark:border-white/15 ring-1 ring-inset ring-white/40 shadow-[0_14px_30px_rgba(31,36,48,0.22)] transition-all duration-300 ease-out group-hover/card:-translate-y-5 group-hover/card:scale-105 group-hover/card:ring-2 group-hover/card:ring-terracotta group-hover/card:shadow-[0_24px_48px_rgba(31,36,48,0.34)]">
+            <div class="w-full h-full rounded-2xl overflow-hidden border border-white/60 dark:border-white/15 ring-1 ring-inset ring-white/40 shadow-[0_14px_30px_rgba(31,36,48,0.18)] transition-all duration-300 ease-out group-hover/card:-translate-y-3 group-hover/card:scale-[1.03] group-hover/card:shadow-[0_24px_48px_rgba(31,36,48,0.3)]">
               <img src={card.img} alt={card.title} loading="lazy" class="w-full h-full object-cover rounded-2xl group-hover/card:scale-105 transition-transform duration-500" />
               <div class="absolute inset-x-0 top-2.5 flex justify-center pointer-events-none">
                 <span class="px-2.5 py-0.5 rounded-full bg-white/85 dark:bg-zinc-900/80 text-[#1F2430] dark:text-white text-[11px] font-bold tracking-wider shadow-sm">
@@ -60,73 +56,6 @@ const latestPosts = allPosts
         ))}
       </div>
     </section>
-
-    <style>
-      @keyframes cardFloatBob {
-        0%, 100% { transform: translate3d(0, 0px, 0) rotate(0deg); }
-        50% { transform: translate3d(0, -8px, 0) rotate(0deg); }
-      }
-      .unified-fan-card.is-settled {
-        animation: cardFloatBob 3.4s ease-in-out infinite;
-        animation-delay: var(--bob-delay, 0s);
-      }
-    </style>
-
-    <script is:inline>
-      (() => {
-        let rafId = null;
-        const initUnifiedCards = () => {
-          const cards = Array.from(document.querySelectorAll('.unified-fan-card'));
-          if (!cards.length) return;
-          let isLocked = false;
-
-          cards.forEach((c) => {
-            c.addEventListener('click', () => {
-              isLocked = true;
-            });
-          });
-
-          const update = () => {
-            rafId = null;
-            if (isLocked) return;
-            const vh = window.innerHeight || 800;
-            const p = Math.max(0, Math.min(1, window.scrollY / (vh * 0.85)));
-            const ease = 1 - Math.pow(1 - p, 3);
-            const isMobile = window.innerWidth < 1024;
-
-            cards.forEach((card) => {
-              if (p >= 0.98) {
-                card.classList.add('is-settled');
-                card.style.transform = '';
-                return;
-              }
-              card.classList.remove('is-settled');
-              const rot0 = Number(card.dataset.rot || 0);
-              const arcY0 = Number(card.dataset.arcy || 0);
-              const spreadX0 = Number(card.dataset.spreadx || 0);
-              // Partial peek on 1st screen (~half visible, half below fold) for natural scroll-down settle
-              const liftY = isMobile ? -75 : -105;
-              const curY = (liftY + arcY0) * (1 - ease) + Math.sin(ease * Math.PI) * 18;
-              const curX = isMobile ? 0 : spreadX0 * (1 - ease);
-              const curRot = rot0 * (1 - ease);
-              const curScale = 1.22 - 0.22 * ease;
-              card.style.transform = `translate3d(${curX.toFixed(1)}px, ${curY.toFixed(1)}px, 0) rotate(${curRot.toFixed(2)}deg) scale(${curScale.toFixed(3)})`;
-            });
-          };
-
-          const onScroll = () => {
-            if (!rafId && !isLocked) rafId = requestAnimationFrame(update);
-          };
-
-          update();
-          window.addEventListener('scroll', onScroll, { passive: true });
-          window.addEventListener('resize', onScroll, { passive: true });
-        };
-
-        initUnifiedCards();
-        document.addEventListener('astro:page-load', initUnifiedCards);
-      })();
-    </script>
 
     <!-- Featured projects (4 core cases + 2 edu mini cards) -->
     {featuredProjects.length > 0 && (

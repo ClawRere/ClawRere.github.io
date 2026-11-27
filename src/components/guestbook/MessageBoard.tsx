@@ -623,8 +623,8 @@ export const MessageBoard: React.FC = () => {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          // Ensure every message keeps a fixed biome
+        if (Array.isArray(parsed)) {
+          // Ensure every message keeps a fixed biome (even if empty after admin deletion)
           const withBiomes = parsed.map((m: CommentItem, i: number) => ({
             ...m,
             biome: m.biome || ALL_BIOMES[i % ALL_BIOMES.length],

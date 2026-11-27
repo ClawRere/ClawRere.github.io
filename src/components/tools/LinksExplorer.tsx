@@ -8,6 +8,8 @@ export interface LinkItem {
   avatar: string;
   descr: string;
   category?: string;
+  sortOrder?: number;
+  createdAt?: number;
 }
 
 interface CategoryGroup {
@@ -41,7 +43,7 @@ export const LinksExplorer: React.FC = () => {
   const [customLinks, setCustomLinks] = useState<LinkItem[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newLink, setNewLink] = useState<LinkItem>({ name: '', link: '', avatar: '', descr: '', category: '友情链接' });
+  const [newLink, setNewLink] = useState<LinkItem>({ name: '', link: '', avatar: '', descr: '', category: '友情链接', sortOrder: 1 });
 
   useEffect(() => {
     setIsAdmin(localStorage.getItem('admin_authenticated') === 'true');
@@ -57,16 +59,25 @@ export const LinksExplorer: React.FC = () => {
   const handleAddLink = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newLink.name.trim() || !newLink.link.trim()) return;
-    const updated = [newLink, ...customLinks];
+    const itemToAdd: LinkItem = {
+      ...newLink,
+      sortOrder: Number(newLink.sortOrder) || 1,
+      createdAt: Date.now(),
+    };
+    const updated = [itemToAdd, ...customLinks];
     setCustomLinks(updated);
     localStorage.setItem('custom_links', JSON.stringify(updated));
-    setNewLink({ name: '', link: '', avatar: '', descr: '', category: '友情链接' });
+    setNewLink({ name: '', link: '', avatar: '', descr: '', category: '友情链接', sortOrder: 1 });
     setShowAddModal(false);
   };
 
   const allLinks = useMemo(() => {
     const base = (linksData as CategoryGroup[]).flatMap((c) => c.links.map((l) => ({ ...l, category: c.name })));
-    return [...customLinks, ...base];
+    return [...customLinks, ...base].sort((a, b) => {
+      const orderDiff = (b.sortOrder ?? 1) - (a.sortOrder ?? 1);
+      if (orderDiff !== 0) return orderDiff;
+      return (b.createdAt ?? 0) - (a.createdAt ?? 0);
+    });
   }, [customLinks]);
 
   const categories = useMemo(() => {
@@ -183,13 +194,24 @@ export const LinksExplorer: React.FC = () => {
           )}
         </div>
 
-      {/* Centered Single-line Full-width Category Pills */}
-      <div className="w-full flex items-center justify-center flex-nowrap overflow-x-auto scrollbar-none gap-1.5 px-2">
+      </div>
+
+      {/* Full-Width Single-Line Category Pills: Left-aligned (never clipped), Mouse-Wheel Horizontal Scroll */}
+      <div
+        onWheel={(e) => {
+          if (Math.abs(e.deltaY) > 0) {
+            e.preventDefault();
+            e.currentTarget.scrollLeft += e.deltaY;
+          }
+        }}
+        className="w-full flex items-center justify-start flex-nowrap overflow-x-auto scrollbar-none gap-2 px-1 sm:px-3 py-1"
+        title="鼠标滚轮在此区域可左右滑动切换分类"
+      >
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-[11px] font-medium transition-all border ${
+            className={`shrink-0 whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border ${
               selectedCategory === cat
                 ? 'bg-terracotta text-white border-terracotta shadow-sm'
                 : 'border-charcoal-500/15 dark:border-white/10 text-charcoal-200 dark:text-cream-300 hover:border-terracotta/40 hover:text-terracotta'
@@ -198,7 +220,6 @@ export const LinksExplorer: React.FC = () => {
             {cat}
           </button>
         ))}
-      </div>
       </div>
 
       {/* Main Content */}
@@ -354,6 +375,10 @@ export const LinksExplorer: React.FC = () => {
             <input type="url" placeholder="网址 https://... *" required value={newLink.link} onChange={e => setNewLink({ ...newLink, link: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
             <input type="text" placeholder="分类 (如：友情链接、AI工具)" value={newLink.category} onChange={e => setNewLink({ ...newLink, category: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
             <input type="text" placeholder="简短描述" value={newLink.descr} onChange={e => setNewLink({ ...newLink, descr: e.target.value })} className="w-full px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30 text-sm" />
+            <div className="flex items-center justify-between gap-3 px-3 py-2 rounded-xl border border-charcoal-500/15 dark:border-white/10 bg-white/60 dark:bg-black/30">
+              <label className="text-xs text-charcoal-100 dark:text-cream-300">排序权重（默认 1，越大越靠前）</label>
+              <input type="number" value={newLink.sortOrder ?? 1} onChange={e => setNewLink({ ...newLink, sortOrder: Number(e.target.value) })} className="w-20 px-2 py-1 rounded-lg border border-charcoal-500/15 dark:border-white/15 bg-white dark:bg-zinc-800 text-xs text-center font-mono" />
+            </div>
             <button type="submit" className="w-full py-2.5 rounded-xl bg-terracotta text-white text-xs font-mono font-semibold hover:opacity-90">保存并立即添加到导航</button>
           </form>
         </div>

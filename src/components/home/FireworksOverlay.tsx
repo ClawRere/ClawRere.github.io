@@ -42,7 +42,7 @@ const playSound = (src: string, volume = 0.35) => {
   } catch {}
 };
 
-export const FireworksOverlay: React.FC = () => {
+export const FireworksOverlay: React.FC<{ inlineTrigger?: boolean }> = ({ inlineTrigger = false }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rocketsRef = useRef<Rocket[]>([]);
   const sparksRef = useRef<Spark[]>([]);
@@ -342,12 +342,24 @@ export const FireworksOverlay: React.FC = () => {
 
       <button
         onClick={launchFireworks}
-        style={{ top: btnPos.top, left: btnPos.left }}
-        className="absolute z-30 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/45 hover:bg-black/70 border border-white/25 text-white text-xs font-mono shadow-xl transition-transform hover:scale-105 active:scale-95"
+        style={inlineTrigger ? undefined : { top: btnPos.top, left: btnPos.left }}
+        className={
+          inlineTrigger
+            ? 'group inline-flex items-center h-10 px-3 rounded-full bg-black/35 hover:bg-black/60 backdrop-blur-md border border-white/25 text-white transition-all duration-300 shadow-lg overflow-hidden'
+            : 'absolute z-30 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/45 hover:bg-black/70 border border-white/25 text-white text-xs font-mono shadow-xl transition-transform hover:scale-105 active:scale-95'
+        }
         title="点击熄灯放烟花（点击夜空可连放）"
       >
-        <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-        <span>🎆 放个烟花</span>
+        <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
+        <span
+          className={
+            inlineTrigger
+              ? 'max-w-0 group-hover:max-w-[90px] group-hover:ml-2 overflow-hidden whitespace-nowrap text-xs font-mono transition-all duration-300'
+              : ''
+          }
+        >
+          {inlineTrigger ? '放个烟花' : '🎆 放个烟花'}
+        </span>
       </button>
     </>
   );

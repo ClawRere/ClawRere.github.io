@@ -163,62 +163,21 @@ export const HeroCover: React.FC = () => {
         }}
         className="pointer-events-none absolute inset-x-0 -top-4 -bottom-32 z-0 will-change-transform transition-[background-image,background-color] duration-500"
       />
-      {/* Center Badges + Typewriter (removed "磊大大" title and shifted up so bottom 7 cards expose >2/3 on 1st screen) */}
-      <div className="relative z-20 text-center px-6 max-w-3xl mx-auto -mt-48 sm:-mt-56">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.75, 0.2, 1] }}
-          className="mb-3 flex items-center justify-center gap-2"
+      {/* Top-Right Compact Circular Stack: Theme Switcher + Fireworks (expand text on hover) */}
+      <div className="absolute top-6 right-6 z-30 flex flex-col items-end gap-2.5">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="group inline-flex items-center h-10 px-3 rounded-full bg-black/35 hover:bg-black/60 backdrop-blur-md border border-white/25 text-white transition-all duration-300 shadow-lg overflow-hidden"
+          title="切换封面壁纸 / 自定义纯色 / 自定义渐变"
         >
-          <span className="px-3 py-1 rounded-full bg-[#F1ECEA]/90 text-[#1F2430] text-[11px] font-mono font-semibold shadow-lg -rotate-2">
-            AI · PMOS
+          <Palette className="w-4 h-4 shrink-0" />
+          <span className="max-w-0 group-hover:max-w-[90px] group-hover:ml-2 overflow-hidden whitespace-nowrap text-xs font-mono transition-all duration-300">
+            切换主题
           </span>
-          <svg className="w-4 h-4 text-[#F4E3D3]" viewBox="0 0 20 20" aria-hidden="true">
-            <path d="M10 0c.8 5.6 3.6 8.6 10 10-6.4 1.4-9.2 4.4-10 10-.8-5.6-3.6-8.6-10-10 6.4-1.4 9.2-4.4 10-10z" fill="currentColor" />
-          </svg>
-          <span className="px-3 py-1 rounded-full bg-[#DDAD95]/95 text-[#1F2430] text-[11px] font-mono font-semibold shadow-lg rotate-2">
-            93+ 动效
-          </span>
-        </motion.div>
+        </button>
 
-        {/* Typewriter subtitle */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-2 inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-black/30 backdrop-blur-md border border-white/20 shadow-xl"
-        >
-          <span className="text-sm sm:text-base md:text-lg font-mono text-white tracking-wide drop-shadow-sm">
-            {activePhrase.slice(0, charIndex)}
-          </span>
-          <span className="inline-block w-[2px] h-5 bg-terracotta ml-1 animate-pulse" />
-        </motion.div>
+        <FireworksOverlay inlineTrigger={true} />
       </div>
-
-      {/* Random-position "放个烟花" button & canvas overlay */}
-      <FireworksOverlay />
-
-      {/* Scroll Down Arrow */}
-      <motion.a
-        href="#hub-section"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="absolute bottom-2 left-1/2 -translate-x-1/2 z-30 p-1.5 rounded-full text-white/80 hover:text-white drop-shadow transition-colors"
-        aria-label="向下滚动"
-      >
-        <ChevronDown className="w-5 h-5 animate-bounce" />
-      </motion.a>
-
-      {/* Subtle Cover Switcher Icon Button (top-right so bottom cards never overlap it) */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className="absolute top-6 right-6 z-30 p-3 rounded-full bg-black/30 hover:bg-black/55 backdrop-blur-md border border-white/25 text-white transition-all shadow-lg hover:scale-105"
-        title="切换封面壁纸 / 自定义纯色 / 自定义渐变"
-      >
-        <Palette className="w-4 h-4" />
-      </button>
 
       {/* Enlarged Switcher Modal (max-w-2xl) */}
       <AnimatePresence>

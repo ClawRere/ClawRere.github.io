@@ -113,6 +113,14 @@ export const EffectsShowcase: React.FC = () => {
         if (Array.isArray(parsed)) setCustomEffects(parsed);
       }
     } catch {}
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveModalEffect(null);
+        setShowAddModal(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
   const allEffects = useMemo(() => {
@@ -356,9 +364,12 @@ export const EffectsShowcase: React.FC = () => {
         })}
       </div>
 
-      {/* 4. Add / Store Effect Modal */}
+      {/* 4. Add / Store Effect Modal (no dark backdrop, click outside to close) */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+        <div
+          onClick={(e) => { if (e.target === e.currentTarget) setShowAddModal(false); }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-transparent backdrop-blur-[2px]"
+        >
           <form
             onSubmit={handleAddEffect}
             className="w-full max-w-lg rounded-3xl bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/15 p-6 shadow-2xl space-y-4"
@@ -413,16 +424,13 @@ export const EffectsShowcase: React.FC = () => {
         </div>
       )}
 
-      {/* 5. Live Interactive Modal Player */}
-      <AnimatePresence>
-        {activeModalEffect && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-md">
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="relative w-full max-w-4xl h-[85vh] rounded-3xl glass overflow-hidden border border-white/20 shadow-2xl flex flex-col bg-cream-50 dark:bg-obsidian"
-            >
+      {/* 5. Live Interactive Modal Player (no dark backdrop, click outside or Esc to close immediately) */}
+      {activeModalEffect && (
+        <div
+          onClick={(e) => { if (e.target === e.currentTarget) setActiveModalEffect(null); }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-transparent backdrop-blur-[2px]"
+        >
+          <div className="relative w-full max-w-4xl h-[85vh] rounded-3xl glass overflow-hidden border border-charcoal-500/20 dark:border-white/20 shadow-2xl flex flex-col bg-cream-50 dark:bg-[#1c1f2b]">
               <div className="px-5 py-3.5 border-b border-charcoal-500/10 dark:border-white/10 flex items-center justify-between bg-cream-100/80 dark:bg-obsidian-card">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -478,10 +486,9 @@ export const EffectsShowcase: React.FC = () => {
                   />
                 )}
               </div>
-            </motion.div>
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
     </div>
   );
 };

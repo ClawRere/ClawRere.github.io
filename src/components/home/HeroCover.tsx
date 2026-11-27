@@ -151,7 +151,7 @@ export const HeroCover: React.FC = () => {
     'linear-gradient(to bottom, #000 0%, #000 58%, rgba(0,0,0,0.92) 68%, rgba(0,0,0,0.76) 77%, rgba(0,0,0,0.52) 85%, rgba(0,0,0,0.26) 93%, transparent 100%)';
 
   return (
-    <div className="relative w-full h-[calc(100vh-3.5rem)] min-h-[540px] flex flex-col items-center justify-center mb-0">
+    <div className="relative w-full h-screen min-h-[560px] flex flex-col items-center justify-center mb-0">
       {/* Pure-color Parallax Background Layer with Multi-Stop Alpha-Mask Bottom Dissolve */}
       <div
         aria-hidden="true"
@@ -163,19 +163,22 @@ export const HeroCover: React.FC = () => {
         }}
         className="pointer-events-none absolute inset-x-0 -top-4 -bottom-32 z-0 will-change-transform transition-[background-image,background-color] duration-500"
       />
-      {/* Center Compact Frosted-Glass Typewriter Pill with Scroll Parallax */}
+      {/* Center Compact Frosted-Glass Typewriter Pill (crisp text, no border, clean integer parallax) */}
       <div
         style={{
-          transform: `translate3d(0, ${(parallaxY * 0.35).toFixed(1)}px, 0)`,
-          opacity: Math.max(0.15, 1 - parallaxY / 260),
+          transform: `translateY(${Math.round(parallaxY * 0.35)}px)`,
         }}
-        className="relative z-20 px-4 max-w-2xl mx-auto text-center will-change-transform"
+        className="relative z-20 px-4 max-w-2xl mx-auto text-center"
       >
-        <div className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-white/15 dark:bg-black/30 backdrop-blur-xl border border-white/30 shadow-2xl">
-          <span className="text-xs sm:text-sm md:text-base font-mono text-white tracking-wide drop-shadow-sm">
+        <div className="relative inline-flex items-center justify-center px-5 py-2.5 rounded-full shadow-xl">
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 rounded-full bg-white/15 dark:bg-black/25 backdrop-blur-md"
+          />
+          <span className="relative z-10 text-xs sm:text-sm md:text-base font-mono text-white tracking-wide drop-shadow-sm">
             {activePhrase.slice(0, charIndex)}
           </span>
-          <span className="inline-block w-[2px] h-4 sm:h-5 bg-terracotta ml-1 animate-pulse" />
+          <span className="relative z-10 inline-block w-[2px] h-4 sm:h-5 bg-terracotta ml-1 animate-pulse" />
         </div>
       </div>
 

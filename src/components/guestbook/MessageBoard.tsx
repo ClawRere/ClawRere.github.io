@@ -610,6 +610,7 @@ export const MessageBoard: React.FC = () => {
   const [nowTick, setNowTick] = useState<number>(Date.now());
   const [burningIds, setBurningIds] = useState<Record<number, boolean>>({});
   const [weatherOffset, setWeatherOffset] = useState<number>(() => Math.floor(Math.random() * 4));
+  const [selectedWeather, setSelectedWeather] = useState<WeatherKind | 'auto'>('auto');
   const [replyingToId, setReplyingToId] = useState<number | null>(null);
   const [replyName, setReplyName] = useState('');
   const [replyContent, setReplyContent] = useState('');
@@ -951,6 +952,36 @@ export const MessageBoard: React.FC = () => {
         }
       `}</style>
 
+      {/* Right-Aligned Animated Weather Selector Bar (inspired by /effects/weather_icon) */}
+      <div className="flex flex-wrap items-center justify-between gap-3 px-1">
+        <span className="text-xs font-mono text-charcoal-100 dark:text-cream-400">
+          共 {messages.length} 条留言
+        </span>
+        <div className="flex items-center gap-1.5 p-1 rounded-full glass border border-charcoal-500/10 dark:border-white/10">
+          {([
+            ['auto', '🎲 随机'],
+            ['sunny', '☀️ 晴'],
+            ['rainy', '🌧️ 雨'],
+            ['snowy', '❄️ 雪'],
+            ['cloudy', '☁️ 云'],
+            ['thunder', '⚡ 雷'],
+          ] as const).map(([key, label]) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setSelectedWeather(key)}
+              className={`px-2.5 py-1 rounded-full text-[11px] font-mono transition-all ${
+                selectedWeather === key
+                  ? 'bg-terracotta text-white shadow-sm'
+                  : 'text-charcoal-200 dark:text-cream-300 hover:bg-black/5 dark:hover:bg-white/10'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Cards List */}
       <div className="space-y-5">
         <AnimatePresence>
@@ -971,7 +1002,10 @@ export const MessageBoard: React.FC = () => {
               coast: 'border-2 border-sky-400/45 shadow-[inset_0_0_0_2px_rgba(56,189,248,0.14)] bg-white/85 dark:bg-zinc-900/75',
             };
             const weathers: WeatherKind[] = ['sunny', 'rainy', 'snowy', 'cloudy', 'thunder'];
-            const weather = weathers[(msg.id + weatherOffset) % weathers.length];
+            const weather =
+              selectedWeather === 'auto'
+                ? weathers[(msg.id + weatherOffset) % weathers.length]
+                : selectedWeather;
 
             return (
               <motion.div
@@ -1036,23 +1070,27 @@ export const MessageBoard: React.FC = () => {
                     </div>
                   )}
                 </div>
-                {/* Accumulating Rain Puddle / Snowdrift / Thunder Char Recovery */}
+                {/* Localized Right-Side Rain Puddle / Snowdrift / Thunder Scorch Spot */}
                 {weather === 'rainy' && (
                   <div
                     aria-hidden="true"
-                    className="tw-rain-puddle pointer-events-none absolute inset-x-0 bottom-0 z-10 rounded-b-2xl bg-gradient-to-t from-sky-400/55 via-sky-300/35 to-transparent backdrop-blur-[1px] border-t border-sky-300/40"
+                    className="tw-rain-puddle pointer-events-none absolute right-8 bottom-0 w-32 sm:w-36 z-10 rounded-t-full bg-gradient-to-t from-sky-400/65 via-sky-300/40 to-transparent backdrop-blur-[1px] border-t border-sky-300/45"
                   />
                 )}
                 {weather === 'snowy' && (
                   <div
                     aria-hidden="true"
-                    className="tw-snow-pile pointer-events-none absolute inset-x-0 bottom-0 z-10 rounded-b-2xl bg-gradient-to-t from-white/95 via-slate-100/80 to-transparent shadow-[0_-2px_8px_rgba(255,255,255,0.6)]"
+                    className="tw-snow-pile pointer-events-none absolute right-8 bottom-0 w-32 sm:w-36 z-10 rounded-t-full bg-gradient-to-t from-white/95 via-slate-100/85 to-transparent shadow-[0_-2px_8px_rgba(255,255,255,0.65)]"
                   />
                 )}
                 {weather === 'thunder' && (
                   <div
                     aria-hidden="true"
-                    className="tw-thunder-char pointer-events-none absolute inset-0 z-20 rounded-2xl bg-gradient-to-b from-zinc-950/90 via-stone-900/80 to-zinc-950/95"
+                    style={{
+                      background:
+                        'radial-gradient(circle, rgba(15,15,18,0.88) 0%, rgba(30,25,22,0.52) 45%, transparent 75%)',
+                    }}
+                    className="tw-thunder-char pointer-events-none absolute right-6 top-2 w-28 h-28 z-20 rounded-full"
                   />
                 )}
                 {isBurning && <BurnCanvas />}

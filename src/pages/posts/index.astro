@@ -54,8 +54,18 @@ const categories = Array.from(
       ))}
     </div>
 
+    <!-- Faint Pale-Pink/Peach Oversized Watermark Title partially occluded by cards, rises & fades on scroll -->
+    <div
+      aria-hidden="true"
+      class="scroll-watermark-rise pointer-events-none select-none text-center -mb-10 sm:-mb-16 relative z-0 overflow-hidden"
+    >
+      <span class="block text-[20vw] sm:text-[9.5rem] lg:text-[11.5rem] font-black leading-none tracking-[0.14em] bg-gradient-to-r from-rose-400/45 via-orange-300/45 to-pink-400/45 dark:from-rose-300/35 dark:via-orange-200/35 dark:to-pink-300/35 bg-clip-text text-transparent">
+        知识库
+      </span>
+    </div>
+
     <!-- Horizontal Two-Column Frosted Glass Cards -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5" id="posts-grid">
+    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-5" id="posts-grid">
       {sortedPosts.map((post, idx) => {
         const category = Array.isArray(post.data.categories)
           ? post.data.categories[0]
@@ -65,18 +75,15 @@ const categories = Array.from(
           : post.data.tags
           ? [post.data.tags]
           : [];
-        const barColors = ['bg-[#E63946]', 'bg-[#1D3557]', 'bg-[#FFB703]', 'bg-terracotta'];
-        const barColor = barColors[idx % barColors.length];
         const cover = `/img/blog/cover-${(idx % 10) + 1}.svg`;
 
         return (
           <a
             href={`/posts/${post.id}`}
             data-category={category}
-            class="post-card scroll-reveal-card ring-collapse group relative flex flex-col sm:flex-row overflow-hidden rounded-2xl glass border border-charcoal-500/12 dark:border-white/12 hover:border-terracotta/45 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+            class="post-card scroll-reveal-card group relative flex flex-col sm:flex-row overflow-hidden rounded-2xl glass border border-charcoal-500/12 dark:border-white/12 hover:border-terracotta/45 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
           >
-            {/* Left Accent Strip + Illustrated Cover Image */}
-            <span class={`hidden sm:block absolute top-0 left-0 bottom-0 w-1.5 z-20 ${barColor}`} />
+            {/* Left Illustrated Cover Image (no vertical color bar) */}
             <div class="relative w-full sm:w-44 md:w-48 h-40 sm:h-auto shrink-0 overflow-hidden bg-zinc-900/10">
               <img
                 src={cover}
@@ -84,7 +91,7 @@ const categories = Array.from(
                 loading="lazy"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
-              <span class="absolute top-2.5 left-3 sm:left-4 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-black/55 backdrop-blur-sm text-white border border-white/15">
+              <span class="absolute top-2.5 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-black/55 backdrop-blur-sm text-white border border-white/15">
                 {category}
               </span>
             </div>
@@ -114,7 +121,6 @@ const categories = Array.from(
                       {t}
                     </span>
                   ))}
-                  <ArrowUpRight class="w-4 h-4 text-terracotta opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
                 </div>
               </div>
             </div>
